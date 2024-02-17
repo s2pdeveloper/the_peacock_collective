@@ -3,15 +3,31 @@ import { CommonModule } from '@angular/common';
 
 import { LandingLayoutRoutingModule } from './landing-layout-routing.module';
 import { LandingLayoutComponent } from './landing-layout.component';
-
+import { MainComponent } from './components/main/main.component';
+import { FollowUsComponent } from './components/follow-us/follow-us.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { WhoWeAreComponent } from './components/who-we-are/who-we-are.component';
+import { PackbagComponent } from './components/packbag/packbag.component';
+import { NewCollectionComponent } from './components/new-collection/new-collection.component';
+import { NewArrivalsComponent } from './components/new-arrivals/new-arrivals.component';
+import { ConnectComponent } from './components/connect/connect.component'
 
 @NgModule({
   declarations: [
-    LandingLayoutComponent
+    LandingLayoutComponent,
+    MainComponent,
+    FollowUsComponent,
+    WhoWeAreComponent,
+    PackbagComponent,
+    NewCollectionComponent,
+    NewArrivalsComponent,
+    ConnectComponent
   ],
   imports: [
     CommonModule,
-    LandingLayoutRoutingModule
-  ]
+    LandingLayoutRoutingModule,
+    NgbModule
+  ],
+  exports:[LandingLayoutComponent]
 })
 export class LandingLayoutModule { }

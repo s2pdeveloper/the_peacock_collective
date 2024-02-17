@@ -1,0 +1,42 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+.contact-text,
+.follow-text {
+  font-size: 1.3rem;
+  margin-bottom: 1.7rem;
+}
+.fa-brands {
+  font-size: 1.3rem;
+}
+.input-wrapper {
+  border: solid 1px #e3e3e3;
+  background-color: #fff;
+  display: flex;
+  input {
+    width: 90%;
+    border: none;
+    padding-left: 1rem;
+    &:focus-visible {
+      outline: none;
+      border-bottom: 1px solid #000;
+      background-color: #e3e3e37f;
+    }
+  }
+}
+.small-text {
+  color: #acaaa6 !important;
+  font-size: 0.75rem;
+}
+.brands-icons{
+    cursor: pointer;
+}
+@media (max-width: 768px) {
+  .brands-icons {
+    width: 30%;
+    i {
+      font-size: 1rem;
+    }
+  }
+}
