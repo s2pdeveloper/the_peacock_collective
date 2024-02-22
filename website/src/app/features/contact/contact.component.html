@@ -1,0 +1,101 @@
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-11">
+      <p class="py-3 text-color-primary pointer"><span (click)="navigateTo('/')">Home</span>  / Contact us</p>
+    </div>
+    <div class="col-11">
+      <h1 class="py-4">Contact us</h1>
+    </div>
+    <div class="col-11 background-primary">
+      <div class="row">
+        <div
+          class="col-12 col-md-6 col-lg-6 flex-column d-flex justify-content-center align-items-center top-left"
+        >
+          <p class="text-get">Get in touch with us</p>
+          <p><i class="fa-solid fa-phone me-2"></i>+48 541 44 27</p>
+          <p><i class="fa-regular fa-envelope me-2"></i>info&#64;info.com</p>
+          <p>
+            <i class="fa-solid fa-location-dot me-2"></i>66-764 City, Street 23
+          </p>
+          <div class="row media-box my-2">
+            <div class="col-12 d-flex justify-content-around my-2">
+              <div class="media">
+                <i class="fa-brands fa-facebook"></i>
+              </div>
+              <div class="media">
+                <i class="fa-brands fa-twitter"></i>
+              </div>
+              <div class="media">
+                <i class="fa-brands fa-google-plus-g"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-6">
+          <ngb-carousel
+            [showNavigationArrows]="showNavigationArrows"
+            [showNavigationIndicators]="showNavigationIndicators"
+          >
+            <ng-template ngbSlide>
+              <div class="d-flex justify-content-center w-100 picsum-img-wrapper">
+                <img
+                  class="img-fluid w-100"
+                  src="../../../assets/images/store1.jpg"
+                />
+              </div>
+            </ng-template>
+            <ng-template ngbSlide>
+              <div class="d-flex justify-content-center w-100 picsum-img-wrapper">
+                <img
+                  class="img-fluid w-100"
+                  src="../../../assets/images/store2.jpg"
+                />
+              </div>
+            </ng-template>
+          </ngb-carousel>
+        </div>
+      </div>
+    </div>
+    <div class="col-11 background-primary">
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-6">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d317893.9737282887!2d-0.11951900000000001!3d51.503186!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604b900d26973%3A0x4291f3172409ea92!2slastminute.com%20London%20Eye!5e0!3m2!1sen!2sus!4v1708409035190!5m2!1sen!2sus"
+            class="w-100"
+            height="450"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+        <div
+          class="col-12 col-md-6 col-lg-6 flex-column d-flex justify-content-center align-items-center"
+        >
+          <p class="text-get my-3">Send us a message</p>
+          <div class="row w-100 justify-content-center" >
+            <div class="col-10">
+              <form>
+                <div class="mb-3">
+                  <input
+                    type="email"
+                    class="form-control"
+                    placeholder="your@email.com"
+                  />
+                </div>
+                <div class="mb-3">
+                  <textarea
+                    class="form-control"
+                    rows="3"
+                    placeholder="How can we help?"
+                  ></textarea>
+                </div>
+                <button type="button" class="btn btn-dark">Send</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

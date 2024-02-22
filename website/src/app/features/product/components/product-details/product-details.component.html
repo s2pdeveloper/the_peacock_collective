@@ -1,0 +1,168 @@
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-11">
+      <div class="row">
+        <div class="col-12 d-flex align-items-center justify-content-between">
+          <div class="row w-100 justify-content-between">
+            <div class="col-12 col-lg-11">
+              <p class="py-3 text-color-primary pointer">
+                <span (click)="navigateTo('/')">Home</span> /
+                <span>Women</span> / <span>Accessories</span> /
+                <span>Leather bag</span>
+              </p>
+            </div>
+            <div class="col-4 d-flex align-items-center justify-content-start justify-content-lg-end col-lg-1">
+              <p>
+                <i class="fa-solid fa-chevron-left me-2"></i>
+                <i class="fa-solid fa-chevron-right"></i>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-11 py-4">
+      <div class="row py-3">
+        <div class="col-12 col-md-12 col-lg-6">
+          <img
+            class="img-fluid"
+            src="../../../../../assets/products/bag-1.jpg"
+            alt=""
+          />
+          <img
+            class="img-fluid"
+            src="../../../../../assets/products/bag-2.jpg"
+            alt=""
+          />
+          <img
+            class="img-fluid"
+            src="../../../../../assets/products/bag-3.jpg"
+            alt=""
+          />
+        </div>
+        <div
+          class="col-12 col-md-12 col-lg-6 d-flex flex-column py-4 align-items-center"
+        >
+          <div class="row justify-content-center">
+            <div class="col-12 pb-3">
+              <h2 class="text-center">Leather bag</h2>
+              <h2 class="text-center">{{ 120.5 | currency }}</h2>
+            </div>
+            <div class="col-10 py-3 border-top border-bottom">
+              <p class="mb-2">
+                Sleeveless knee-length chiffon dress. V-neckline with elastic
+                under the bust lining.
+              </p>
+              <div class="row py-2 justify-content-center">
+                <div
+                  class="col-lg-2 d-flex input-div background-primary justify-content-center align-items-center"
+                >
+                  <input
+                    type="number"
+                    class="border-0 w-100 p-3"
+                    [(ngModel)]="qty"
+                    [value]="qty"
+                  />
+                </div>
+                <div class="col-12 col-lg-3 ">
+                  <button
+                    type="button"
+                    class="btn btn-dark h-100 py-2"
+                  >
+                    <i class="fa-solid fa-bag-shopping text-light me-1"></i>Add
+                    to cart
+                  </button>
+                </div>
+                <div
+                  class="col-lg-2 p-3 background-primary d-flex justify-content-center align-items-center"
+                >
+                  <i class="fa-regular fa-heart"></i>
+                </div>
+                <div
+                  class="col-lg-2 p-3 background-primary d-flex justify-content-center align-items-center"
+                >
+                  <i class="fa-solid fa-code-compare"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-11 py-4">
+      <div class="tabs">
+        <span
+          [ngClass]="tabActive == 'description' ? 'active' : 'inactive'"
+          (click)="setTabActive('description')"
+          >Description</span
+        >
+        <span
+          [ngClass]="tabActive == 'product' ? 'active' : 'inactive'"
+          (click)="setTabActive('product')"
+          >Product Details</span
+        >
+        <span
+          [ngClass]="tabActive == 'review' ? 'active' : 'inactive'"
+          (click)="setTabActive('review')"
+        >
+          Reviews(0)</span
+        >
+      </div>
+      <p *ngIf="tabActive == 'description'" class="py-3">
+        Fashion has been creating well-designed collections since 2010. The
+        brand offers feminine designs delivering stylish separates and statement
+        dresses which have since evolved into a full ready-to-wear collection in
+        which every item is a vital part of a woman's wardrobe. The result?
+        Cool, easy, chic looks with youthful elegance and unmistakable signature
+        style. All the beautiful pieces are made in Italy and manufactured with
+        the greatest attention. Now Fashion extends to a range of accessories
+        including shoes, hats, belts and more!
+      </p>
+      <div
+        *ngIf="tabActive == 'product'"
+        class="d-flex justify-content-between align-items-center"
+      >
+        <span>Reference demo_6</span>
+        <div class="d-flex justify-content-center align-items-center h-50">
+          <span>Brand</span
+          ><img
+            width="100"
+            height="100"
+            src="../../../../../assets/images/brand2.jpg"
+            alt=""
+          />
+        </div>
+      </div>
+      <div *ngIf="tabActive == 'review'" class="d-flex justify-content-between">
+        <span>No reviews</span
+        ><button type="button" class="btn btn-dark py-2">
+          <i class="fa-solid fa-pen-to-square me-1"></i>Write review
+        </button>
+      </div>
+    </div>
+    <div class="col-11 py-4">
+      <p class="product-text">8 other products in the same category:</p>
+      <div class="col-12 product">
+        <div class="row product-row">
+          <div
+            class="col-6 col-md-4 col-lg-3 product-column"
+            *ngFor="let p of products"
+          >
+            <div class="card border-0">
+              <div class="img-box">
+                <img class="img-fluid" [src]="p?.img" />
+              </div>
+              <div class="text-box p-3">
+                <div class="d-flex justify-content-between">
+                  <p class="cat-name">{{ p?.catName }}</p>
+                  <h5 class="fw-bold prod-price">{{ p?.price | currency }}</h5>
+                </div>
+                <p class="prod-name">{{ p?.name }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

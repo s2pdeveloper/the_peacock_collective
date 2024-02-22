@@ -1,0 +1,43 @@
+<div class="container-fluid pb-5">
+  <div class="row justify-content-center">
+    <div class="col-11">
+      <p class="py-3 text-color-primary pointer">
+        <span (click)="navigateTo('/')">Home</span> / Reset your password
+      </p>
+    </div>
+    <div class="col-11 py-4">
+      <h2>Forgot your password?</h2>
+    </div>
+    <div class="col-11 px-3 py-4 border">
+      <p class="pb-2">
+        Please enter the email address you used to register. You will receive a
+        temporary link to reset your password.
+      </p>
+      <form class="pb-3 border-bottom">
+        <div class="row">
+          <div class="col-12 col-lg-2 d-flex align-items-center my-1">
+            <label for="inputPassword6" class="col-form-label"
+              >Email address</label
+            >
+          </div>
+          <div class="col-12 col-lg-2 me-3 my-1">
+            <input type="email" class="background-primary form-control" />
+          </div>
+          <div class="col-5 col-md-2 col-lg-2 my-1">
+            <button class="btn btn-dark py-2">
+              Send reset link
+            </button>
+          </div>
+        </div>
+      </form>
+      <div class="row pt-3">
+        <div class="col-12 d-flex">
+          <p class="pointer" (click)="navigateTo('/auth/login')">
+            <i class="fa-solid fa-chevron-left"></i>
+            Back to login
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

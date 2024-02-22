@@ -29,14 +29,15 @@
   color: #acaaa6 !important;
   font-size: 0.75rem;
 }
-.brands-icons{
-    cursor: pointer;
+.brands-icons {
+  cursor: pointer;
 }
 @media (max-width: 768px) {
   .brands-icons {
-    width: 30%;
+    justify-content: flex-start !important;
     i {
       font-size: 1rem;
+      margin-right: 1rem;
     }
   }
 }

@@ -1,17 +1,29 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AuthLayoutRoutingModule } from './auth-layout-routing.module';
 import { AuthLayoutComponent } from './auth-layout.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { ForgetPassComponent } from './components/forget-pass/forget-pass.component';
+import { RouterModule, Routes } from '@angular/router';
 
-
+const routes: Routes = [
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'login',
+  },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'forgot-pass', component: ForgetPassComponent },
+];
 @NgModule({
   declarations: [
-    AuthLayoutComponent
+    AuthLayoutComponent,
+    LoginComponent,
+    RegisterComponent,
+    ForgetPassComponent,
   ],
-  imports: [
-    CommonModule,
-    AuthLayoutRoutingModule
-  ]
+  imports: [CommonModule, RouterModule.forChild(routes)],
 })
-export class AuthLayoutModule { }
+export class AuthLayoutModule {}

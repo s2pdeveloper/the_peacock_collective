@@ -1,0 +1,41 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.password-input {
+  display: flex;
+  input {
+    width: 95%;
+  }
+  .icon-box {
+    width: 5%;
+    background-color: #f8f8f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media (max-width: 992px) and (min-width: 475px) {
+  .password-input {
+    display: flex;
+    input {
+      width: 90%;
+    }
+    .icon-box {
+      width: 10%;
+    }
+  }
+}
+@media (max-width: 475px) {
+  .password-input {
+    display: flex;
+    input {
+      width: 85%;
+    }
+    .icon-box {
+      width: 15%;
+    }
+  }
+}

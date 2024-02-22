@@ -1,0 +1,277 @@
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-11">
+      <div class="row">
+        <div class="col-11">
+          <p class="py-3 text-color-primary pointer">
+            <span (click)="navigateTo('/')">Home</span> / <span>Women</span> /
+            <span>Tops</span>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-11 py-3">
+          <h1>Tops</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-11">
+          <img
+            class="img-fluid h-100 w-100"
+            src="../../../../../assets/products/shoes.jpg"
+            alt=""
+          />
+        </div>
+      </div>
+      <div
+        [ngClass]="searchToggle ? 'filter-row' : 'filter-collapsed'"
+        class="row py-5"
+      >
+        <div class="col-12 d-flex justify-content-between">
+          <div class="filter" (click)="searchToggle = !searchToggle">
+            <i class="fa-solid fa-filter me-2"></i>Filter
+          </div>
+
+          <div class="justify-content-end d-flex">
+            <div class="sort w-50 me-1">
+              <select class="sort-select w-100 h-100">
+                <option value="">Best Seller</option>
+                <option value="">Relevance</option>
+                <option value="">Name,A to Z</option>
+                <option value="">Name,Z to A</option>
+                <option value="">Price,Low to high</option>
+                <option value="">Price,High to low</option>
+              </select>
+            </div>
+            <div class="size w-25">
+              <select class="size-select w-100">
+                <option value="">36</option>
+                <option value="">38</option>
+                <option value="">40</option>
+                <option value="">Show all</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          [ngClass]="searchToggle ? 'filters' : 'filters-collapsed'"
+          class="col-12 py-4"
+        >
+          <div class="row w-100">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-3">
+              <p class="mb-3 fw-bold">Categories</p>
+              <div class="d-flex align-items-center">
+                <input
+                  class="form-check-input me-2"
+                  type="checkbox"
+                  value=""
+                  id="cat1"
+                />
+                <label class="form-check-label" for="cat1">
+                  T-shirts(14)
+                </label>
+              </div>
+              <div class="d-flex align-items-center">
+                <input
+                  class="form-check-input me-2"
+                  type="checkbox"
+                  value=""
+                  id="cat2"
+                />
+                <label class="form-check-label" for="cat2"> Tops(13) </label>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-3">
+              <p class="mb-3 fw-bold">Size</p>
+              <div class="d-flex align-items-center">
+                <input
+                  class="form-check-input me-2"
+                  type="checkbox"
+                  value=""
+                  id="cat3"
+                />
+                <label class="form-check-label" for="cat3"> S(12) </label>
+              </div>
+              <div class="d-flex align-items-center">
+                <input
+                  class="form-check-input me-2"
+                  type="checkbox"
+                  value=""
+                  id="cat4"
+                />
+                <label class="form-check-label" for="cat4"> M(10) </label>
+              </div>
+              <div class="d-flex align-items-center">
+                <input
+                  class="form-check-input me-2"
+                  type="checkbox"
+                  value=""
+                  id="cat5"
+                />
+                <label class="form-check-label" for="cat5"> L(12) </label>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-3">
+              <p class="mb-3 fw-bold">Color</p>
+              <div class="d-flex flex-wrap">
+                <div class="color color-1"></div>
+                <div class="color color-2"></div>
+                <div class="color color-3"></div>
+                <div class="color color-4"></div>
+                <div class="color color-5"></div>
+                <div class="color color-6"></div>
+                <div class="color color-7"></div>
+                <div class="color color-8"></div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-3">
+              <p class="mb-3 fw-bold">Compositions</p>
+              <div class="d-flex align-items-center">
+                <input
+                  class="form-check-input me-2"
+                  type="checkbox"
+                  value=""
+                  id="cat6"
+                />
+                <label class="form-check-label" for="cat6"> Cotton(1) </label>
+              </div>
+              <div class="d-flex align-items-center">
+                <input
+                  class="form-check-input me-2"
+                  type="checkbox"
+                  value=""
+                  id="cat7"
+                />
+                <label class="form-check-label" for="cat7"> Viscose(2) </label>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-3">
+              <p class="mb-3 fw-bold">Styles</p>
+              <div class="d-flex align-items-center">
+                <input
+                  class="form-check-input me-2"
+                  type="checkbox"
+                  value=""
+                  id="cat8"
+                />
+                <label class="form-check-label" for="cat8"> Casual(2) </label>
+              </div>
+              <div class="d-flex align-items-center">
+                <input
+                  class="form-check-input me-2"
+                  type="checkbox"
+                  value=""
+                  id="cat9"
+                />
+                <label class="form-check-label" for="cat9"> Dressy(1) </label>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-3">
+              <p class="mb-3 fw-bold">Properties</p>
+              <div class="d-flex align-items-center">
+                <input
+                  class="form-check-input me-2"
+                  type="checkbox"
+                  value=""
+                  id="cat10"
+                />
+                <label class="form-check-label" for="cat10">
+                  Maxi Dress(1)
+                </label>
+              </div>
+              <div class="d-flex align-items-center">
+                <input
+                  class="form-check-input me-2"
+                  type="checkbox"
+                  value=""
+                  id="cat11"
+                />
+                <label class="form-check-label" for="cat11">
+                  Short Dress(1)
+                </label>
+              </div>
+              <div class="d-flex align-items-center">
+                <input
+                  class="form-check-input me-2"
+                  type="checkbox"
+                  value=""
+                  id="cat12"
+                />
+                <label class="form-check-label" for="cat12">
+                  Short Sleeve(1)
+                </label>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-3">
+              <p class="mb-3 fw-bold">Properties</p>
+              <div class="d-flex align-items-center">
+                <input
+                  class="form-check-input me-2"
+                  type="checkbox"
+                  value=""
+                  id="cat13"
+                />
+                <label class="form-check-label" for="cat13"> Ankos(13) </label>
+              </div>
+              <div class="d-flex align-items-center">
+                <input
+                  class="form-check-input me-2"
+                  type="checkbox"
+                  value=""
+                  id="cat14"
+                />
+                <label class="form-check-label" for="cat14"> Antara(1) </label>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-3">
+              <p class="mb-3 fw-bold">Price</p>
+              <div class="custom-slider">
+                <ngx-slider
+                  [value]="value"
+                  [highValue]="highValue"
+                  [options]="options"
+                ></ngx-slider>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="row product-row justify-content-between">
+            <div
+            (click)="navigateTo('product/product-details')"
+              class="col-6 col-md-4 col-lg-3 p-3 pointer"
+              *ngFor="let p of products"
+            >
+              <div class="card border-0">
+                <div class="img-box">
+                  <img class="img-fluid" [src]="p?.img" />
+                </div>
+                <div class="text-box p-3">
+                  <div class="d-flex justify-content-between">
+                    <p class="cat-name">{{ p?.catName }}</p>
+                    <h5 class="fw-bold prod-price">
+                      {{ p?.price | currency }}
+                    </h5>
+                  </div>
+                  <p class="prod-name">{{ p?.name }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div
+          class="col-3 col-md-2 col-lg-1 align-items-center d-flex justify-content-between"
+        >
+          <i class="fa-solid fa-angle-left"></i>
+          <p>1</p>
+          <p>2</p>
+          <i class="fa-solid fa-angle-right"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

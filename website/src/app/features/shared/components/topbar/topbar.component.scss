@@ -32,3 +32,47 @@
     }
   }
 }
+.product-part{
+  max-height: 30vh;
+  min-height: 30vh;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+ .small-text{
+  font-size: 0.75rem;
+ }
+ input{
+  background-color: #f8f8f8;
+  padding: 0.5rem;
+  &:focus{
+    border: 0;
+    outline: 0;
+  }
+ }
+}
+.info-part{
+  max-height: 52vh;
+  min-height: 52vh;
+  .description{
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+  }
+}
+
+input {
+  background-color: #f8f8f8;
+}
+@media (max-width:992px){
+  .container-fluid {
+    .upper-row {
+      .ship-text {
+        p {
+          text-align: start;
+        }
+      }
+    }}
+}

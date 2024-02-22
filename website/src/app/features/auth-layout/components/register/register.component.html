@@ -1,0 +1,161 @@
+<div class="container-fluid pb-5">
+  <div class="row justify-content-center">
+    <div class="col-11">
+      <p class="py-3 text-color-secondary pointer"><span (click)="navigateTo('/')">Home</span> / Create an account</p>
+    </div>
+    <div class="col-11 py-4">
+      <h2>Create an account</h2>
+    </div>
+    <div class="col-11 px-3 py-4 border">
+      <span class="pb-2 pointer" (click)="navigateTo('/auth/login')">
+        <i class="fa-regular fa-circle-question"></i>
+        Already have an account? Log in instead!
+      </span>
+      <form class="pb-3 border-bottom">
+        <div class="row my-3">
+          <div class="col-12 col-lg-2 d-flex align-items-center my-1">
+            <label for="inputPassword6" class="col-form-label"
+              >Social title</label
+            >
+          </div>
+          <div class="col-12 col-lg-2 d-flex me-3 my-1">
+            <div class="d-flex px-2 align-items-center">
+              <input
+                class="form-check-input me-2 background-primary"
+                type="radio"
+                name="inlineRadioOptions"
+                id="inlineRadio1"
+                value="option1"
+              />
+              <label class="form-check-label" for="inlineRadio1">Mr.</label>
+            </div>
+            <div class="d-flex px-2 align-items-center">
+              <input
+                class="form-check-input me-2 background-primary"
+                type="radio"
+                name="inlineRadioOptions"
+                id="inlineRadio2"
+                value="option2"
+              />
+              <label class="form-check-label" for="inlineRadio2">Mrs.</label>
+            </div>
+          </div>
+        </div>
+        <div class="row my-3">
+          <div class="col-12 col-lg-2 d-flex align-items-center my-1">
+            <label for="inputPassword6" class="col-form-label"
+              >First name</label
+            >
+          </div>
+          <div class="col-12 col-lg-8 me-3 my-1">
+            <input type="text" class="form-control background-primary" />
+            <p class="small-text">
+              Only letters and the dot (.) character, followed by a space, are
+              allowed.
+            </p>
+          </div>
+        </div>
+        <div class="row my-3">
+          <div class="col-12 col-lg-2 d-flex align-items-center my-1">
+            <label for="inputPassword6" class="col-form-label">Last name</label>
+          </div>
+          <div class="col-12 col-lg-8 me-3 my-1">
+            <input type="text" class="form-control background-primary" />
+            <p  class="small-text">
+              Only letters and the dot (.) character, followed by a space, are
+              allowed.
+            </p>
+          </div>
+        </div>
+        <div class="row my-3">
+          <div class="col-12 col-lg-2 d-flex align-items-center my-1">
+            <label for="inputPassword6" class="col-form-label">Email</label>
+          </div>
+          <div class="col-12 col-lg-8 me-3 my-1">
+            <input type="email" class="form-control background-primary" />
+          </div>
+        </div>
+        <div class="row my-3">
+          <div class="col-12 col-lg-2 d-flex align-items-center my-1">
+            <label for="inputPassword6" class="col-form-label">Password</label>
+          </div>
+          <div class="col-12 col-lg-8 me-3 my-1 password-input">
+            <input
+              [type]="showEye ? 'password' : 'text'"
+              class="form-control background-primary"
+            />
+            <div *ngIf="!showEye" class="icon-box" (click)="showEye = !showEye">
+              <i class="fa-solid fa-eye"></i>
+            </div>
+            <div *ngIf="showEye" class="icon-box" (click)="showEye = !showEye">
+              <i class="fa-solid fa-eye-slash"></i>
+            </div>
+          </div>
+        </div>
+        <div class="row my-3">
+          <div class="col-12 col-lg-2 d-flex align-items-center my-1">
+            <label for="inputPassword6" class="col-form-label">BirthDate</label>
+          </div>
+          <div class="col-12 col-lg-8 me-3 my-1">
+            <div class="d-flex">
+              <input
+                type="text"
+                class="form-control background-primary"
+                placeholder="MM/DD/YYYY"
+              />
+              <div class="opt-box">Optional</div>
+            </div>
+            <p>(E.g.: 05/31/1970)</p>
+          </div>
+        </div>
+        <div class="row my-3">
+          <div class="col-12 col-lg-2 my-1"></div>
+          <div class="col-12 col-lg-8 me-3 my-1">
+            <div class="d-flex align-items-center my-2">
+              <input
+                class="form-check-input me-2"
+                type="checkbox"
+                id="inlineCheckbox1"
+                value="option1"
+              />
+              <p>Receive offers from our partners</p>
+            </div>
+          </div>
+        </div>
+        <div class="row my-3">
+          <div class="col-12 col-lg-2 my-1"></div>
+          <div class="col-12 col-lg-8 me-3 my-1">
+            <div class="d-flex align-items-center my-2">
+              <input
+                class="form-check-input me-2"
+                type="checkbox"
+                id="inlineCheckbox1"
+                value="option1"
+              />
+              <p>Sign up for our newsletter</p>
+            </div>
+            <i
+              >You may unsubscribe at any moment. For that purpose, please find
+              our contact info in the legal notice.</i
+            >
+          </div>
+        </div>
+        <div class="row my-3 justify-content-center">
+          <div class="col-3 col-md-2 col-lg-1">
+            <button class="btn bg-dark p-2 w-100 text-light rounded-0">
+              Save
+            </button>
+          </div>
+        </div>
+      </form>
+      <div class="row pt-3">
+        <div class="col-12 d-flex">
+          <p class="pointer" (click)="navigateTo('/auth/login')">
+            <i class="fa-solid fa-chevron-left"></i>
+            Back to login
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

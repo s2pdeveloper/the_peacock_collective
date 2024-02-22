@@ -1,5 +1,21 @@
-@import 'bootstrap/scss/bootstrap';
+@import "bootstrap/scss/bootstrap";
+@import './themes/variable';
+@import './themes/custom';
+* {
+  font-family: "Cormorant", "serif";
+}
+::-webkit-scrollbar {
+  width: 2px;
+  border: 1px solid #ffffff;
+}
 
-*{
-    font-family: 'Cormorant','serif';
+::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+::-webkit-scrollbar-thumb {
+  height: 200px;
+  background: #000;
+  border-radius: 0;
+  outline: 5px solid #000;
 }

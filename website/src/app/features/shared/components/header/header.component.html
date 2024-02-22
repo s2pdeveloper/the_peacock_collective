@@ -7,13 +7,21 @@
             <div class="nav_menu d-flex">
               <div class="nav_list nav_list_menu">
                 <a class="nav_link text-uppercase">
-                  <span>Categories</span>
+                  <span class="nav-items">Categories</span>
                 </a>
                 <div class="dropdown">
                   <div class="dropdown-inner">
                     <div class="dropdown-item">
-                      <h3 class="item-heading">Women</h3>
-                      <div class="item-img">
+                      <h3
+                        class="item-heading"
+                        (click)="navigateTo('/product/product-list')"
+                      >
+                        Women
+                      </h3>
+                      <div
+                        class="pointer item-img pointer"
+                        (click)="navigateTo('/product/product-list')"
+                      >
                         <img
                           src="../../../../../assets/images/women.jpg"
                           alt="Icon"
@@ -21,130 +29,39 @@
                       </div>
                       <div class="item-list-info">
                         <ul>
-                          <li>Blouses</li>
-                          <div class="btn-group dropend">
-                            <button type="button" class="btn btn-secondary  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                              Dropright
-                            </button>
-                            <ul class="dropdown-menu">
-                              <li>Dresses</li>
-                          <li>Shoes</li>
-                            </ul>
-                          </div>
-                          <li>Dresses</li>
-                          <li>Shoes</li>
-                          <li>Accessories</li>
-                          <li>Hats</li>
-                        </ul>
-                      </div>
-                    </div>
-
-                    <div class="dropdown-item">
-                      <h3 class="item-heading">Women</h3>
-                      <div class="item-img">
-                        <img
-                          src="../../../../../assets/images/women.jpg"
-                          alt="Icon"
-                        />
-                      </div>
-                      <div class="item-list-info">
-                        <ul>
-                          <li>Blouses</li>
-                          <li>Tops</li>
-                          <li>Dresses</li>
-                          <li>Shoes</li>
-                          <li>Accessories</li>
-                          <li>Hats</li>
-                        </ul>
-                      </div>
-                    </div>
-
-                    <div class="dropdown-item">
-                      <h3 class="item-heading">Women</h3>
-                      <div class="item-img">
-                        <img
-                          src="../../../../../assets/images/women.jpg"
-                          alt="Icon"
-                        />
-                      </div>
-                      <div class="item-list-info">
-                        <ul>
-                          <li>Blouses</li>
-                          <li>Tops</li>
-                          <li>Dresses</li>
-                          <li>Shoes</li>
-                          <li>Accessories</li>
-                          <li>Hats</li>
-                        </ul>
-                      </div>
-                    </div>
-
-                    <div class="dropdown-item">
-                      <h3 class="item-heading">Women</h3>
-                      <div class="item-img">
-                        <img
-                          src="../../../../../assets/images/women.jpg"
-                          alt="Icon"
-                        />
-                      </div>
-                      <div class="item-list-info">
-                        <ul>
-                          <li>Blouses</li>
-                          <li>Tops</li>
-                          <li>Dresses</li>
-                          <li>Shoes</li>
-                          <li>Accessories</li>
-                          <li>Hats</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="nav_menu d-flex">
-              <div class="nav_list nav_list_menu">
-                <a class="nav_link text-uppercase">
-                  <span>Shop</span>
-                </a>
-                <div class="dropdown">
-                  <div class="dropdown-inner">
-                    <div class="dropdown-item">
-                      <h3 class="item-heading">Women</h3>
-                      <div class="item-img">
-                        <img
-                          src="../../../../../assets/images/women.jpg"
-                          alt="Icon"
-                        />
-                      </div>
-                      <div class="item-list-info">
-                        <ul>
-                          <li>Blouses</li>
-                          <li>
+                          <li (click)="navigateTo('/product/product-list')">
+                            Blouses
+                          </li>
+                          <li (click)="navigateTo('/product/product-list')">
                             <span> Tops </span>
                           </li>
-                          <li>Dresses</li>
-                          <li>Shoes</li>
-                          <li>Accessories</li>
-                          <li>Hats</li>
+                          <li (click)="navigateTo('/product/product-list')">
+                            Dresses
+                          </li>
+                          <li (click)="navigateTo('/product/product-list')">
+                            Shoes
+                          </li>
+                          <li (click)="navigateTo('/product/product-list')">
+                            Accessories
+                          </li>
+                          <li (click)="navigateTo('/product/product-list')">
+                            Hats
+                          </li>
                         </ul>
                       </div>
-                      .
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="nav_menu d-flex">
-              <div class="nav_list nav_list_menu">
-                <a class="nav_link text-uppercase">
-                  <span>Fashion</span>
-                </a>
-                <div class="dropdown">
-                  <div class="dropdown-inner">
+
                     <div class="dropdown-item">
-                      <h3 class="item-heading">Women</h3>
-                      <div class="item-img">
+                      <h3
+                        (click)="navigateTo('/product/product-list')"
+                        class="item-heading"
+                      >
+                        Women
+                      </h3>
+                      <div
+                        (click)="navigateTo('/product/product-list')"
+                        class="item-img pointer"
+                      >
                         <img
                           src="../../../../../assets/images/women.jpg"
                           alt="Icon"
@@ -152,14 +69,104 @@
                       </div>
                       <div class="item-list-info">
                         <ul>
-                          <li>Blouses</li>
-                          <li>
-                            <span> Tops </span>
+                          <li (click)="navigateTo('/product/product-list')">
+                            Blouses
                           </li>
-                          <li>Dresses</li>
-                          <li>Shoes</li>
-                          <li>Accessories</li>
-                          <li>Hats</li>
+                          <li (click)="navigateTo('/product/product-list')">
+                            Tops
+                          </li>
+                          <li (click)="navigateTo('/product/product-list')">
+                            Dresses
+                          </li>
+                          <li (click)="navigateTo('/product/product-list')">
+                            Shoes
+                          </li>
+                          <li (click)="navigateTo('/product/product-list')">
+                            Accessories
+                          </li>
+                          <li (click)="navigateTo('/product/product-list')">
+                            Hats
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div class="dropdown-item">
+                      <h3
+                        (click)="navigateTo('/product/product-list')"
+                        class="item-heading"
+                      >
+                        Women
+                      </h3>
+                      <div
+                        (click)="navigateTo('/product/product-list')"
+                        class="item-img pointer"
+                      >
+                        <img
+                          src="../../../../../assets/images/women.jpg"
+                          alt="Icon"
+                        />
+                      </div>
+                      <div class="item-list-info">
+                        <ul>
+                          <li (click)="navigateTo('/product/product-list')">
+                            Blouses
+                          </li>
+                          <li (click)="navigateTo('/product/product-list')">
+                            Tops
+                          </li>
+                          <li (click)="navigateTo('/product/product-list')">
+                            Dresses
+                          </li>
+                          <li (click)="navigateTo('/product/product-list')">
+                            Shoes
+                          </li>
+                          <li (click)="navigateTo('/product/product-list')">
+                            Accessories
+                          </li>
+                          <li (click)="navigateTo('/product/product-list')">
+                            Hats
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div class="dropdown-item">
+                      <h3
+                        (click)="navigateTo('/product/product-list')"
+                        class="item-heading"
+                      >
+                        Women
+                      </h3>
+                      <div
+                        (click)="navigateTo('/product/product-list')"
+                        class="item-img pointer"
+                      >
+                        <img
+                          src="../../../../../assets/images/women.jpg"
+                          alt="Icon"
+                        />
+                      </div>
+                      <div class="item-list-info">
+                        <ul>
+                          <li (click)="navigateTo('/product/product-list')">
+                            Blouses
+                          </li>
+                          <li (click)="navigateTo('/product/product-list')">
+                            Tops
+                          </li>
+                          <li (click)="navigateTo('/product/product-list')">
+                            Dresses
+                          </li>
+                          <li (click)="navigateTo('/product/product-list')">
+                            Shoes
+                          </li>
+                          <li (click)="navigateTo('/product/product-list')">
+                            Accessories
+                          </li>
+                          <li (click)="navigateTo('/product/product-list')">
+                            Hats
+                          </li>
                         </ul>
                       </div>
                     </div>
@@ -170,13 +177,227 @@
             <div class="nav_menu d-flex">
               <div class="nav_list nav_list_menu">
                 <a class="nav_link text-uppercase">
-                  <span>Simple</span>
+                  <span class="nav-items">Shop</span>
+                </a>
+                <div class="dropdown">
+                  <div class="dropdown-inner-shop">
+                    <div class="dropdown-item-shop">
+                      <div class="pointer item-img-shop">
+                        <img
+                          src="../../../../../assets/images/placeholder-img.svg"
+                          alt=""
+                        />
+                      </div>
+                      <div class="pointer item-img-shop">
+                        <img
+                          src="../../../../../assets/images/placeholder-img.svg"
+                          alt=""
+                        />
+                      </div>
+                      <div class="pointer item-img-shop">
+                        <img
+                          src="../../../../../assets/images/placeholder-img.svg"
+                          alt=""
+                        />
+                      </div>
+                      <div class="pointer item-img-shop">
+                        <img
+                          src="../../../../../assets/images/placeholder-img.svg"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                    <div class="dropdown-item-shop">
+                      <div class="item-list-info">
+                        <ul>
+                          <h6 class="mb-2 fw-bold">Tops</h6>
+                          <li>Tops</li>
+                          <li>T-shirts</li>
+                        </ul>
+                      </div>
+                      <div class="item-list-info">
+                        <ul>
+                          <h6 class="mb-2 fw-bold">Dresses</h6>
+                          <li>Casual Dresses</li>
+                          <li>Summer Dresses</li>
+                          <li>Evening Dresses</li>
+                        </ul>
+                      </div>
+                      <div class="item-list-info">
+                        <ul>
+                          <h6 class="mb-2 fw-bold">Women</h6>
+                          <li>Blouses</li>
+                          <li>Tops</li>
+                          <li>Dresses</li>
+                          <li>Shoes</li>
+                          <li>Accessories</li>
+                          <li>Hats</li>
+                        </ul>
+                      </div>
+                      <div class="item-list-info">
+                        <ul>
+                          <h6 class="mb-2 fw-bold">Dresses</h6>
+                          <li>Casual Dresses</li>
+                          <li>Summer Dresses</li>
+                          <li>Evening Dresses</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="shop-dropdown">
+                      <h6 class="mb-2 fw-bold">Top Brands</h6>
+                      <div class="dropdown-item-shop">
+                        <div class="item-list-info">
+                          <img
+                            src="../../../../../assets/images/brand1.jpg"
+                            alt=""
+                          />
+                        </div>
+                        <div class="item-list-info">
+                          <img
+                            src="../../../../../assets/images/brand2.jpg"
+                            alt=""
+                          />
+                        </div>
+                        <div class="item-list-info">
+                          <img
+                            src="../../../../../assets/images/brand3.jpg"
+                            alt=""
+                          />
+                        </div>
+                        <div class="item-list-info">
+                          <img
+                            src="../../../../../assets/images/brand4.jpg"
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="links">
+                    <ul class="d-flex">
+                      <li>Delivery</li>
+                      <li>Legal Notice</li>
+                      <li>All manufacturers</li>
+                      <li>Sonda</li>
+                      <li>Bower</li>
+                      <li>321</li>
+                      <li>Tops</li>
+                      <li>T-shirts</li>
+                      <li>Blouses</li>
+                      <li>Dresses</li>
+                      <li>Summer Dresses</li>
+                      <li>Shoes Hats</li>
+                    </ul>
+                  </div>
+                  <div class="placeholder-img my-4">
+                    <img
+                      src="../../../../../assets/images/placeholder-img-big.svg"
+                      alt=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="nav_menu d-flex">
+              <div class="nav_list nav_list_menu">
+                <a class="nav_link text-uppercase">
+                  <span class="nav-items">Fashion</span>
+                </a>
+                <div class="dropdown">
+                  <div class="dropdown-inner-fashion">
+                    <div class="dropdown-left">
+                      <div class="dropdown-item">
+                        <h3 class="item-heading">Dresses</h3>
+                        <div class="pointer item-img">
+                          <img
+                            src="../../../../../assets/images/women.jpg"
+                            alt="Icon"
+                          />
+                        </div>
+                        <div class="item-list-info">
+                          <ul>
+                            <li>Casual Dresses</li>
+                            <li>Summer Dresses</li>
+                            <li>Evening Dresses</li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="dropdown-item">
+                        <h3 class="item-heading">Tops</h3>
+                        <div class="pointer item-img">
+                          <img
+                            src="../../../../../assets/images/women.jpg"
+                            alt="Icon"
+                          />
+                        </div>
+                        <div class="item-list-info">
+                          <ul>
+                            <li>Tops</li>
+                            <li>T-shirts</li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="dropdown-item">
+                        <h3 class="item-heading">Dresses</h3>
+                        <div class="pointer item-img">
+                          <img
+                            src="../../../../../assets/images/women.jpg"
+                            alt="Icon"
+                          />
+                        </div>
+                        <div class="item-list-info">
+                          <ul>
+                            <li>Casual Dresses</li>
+                            <li>Summer Dresses</li>
+                            <li>Evening Dresses</li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="dropdown-item">
+                        <h3 class="item-heading">Women</h3>
+                        <div class="pointer item-img">
+                          <img
+                            src="../../../../../assets/images/women.jpg"
+                            alt="Icon"
+                          />
+                        </div>
+                        <div class="item-list-info">
+                          <ul>
+                            <li>Blouses</li>
+                            <li>
+                              <span> Tops </span>
+                            </li>
+                            <li>Dresses</li>
+                            <li>Shoes</li>
+                            <li>Accessories</li>
+                            <li>Hats</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="dropdown-right d-flex justify-content-end align-items-end"
+                    >
+                      <img
+                        class="fashion-img"
+                        src="../../../../../assets/images/menu-bg.jpg"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="nav_menu d-flex">
+              <div class="nav_list nav_list_menu">
+                <a class="nav_link text-uppercase">
+                  <span class="nav-items">Simple</span>
                 </a>
                 <div class="dropdown">
                   <div class="dropdown-inner">
                     <div class="dropdown-item">
                       <h3 class="item-heading">Women</h3>
-                      <div class="item-img">
+                      <div class="pointer item-img">
                         <img
                           src="../../../../../assets/images/women.jpg"
                           alt="Icon"
@@ -202,9 +423,17 @@
           </div>
         </div>
         <div class="col-4 d-flex justify-content-end">
-          <div class="navbar-brand text-uppercase text-color-red">Contact</div>
+          <div
+            class="navbar-brand text-uppercase text-color-red nav-items"
+            (click)="navigateTo('/contact')"
+          >
+            Contact
+          </div>
           <div class="d-flex align-items-center">
-            <i class="fa-solid fa-bag-shopping"></i>
+            <i
+              class="fa-solid fa-bag-shopping nav-items"
+              (click)="openModal(cartModal, 'end')"
+            ></i>
           </div>
         </div>
       </div>
@@ -214,21 +443,402 @@
 
 <div class="container-fluid sticky-top header-tablet bg-light">
   <div class="row">
-    <div class="col-3 d-flex flex-column align-items-center p-3 menu-items">
+    <div
+      class="col-3 d-flex flex-column align-items-center p-3 menu-items"
+      (click)="openModal(toggle, 'start')"
+    >
       <i class="fa-solid fa-bars"></i>
       <p>Menu</p>
     </div>
     <div class="col-3 d-flex flex-column align-items-center p-3 menu-items">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <p>Search</p>
+      <i
+        class="fa-solid fa-magnifying-glass"
+        (click)="searchToggle = !searchToggle"
+      ></i>
+      <div class="d-flex">
+        <div class="nav_list">
+          <p class="nav_link-search" (click)="searchToggle = !searchToggle">
+            Search
+          </p>
+          <div
+            [ngClass]="
+              searchToggle ? 'dropdown-search' : 'dropdown-search-collapsed'
+            "
+          >
+            <div class="container-fluid">
+              <div
+                class="search d-flex justify-content-between align-items-center p-4 w-100"
+              >
+                <input
+                  type="text"
+                  placeholder="Search"
+                  class="form-control w-75"
+                />
+                <i
+                  class="fa-solid fa-magnifying-glass"
+                  (click)="searchToggle = !searchToggle"
+                ></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="col-3 d-flex flex-column align-items-center p-3 menu-items">
+    <div
+      class="col-3 d-flex flex-column align-items-center p-3 menu-items"
+      (click)="navigateTo('/auth/login')"
+    >
       <i class="fa-solid fa-user"></i>
       <p>Sign In</p>
     </div>
     <div class="col-3 d-flex flex-column align-items-center p-3 menu-items">
       <i class="fa-solid fa-bag-shopping"></i>
-      <p>Cart</p>
+      <p (click)="openModal(cartModal, 'end')">Cart</p>
     </div>
   </div>
 </div>
+<ng-template #toggle let-offcanvas>
+  <div class="offcanvas-header m-0 px-4 py-2 bg-dark">
+    <img
+      src="../../../../../assets/images/white-logo.png"
+      class="img-fluid-m me-3 logo-img"
+      (click)="offcanvas.dismiss('Cross click')"
+    />
+    <button
+      type="button"
+      class="btn text-light"
+      (click)="offcanvas.dismiss('Cross click')"
+    >
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+
+  <div
+    class="offcanvas-body m-0 bg-dark d-flex flex-column justify-content-between"
+  >
+    <div class="option p-4">
+      <div
+        class="option-item d-flex justify-content-between py-3"
+        (click)="openModal(categoryModal, 'end');offcanvas.dismiss('Cross click')"
+      >
+        <p class="text-white w-75">Categories</p>
+        <div class="d-flex justify-content-end align-items-center w-25">
+          <i class="fa-solid fa-chevron-right text-white"></i>
+        </div>
+      </div>
+      <div
+        class="option-item d-flex justify-content-between py-3"
+        (click)="offcanvas.dismiss('Cross click')"
+      >
+        <p class="text-white w-75">Shop</p>
+        <div class="d-flex justify-content-end align-items-center w-25">
+          <i class="fa-solid fa-chevron-right text-white"></i>
+        </div>
+      </div>
+      <div
+        class="option-item d-flex justify-content-between py-3"
+        (click)="offcanvas.dismiss('Cross click')"
+      >
+        <p class="text-white w-75">Fashion</p>
+        <div class="d-flex justify-content-end align-items-center w-25">
+          <i class="fa-solid fa-chevron-right text-white"></i>
+        </div>
+      </div>
+      <div
+        class="option-item d-flex justify-content-between py-3"
+        (click)="offcanvas.dismiss('Cross click')"
+      >
+        <p class="text-white w-75">Simple</p>
+        <div class="d-flex justify-content-end align-items-center w-25">
+          <i class="fa-solid fa-chevron-right text-white"></i>
+        </div>
+      </div>
+      <div
+        class="option-item d-flex justify-content-between py-3"
+        (click)="offcanvas.dismiss('Cross click')"
+      >
+        <p class="text-white w-75">Contact</p>
+      </div>
+    </div>
+    <div
+      class="foot d-flex justify-content-evenly align-items-center border-top"
+    >
+      <p class="text-white">English</p>
+      <p class="text-white">USD $</p>
+      <p class="text-white"><i class="fa-solid fa-user me-1"></i>Sign in</p>
+    </div>
+  </div>
+</ng-template>
+<ng-template #cartModal let-offcanvas>
+  <div class="offcanvas-header m-0 px-4 py-3 border-bottom bg-light">
+    <h4>Your Cart</h4>
+    <button
+      type="button"
+      class="btn text-dark"
+      (click)="offcanvas.dismiss('Cross click')"
+    >
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+
+  <div
+    class="offcanvas-body m-0 bg-white p-3 d-flex flex-column justify-content-between"
+  >
+    <div class="product-part">
+      <div class="border-bottom d-flex" *ngFor="let p of product">
+        <div>
+          <img class="img-fluid" [src]="p.img" alt="" />
+        </div>
+        <div class="d-flex justify-content-center bg-white flex-column p-3">
+          <p>{{ p.name }}</p>
+          <p class="text-color-secondary small-text">Size : {{ p.size }}</p>
+          <p class="text-color-secondary small-text">Color : {{ p.color }}</p>
+          <div class="d-flex align-items-center">
+            <input
+              type="number"
+              class="w-50 border-0"
+              [(ngModel)]="qty"
+              [value]="qty"
+            />
+            <label>x {{ p.price | currency }}</label>
+          </div>
+        </div>
+        <div class="d-flex align-items-center bg-white">
+          <i class="fa-solid fa-trash"></i>
+        </div>
+      </div>
+    </div>
+    <div class="info-part">
+      <div class="container-fluid">
+        <div class="row py-3 border-bottom">
+          <div class="col-12 d-flex justify-content-between">
+            <p>3 Items</p>
+            <p>{{ 331.5 | currency }}</p>
+          </div>
+          <div class="col-12 d-flex justify-content-between">
+            <p>Shipping</p>
+            <p>{{ 7 | currency }}</p>
+          </div>
+        </div>
+        <div class="row py-3">
+          <div class="col-12 d-flex justify-content-between">
+            <p>Total (tax incl.)</p>
+            <p>{{ 338.5 | currency }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 description">
+            <p>Spend $168.50 more to get free shipping!</p>
+            <p>
+              IQITFREEDELIVERYCOUNT - module, you can put own text in
+              configuration
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 mb-2">
+            <button type="button" class="btn btn-dark">
+              Checkout
+            </button>
+          </div>
+          <div class="col-12">
+            <button type="button" class="btn btn-light">
+              Cart
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #categoryModal let-offcanvas>
+  <div class="offcanvas-header m-0 px-4 py-3 border-bottom bg-dark">
+    <h4 class="text-light">
+      <i
+        (click)="offcanvas.dismiss('Cross click')"
+        class="me-1 fa-solid fa-chevron-left"
+      ></i
+      >Categories
+    </h4>
+    <button
+      type="button"
+      class="btn text-dark"
+      (click)="offcanvas.dismiss('Cross click')"
+    >
+      <i class="text-light fa-solid fa-xmark"></i>
+    </button>
+  </div>
+
+  <div
+    class="offcanvas-body m-0 bg-dark p-4 d-flex flex-column justify-content-between"
+  >
+    <div class="row py-3">
+      <div class="col-12">
+        <h3 class="text-light" (click)="navigateTo('/product/product-list');offcanvas.close('Cross click')">Women</h3>
+      </div>
+      <div class="col-12 py-3">
+        <img
+        (click)="navigateTo('/product/product-list');offcanvas.close('Cross click')"
+          src="../../../../../assets/images/women.jpg"
+          alt=""
+          class="img-fluid"
+        />
+      </div>
+      <div class="col-12">
+        <ul>
+          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Blouses</li>
+          <li class="text-light py-2" (click)="catBToggle = !catBToggle;navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">
+            Tops
+            <i *ngIf="!catBToggle" class="ms-1 fa-solid fa-chevron-down"></i
+            ><i *ngIf="catBToggle" class="ms-1 fa-solid fa-chevron-up"></i>
+            <ul [ngClass]="catBToggle ? 'd-block' : 'd-none'">
+              <li class="text-light py-2">Tops</li>
+              <li class="text-light py-2">T-shirts</li>
+            </ul>
+          </li>
+          <li class="text-light py-2" (click)="catDToggle = !catDToggle;navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">
+            Dresses<i
+              *ngIf="!catDToggle"
+              class="ms-1 fa-solid fa-chevron-down"
+            ></i
+            ><i *ngIf="catDToggle" class="ms-1 fa-solid fa-chevron-up"></i>
+            <ul [ngClass]="catDToggle ? 'd-block' : 'd-none'">
+              <li class="text-light py-2">Casual Dresses</li>
+              <li class="text-light py-2">Summer Dresses</li>
+              <li class="text-light py-2">Evening Dresses</li>
+            </ul>
+          </li>
+          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Shoes</li>
+          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Accessories</li>
+          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Hats</li>
+        </ul>
+      </div>
+    </div>
+    <div class="row py-3">
+      <div class="col-12">
+        <h3 class="text-light" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Women</h3>
+      </div>
+      <div class="col-12 py-3">
+        <img
+        (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')"
+          src="../../../../../assets/images/women.jpg"
+          alt=""
+          class="img-fluid"
+        />
+      </div>
+      <div class="col-12">
+        <ul>
+          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Blouses</li>
+          <li class="text-light py-2" (click)="catBToggle = !catBToggle;navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">
+            Tops
+            <i *ngIf="!catBToggle" class="ms-1 fa-solid fa-chevron-down"></i
+            ><i *ngIf="catBToggle" class="ms-1 fa-solid fa-chevron-up"></i>
+            <ul [ngClass]="catBToggle ? 'd-block' : 'd-none'">
+              <li class="text-light py-2">Tops</li>
+              <li class="text-light py-2">T-shirts</li>
+            </ul>
+          </li>
+          <li class="text-light py-2" (click)="catDToggle = !catDToggle;navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">
+            Dresses<i
+              *ngIf="!catDToggle"
+              class="ms-1 fa-solid fa-chevron-down"
+            ></i
+            ><i *ngIf="catDToggle" class="ms-1 fa-solid fa-chevron-up"></i>
+            <ul [ngClass]="catDToggle ? 'd-block' : 'd-none'">
+              <li class="text-light py-2">Casual Dresses</li>
+              <li class="text-light py-2">Summer Dresses</li>
+              <li class="text-light py-2">Evening Dresses</li>
+            </ul>
+          </li>
+          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Shoes</li>
+          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Accessories</li>
+          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Hats</li>
+        </ul>
+      </div>
+    </div>
+    <div class="row py-3">
+      <div class="col-12">
+        <h3 class="text-light" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Women</h3>
+      </div>
+      <div class="col-12 py-3">
+        <img
+        (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')"
+          src="../../../../../assets/images/women.jpg"
+          alt=""
+          class="img-fluid"
+        />
+      </div>
+      <div class="col-12">
+        <ul>
+          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Blouses</li>
+          <li class="text-light py-2" (click)="catBToggle = !catBToggle;navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">
+            Tops
+            <i *ngIf="!catBToggle" class="ms-1 fa-solid fa-chevron-down"></i
+            ><i *ngIf="catBToggle" class="ms-1 fa-solid fa-chevron-up"></i>
+            <ul [ngClass]="catBToggle ? 'd-block' : 'd-none'">
+              <li class="text-light py-2">Tops</li>
+              <li class="text-light py-2">T-shirts</li>
+            </ul>
+          </li>
+          <li class="text-light py-2" (click)="catDToggle = !catDToggle;navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">
+            Dresses<i
+              *ngIf="!catDToggle"
+              class="ms-1 fa-solid fa-chevron-down"
+            ></i
+            ><i *ngIf="catDToggle" class="ms-1 fa-solid fa-chevron-up"></i>
+            <ul [ngClass]="catDToggle ? 'd-block' : 'd-none'">
+              <li class="text-light py-2">Casual Dresses</li>
+              <li class="text-light py-2">Summer Dresses</li>
+              <li class="text-light py-2">Evening Dresses</li>
+            </ul>
+          </li>
+          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Shoes</li>
+          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Accessories</li>
+          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Hats</li>
+        </ul>
+      </div>
+    </div>
+    <div class="row py-3">
+      <div class="col-12">
+        <h3 class="text-light" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Women</h3>
+      </div>
+      <div class="col-12 py-3">
+        <img
+        (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')"
+          src="../../../../../assets/images/women.jpg"
+          alt=""
+          class="img-fluid"
+        />
+      </div>
+      <div class="col-12">
+        <ul>
+          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Blouses</li>
+          <li class="text-light py-2" (click)="catBToggle = !catBToggle;navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">
+            Tops
+            <i *ngIf="!catBToggle" class="ms-1 fa-solid fa-chevron-down"></i
+            ><i *ngIf="catBToggle" class="ms-1 fa-solid fa-chevron-up"></i>
+            <ul [ngClass]="catBToggle ? 'd-block' : 'd-none'">
+              <li class="text-light py-2">Tops</li>
+              <li class="text-light py-2">T-shirts</li>
+            </ul>
+          </li>
+          <li class="text-light py-2" (click)="catDToggle = !catDToggle;navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">
+            Dresses<i
+              *ngIf="!catDToggle"
+              class="ms-1 fa-solid fa-chevron-down"
+            ></i
+            ><i *ngIf="catDToggle" class="ms-1 fa-solid fa-chevron-up"></i>
+            <ul [ngClass]="catDToggle ? 'd-block' : 'd-none'">
+              <li class="text-light py-2">Casual Dresses</li>
+              <li class="text-light py-2">Summer Dresses</li>
+              <li class="text-light py-2">Evening Dresses</li>
+            </ul>
+          </li>
+          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Shoes</li>
+          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Accessories</li>
+          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Hats</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</ng-template>

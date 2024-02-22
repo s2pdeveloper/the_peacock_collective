@@ -1,0 +1,63 @@
+<div class="container-fluid pb-5">
+  <div class="row justify-content-center">
+    <div class="col-11">
+      <p class="py-3 text-color-primary pointer">
+        <span (click)="navigateTo('/')">Home</span> / Log in to your account
+      </p>
+    </div>
+    <div class="col-11 py-4">
+      <h2>Log in to your account</h2>
+    </div>
+    <div class="col-11 px-3 py-4 border">
+      <form class="pb-3 border-bottom">
+        <div class="row g-3 align-items-center justify-content-between">
+          <div class="col-2">
+            <label for="inputPassword6" class="col-form-label">Email</label>
+          </div>
+          <div class="col-12 col-md-12 col-lg-8">
+            <input type="email" class="form-control background-primary" />
+          </div>
+          <div class="col-2"></div>
+        </div>
+        <div class="row g-3 py-3 align-items-center justify-content-between">
+          <div class="col-2">
+            <label for="inputPassword6" class="col-form-label">Password</label>
+          </div>
+          <div class="col-12 col-md-12 col-lg-8 password-input">
+            <input
+              [type]="showEye ? 'password' : 'text'"
+              class="form-control background-primary"
+            />
+            <div *ngIf="!showEye" class="icon-box" (click)="showEye = !showEye">
+              <i class="fa-solid fa-eye"></i>
+            </div>
+            <div *ngIf="showEye" class="icon-box" (click)="showEye = !showEye">
+              <i class="fa-solid fa-eye-slash"></i>
+            </div>
+          </div>
+          <div class="col-2"></div>
+        </div>
+        <div class="row py-3">
+          <div class="col-12 d-flex justify-content-center">
+            <span class="pointer" (click)="navigateTo('/auth/forgot-pass')"
+              >Forgot your password?</span
+            >
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-3 col-md-2 col-lg-1">
+            <button class="btn btn-dark py-2">Sign in</button>
+          </div>
+        </div>
+      </form>
+      <div class="row pt-3">
+        <div class="col-12 d-flex justify-content-center">
+          <p class="pointer" (click)="navigateTo('/auth/register')">
+            No account? Create one here
+            <i class="fa-solid fa-chevron-right"></i>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

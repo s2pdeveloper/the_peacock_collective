@@ -1,0 +1,111 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.section-heading {
+  font-size: 3.2rem;
+}
+
+.product {
+  .product-row {
+    padding: 2rem;
+    min-width: 100%;
+    max-width: 100%;
+    overflow-x: scroll;
+    display: flex;
+    transition: ease-out 0.3s;
+    flex-wrap: nowrap;
+    .product-column {
+      padding: 0 0.8rem;
+    }
+    .card {
+      &:hover{
+        transform: scale(1.02);
+        transition: transform 0.5s;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+      }
+      .img-box {
+        height: 90%;
+        img{
+          min-height: 55vh;
+          max-height: 55vh;
+        }
+      }
+      .text-box {
+        height: 10%;
+      }
+    }
+  }
+  .arrow-btns {
+    // position: absolute !important;
+    position: relative;
+    bottom: 60%;
+    width: 99%;
+    display: flex;
+    justify-content: space-between;
+    .left-btn,
+    .right-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .left-btn{
+      position: relative;
+      right: -1%;
+    }
+    .right-btn {
+      position: relative;
+      left: 0%;
+    }
+  }
+}
+.product-row::-webkit-scrollbar {
+  display: none;
+}
+@media (max-width: 767px) {
+  .section-heading {
+    font-size: 2.5rem;
+  }
+  .product {
+    padding: 0;
+    .section-heading {
+      font-size: 2rem;
+    }
+    .product-row {
+      padding: 1rem;
+      .product-column {
+        .text-box{
+          padding: 0.25rem !important;
+          .cat-name{
+            font-size: 0.75rem;
+          }
+          .cat-price{
+            font-size: 0.4rem;
+          }
+          .prod-name{
+            width: 50%;
+            line-height: 1;
+            font-size: 0.9rem;
+          }
+        }
+        .card{
+          
+          .img-box{
+            img{
+              min-height: 40vh;
+              max-height: 40vh;
+            }
+          }
+        }
+      }
+    }
+    .arrow-btns {
+      .right-btn {
+        left: 0;
+      }
+    }
+  }
+}

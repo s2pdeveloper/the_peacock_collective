@@ -1,0 +1,38 @@
+.text-color-secondary {
+  color: #8f8f8f;
+}
+.text-color-primary {
+  color: $color-primary;
+}
+.background-primary {
+  background-color: $background-color-primary;
+}
+.pointer {
+  cursor: pointer;
+}
+.form-control {
+  border: 0;
+  border-radius: 0;
+  padding: 0.5rem 1rem !important;
+}
+.form-control:focus {
+  box-shadow: none;
+  outline: none;
+  border-bottom: 1px solid #000;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+}
+.form-control:focus-visible {
+  border-bottom: 1px solid #000;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  outline: none;
+}
+.btn-dark,
+.btn-light {
+  width: 100%;
+  padding: 0.5rem 0;
+  border-radius: 0;
+}

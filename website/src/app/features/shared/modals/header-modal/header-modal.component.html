@@ -1,0 +1,27 @@
+<ng-template #toggle let-offcanvas>
+    <div class="offcanvas-header m-0 px-4 py-2 bg-dark">
+      <img
+        src="../../../../../assets/images/white-logo.png"
+        class="img-fluid-m me-3 logo-img"
+        (click)="offcanvas.dismiss('Cross click')"
+      />
+      <button
+        type="button"
+        class="btn text-light" 
+        (click)="offcanvas.dismiss('Cross click')"
+      ><i class="fa-solid fa-xmark"></i></button>
+    </div>
+  
+    <div class="offcanvas-body m-0 bg-dark">
+        <div class="option">
+          <div><a (click)="offcanvas.dismiss('Cross click')">HOME</a></div>
+          <br />
+          <div>
+            <a (click)="offcanvas.dismiss('Cross click')">ALL JEWELLERY</a>
+          </div>
+          <br />
+          <div><a (click)="offcanvas.dismiss('Cross click')">WHAT'S NEW?</a></div>
+          <br />
+        </div>
+    </div>
+  </ng-template>

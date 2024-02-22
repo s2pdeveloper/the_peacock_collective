@@ -1,1 +1,36 @@
-<p>new-arrivals works!</p>
+<div class="container-fluid py-5">
+  <div class="row">
+    <div class="col-12 py-4 d-flex justify-content-center">
+      <p class="section-heading">The Bridal Edit</p>
+    </div>
+    <div class="col-12 product">
+      <div class="row product-row">
+        <div class="col-6 col-md-4 col-lg-3 product-column"  *ngFor="let p of products ">
+          <div class="card border-0">
+            <div class="img-box">
+              <img
+                class="img-fluid w-100 h-100"
+                [src]="p?.img"
+              />
+            </div>
+            <div class="text-box p-3">
+              <div class="d-flex justify-content-between">
+                <p class="cat-name">{{p?.catName}}</p>
+                <h5 class="fw-bold prod-price">{{ p?.price | currency }}</h5>
+              </div>
+              <p class="prod-name">{{p?.name}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="arrow-btns">
+        <div class="left-btn">
+            <i class="fa-solid fa-chevron-left"></i>
+        </div>
+        <div class="right-btn">
+            <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

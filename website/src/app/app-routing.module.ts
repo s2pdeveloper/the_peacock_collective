@@ -3,13 +3,44 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'home',
+  },
+  {
     path: 'home',
     loadChildren: () =>
       import('./features/landing-layout/landing-layout.module').then(
         (m) => m.LandingLayoutModule
       ),
   },
-  { path: 'auth', loadChildren: () => import('./features/auth-layout/auth-layout.module').then(m => m.AuthLayoutModule) },
+  {
+    path: 'auth',
+    loadChildren: () =>
+      import('./features/auth-layout/auth-layout.module').then(
+        (m) => m.AuthLayoutModule
+      ),
+  },
+  {
+    path: 'contact',
+    loadChildren: () =>
+      import('./features/contact/contact.module').then((m) => m.ContactModule),
+  },
+  {
+    path: 'account',
+    loadChildren: () =>
+      import('./features/account/account.module').then((m) => m.AccountModule),
+  },
+  {
+    path: 'product',
+    loadChildren: () =>
+      import('./features/product/product.module').then((m) => m.ProductModule),
+  },
+  {
+    path: 'order',
+    loadChildren: () =>
+      import('./features/order/order.module').then((m) => m.OrderModule),
+  },
 ];
 
 @NgModule({

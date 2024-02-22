@@ -1,0 +1,47 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+.media-box {
+  width: 30%;
+  .media {
+    width: 45px;
+    height: 45px;
+    padding: 1rem;
+    border-radius: 50%;
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    i{
+        font-size: 1rem;
+    }
+  }
+}
+.text-get {
+  font-size: 1.8rem;
+  line-height: 1;
+  font-weight: 500;
+  display: inline-block;
+  padding-bottom: 1rem;
+
+  &::after {
+    content: "";
+    display: block;
+    width: 35px;
+    height: 2.5px;
+    background-color: #000;
+    margin: 12px auto;
+  }
+}
+
+
+@media (max-width:771px){
+    .top-left{
+        padding: 40px;
+    }
+    .text-get {
+        font-size: 1.5rem;
+    }
+}

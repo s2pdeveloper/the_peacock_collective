@@ -1,0 +1,142 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+.filter {
+  background-color: #f8f8f8;
+  padding: 0.5rem 1.2rem;
+}
+.sort-select {
+  background-color: #f8f8f8;
+  padding: 0.5rem 1.2rem;
+  border: none;
+}
+.size-select {
+  background-color: #f8f8f8;
+  padding: 0.8rem;
+  border: none;
+}
+select:focus-visible {
+  outline: 0;
+}
+.product-row {
+  transition: ease-out 0.3s;
+  .card {
+    &:hover {
+      box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    }
+    .img-box {
+      height: 90%;
+    }
+    .text-box {
+      height: 10%;
+      .cat-name{
+        font-size: 0.9rem;
+        color: #acaaa6;
+      }
+    }
+  }
+}
+
+.filter {
+  position: relative;
+}
+//
+.filters {
+  background-color: #f8f8f8;
+  transition: all 0.5s ease-in;
+  margin-top: 2rem;
+  clip-path: polygon(0 100%, 100% 100%, 100% 0, 0 0);
+  // clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+}
+.filter-row {
+  height: auto;
+  transition: all 0.5s ease-in;
+  cursor: pointer;
+}
+.filters-collapsed {
+  background-color: #f8f8f8;
+  transition: all 0.5s ease-in;
+  margin-top: 2rem;
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+}
+
+.filter-collapsed {
+  height: 142px;
+  transition: all .5s ease-in;
+  cursor: pointer;
+}
+
+.color {
+  width: 30px;
+  height: 30px;
+  margin: 5px;
+}
+.color-1 {
+  background-color: #f5f5dc;
+}
+.color-2 {
+  background-color: #fff;
+}
+.color-3 {
+  background-color: #434a54;
+}
+.color-4 {
+  background-color: #f39c11;
+}
+.color-5 {
+  background-color: #5d9cec;
+}
+.color-6 {
+  background-color: #a0d468;
+}
+.color-7 {
+  background-color: #f1c40f;
+}
+.color-8 {
+  background-color: #fccacd;
+}
+@media (max-width: 767px) {
+  .section-heading {
+    font-size: 2.5rem;
+  }
+  .product {
+    padding: 0;
+    .section-heading {
+      font-size: 2rem;
+    }
+
+    .arrow-btns {
+      .right-btn {
+        left: 0;
+      }
+    }
+  }
+  .filter-row,.filter-collapsed{
+    font-size: 14px;
+    padding: 0;
+  }
+  .filter{
+    padding: 0.3rem 0.8rem;
+    display: flex;
+    align-items: center;
+  }
+  .product-row {
+    padding: 0;
+      .text-box {
+        padding: 0.25rem !important;
+        .cat-name {
+          font-size: 0.75rem;
+          font-weight: 600;
+        }
+        .prod-price {
+          font-size: 0.8rem;
+        }
+        .prod-name {
+          width: 50%;
+          line-height: 1;
+          font-size: 0.9rem;
+        }
+      }
+  }
+}
