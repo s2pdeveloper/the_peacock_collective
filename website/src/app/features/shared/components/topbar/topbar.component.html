@@ -15,11 +15,17 @@
         <div class="d-none d-md-none d-lg-block col-lg-4">
           <div class="icons-box">
             <div class="icons">
-              <i class="fa-solid fa-magnifying-glass pointer"  (click)="openSearch(search)"></i>
-              <i class="fa-solid fa-user pointer" (click)="navigateTo('/auth/login')"></i>
+              <i
+                class="fa-solid fa-magnifying-glass pointer"
+                (click)="openSearch(search)"
+              ></i>
+              <i
+                class="fa-solid fa-user pointer"
+                (click)="navigateTo('/auth/login')"
+              ></i>
               <i
                 class="fa-solid fa-bag-shopping pointer"
-                (click)="openModal(cartModal,'end')"
+                (click)="openModal(cartModal, 'end')"
               ></i>
             </div>
           </div>
@@ -43,21 +49,38 @@
   <div
     class="offcanvas-body m-0 bg-white p-3 d-flex flex-column justify-content-between"
   >
-    <div class="product-part" >
+    <div class="product-part">
       <div class="border-bottom d-flex" *ngFor="let p of product">
         <div>
           <img
-            class="img-fluid"
+            (click)="
+              navigateTo('/product/product-details');
+              offcanvas.dismiss('Cross click')
+            "
+            class="img-fluid pointer"
             [src]="p.img"
             alt=""
           />
         </div>
         <div class="d-flex justify-content-center bg-white flex-column p-3">
-          <p>{{p.name}}</p>
-          <p class="text-color-secondary small-text">Size : {{p.size}}</p>
-          <p class="text-color-secondary small-text">Color : {{p.color}}</p>
+          <p
+            (click)="
+              navigateTo('/product/product-details');
+              offcanvas.dismiss('Cross click')
+            "
+            class="pointer"
+          >
+            {{ p.name }}
+          </p>
+          <p class="text-color-secondary small-text">Size : {{ p.size }}</p>
+          <p class="text-color-secondary small-text">Color : {{ p.color }}</p>
           <div class="d-flex align-items-center">
-            <input type="number" class="w-50 border-0" [(ngModel)]="qty" [value]="qty"/>
+            <input
+              type="number"
+              class="w-50 border-0"
+              [(ngModel)]="qty"
+              [value]="qty"
+            />
             <label>x {{ p.price | currency }}</label>
           </div>
         </div>
@@ -95,12 +118,24 @@
         </div>
         <div class="row">
           <div class="col-12 mb-2">
-            <button type="button" class="btn btn-dark">
+            <button
+              type="button"
+              class="btn btn-dark py-2"
+              (click)="
+                navigateTo('/order/checkout'); offcanvas.dismiss('Cross click')
+              "
+            >
               Checkout
             </button>
           </div>
           <div class="col-12">
-            <button type="button" class="btn btn-light py-2">
+            <button
+              type="button"
+              class="btn btn-light py-2"
+              (click)="
+                navigateTo('/order/cart'); offcanvas.dismiss('Cross click')
+              "
+            >
               Cart
             </button>
           </div>
@@ -110,8 +145,14 @@
   </div>
 </ng-template>
 <ng-template #search let-modal>
-  <div class="search d-flex justify-content-between align-items-center p-4 w-100">
-    <input type="text" placeholder="Search our catalog" class="form-control w-75 background-primary">
-    <i class="fa-solid fa-magnifying-glass "></i>
+  <div
+    class="search d-flex justify-content-between align-items-center p-4 w-100"
+  >
+    <input
+      type="text"
+      placeholder="Search our catalog"
+      class="form-control w-75 background-primary"
+    />
+    <i class="fa-solid fa-magnifying-glass"></i>
   </div>
 </ng-template>

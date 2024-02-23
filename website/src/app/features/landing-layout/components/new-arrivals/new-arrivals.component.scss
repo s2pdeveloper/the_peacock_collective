@@ -19,16 +19,16 @@
       padding: 0 0.8rem;
     }
     .card {
-      &:hover{
+      &:hover {
         transform: scale(1.02);
         transition: transform 0.5s;
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
       }
       .img-box {
         height: 90%;
-        img{
-          min-height: 55vh;
-          max-height: 55vh;
+        img {
+          height: 55vh;
+          object-fit: cover;
         }
       }
       .text-box {
@@ -37,7 +37,6 @@
     }
   }
   .arrow-btns {
-    // position: absolute !important;
     position: relative;
     bottom: 60%;
     width: 99%;
@@ -52,7 +51,7 @@
       justify-content: center;
       align-items: center;
     }
-    .left-btn{
+    .left-btn {
       position: relative;
       right: -1%;
     }
@@ -77,26 +76,25 @@
     .product-row {
       padding: 1rem;
       .product-column {
-        .text-box{
+        .text-box {
           padding: 0.25rem !important;
-          .cat-name{
+          .cat-name {
             font-size: 0.75rem;
           }
-          .cat-price{
+          .cat-price {
             font-size: 0.4rem;
           }
-          .prod-name{
+          .prod-name {
             width: 50%;
             line-height: 1;
             font-size: 0.9rem;
           }
         }
-        .card{
-          
-          .img-box{
-            img{
-              min-height: 40vh;
-              max-height: 40vh;
+        .card {
+          .img-box {
+            img {
+              height: 35vh;
+              object-fit: cover;
             }
           }
         }

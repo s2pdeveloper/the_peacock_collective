@@ -1,0 +1,52 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.description {
+  color: #0c5460;
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+  padding: 0.5rem;
+  margin-top: 1rem;
+}
+.password-input {
+  display: flex;
+  input {
+    width: 95%;
+  }
+  .icon-box {
+    padding: 0.5rem;
+    background-color: #f8f8f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.opt-box {
+  padding: 0.5rem;
+  background-color: #f8f8f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.background-danger {
+  background-color: #f8d7da;
+}
+.info {
+  height: auto;
+}
+@media (max-width: 992px) {
+  .personal-info,
+  .address-info,
+  .shipping-info {
+    padding: 0 !important;
+    // margin-bottom: 1rem;
+  }
+}
+.info-collapsed{
+  height: 73px;
+}
+.promo-input{
+  background-color: transparent;
+}

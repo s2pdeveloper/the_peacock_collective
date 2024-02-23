@@ -7,15 +7,33 @@
 .background-primary {
   background-color: $background-color-primary;
 }
+.text-muted {
+  color: #acaaa6 !important;
+  font-weight: 400;
+}
+.regular-font{
+  font-size: .9rem;
+  font-weight: 400;
+}
+.small-text{
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+.regular-weight{
+  font-weight: 400;
+}
+.light-dark {
+  color: #333 !important;
+}
 .pointer {
   cursor: pointer;
 }
-.form-control {
+.form-control,.input-number {
   border: 0;
   border-radius: 0;
   padding: 0.5rem 1rem !important;
 }
-.form-control:focus {
+.form-control:focus,.input-number:focus {
   box-shadow: none;
   outline: none;
   border-bottom: 1px solid #000;
@@ -23,7 +41,7 @@
   border-left: 0;
   border-right: 0;
 }
-.form-control:focus-visible {
+.form-control:focus-visible,.input-number:focus-visible {
   border-bottom: 1px solid #000;
   border-top: 0;
   border-left: 0;

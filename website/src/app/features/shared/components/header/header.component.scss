@@ -198,7 +198,7 @@ li {
   position: relative;
   width: 100%;
 }
-span {
+.nav-items {
   font-size: 18px;
 }
 button:focus{
@@ -276,4 +276,7 @@ input {
 }
 .search:visited {
   border-bottom: 1px solid #000;
+}
+.shop-top-span{
+  font-size: 1.25rem;
 }

@@ -1,0 +1,121 @@
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-11 py-4">
+      <h1 class="p-4 regular-weight">Shopping Cart</h1>
+    </div>
+    <div class="col-11">
+      <div class="row">
+        <div class="col-12 col-md-12 col-lg-8 table-responsive px-3">
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th class="text-center regular-weight">Product</th>
+                <th>Price</th>
+                <th class="text-center regular-weight">Qty</th>
+                <th>Total</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let p of product">
+                <th scope="row" class="d-flex">
+                  <img width="100" height="90" [src]="p.img" alt="" />
+                  <div class="p-3">
+                    <p class="light-dark regular-font">{{ p.name }}</p>
+                    <p class="text-muted small-text">Size: {{ p.size }}</p>
+                    <p class="text-muted small-text">Color: {{ p.color }}</p>
+                  </div>
+                </th>
+                <td class="py-auto light-dark small-text">
+                  {{ p.price | currency }}
+                </td>
+                <td>
+                  <input
+                    type="number "
+                    class="w-25 input-number background-primary"
+                    [(ngModel)]="qty"
+                    [value]="qty"
+                  />
+                </td>
+                <td class="light-dark small-text">
+                  <p class="py-auto">{{ p.price * qty | currency }}</p>
+                </td>
+                <td><i class="fa-regular fa-trash-can"></i></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="row py-5">
+            <div
+              class="w-auto py-2 px-3 pointer background-primary d-flex align-items-center"
+              (click)="navigateTo('/home')"
+            >
+              <i class="fa-solid fa-chevron-left me-1"></i>
+              Continue Shopping
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-12 col-lg-4">
+          <div class="card rounded-0">
+            <div class="p-3">
+              <div class="row justify-content-between">
+                <div class="col-4 regular-weight">
+                  {{ product.length }}
+                  {{ product.length > 2 ? "item" : "items" }}
+                </div>
+                <div class="col-4 d-flex justify-content-end regular-weight">
+                  {{ 10.5 | currency }}
+                </div>
+              </div>
+              <div class="row justify-content-between">
+                <div class="col-4 regular-weight">Shipping</div>
+                <div class="col-4 d-flex justify-content-end regular-weight">
+                  {{ 7 | currency }}
+                </div>
+              </div>
+            </div>
+            <div class="card-body p-3">
+              <div class="row justify-content-between">
+                <div class="col-4">
+                  <h5 class="regular-weight">Total (tax incl.)</h5>
+                </div>
+                <div class="col-4 d-flex justify-content-end">
+                  <h5 class="regular-weight">{{ 17.5 | currency }}</h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 description">
+                  <p>Spend $168.50 more to get free shipping!</p>
+                  <p class="regular-weight">
+                    IQITFREEDELIVERYCOUNT - module, you can put own text in
+                    configuration
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row p-4 background-primary">
+              <div class="col-2">
+                <i class="fa-solid fa-tag"></i>
+              </div>
+              <div class="col-7">
+                <p class="regular-weight">Promo Code</p>
+              </div>
+              <div class="col-3 d-flex justify-content-end">
+                <p class="regular-weight">Add</p>
+              </div>
+            </div>
+            <div class="row p-3">
+              <div class="col-12">
+                <button
+                  class="btn btn-dark py-3 regular-weight"
+                  (click)="navigateTo('/order/checkout')"
+                >
+                  Proceed to checkout
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

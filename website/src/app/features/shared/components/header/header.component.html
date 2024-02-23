@@ -32,11 +32,72 @@
                           <li (click)="navigateTo('/product/product-list')">
                             Blouses
                           </li>
-                          <li (click)="navigateTo('/product/product-list')">
-                            <span> Tops </span>
+                          <li class="py-2">
+                            <span (click)="navigateTo('/product/product-list')"
+                              >Tops</span
+                            >
+
+                            <i
+                              (click)="catBToggle = !catBToggle"
+                              *ngIf="!catBToggle"
+                              class="ms-1 fa-solid fa-chevron-down"
+                            ></i
+                            ><i
+                              (click)="catBToggle = !catBToggle"
+                              *ngIf="catBToggle"
+                              class="ms-1 fa-solid fa-chevron-up"
+                            ></i>
+                            <ul [ngClass]="catBToggle ? 'd-block' : 'd-none'">
+                              <li class="py-2">
+                                <span
+                                  class="pointer"
+                                  (click)="navigateTo('/product/product-list')"
+                                  >Tops</span
+                                >
+                              </li>
+                              <li class="py-2">
+                                <span
+                                  class="pointer"
+                                  (click)="navigateTo('/product/product-list')"
+                                  >T-shirts</span
+                                >
+                              </li>
+                            </ul>
                           </li>
-                          <li (click)="navigateTo('/product/product-list')">
-                            Dresses
+                          <li class="py-2">
+                            <span (click)="navigateTo('/product/product-list')"
+                              >Dresses</span
+                            >
+                            <i
+                              (click)="catDToggle = !catDToggle"
+                              *ngIf="!catDToggle"
+                              class="ms-1 fa-solid fa-chevron-down"
+                            ></i
+                            ><i
+                              (click)="catDToggle = !catDToggle"
+                              *ngIf="catDToggle"
+                              class="ms-1 fa-solid fa-chevron-up"
+                            ></i>
+                            <ul [ngClass]="catDToggle ? 'd-block' : 'd-none'">
+                              <li class="py-2">
+                                <span
+                                  (click)="navigateTo('/product/product-list')"
+                                  >Casual Dresses</span
+                                >
+                              </li>
+                              <li class="py-2">
+                                <span
+                                  (click)="navigateTo('/product/product-list')"
+                                  >Summer Dresses</span
+                                >
+                              </li>
+                              <li class="py-2">
+                                <span
+                                  (click)="navigateTo('/product/product-list')"
+                                  >Evening Dresses</span
+                                >
+                              </li>
+                            </ul>
                           </li>
                           <li (click)="navigateTo('/product/product-list')">
                             Shoes
@@ -53,14 +114,14 @@
 
                     <div class="dropdown-item">
                       <h3
-                        (click)="navigateTo('/product/product-list')"
                         class="item-heading"
+                        (click)="navigateTo('/product/product-list')"
                       >
                         Women
                       </h3>
                       <div
+                        class="pointer item-img pointer"
                         (click)="navigateTo('/product/product-list')"
-                        class="item-img pointer"
                       >
                         <img
                           src="../../../../../assets/images/women.jpg"
@@ -72,11 +133,72 @@
                           <li (click)="navigateTo('/product/product-list')">
                             Blouses
                           </li>
-                          <li (click)="navigateTo('/product/product-list')">
-                            Tops
+                          <li class="py-2">
+                            <span (click)="navigateTo('/product/product-list')"
+                              >Tops</span
+                            >
+
+                            <i
+                              (click)="catBToggle = !catBToggle"
+                              *ngIf="!catBToggle"
+                              class="ms-1 fa-solid fa-chevron-down"
+                            ></i
+                            ><i
+                              (click)="catBToggle = !catBToggle"
+                              *ngIf="catBToggle"
+                              class="ms-1 fa-solid fa-chevron-up"
+                            ></i>
+                            <ul [ngClass]="catBToggle ? 'd-block' : 'd-none'">
+                              <li class="py-2">
+                                <span
+                                  class="pointer"
+                                  (click)="navigateTo('/product/product-list')"
+                                  >Tops</span
+                                >
+                              </li>
+                              <li class="py-2">
+                                <span
+                                  class="pointer"
+                                  (click)="navigateTo('/product/product-list')"
+                                  >T-shirts</span
+                                >
+                              </li>
+                            </ul>
                           </li>
-                          <li (click)="navigateTo('/product/product-list')">
-                            Dresses
+                          <li class="py-2">
+                            <span (click)="navigateTo('/product/product-list')"
+                              >Dresses</span
+                            >
+                            <i
+                              (click)="catDToggle = !catDToggle"
+                              *ngIf="!catDToggle"
+                              class="ms-1 fa-solid fa-chevron-down"
+                            ></i
+                            ><i
+                              (click)="catDToggle = !catDToggle"
+                              *ngIf="catDToggle"
+                              class="ms-1 fa-solid fa-chevron-up"
+                            ></i>
+                            <ul [ngClass]="catDToggle ? 'd-block' : 'd-none'">
+                              <li class="py-2">
+                                <span
+                                  (click)="navigateTo('/product/product-list')"
+                                  >Casual Dresses</span
+                                >
+                              </li>
+                              <li class="py-2">
+                                <span
+                                  (click)="navigateTo('/product/product-list')"
+                                  >Summer Dresses</span
+                                >
+                              </li>
+                              <li class="py-2">
+                                <span
+                                  (click)="navigateTo('/product/product-list')"
+                                  >Evening Dresses</span
+                                >
+                              </li>
+                            </ul>
                           </li>
                           <li (click)="navigateTo('/product/product-list')">
                             Shoes
@@ -93,14 +215,14 @@
 
                     <div class="dropdown-item">
                       <h3
-                        (click)="navigateTo('/product/product-list')"
                         class="item-heading"
+                        (click)="navigateTo('/product/product-list')"
                       >
                         Women
                       </h3>
                       <div
+                        class="pointer item-img pointer"
                         (click)="navigateTo('/product/product-list')"
-                        class="item-img pointer"
                       >
                         <img
                           src="../../../../../assets/images/women.jpg"
@@ -112,11 +234,72 @@
                           <li (click)="navigateTo('/product/product-list')">
                             Blouses
                           </li>
-                          <li (click)="navigateTo('/product/product-list')">
-                            Tops
+                          <li class="py-2">
+                            <span (click)="navigateTo('/product/product-list')"
+                              >Tops</span
+                            >
+
+                            <i
+                              (click)="catBToggle = !catBToggle"
+                              *ngIf="!catBToggle"
+                              class="ms-1 fa-solid fa-chevron-down"
+                            ></i
+                            ><i
+                              (click)="catBToggle = !catBToggle"
+                              *ngIf="catBToggle"
+                              class="ms-1 fa-solid fa-chevron-up"
+                            ></i>
+                            <ul [ngClass]="catBToggle ? 'd-block' : 'd-none'">
+                              <li class="py-2">
+                                <span
+                                  class="pointer"
+                                  (click)="navigateTo('/product/product-list')"
+                                  >Tops</span
+                                >
+                              </li>
+                              <li class="py-2">
+                                <span
+                                  class="pointer"
+                                  (click)="navigateTo('/product/product-list')"
+                                  >T-shirts</span
+                                >
+                              </li>
+                            </ul>
                           </li>
-                          <li (click)="navigateTo('/product/product-list')">
-                            Dresses
+                          <li class="py-2">
+                            <span (click)="navigateTo('/product/product-list')"
+                              >Dresses</span
+                            >
+                            <i
+                              (click)="catDToggle = !catDToggle"
+                              *ngIf="!catDToggle"
+                              class="ms-1 fa-solid fa-chevron-down"
+                            ></i
+                            ><i
+                              (click)="catDToggle = !catDToggle"
+                              *ngIf="catDToggle"
+                              class="ms-1 fa-solid fa-chevron-up"
+                            ></i>
+                            <ul [ngClass]="catDToggle ? 'd-block' : 'd-none'">
+                              <li class="py-2">
+                                <span
+                                  (click)="navigateTo('/product/product-list')"
+                                  >Casual Dresses</span
+                                >
+                              </li>
+                              <li class="py-2">
+                                <span
+                                  (click)="navigateTo('/product/product-list')"
+                                  >Summer Dresses</span
+                                >
+                              </li>
+                              <li class="py-2">
+                                <span
+                                  (click)="navigateTo('/product/product-list')"
+                                  >Evening Dresses</span
+                                >
+                              </li>
+                            </ul>
                           </li>
                           <li (click)="navigateTo('/product/product-list')">
                             Shoes
@@ -133,14 +316,14 @@
 
                     <div class="dropdown-item">
                       <h3
-                        (click)="navigateTo('/product/product-list')"
                         class="item-heading"
+                        (click)="navigateTo('/product/product-list')"
                       >
                         Women
                       </h3>
                       <div
+                        class="pointer item-img pointer"
                         (click)="navigateTo('/product/product-list')"
-                        class="item-img pointer"
                       >
                         <img
                           src="../../../../../assets/images/women.jpg"
@@ -152,11 +335,72 @@
                           <li (click)="navigateTo('/product/product-list')">
                             Blouses
                           </li>
-                          <li (click)="navigateTo('/product/product-list')">
-                            Tops
+                          <li class="py-2">
+                            <span (click)="navigateTo('/product/product-list')"
+                              >Tops</span
+                            >
+
+                            <i
+                              (click)="catBToggle = !catBToggle"
+                              *ngIf="!catBToggle"
+                              class="ms-1 fa-solid fa-chevron-down"
+                            ></i
+                            ><i
+                              (click)="catBToggle = !catBToggle"
+                              *ngIf="catBToggle"
+                              class="ms-1 fa-solid fa-chevron-up"
+                            ></i>
+                            <ul [ngClass]="catBToggle ? 'd-block' : 'd-none'">
+                              <li class="py-2">
+                                <span
+                                  class="pointer"
+                                  (click)="navigateTo('/product/product-list')"
+                                  >Tops</span
+                                >
+                              </li>
+                              <li class="py-2">
+                                <span
+                                  class="pointer"
+                                  (click)="navigateTo('/product/product-list')"
+                                  >T-shirts</span
+                                >
+                              </li>
+                            </ul>
                           </li>
-                          <li (click)="navigateTo('/product/product-list')">
-                            Dresses
+                          <li class="py-2">
+                            <span (click)="navigateTo('/product/product-list')"
+                              >Dresses</span
+                            >
+                            <i
+                              (click)="catDToggle = !catDToggle"
+                              *ngIf="!catDToggle"
+                              class="ms-1 fa-solid fa-chevron-down"
+                            ></i
+                            ><i
+                              (click)="catDToggle = !catDToggle"
+                              *ngIf="catDToggle"
+                              class="ms-1 fa-solid fa-chevron-up"
+                            ></i>
+                            <ul [ngClass]="catDToggle ? 'd-block' : 'd-none'">
+                              <li class="py-2">
+                                <span
+                                  (click)="navigateTo('/product/product-list')"
+                                  >Casual Dresses</span
+                                >
+                              </li>
+                              <li class="py-2">
+                                <span
+                                  (click)="navigateTo('/product/product-list')"
+                                  >Summer Dresses</span
+                                >
+                              </li>
+                              <li class="py-2">
+                                <span
+                                  (click)="navigateTo('/product/product-list')"
+                                  >Evening Dresses</span
+                                >
+                              </li>
+                            </ul>
                           </li>
                           <li (click)="navigateTo('/product/product-list')">
                             Shoes
@@ -440,7 +684,6 @@
     </div>
   </div>
 </div>
-
 <div class="container-fluid sticky-top header-tablet bg-light">
   <div class="row">
     <div
@@ -491,9 +734,12 @@
       <i class="fa-solid fa-user"></i>
       <p>Sign In</p>
     </div>
-    <div class="col-3 d-flex flex-column align-items-center p-3 menu-items">
+    <div
+      (click)="openModal(cartModal, 'end')"
+      class="col-3 d-flex flex-column align-items-center p-3 menu-items"
+    >
       <i class="fa-solid fa-bag-shopping"></i>
-      <p (click)="openModal(cartModal, 'end')">Cart</p>
+      <p>Cart</p>
     </div>
   </div>
 </div>
@@ -513,13 +759,13 @@
     </button>
   </div>
 
-  <div
-    class="offcanvas-body m-0 bg-dark d-flex flex-column justify-content-between"
-  >
+  <div class="offcanvas-body m-0 bg-dark">
     <div class="option p-4">
       <div
         class="option-item d-flex justify-content-between py-3"
-        (click)="openModal(categoryModal, 'end');offcanvas.dismiss('Cross click')"
+        (click)="
+          openModal(categoryModal, 'end'); offcanvas.dismiss('Cross click')
+        "
       >
         <p class="text-white w-75">Categories</p>
         <div class="d-flex justify-content-end align-items-center w-25">
@@ -528,7 +774,7 @@
       </div>
       <div
         class="option-item d-flex justify-content-between py-3"
-        (click)="offcanvas.dismiss('Cross click')"
+        (click)="openModal(shopModal, 'end'); offcanvas.dismiss('Cross click')"
       >
         <p class="text-white w-75">Shop</p>
         <div class="d-flex justify-content-end align-items-center w-25">
@@ -537,7 +783,9 @@
       </div>
       <div
         class="option-item d-flex justify-content-between py-3"
-        (click)="offcanvas.dismiss('Cross click')"
+        (click)="
+          openModal(fashionModal, 'end'); offcanvas.dismiss('Cross click')
+        "
       >
         <p class="text-white w-75">Fashion</p>
         <div class="d-flex justify-content-end align-items-center w-25">
@@ -546,7 +794,9 @@
       </div>
       <div
         class="option-item d-flex justify-content-between py-3"
-        (click)="offcanvas.dismiss('Cross click')"
+        (click)="
+          openModal(simpleModal, 'end'); offcanvas.dismiss('Cross click')
+        "
       >
         <p class="text-white w-75">Simple</p>
         <div class="d-flex justify-content-end align-items-center w-25">
@@ -555,17 +805,21 @@
       </div>
       <div
         class="option-item d-flex justify-content-between py-3"
-        (click)="offcanvas.dismiss('Cross click')"
+        (click)="navigateTo('/contact'); offcanvas.dismiss('Cross click')"
       >
         <p class="text-white w-75">Contact</p>
       </div>
     </div>
-    <div
-      class="foot d-flex justify-content-evenly align-items-center border-top"
-    >
-      <p class="text-white">English</p>
-      <p class="text-white">USD $</p>
-      <p class="text-white"><i class="fa-solid fa-user me-1"></i>Sign in</p>
+  </div>
+  <div class="offcanvas-footer m-0 px-4 py-3 border-bottom bg-dark">
+    <div class="row justify-content-between">
+      <div class="col-4">
+        <span class="text-light me-2">English</span
+        ><span class="text-light">USD$</span>
+      </div>
+      <div class="col-3 text-light">
+        <i class="fa-solid fa-user me-1"></i>SignIn
+      </div>
     </div>
   </div>
 </ng-template>
@@ -587,10 +841,26 @@
     <div class="product-part">
       <div class="border-bottom d-flex" *ngFor="let p of product">
         <div>
-          <img class="img-fluid" [src]="p.img" alt="" />
+          <img
+            (click)="
+              navigateTo('/product/product-details');
+              offcanvas.dismiss('Cross click')
+            "
+            class="img-fluid pointer"
+            [src]="p.img"
+            alt=""
+          />
         </div>
         <div class="d-flex justify-content-center bg-white flex-column p-3">
-          <p>{{ p.name }}</p>
+          <p
+            (click)="
+              navigateTo('/product/product-details');
+              offcanvas.dismiss('Cross click')
+            "
+            class="pointer"
+          >
+            {{ p.name }}
+          </p>
           <p class="text-color-secondary small-text">Size : {{ p.size }}</p>
           <p class="text-color-secondary small-text">Color : {{ p.color }}</p>
           <div class="d-flex align-items-center">
@@ -637,12 +907,24 @@
         </div>
         <div class="row">
           <div class="col-12 mb-2">
-            <button type="button" class="btn btn-dark">
+            <button
+              type="button"
+              class="btn btn-dark py-2"
+              (click)="
+                navigateTo('/order/checkout'); offcanvas.dismiss('Cross click')
+              "
+            >
               Checkout
             </button>
           </div>
           <div class="col-12">
-            <button type="button" class="btn btn-light">
+            <button
+              type="button"
+              class="btn btn-light py-2"
+              (click)="
+                navigateTo('/order/cart'); offcanvas.dismiss('Cross click')
+              "
+            >
               Cart
             </button>
           </div>
@@ -674,11 +956,20 @@
   >
     <div class="row py-3">
       <div class="col-12">
-        <h3 class="text-light" (click)="navigateTo('/product/product-list');offcanvas.close('Cross click')">Women</h3>
+        <h3
+          class="text-light"
+          (click)="
+            navigateTo('/product/product-list'); offcanvas.close('Cross click')
+          "
+        >
+          Women
+        </h3>
       </div>
       <div class="col-12 py-3">
         <img
-        (click)="navigateTo('/product/product-list');offcanvas.close('Cross click')"
+          (click)="
+            navigateTo('/product/product-list'); offcanvas.close('Cross click')
+          "
           src="../../../../../assets/images/women.jpg"
           alt=""
           class="img-fluid"
@@ -686,41 +977,149 @@
       </div>
       <div class="col-12">
         <ul>
-          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Blouses</li>
-          <li class="text-light py-2" (click)="catBToggle = !catBToggle;navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">
-            Tops
-            <i *ngIf="!catBToggle" class="ms-1 fa-solid fa-chevron-down"></i
-            ><i *ngIf="catBToggle" class="ms-1 fa-solid fa-chevron-up"></i>
+          <li
+            class="text-light py-2"
+            (click)="
+              navigateTo('/product/product-list');
+              offcanvas.dismiss('Cross click')
+            "
+          >
+            Blouses
+          </li>
+          <li class="text-light py-2">
+            <span
+              (click)="
+                navigateTo('/product/product-list');
+                offcanvas.dismiss('Cross click')
+              "
+              >Tops</span
+            >
+
+            <i
+              (click)="catBToggle = !catBToggle"
+              *ngIf="!catBToggle"
+              class="ms-1 fa-solid fa-chevron-down"
+            ></i
+            ><i
+              (click)="catBToggle = !catBToggle"
+              *ngIf="catBToggle"
+              class="ms-1 fa-solid fa-chevron-up"
+            ></i>
             <ul [ngClass]="catBToggle ? 'd-block' : 'd-none'">
-              <li class="text-light py-2">Tops</li>
-              <li class="text-light py-2">T-shirts</li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-list');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Tops</span
+                >
+              </li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-list');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >T-shirts</span
+                >
+              </li>
             </ul>
           </li>
-          <li class="text-light py-2" (click)="catDToggle = !catDToggle;navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">
-            Dresses<i
+          <li class="text-light py-2">
+            <span
+              (click)="
+                navigateTo('/product/product-list');
+                offcanvas.dismiss('Cross click')
+              "
+              >Dresses</span
+            >
+            <i
+              (click)="catDToggle = !catDToggle"
               *ngIf="!catDToggle"
               class="ms-1 fa-solid fa-chevron-down"
             ></i
-            ><i *ngIf="catDToggle" class="ms-1 fa-solid fa-chevron-up"></i>
+            ><i
+              (click)="catDToggle = !catDToggle"
+              *ngIf="catDToggle"
+              class="ms-1 fa-solid fa-chevron-up"
+            ></i>
             <ul [ngClass]="catDToggle ? 'd-block' : 'd-none'">
-              <li class="text-light py-2">Casual Dresses</li>
-              <li class="text-light py-2">Summer Dresses</li>
-              <li class="text-light py-2">Evening Dresses</li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-list');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Casual Dresses</span
+                >
+              </li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-list');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Summer Dresses</span
+                >
+              </li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-list');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Evening Dresses</span
+                >
+              </li>
             </ul>
           </li>
-          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Shoes</li>
-          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Accessories</li>
-          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Hats</li>
+          <li
+            class="text-light py-2"
+            (click)="
+              navigateTo('/product/product-list');
+              offcanvas.dismiss('Cross click')
+            "
+          >
+            Shoes
+          </li>
+          <li
+            class="text-light py-2"
+            (click)="
+              navigateTo('/product/product-list');
+              offcanvas.dismiss('Cross click')
+            "
+          >
+            Accessories
+          </li>
+          <li
+            class="text-light py-2"
+            (click)="
+              navigateTo('/product/product-list');
+              offcanvas.dismiss('Cross click')
+            "
+          >
+            Hats
+          </li>
         </ul>
       </div>
     </div>
     <div class="row py-3">
       <div class="col-12">
-        <h3 class="text-light" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Women</h3>
+        <h3
+          class="text-light"
+          (click)="
+            navigateTo('/product/product-list'); offcanvas.close('Cross click')
+          "
+        >
+          Women
+        </h3>
       </div>
       <div class="col-12 py-3">
         <img
-        (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')"
+          (click)="
+            navigateTo('/product/product-list'); offcanvas.close('Cross click')
+          "
           src="../../../../../assets/images/women.jpg"
           alt=""
           class="img-fluid"
@@ -728,41 +1127,149 @@
       </div>
       <div class="col-12">
         <ul>
-          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Blouses</li>
-          <li class="text-light py-2" (click)="catBToggle = !catBToggle;navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">
-            Tops
-            <i *ngIf="!catBToggle" class="ms-1 fa-solid fa-chevron-down"></i
-            ><i *ngIf="catBToggle" class="ms-1 fa-solid fa-chevron-up"></i>
+          <li
+            class="text-light py-2"
+            (click)="
+              navigateTo('/product/product-list');
+              offcanvas.dismiss('Cross click')
+            "
+          >
+            Blouses
+          </li>
+          <li class="text-light py-2">
+            <span
+              (click)="
+                navigateTo('/product/product-list');
+                offcanvas.dismiss('Cross click')
+              "
+              >Tops</span
+            >
+
+            <i
+              (click)="catBToggle = !catBToggle"
+              *ngIf="!catBToggle"
+              class="ms-1 fa-solid fa-chevron-down"
+            ></i
+            ><i
+              (click)="catBToggle = !catBToggle"
+              *ngIf="catBToggle"
+              class="ms-1 fa-solid fa-chevron-up"
+            ></i>
             <ul [ngClass]="catBToggle ? 'd-block' : 'd-none'">
-              <li class="text-light py-2">Tops</li>
-              <li class="text-light py-2">T-shirts</li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-list');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Tops</span
+                >
+              </li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-list');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >T-shirts</span
+                >
+              </li>
             </ul>
           </li>
-          <li class="text-light py-2" (click)="catDToggle = !catDToggle;navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">
-            Dresses<i
+          <li class="text-light py-2">
+            <span
+              (click)="
+                navigateTo('/product/product-list');
+                offcanvas.dismiss('Cross click')
+              "
+              >Dresses</span
+            >
+            <i
+              (click)="catDToggle = !catDToggle"
               *ngIf="!catDToggle"
               class="ms-1 fa-solid fa-chevron-down"
             ></i
-            ><i *ngIf="catDToggle" class="ms-1 fa-solid fa-chevron-up"></i>
+            ><i
+              (click)="catDToggle = !catDToggle"
+              *ngIf="catDToggle"
+              class="ms-1 fa-solid fa-chevron-up"
+            ></i>
             <ul [ngClass]="catDToggle ? 'd-block' : 'd-none'">
-              <li class="text-light py-2">Casual Dresses</li>
-              <li class="text-light py-2">Summer Dresses</li>
-              <li class="text-light py-2">Evening Dresses</li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-list');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Casual Dresses</span
+                >
+              </li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-list');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Summer Dresses</span
+                >
+              </li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-list');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Evening Dresses</span
+                >
+              </li>
             </ul>
           </li>
-          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Shoes</li>
-          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Accessories</li>
-          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Hats</li>
+          <li
+            class="text-light py-2"
+            (click)="
+              navigateTo('/product/product-list');
+              offcanvas.dismiss('Cross click')
+            "
+          >
+            Shoes
+          </li>
+          <li
+            class="text-light py-2"
+            (click)="
+              navigateTo('/product/product-list');
+              offcanvas.dismiss('Cross click')
+            "
+          >
+            Accessories
+          </li>
+          <li
+            class="text-light py-2"
+            (click)="
+              navigateTo('/product/product-list');
+              offcanvas.dismiss('Cross click')
+            "
+          >
+            Hats
+          </li>
         </ul>
       </div>
     </div>
     <div class="row py-3">
       <div class="col-12">
-        <h3 class="text-light" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Women</h3>
+        <h3
+          class="text-light"
+          (click)="
+            navigateTo('/product/product-list'); offcanvas.close('Cross click')
+          "
+        >
+          Women
+        </h3>
       </div>
       <div class="col-12 py-3">
         <img
-        (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')"
+          (click)="
+            navigateTo('/product/product-list'); offcanvas.close('Cross click')
+          "
           src="../../../../../assets/images/women.jpg"
           alt=""
           class="img-fluid"
@@ -770,41 +1277,149 @@
       </div>
       <div class="col-12">
         <ul>
-          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Blouses</li>
-          <li class="text-light py-2" (click)="catBToggle = !catBToggle;navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">
-            Tops
-            <i *ngIf="!catBToggle" class="ms-1 fa-solid fa-chevron-down"></i
-            ><i *ngIf="catBToggle" class="ms-1 fa-solid fa-chevron-up"></i>
+          <li
+            class="text-light py-2"
+            (click)="
+              navigateTo('/product/product-list');
+              offcanvas.dismiss('Cross click')
+            "
+          >
+            Blouses
+          </li>
+          <li class="text-light py-2">
+            <span
+              (click)="
+                navigateTo('/product/product-list');
+                offcanvas.dismiss('Cross click')
+              "
+              >Tops</span
+            >
+
+            <i
+              (click)="catBToggle = !catBToggle"
+              *ngIf="!catBToggle"
+              class="ms-1 fa-solid fa-chevron-down"
+            ></i
+            ><i
+              (click)="catBToggle = !catBToggle"
+              *ngIf="catBToggle"
+              class="ms-1 fa-solid fa-chevron-up"
+            ></i>
             <ul [ngClass]="catBToggle ? 'd-block' : 'd-none'">
-              <li class="text-light py-2">Tops</li>
-              <li class="text-light py-2">T-shirts</li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-list');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Tops</span
+                >
+              </li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-list');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >T-shirts</span
+                >
+              </li>
             </ul>
           </li>
-          <li class="text-light py-2" (click)="catDToggle = !catDToggle;navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">
-            Dresses<i
+          <li class="text-light py-2">
+            <span
+              (click)="
+                navigateTo('/product/product-list');
+                offcanvas.dismiss('Cross click')
+              "
+              >Dresses</span
+            >
+            <i
+              (click)="catDToggle = !catDToggle"
               *ngIf="!catDToggle"
               class="ms-1 fa-solid fa-chevron-down"
             ></i
-            ><i *ngIf="catDToggle" class="ms-1 fa-solid fa-chevron-up"></i>
+            ><i
+              (click)="catDToggle = !catDToggle"
+              *ngIf="catDToggle"
+              class="ms-1 fa-solid fa-chevron-up"
+            ></i>
             <ul [ngClass]="catDToggle ? 'd-block' : 'd-none'">
-              <li class="text-light py-2">Casual Dresses</li>
-              <li class="text-light py-2">Summer Dresses</li>
-              <li class="text-light py-2">Evening Dresses</li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-list');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Casual Dresses</span
+                >
+              </li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-list');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Summer Dresses</span
+                >
+              </li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-list');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Evening Dresses</span
+                >
+              </li>
             </ul>
           </li>
-          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Shoes</li>
-          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Accessories</li>
-          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Hats</li>
+          <li
+            class="text-light py-2"
+            (click)="
+              navigateTo('/product/product-list');
+              offcanvas.dismiss('Cross click')
+            "
+          >
+            Shoes
+          </li>
+          <li
+            class="text-light py-2"
+            (click)="
+              navigateTo('/product/product-list');
+              offcanvas.dismiss('Cross click')
+            "
+          >
+            Accessories
+          </li>
+          <li
+            class="text-light py-2"
+            (click)="
+              navigateTo('/product/product-list');
+              offcanvas.dismiss('Cross click')
+            "
+          >
+            Hats
+          </li>
         </ul>
       </div>
     </div>
     <div class="row py-3">
       <div class="col-12">
-        <h3 class="text-light" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Women</h3>
+        <h3
+          class="text-light"
+          (click)="
+            navigateTo('/product/product-list'); offcanvas.close('Cross click')
+          "
+        >
+          Women
+        </h3>
       </div>
       <div class="col-12 py-3">
         <img
-        (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')"
+          (click)="
+            navigateTo('/product/product-list'); offcanvas.close('Cross click')
+          "
           src="../../../../../assets/images/women.jpg"
           alt=""
           class="img-fluid"
@@ -812,32 +1427,860 @@
       </div>
       <div class="col-12">
         <ul>
-          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Blouses</li>
-          <li class="text-light py-2" (click)="catBToggle = !catBToggle;navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">
-            Tops
-            <i *ngIf="!catBToggle" class="ms-1 fa-solid fa-chevron-down"></i
-            ><i *ngIf="catBToggle" class="ms-1 fa-solid fa-chevron-up"></i>
+          <li
+            class="text-light py-2"
+            (click)="
+              navigateTo('/product/product-list');
+              offcanvas.dismiss('Cross click')
+            "
+          >
+            Blouses
+          </li>
+          <li class="text-light py-2">
+            <span
+              (click)="
+                navigateTo('/product/product-list');
+                offcanvas.dismiss('Cross click')
+              "
+              >Tops</span
+            >
+
+            <i
+              (click)="catBToggle = !catBToggle"
+              *ngIf="!catBToggle"
+              class="ms-1 fa-solid fa-chevron-down"
+            ></i
+            ><i
+              (click)="catBToggle = !catBToggle"
+              *ngIf="catBToggle"
+              class="ms-1 fa-solid fa-chevron-up"
+            ></i>
             <ul [ngClass]="catBToggle ? 'd-block' : 'd-none'">
-              <li class="text-light py-2">Tops</li>
-              <li class="text-light py-2">T-shirts</li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-list');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Tops</span
+                >
+              </li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-list');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >T-shirts</span
+                >
+              </li>
             </ul>
           </li>
-          <li class="text-light py-2" (click)="catDToggle = !catDToggle;navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">
-            Dresses<i
+          <li class="text-light py-2">
+            <span
+              (click)="
+                navigateTo('/product/product-list');
+                offcanvas.dismiss('Cross click')
+              "
+              >Dresses</span
+            >
+            <i
+              (click)="catDToggle = !catDToggle"
               *ngIf="!catDToggle"
               class="ms-1 fa-solid fa-chevron-down"
             ></i
-            ><i *ngIf="catDToggle" class="ms-1 fa-solid fa-chevron-up"></i>
+            ><i
+              (click)="catDToggle = !catDToggle"
+              *ngIf="catDToggle"
+              class="ms-1 fa-solid fa-chevron-up"
+            ></i>
             <ul [ngClass]="catDToggle ? 'd-block' : 'd-none'">
-              <li class="text-light py-2">Casual Dresses</li>
-              <li class="text-light py-2">Summer Dresses</li>
-              <li class="text-light py-2">Evening Dresses</li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-list');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Casual Dresses</span
+                >
+              </li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-list');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Summer Dresses</span
+                >
+              </li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-list');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Evening Dresses</span
+                >
+              </li>
             </ul>
           </li>
-          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Shoes</li>
-          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Accessories</li>
-          <li class="text-light py-2" (click)="navigateTo('/product/product-list');offcanvas.dismiss('Cross click')">Hats</li>
+          <li
+            class="text-light py-2"
+            (click)="
+              navigateTo('/product/product-list');
+              offcanvas.dismiss('Cross click')
+            "
+          >
+            Shoes
+          </li>
+          <li
+            class="text-light py-2"
+            (click)="
+              navigateTo('/product/product-list');
+              offcanvas.dismiss('Cross click')
+            "
+          >
+            Accessories
+          </li>
+          <li
+            class="text-light py-2"
+            (click)="
+              navigateTo('/product/product-list');
+              offcanvas.dismiss('Cross click')
+            "
+          >
+            Hats
+          </li>
         </ul>
+      </div>
+    </div>
+  </div>
+  <div class="offcanvas-footer m-0 px-4 py-3 border-bottom bg-dark">
+    <div class="row justify-content-between">
+      <div class="col-4">
+        <span class="text-light me-2">English</span
+        ><span class="text-light">USD$</span>
+      </div>
+      <div class="col-3 text-light">
+        <i class="fa-solid fa-user me-1"></i>SignIn
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #shopModal let-offcanvas>
+  <div class="offcanvas-header m-0 px-4 py-3 border-bottom bg-dark">
+    <h4 class="text-light">
+      <i
+        (click)="offcanvas.dismiss('Cross click')"
+        class="me-1 fa-solid fa-chevron-left"
+      ></i
+      >Shop
+    </h4>
+    <button
+      type="button"
+      class="btn text-dark"
+      (click)="offcanvas.dismiss('Cross click')"
+    >
+      <i class="text-light fa-solid fa-xmark"></i>
+    </button>
+  </div>
+  <div class="offcanvas-body m-0 bg-dark p-4">
+    <div class="row">
+      <div class="col-12 p-3">
+        <img src="../../../../../assets/images/placeholder-img.svg" alt="" />
+      </div>
+      <div class="col-12 p-3">
+        <img src="../../../../../assets/images/placeholder-img.svg" alt="" />
+      </div>
+      <div class="col-12 p-3">
+        <img src="../../../../../assets/images/placeholder-img.svg" alt="" />
+      </div>
+      <div class="col-12 p-3">
+        <img src="../../../../../assets/images/placeholder-img.svg" alt="" />
+      </div>
+
+      <div class="col-12 px-3 py-4">
+        <h1 class="text-light">Tops</h1>
+        <div class="row">
+          <div class="col-12">
+            <ul>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-list');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Tops</span
+                >
+              </li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-list');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >T-shirts</span
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 px-3 py-4">
+        <h1 class="text-light">Dresses</h1>
+        <div class="row">
+          <div class="col-12">
+            <ul>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-details');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Casual Dresses</span
+                >
+              </li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-details');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Summer Dresses</span
+                >
+              </li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-details');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Evening Dresses</span
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 px-3 py-4">
+        <div class="row py-3">
+          <div class="col-12">
+            <h3
+              class="text-light"
+              (click)="
+                navigateTo('/product/product-list');
+                offcanvas.close('Cross click')
+              "
+            >
+              Women
+            </h3>
+          </div>
+          <div class="col-12">
+            <ul>
+              <li
+                class="text-light py-2"
+                (click)="
+                  navigateTo('/product/product-list');
+                  offcanvas.dismiss('Cross click')
+                "
+              >
+                Blouses
+              </li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-list');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Tops</span
+                >
+
+                <i
+                  (click)="catBToggle = !catBToggle"
+                  *ngIf="!catBToggle"
+                  class="ms-1 fa-solid fa-chevron-down"
+                ></i
+                ><i
+                  (click)="catBToggle = !catBToggle"
+                  *ngIf="catBToggle"
+                  class="ms-1 fa-solid fa-chevron-up"
+                ></i>
+                <ul [ngClass]="catBToggle ? 'd-block' : 'd-none'">
+                  <li class="text-light py-2">
+                    <span
+                      (click)="
+                        navigateTo('/product/product-list');
+                        offcanvas.dismiss('Cross click')
+                      "
+                      >Tops</span
+                    >
+                  </li>
+                  <li class="text-light py-2">
+                    <span
+                      (click)="
+                        navigateTo('/product/product-list');
+                        offcanvas.dismiss('Cross click')
+                      "
+                      >T-shirts</span
+                    >
+                  </li>
+                </ul>
+              </li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-list');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Dresses</span
+                >
+                <i
+                  (click)="catDToggle = !catDToggle"
+                  *ngIf="!catDToggle"
+                  class="ms-1 fa-solid fa-chevron-down"
+                ></i
+                ><i
+                  (click)="catDToggle = !catDToggle"
+                  *ngIf="catDToggle"
+                  class="ms-1 fa-solid fa-chevron-up"
+                ></i>
+                <ul [ngClass]="catDToggle ? 'd-block' : 'd-none'">
+                  <li class="text-light py-2">
+                    <span
+                      (click)="
+                        navigateTo('/product/product-list');
+                        offcanvas.dismiss('Cross click')
+                      "
+                      >Casual Dresses</span
+                    >
+                  </li>
+                  <li class="text-light py-2">
+                    <span
+                      (click)="
+                        navigateTo('/product/product-list');
+                        offcanvas.dismiss('Cross click')
+                      "
+                      >Summer Dresses</span
+                    >
+                  </li>
+                  <li class="text-light py-2">
+                    <span
+                      (click)="
+                        navigateTo('/product/product-list');
+                        offcanvas.dismiss('Cross click')
+                      "
+                      >Evening Dresses</span
+                    >
+                  </li>
+                </ul>
+              </li>
+              <li
+                class="text-light py-2"
+                (click)="
+                  navigateTo('/product/product-list');
+                  offcanvas.dismiss('Cross click')
+                "
+              >
+                Shoes
+              </li>
+              <li
+                class="text-light py-2"
+                (click)="
+                  navigateTo('/product/product-list');
+                  offcanvas.dismiss('Cross click')
+                "
+              >
+                Accessories
+              </li>
+              <li
+                class="text-light py-2"
+                (click)="
+                  navigateTo('/product/product-list');
+                  offcanvas.dismiss('Cross click')
+                "
+              >
+                Hats
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 px-3 py-4">
+        <h1 class="text-light">Dresses</h1>
+        <div class="row">
+          <div class="col-12">
+            <ul>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-details');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Casual Dresses</span
+                >
+              </li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-details');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Summer Dresses</span
+                >
+              </li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-details');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Evening Dresses</span
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 py-4">
+        <h1 class="text-light mb-2">Top Brands</h1>
+        <div class="row">
+          <div class="col-4 p-2">
+            <img src="../../../../../assets/images/brand1.jpg" alt="" />
+          </div>
+          <div class="col-4 p-2">
+            <img src="../../../../../assets/images/brand2.jpg" alt="" />
+          </div>
+          <div class="col-4 p-2">
+            <img src="../../../../../assets/images/brand3.jpg" alt="" />
+          </div>
+          <div class="col-4 p-2">
+            <img src="../../../../../assets/images/brand4.jpg" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="col-12 py-4">
+        <ul>
+          <li class="text-light">Delivery</li>
+          <li class="text-light">Legal Notice</li>
+          <li class="text-light">All manufacturers</li>
+          <li class="text-light">Sonda</li>
+          <li class="text-light">Bower</li>
+          <li class="text-light">321</li>
+          <li class="text-light">Tops</li>
+          <li class="text-light">T-shirts</li>
+          <li class="text-light">Blouses</li>
+          <li class="text-light">Dresses</li>
+          <li class="text-light">Summer Dresses</li>
+          <li class="text-light">Shoes Hats</li>
+        </ul>
+      </div>
+      <div class="col-12 py-4">
+        <img
+          src="../../../../../assets/images/placeholder-img-big.svg"
+          alt=""
+        />
+      </div>
+    </div>
+  </div>
+  <div class="offcanvas-footer m-0 px-4 py-3 border-bottom bg-dark">
+    <div class="row justify-content-between">
+      <div class="col-4">
+        <span class="text-light me-2">English</span
+        ><span class="text-light">USD$</span>
+      </div>
+      <div class="col-3 text-light">
+        <i class="fa-solid fa-user me-1"></i>SignIn
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #fashionModal let-offcanvas>
+  <div class="offcanvas-header m-0 px-4 py-3 border-bottom bg-dark">
+    <h4 class="text-light">
+      <i
+        (click)="offcanvas.dismiss('Cross click')"
+        class="me-1 fa-solid fa-chevron-left"
+      ></i
+      >Fashion
+    </h4>
+    <button
+      type="button"
+      class="btn text-dark"
+      (click)="offcanvas.dismiss('Cross click')"
+    >
+      <i class="text-light fa-solid fa-xmark"></i>
+    </button>
+  </div>
+  <div class="offcanvas-body m-0 bg-dark p-2">
+    <div class="row">
+      <div class="col-12 px-3 py-4">
+        <h1 class="text-light">Dresses</h1>
+        <img
+          (click)="
+            navigateTo('/product/product-details');
+            offcanvas.dismiss('Cross click')
+          "
+          class="py-3 h-50"
+          src="../../../../../assets/images/women.jpg"
+          alt=""
+        />
+        <div class="row">
+          <div class="col-12">
+            <ul>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-details');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Casual Dresses</span
+                >
+              </li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-details');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Summer Dresses</span
+                >
+              </li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-details');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Evening Dresses</span
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 px-3 py-4">
+        <h1 class="text-light">Tops</h1>
+        <img
+          (click)="
+            navigateTo('/product/product-details');
+            offcanvas.dismiss('Cross click')
+          "
+          class="py-3 h-50"
+          src="../../../../../assets/images/women.jpg"
+          alt=""
+        />
+        <div class="row">
+          <div class="col-12">
+            <ul>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-list');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Tops</span
+                >
+              </li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-list');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >T-shirts</span
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 px-3 py-4">
+        <h1 class="text-light">Dresses</h1>
+        <img
+          (click)="
+            navigateTo('/product/product-details');
+            offcanvas.dismiss('Cross click')
+          "
+          class="py-3 h-50"
+          src="../../../../../assets/images/women.jpg"
+          alt=""
+        />
+        <div class="row">
+          <div class="col-12">
+            <ul>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-details');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Casual Dresses</span
+                >
+              </li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-details');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Summer Dresses</span
+                >
+              </li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-details');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Evening Dresses</span
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 px-3 py-4">
+        <div class="row py-3">
+          <div class="col-12">
+            <h3
+              class="text-light"
+              (click)="
+                navigateTo('/product/product-list');
+                offcanvas.close('Cross click')
+              "
+            >
+              Women
+            </h3>
+          </div>
+          <div class="col-12 py-3">
+            <img
+              (click)="
+                navigateTo('/product/product-list');
+                offcanvas.close('Cross click')
+              "
+              src="../../../../../assets/images/women.jpg"
+              alt=""
+              class="img-fluid"
+            />
+          </div>
+          <div class="col-12">
+            <ul>
+              <li
+                class="text-light py-2"
+                (click)="
+                  navigateTo('/product/product-list');
+                  offcanvas.dismiss('Cross click')
+                "
+              >
+                Blouses
+              </li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-list');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Tops</span
+                >
+
+                <i
+                  (click)="catBToggle = !catBToggle"
+                  *ngIf="!catBToggle"
+                  class="ms-1 fa-solid fa-chevron-down"
+                ></i
+                ><i
+                  (click)="catBToggle = !catBToggle"
+                  *ngIf="catBToggle"
+                  class="ms-1 fa-solid fa-chevron-up"
+                ></i>
+                <ul [ngClass]="catBToggle ? 'd-block' : 'd-none'">
+                  <li class="text-light py-2">
+                    <span
+                      (click)="
+                        navigateTo('/product/product-list');
+                        offcanvas.dismiss('Cross click')
+                      "
+                      >Tops</span
+                    >
+                  </li>
+                  <li class="text-light py-2">
+                    <span
+                      (click)="
+                        navigateTo('/product/product-list');
+                        offcanvas.dismiss('Cross click')
+                      "
+                      >T-shirts</span
+                    >
+                  </li>
+                </ul>
+              </li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-list');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Dresses</span
+                >
+                <i
+                  (click)="catDToggle = !catDToggle"
+                  *ngIf="!catDToggle"
+                  class="ms-1 fa-solid fa-chevron-down"
+                ></i
+                ><i
+                  (click)="catDToggle = !catDToggle"
+                  *ngIf="catDToggle"
+                  class="ms-1 fa-solid fa-chevron-up"
+                ></i>
+                <ul [ngClass]="catDToggle ? 'd-block' : 'd-none'">
+                  <li class="text-light py-2">
+                    <span
+                      (click)="
+                        navigateTo('/product/product-list');
+                        offcanvas.dismiss('Cross click')
+                      "
+                      >Casual Dresses</span
+                    >
+                  </li>
+                  <li class="text-light py-2">
+                    <span
+                      (click)="
+                        navigateTo('/product/product-list');
+                        offcanvas.dismiss('Cross click')
+                      "
+                      >Summer Dresses</span
+                    >
+                  </li>
+                  <li class="text-light py-2">
+                    <span
+                      (click)="
+                        navigateTo('/product/product-list');
+                        offcanvas.dismiss('Cross click')
+                      "
+                      >Evening Dresses</span
+                    >
+                  </li>
+                </ul>
+              </li>
+              <li
+                class="text-light py-2"
+                (click)="
+                  navigateTo('/product/product-list');
+                  offcanvas.dismiss('Cross click')
+                "
+              >
+                Shoes
+              </li>
+              <li
+                class="text-light py-2"
+                (click)="
+                  navigateTo('/product/product-list');
+                  offcanvas.dismiss('Cross click')
+                "
+              >
+                Accessories
+              </li>
+              <li
+                class="text-light py-2"
+                (click)="
+                  navigateTo('/product/product-list');
+                  offcanvas.dismiss('Cross click')
+                "
+              >
+                Hats
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 px-3 py-4">
+        <ul>
+          <li class="text-light py-2">Delivery</li>
+          <li class="text-light py-2">Legal Notice</li>
+          <li class="text-light py-2">About us</li>
+          <li class="text-light py-2">All manufacturers</li>
+          <li class="text-light py-2">Dresses</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="offcanvas-footer m-0 px-4 py-3 border-bottom bg-dark">
+    <div class="row justify-content-between">
+      <div class="col-4">
+        <span class="text-light me-2">English</span
+        ><span class="text-light">USD$</span>
+      </div>
+      <div class="col-3 text-light">
+        <i class="fa-solid fa-user me-1"></i>SignIn
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #simpleModal let-offcanvas>
+  <div class="offcanvas-header m-0 px-4 py-3 border-bottom bg-dark">
+    <h4 class="text-light">
+      <i
+        (click)="offcanvas.dismiss('Cross click')"
+        class="me-1 fa-solid fa-chevron-left"
+      ></i
+      >Simple
+    </h4>
+    <button
+      type="button"
+      class="btn text-dark"
+      (click)="offcanvas.dismiss('Cross click')"
+    >
+      <i class="text-light fa-solid fa-xmark"></i>
+    </button>
+  </div>
+  <div class="offcanvas-body m-0 bg-dark p-2">
+    <div class="row">
+      <div class="col-12 px-3 py-4">
+        <h1 class="text-light">Tops</h1>
+        <img
+          (click)="
+            navigateTo('/product/product-details');
+            offcanvas.dismiss('Cross click')
+          "
+          class="py-3 h-50"
+          src="../../../../../assets/images/women.jpg"
+          alt=""
+        />
+        <div class="row">
+          <div class="col-12">
+            <ul>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-details');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >Tops</span
+                >
+              </li>
+              <li class="text-light py-2">
+                <span
+                  (click)="
+                    navigateTo('/product/product-details');
+                    offcanvas.dismiss('Cross click')
+                  "
+                  >T-shirts</span
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="offcanvas-footer m-0 px-4 py-3 border-bottom bg-dark">
+    <div class="row justify-content-between">
+      <div class="col-4">
+        <span class="text-light me-2">English</span
+        ><span class="text-light">USD$</span>
+      </div>
+      <div class="col-3 text-light">
+        <i class="fa-solid fa-user me-1"></i>SignIn
       </div>
     </div>
   </div>

@@ -15,6 +15,8 @@ export class HeaderComponent {
   searchToggle: boolean = false;
   catBToggle: boolean = false;
   catDToggle: boolean = false;
+  shopBToggle: boolean = false;
+  shopDToggle: boolean = false;
   qty: number = 1;
   closeResult = '';
   constructor(private router: Router) {}
