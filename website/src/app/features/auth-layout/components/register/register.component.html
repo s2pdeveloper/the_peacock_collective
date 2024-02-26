@@ -1,17 +1,24 @@
 <div class="container-fluid pb-5">
   <div class="row justify-content-center">
     <div class="col-11">
-      <p class="py-3 text-color-secondary pointer"><span (click)="navigateTo('/')">Home</span> / Create an account</p>
+      <p class="py-3 text-color-secondary pointer">
+        <span (click)="navigateTo('/')">Home</span> / Create an account
+      </p>
     </div>
     <div class="col-11 py-4">
       <h2>Create an account</h2>
     </div>
     <div class="col-11 px-3 py-4 border">
-      <span class="pb-2 pointer" (click)="navigateTo('/auth/login')">
+      <p class="pb-2">
         <i class="fa-regular fa-circle-question"></i>
-        Already have an account? Log in instead!
-      </span>
-      <form class="pb-3 border-bottom">
+        Already have an account?
+        <span
+          class="pointer text-decoration-underline"
+          (click)="navigateTo('/auth/login')"
+          >Log in instead!</span
+        >
+      </p>
+      <form [formGroup]="registerForm" class="pb-3 border-bottom">
         <div class="row my-3">
           <div class="col-12 col-lg-2 d-flex align-items-center my-1">
             <label for="inputPassword6" class="col-form-label"
@@ -23,21 +30,23 @@
               <input
                 class="form-check-input me-2 background-primary"
                 type="radio"
-                name="inlineRadioOptions"
-                id="inlineRadio1"
-                value="option1"
+                name="socialTitle"
+                id="socialTitle1"
+                value="Mr."
+                formControlName="socialTitle"
               />
-              <label class="form-check-label" for="inlineRadio1">Mr.</label>
+              <label class="form-check-label" for="socialTitle1">Mr.</label>
             </div>
             <div class="d-flex px-2 align-items-center">
               <input
                 class="form-check-input me-2 background-primary"
                 type="radio"
-                name="inlineRadioOptions"
-                id="inlineRadio2"
-                value="option2"
+                name="socialTitle"
+                id="socialTitle2"
+                value="Mrs."
+                formControlName="socialTitle"
               />
-              <label class="form-check-label" for="inlineRadio2">Mrs.</label>
+              <label class="form-check-label" for="socialTitle2">Mrs.</label>
             </div>
           </div>
         </div>
@@ -48,7 +57,11 @@
             >
           </div>
           <div class="col-12 col-lg-8 me-3 my-1">
-            <input type="text" class="form-control background-primary" />
+            <input
+              type="text"
+              class="form-control background-primary"
+              formControlName="firstName"
+            />
             <p class="small-text text-muted mt-1">
               Only letters and the dot (.) character, followed by a space, are
               allowed.
@@ -60,8 +73,12 @@
             <label for="inputPassword6" class="col-form-label">Last name</label>
           </div>
           <div class="col-12 col-lg-8 me-3 my-1">
-            <input type="text" class="form-control background-primary" />
-            <p  class="small-text text-muted mt-1">
+            <input
+              type="text"
+              class="form-control background-primary"
+              formControlName="lastName"
+            />
+            <p class="small-text text-muted mt-1">
               Only letters and the dot (.) character, followed by a space, are
               allowed.
             </p>
@@ -72,7 +89,11 @@
             <label for="inputPassword6" class="col-form-label">Email</label>
           </div>
           <div class="col-12 col-lg-8 me-3 my-1">
-            <input type="email" class="form-control background-primary" />
+            <input
+              type="email"
+              class="form-control background-primary"
+              formControlName="email"
+            />
           </div>
         </div>
         <div class="row my-3">
@@ -83,12 +104,13 @@
             <input
               [type]="showEye ? 'password' : 'text'"
               class="form-control background-primary"
+              formControlName="password"
             />
             <div *ngIf="!showEye" class="icon-box" (click)="showEye = !showEye">
-              <i class="fa-solid fa-eye"></i>
+              <i class="fa-solid fa-eye pointer"></i>
             </div>
             <div *ngIf="showEye" class="icon-box" (click)="showEye = !showEye">
-              <i class="fa-solid fa-eye-slash"></i>
+              <i class="fa-solid fa-eye-slash pointer"></i>
             </div>
           </div>
         </div>
@@ -97,11 +119,12 @@
             <label for="inputPassword6" class="col-form-label">BirthDate</label>
           </div>
           <div class="col-12 col-lg-8 me-3 my-1">
-            <div class="d-flex">
+            <div class="d-flex mb-1">
               <input
                 type="text"
                 class="form-control background-primary"
                 placeholder="MM/DD/YYYY"
+                formControlName="birthDate"
               />
               <div class="opt-box">Optional</div>
             </div>
@@ -116,7 +139,7 @@
                 class="form-check-input me-2"
                 type="checkbox"
                 id="inlineCheckbox1"
-                value="option1"
+                formControlName="isReceivedOffers"
               />
               <p>Receive offers from our partners</p>
             </div>
@@ -130,7 +153,7 @@
                 class="form-check-input me-2"
                 type="checkbox"
                 id="inlineCheckbox1"
-                value="option1"
+                formControlName="isSignUpNewsletter"
               />
               <p>Sign up for our newsletter</p>
             </div>
@@ -142,7 +165,10 @@
         </div>
         <div class="row my-3 justify-content-center">
           <div class="col-3 col-md-2 col-lg-1">
-            <button class="btn bg-dark p-2 w-100 text-light rounded-0">
+            <button
+              class="btn bg-dark p-2 w-100 text-light rounded-0"
+              (click)="submit($event)"
+            >
               Save
             </button>
           </div>

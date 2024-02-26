@@ -1,0 +1,86 @@
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-11">
+      <p class="py-3 text-color-primary pointer">
+        <span (click)="navigateTo('/')">Home</span> /
+        <span (click)="navigateTo('/brand')">Brand</span> / {{ brandName }}
+      </p>
+    </div>
+    <div class="col-11 py-4">
+      <h1 class="pb-4">List of products by brand {{ brandName }}</h1>
+    </div>
+    <div class="col-11 pb-4">
+      <div class="row justify-content-between">
+        <div class="col-12 col-md-8 col-lg-8">
+          <p>Lorem ipsum dolor sit amet consectetur adipiscing elit.</p>
+        </div>
+        <div class="col-12 col-md-2 col-lg-2 d-flex justify-content-end">
+          <p class="sort-select">More</p>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="products.length < 1" class="col-11 p-3 background-solid">
+      <p>There are no products.</p>
+    </div>
+
+    <div
+      *ngIf="products.length > 1"
+      class="col-11 d-flex justify-content-end pb-4"
+    >
+      <div class="justify-content-end d-flex">
+        <div class="sort w-50 me-1">
+          <select class="sort-select w-100 h-100">
+            <option value="">Best Seller</option>
+            <option value="">Relevance</option>
+            <option value="">Name,A to Z</option>
+            <option value="">Name,Z to A</option>
+            <option value="">Price,Low to high</option>
+            <option value="">Price,High to low</option>
+          </select>
+        </div>
+        <div class="size w-25">
+          <select class="size-select w-100">
+            <option value="">36</option>
+            <option value="">38</option>
+            <option value="">40</option>
+            <option value="">Show all</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="products.length > 1" class="col-11 py-4">
+      <div class="col-12 product">
+        <div class="row product-row">
+          <div
+            class="col-6 col-md-4 col-lg-3 p-2 product-column"
+            *ngFor="let p of products"
+          >
+            <div class="card border-0">
+              <div class="img-box">
+                <img class="img-fluid" [src]="p?.img" />
+              </div>
+              <div class="text-box p-3">
+                <div class="d-flex justify-content-between">
+                  <p class="cat-name">{{ p?.catName }}</p>
+                  <h5 class="fw-bold prod-price">{{ p?.price | currency }}</h5>
+                </div>
+                <p class="prod-name">{{ p?.name }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      *ngIf="products.length > 1"
+      class="col-11 d-flex justify-content-center py-3"
+    >
+      <app-custom-pagination
+        [(page)]="page"
+        [(pageSize)]="pageSize"
+        [(collection)]="collection"
+        (myOutput)="onChangePage(page)"
+      ></app-custom-pagination>
+    </div>
+  </div>
+</div>

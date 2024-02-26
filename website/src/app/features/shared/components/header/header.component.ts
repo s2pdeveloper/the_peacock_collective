@@ -31,6 +31,8 @@ export class HeaderComponent {
       size: 'S',
       color: 'Yellow',
       price: 10.5,
+      qty: 5,
+      shipCharge: 3.2,
     },
     {
       name: 'Printed Chiffon Dress',
@@ -38,10 +40,33 @@ export class HeaderComponent {
       size: 'S',
       color: 'Yellow',
       price: 10.5,
+      qty: 1,
+      shipCharge: 3.2,
     },
   ];
 
   navigateTo(path: any) {
     this.router.navigate([path]);
+  }
+
+  get totalItemPrice() {
+    let totalPriceArray = this.product.map((items) => {
+      return {
+        ...items,
+        totalPrice: items.qty * items.price,
+      };
+    });
+    return totalPriceArray.reduce(
+      (acc, currValue) => acc + currValue.totalPrice,
+      0
+    );
+  }
+  totalShipCharge = this.product.reduce(
+    (acc, currValue) => acc + currValue.shipCharge,
+    0
+  );
+
+  navigateWithParams(path: any, param: any) {
+    this.router.navigate([path], { queryParams: { brand: param } });
   }
 }

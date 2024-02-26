@@ -35,8 +35,8 @@
   }
 }
 .product-part{
-  max-height: 30vh;
-  min-height: 30vh;
+  max-height: 35vh;
+  min-height: 35vh;
   overflow-y: scroll;
   &::-webkit-scrollbar {
     display: none;
@@ -64,9 +64,14 @@
     margin-bottom: 1rem;
   }
 }
-
+.search{
+  background-color: #e3e3e3;
+}
 input {
-  background-color: #f8f8f8;
+  background-color: #e3e3e3;
+  &:focus{
+    background-color: #e3e3e3;
+  }
 }
 @media (max-width:992px){
   .container-fluid {

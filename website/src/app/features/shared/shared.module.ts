@@ -6,10 +6,12 @@ import { TopbarComponent } from './components/topbar/topbar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HeaderModalComponent } from './modals/header-modal/header-modal.component';
 import { FormsModule } from '@angular/forms';
+import { NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
+import { CustomPaginationComponent } from './components/custom-pagination/custom-pagination.component';
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, TopbarComponent, HeaderModalComponent],
-  imports: [CommonModule, NgbModule,FormsModule],
-  exports: [HeaderComponent, FooterComponent, TopbarComponent],
+  declarations: [HeaderComponent, FooterComponent, TopbarComponent, HeaderModalComponent, CustomPaginationComponent],
+  imports: [CommonModule, NgbModule,FormsModule,NgbPaginationModule],
+  exports: [HeaderComponent, FooterComponent, TopbarComponent,CustomPaginationComponent],
 })
 export class SharedModule {}

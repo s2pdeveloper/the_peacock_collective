@@ -102,6 +102,7 @@ img {
   top: 3.5rem;
   left: 0;
   width: 100%;
+  height: auto;
   background: rgb(252, 253, 251);
   box-shadow: 0rem 0.2rem 0.5rem rgba(32, 7, 65, 0.14);
   clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
@@ -145,6 +146,7 @@ img {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
+  padding: 1rem 0;
 }
 .dropdown-item-shop{
   display: grid;
@@ -219,8 +221,8 @@ button:focus{
   height: 10%;
 }
 .product-part{
-  max-height: 30vh;
-  min-height: 30vh;
+  max-height: 35vh;
+  min-height: 35vh;
   overflow-y: scroll;
   &::-webkit-scrollbar {
     display: none;

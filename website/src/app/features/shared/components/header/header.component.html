@@ -454,36 +454,36 @@
                     <div class="dropdown-item-shop">
                       <div class="item-list-info">
                         <ul>
-                          <h6 class="mb-2 fw-bold">Tops</h6>
-                          <li>Tops</li>
-                          <li>T-shirts</li>
+                          <h6 class="mb-2 fw-bold pointer">Tops</h6>
+                          <li class="pointer">Tops</li>
+                          <li class="pointer">T-shirts</li>
                         </ul>
                       </div>
                       <div class="item-list-info">
                         <ul>
-                          <h6 class="mb-2 fw-bold">Dresses</h6>
-                          <li>Casual Dresses</li>
-                          <li>Summer Dresses</li>
-                          <li>Evening Dresses</li>
+                          <h6 class="mb-2 fw-bold pointer">Dresses</h6>
+                          <li class="pointer">Casual Dresses</li>
+                          <li class="pointer">Summer Dresses</li>
+                          <li class="pointer">Evening Dresses</li>
                         </ul>
                       </div>
                       <div class="item-list-info">
                         <ul>
-                          <h6 class="mb-2 fw-bold">Women</h6>
-                          <li>Blouses</li>
-                          <li>Tops</li>
-                          <li>Dresses</li>
-                          <li>Shoes</li>
-                          <li>Accessories</li>
-                          <li>Hats</li>
+                          <h6 class="mb-2 fw-bold pointer">Women</h6>
+                          <li class="pointer">Blouses</li>
+                          <li class="pointer">Tops</li>
+                          <li class="pointer">Dresses</li>
+                          <li class="pointer">Shoes</li>
+                          <li class="pointer">Accessories</li>
+                          <li class="pointer">Hats</li>
                         </ul>
                       </div>
                       <div class="item-list-info">
                         <ul>
-                          <h6 class="mb-2 fw-bold">Dresses</h6>
-                          <li>Casual Dresses</li>
-                          <li>Summer Dresses</li>
-                          <li>Evening Dresses</li>
+                          <h6 class="mb-2 fw-bold pointer">Dresses</h6>
+                          <li class="pointer">Casual Dresses</li>
+                          <li class="pointer">Summer Dresses</li>
+                          <li class="pointer">Evening Dresses</li>
                         </ul>
                       </div>
                     </div>
@@ -519,12 +519,32 @@
                   </div>
                   <div class="links">
                     <ul class="d-flex">
-                      <li>Delivery</li>
-                      <li>Legal Notice</li>
-                      <li>All manufacturers</li>
-                      <li>Sonda</li>
-                      <li>Bower</li>
-                      <li>321</li>
+                      <li (click)="navigateTo('/info/delivery')">Delivery</li>
+                      <li (click)="navigateTo('/info/legal-notice')">
+                        Legal Notice
+                      </li>
+                      <li (click)="navigateTo('/brand')">All manufacturers</li>
+                      <li
+                        (click)="
+                          navigateWithParams('/brand/brand-catalogue', 'Sonda')
+                        "
+                      >
+                        Sonda
+                      </li>
+                      <li
+                        (click)="
+                          navigateWithParams('/brand/brand-catalogue', 'Bower')
+                        "
+                      >
+                        Bower
+                      </li>
+                      <li
+                        (click)="
+                          navigateWithParams('/brand/brand-catalogue', '321')
+                        "
+                      >
+                        321
+                      </li>
                       <li>Tops</li>
                       <li>T-shirts</li>
                       <li>Blouses</li>
@@ -549,74 +569,105 @@
                 </a>
                 <div class="dropdown">
                   <div class="dropdown-inner-fashion">
-                    <div class="dropdown-left">
-                      <div class="dropdown-item">
-                        <h3 class="item-heading">Dresses</h3>
-                        <div class="pointer item-img">
-                          <img
-                            src="../../../../../assets/images/women.jpg"
-                            alt="Icon"
-                          />
+                    <div>
+                      <div class="dropdown-left">
+                        <div class="dropdown-item">
+                          <h3 class="item-heading">Dresses</h3>
+                          <div class="pointer item-img">
+                            <img
+                              src="../../../../../assets/images/women.jpg"
+                              alt="Icon"
+                            />
+                          </div>
+                          <div class="item-list-info">
+                            <ul>
+                              <li>Casual Dresses</li>
+                              <li>Summer Dresses</li>
+                              <li>Evening Dresses</li>
+                            </ul>
+                          </div>
                         </div>
-                        <div class="item-list-info">
-                          <ul>
-                            <li>Casual Dresses</li>
-                            <li>Summer Dresses</li>
-                            <li>Evening Dresses</li>
-                          </ul>
+                        <div class="dropdown-item">
+                          <h3 class="item-heading">Tops</h3>
+                          <div class="pointer item-img">
+                            <img
+                              src="../../../../../assets/images/women.jpg"
+                              alt="Icon"
+                            />
+                          </div>
+                          <div class="item-list-info">
+                            <ul>
+                              <li>Tops</li>
+                              <li>T-shirts</li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="dropdown-item">
+                          <h3 class="item-heading">Dresses</h3>
+                          <div class="pointer item-img">
+                            <img
+                              src="../../../../../assets/images/women.jpg"
+                              alt="Icon"
+                            />
+                          </div>
+                          <div class="item-list-info">
+                            <ul>
+                              <li>Casual Dresses</li>
+                              <li>Summer Dresses</li>
+                              <li>Evening Dresses</li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="dropdown-item">
+                          <h3 class="item-heading">Women</h3>
+                          <div class="pointer item-img">
+                            <img
+                              src="../../../../../assets/images/women.jpg"
+                              alt="Icon"
+                            />
+                          </div>
+                          <div class="item-list-info">
+                            <ul>
+                              <li>Blouses</li>
+                              <li>
+                                <span> Tops </span>
+                              </li>
+                              <li>Dresses</li>
+                              <li>Shoes</li>
+                              <li>Accessories</li>
+                              <li>Hats</li>
+                            </ul>
+                          </div>
                         </div>
                       </div>
-                      <div class="dropdown-item">
-                        <h3 class="item-heading">Tops</h3>
-                        <div class="pointer item-img">
-                          <img
-                            src="../../../../../assets/images/women.jpg"
-                            alt="Icon"
-                          />
-                        </div>
-                        <div class="item-list-info">
-                          <ul>
-                            <li>Tops</li>
-                            <li>T-shirts</li>
-                          </ul>
-                        </div>
-                      </div>
-                      <div class="dropdown-item">
-                        <h3 class="item-heading">Dresses</h3>
-                        <div class="pointer item-img">
-                          <img
-                            src="../../../../../assets/images/women.jpg"
-                            alt="Icon"
-                          />
-                        </div>
-                        <div class="item-list-info">
-                          <ul>
-                            <li>Casual Dresses</li>
-                            <li>Summer Dresses</li>
-                            <li>Evening Dresses</li>
-                          </ul>
-                        </div>
-                      </div>
-                      <div class="dropdown-item">
-                        <h3 class="item-heading">Women</h3>
-                        <div class="pointer item-img">
-                          <img
-                            src="../../../../../assets/images/women.jpg"
-                            alt="Icon"
-                          />
-                        </div>
-                        <div class="item-list-info">
-                          <ul>
-                            <li>Blouses</li>
-                            <li>
-                              <span> Tops </span>
-                            </li>
-                            <li>Dresses</li>
-                            <li>Shoes</li>
-                            <li>Accessories</li>
-                            <li>Hats</li>
-                          </ul>
-                        </div>
+                      <div class="border-top d-flex">
+                        <ul class="d-flex">
+                          <li
+                            class="p-2 pointer"
+                            (click)="navigateTo('/info/delivery')"
+                          >
+                            Delivery
+                          </li>
+                          <li
+                            class="p-2 pointer"
+                            (click)="navigateTo('/info/legal-notice')"
+                          >
+                            Legal Notice
+                          </li>
+                          <li
+                            class="p-2 pointer"
+                            (click)="navigateTo('/info/about-us')"
+                          >
+                            About us
+                          </li>
+                          <li
+                            class="p-2 pointer"
+                            (click)="navigateTo('/brand')"
+                          >
+                            All Manufacturers
+                          </li>
+                          <li class="p-2 pointer">Dresses</li>
+                        </ul>
                       </div>
                     </div>
                     <div
@@ -867,8 +918,8 @@
             <input
               type="number"
               class="w-50 border-0"
-              [(ngModel)]="qty"
-              [value]="qty"
+              [(ngModel)]="p.qty"
+              [value]="p.qty"
             />
             <label>x {{ p.price | currency }}</label>
           </div>
@@ -882,18 +933,18 @@
       <div class="container-fluid">
         <div class="row py-3 border-bottom">
           <div class="col-12 d-flex justify-content-between">
-            <p>3 Items</p>
-            <p>{{ 331.5 | currency }}</p>
+            <p>{{product.length}} {{product.length > 1 ? 'items' : 'item'}}</p>
+            <p>{{ totalItemPrice | currency }}</p>
           </div>
           <div class="col-12 d-flex justify-content-between">
             <p>Shipping</p>
-            <p>{{ 7 | currency }}</p>
+            <p>{{ totalShipCharge | currency }}</p>
           </div>
         </div>
         <div class="row py-3">
           <div class="col-12 d-flex justify-content-between">
             <p>Total (tax incl.)</p>
-            <p>{{ 338.5 | currency }}</p>
+            <p>{{ totalItemPrice + totalShipCharge | currency }}</p>
           </div>
         </div>
         <div class="row">
@@ -1860,12 +1911,55 @@
       </div>
       <div class="col-12 py-4">
         <ul>
-          <li class="text-light">Delivery</li>
-          <li class="text-light">Legal Notice</li>
-          <li class="text-light">All manufacturers</li>
-          <li class="text-light">Sonda</li>
-          <li class="text-light">Bower</li>
-          <li class="text-light">321</li>
+          <li
+            class="text-light"
+            (click)="
+              navigateTo('/info/delivery'); offcanvas.dismiss('Cross click')
+            "
+          >
+            Delivery
+          </li>
+          <li
+            class="text-light"
+            (click)="
+              navigateTo('/info/legal-notice'); offcanvas.dismiss('Cross click')
+            "
+          >
+            Legal Notice
+          </li>
+          <li
+            class="text-light"
+            (click)="navigateTo('/brand'); offcanvas.dismiss('Cross click')"
+          >
+            All manufacturers
+          </li>
+          <li
+            class="text-light"
+            (click)="
+              navigateWithParams('/brand/brand-catalogue', 'Sonda');
+              offcanvas.dismiss('Cross click')
+            "
+          >
+            Sonda
+          </li>
+          <li
+            class="text-light"
+            (click)="
+              navigateWithParams('/brand/brand-catalogue', 'Bower');
+              offcanvas.dismiss('Cross click')
+            "
+          >
+            Bower
+          </li>
+          <li
+            class="text-light"
+            (click)="
+              navigateWithParams('/brand/brand-catalogue', '321');
+              offcanvas.dismiss('Cross click')
+            "
+          >
+            321
+          </li>
           <li class="text-light">Tops</li>
           <li class="text-light">T-shirts</li>
           <li class="text-light">Blouses</li>
@@ -2043,7 +2137,7 @@
         <div class="row py-3">
           <div class="col-12">
             <h3
-              class="text-light"
+              class="text-light pointer"
               (click)="
                 navigateTo('/product/product-list');
                 offcanvas.close('Cross click')
@@ -2060,7 +2154,7 @@
               "
               src="../../../../../assets/images/women.jpg"
               alt=""
-              class="img-fluid"
+              class="img-fluid pointer"
             />
           </div>
           <div class="col-12">
@@ -2195,11 +2289,37 @@
       </div>
       <div class="col-12 px-3 py-4">
         <ul>
-          <li class="text-light py-2">Delivery</li>
-          <li class="text-light py-2">Legal Notice</li>
-          <li class="text-light py-2">About us</li>
-          <li class="text-light py-2">All manufacturers</li>
-          <li class="text-light py-2">Dresses</li>
+          <li
+            class="text-light py-2 pointer"
+            (click)="
+              navigateTo('/info/delivery'); offcanvas.dismiss('Cross click')
+            "
+          >
+            Delivery
+          </li>
+          <li
+            class="text-light py-2 pointer"
+            (click)="
+              navigateTo('/info/legal-notice'); offcanvas.dismiss('Cross click')
+            "
+          >
+            Legal Notice
+          </li>
+          <li
+            class="text-light py-2 pointer"
+            (click)="
+              navigateTo('/info/about-us'); offcanvas.dismiss('Cross click')
+            "
+          >
+            About us
+          </li>
+          <li
+            class="text-light py-2 pointer"
+            (click)="navigateTo('/brand'); offcanvas.dismiss('Cross click')"
+          >
+            All manufacturers
+          </li>
+          <li class="text-light py-2 pointer">Dresses</li>
         </ul>
       </div>
     </div>
@@ -2207,11 +2327,11 @@
   <div class="offcanvas-footer m-0 px-4 py-3 border-bottom bg-dark">
     <div class="row justify-content-between">
       <div class="col-4">
-        <span class="text-light me-2">English</span
-        ><span class="text-light">USD$</span>
+        <span class="text-light me-2 pointer">English</span
+        ><span class="text-light pointer">USD$</span>
       </div>
       <div class="col-3 text-light">
-        <i class="fa-solid fa-user me-1"></i>SignIn
+        <i class="fa-solid fa-user me-1 pointer"></i>SignIn
       </div>
     </div>
   </div>

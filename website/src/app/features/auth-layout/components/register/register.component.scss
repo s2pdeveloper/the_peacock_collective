@@ -18,11 +18,12 @@
     }
   }
   .opt-box {
-    width: 10%;
+    width: 50%;
     background-color: #f8f8f8;
     display: flex;
-    justify-content: center;
+    justify-content: end;
     align-items: center;
+    padding-right: 0.5rem;
   }
 
   @media (max-width: 992px) and (min-width: 475px) {

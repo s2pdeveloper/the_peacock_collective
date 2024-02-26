@@ -25,7 +25,7 @@
               ></i>
               <i
                 class="fa-solid fa-bag-shopping pointer"
-                (click)="openModal(cartModal, 'end')"
+                (click)="openModal(cartModal, 'end');totalItemPrice()"
               ></i>
             </div>
           </div>
@@ -78,8 +78,8 @@
             <input
               type="number"
               class="w-50 border-0"
-              [(ngModel)]="qty"
-              [value]="qty"
+              [(ngModel)]="p.qty"
+              [value]="p.qty"
             />
             <label>x {{ p.price | currency }}</label>
           </div>
@@ -93,18 +93,18 @@
       <div class="container-fluid">
         <div class="row py-3 border-bottom">
           <div class="col-12 d-flex justify-content-between">
-            <p>3 Items</p>
-            <p>{{ 331.5 | currency }}</p>
+            <p>{{product.length}} {{product.length > 1 ? 'items' : 'item'}}</p>
+            <p>{{ totalItemPrice | currency }}</p>
           </div>
           <div class="col-12 d-flex justify-content-between">
             <p>Shipping</p>
-            <p>{{ 7 | currency }}</p>
+            <p>{{ totalShipCharge | currency }}</p>
           </div>
         </div>
         <div class="row py-3">
           <div class="col-12 d-flex justify-content-between">
             <p>Total (tax incl.)</p>
-            <p>{{ 338.5 | currency }}</p>
+            <p>{{ totalItemPrice + totalShipCharge | currency }}</p>
           </div>
         </div>
         <div class="row">

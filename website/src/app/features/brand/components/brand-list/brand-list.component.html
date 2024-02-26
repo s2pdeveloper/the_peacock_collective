@@ -1,0 +1,58 @@
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-11">
+      <p class="py-3 text-color-primary pointer">
+        <span (click)="navigateTo('/', null)">Home</span> / Brand
+      </p>
+    </div>
+    <div class="col-11 pt-5">
+      <h1 class="pb-4">Brands</h1>
+    </div>
+    <div class="col-11 py-3 d-flex border-bottom">
+      <p class="px-2 pointer" *ngFor="let s of serials" (click)="scrollTo(s)">
+        {{ s + " " + "/" }}
+      </p>
+    </div>
+    <div class="col-11 py-3 border-top" *ngFor="let b of brands">
+      <div class="row">
+        <div class="col-3">
+          <h2 [id]="b.serial">{{ b.serial }}</h2>
+          <p
+            class="pointer"
+            *ngFor="let c1 of b.brandNameCol1.name"
+            (click)="navigateTo('/brand/brand-catalogue', c1)"
+          >
+            {{ c1 }}
+          </p>
+        </div>
+        <div class="col-3 d-flex flex-column justify-content-end">
+          <p
+            class="pointer"
+            *ngFor="let c2 of b.brandNameCol2.name"
+            (click)="navigateTo('/brand/brand-catalogue', c2)"
+          >
+            {{ c2 }}
+          </p>
+        </div>
+        <div class="col-3 d-flex flex-column justify-content-end">
+          <p
+            class="pointer"
+            *ngFor="let c3 of b?.brandNameCol3?.name"
+            (click)="navigateTo('/brand/brand-catalogue', c3)"
+          >
+            {{ c3 }}
+          </p>
+        </div>
+        <div class="col-3 d-flex flex-column justify-content-end">
+          <p
+            class="pointer"
+            *ngFor="let c4 of b?.brandNameCol4?.name"
+            (click)="navigateTo('/brand/brand-catalogue', c4)"
+          >
+            {{ c4 }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

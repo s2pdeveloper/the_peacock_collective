@@ -1,7 +1,9 @@
 <div class="container-fluid">
   <div class="row justify-content-center">
     <div class="col-11">
-      <p class="py-3 text-color-primary pointer"><span (click)="navigateTo('/')">Home</span>  / Contact us</p>
+      <p class="py-3 text-color-primary pointer">
+        <span (click)="navigateTo('/')">Home</span> / Contact us
+      </p>
     </div>
     <div class="col-11">
       <h1 class="py-4">Contact us</h1>
@@ -12,13 +14,18 @@
           class="col-12 col-md-6 col-lg-6 flex-column d-flex justify-content-center align-items-center top-left"
         >
           <p class="text-get">Get in touch with us</p>
-          <p><i class="fa-solid fa-phone me-2"></i>+48 541 44 27</p>
+          <p>
+            <i class="fa-solid fa-phone me-2"></i
+            ><a [href]="'tel:' + data.phone">{{ data.phone }}</a>
+          </p>
           <p><i class="fa-regular fa-envelope me-2"></i>info&#64;info.com</p>
           <p>
             <i class="fa-solid fa-location-dot me-2"></i>66-764 City, Street 23
           </p>
-          <div class="row media-box my-2">
-            <div class="col-12 d-flex justify-content-around my-2">
+          <div class="row media-box justify-content-center my-2 w-100">
+            <div
+              class="col-10 col-md-7 col-lg-6 d-flex justify-content-evenly my-2"
+            >
               <div class="media">
                 <i class="fa-brands fa-facebook"></i>
               </div>
@@ -37,7 +44,9 @@
             [showNavigationIndicators]="showNavigationIndicators"
           >
             <ng-template ngbSlide>
-              <div class="d-flex justify-content-center w-100 picsum-img-wrapper">
+              <div
+                class="d-flex justify-content-center w-100 picsum-img-wrapper"
+              >
                 <img
                   class="img-fluid w-100"
                   src="../../../assets/images/store1.jpg"
@@ -45,7 +54,9 @@
               </div>
             </ng-template>
             <ng-template ngbSlide>
-              <div class="d-flex justify-content-center w-100 picsum-img-wrapper">
+              <div
+                class="d-flex justify-content-center w-100 picsum-img-wrapper"
+              >
                 <img
                   class="img-fluid w-100"
                   src="../../../assets/images/store2.jpg"
@@ -70,27 +81,35 @@
           ></iframe>
         </div>
         <div
-          class="col-12 col-md-6 col-lg-6 flex-column d-flex justify-content-center align-items-center"
+          class="col-12 col-md-6 col-lg-6 flex-column d-flex justify-content-center align-items-center p-4"
         >
-          <p class="text-get my-3">Send us a message</p>
-          <div class="row w-100 justify-content-center" >
-            <div class="col-10">
-              <form>
+          <p class="text-get mb-3">Send us a message</p>
+          <div class="row w-100 justify-content-center">
+            <div class="col-12">
+              <form [formGroup]="messageForm">
                 <div class="mb-3">
                   <input
                     type="email"
                     class="form-control"
                     placeholder="your@email.com"
+                    formControlName="email"
                   />
                 </div>
                 <div class="mb-3">
                   <textarea
                     class="form-control"
                     rows="3"
+                    formControlName="query"
                     placeholder="How can we help?"
                   ></textarea>
                 </div>
-                <button type="button" class="btn btn-dark py-2">Send</button>
+                <button
+                  type="button"
+                  class="btn btn-dark py-2"
+                  (click)="submit($event)"
+                >
+                  Send
+                </button>
               </form>
             </div>
           </div>

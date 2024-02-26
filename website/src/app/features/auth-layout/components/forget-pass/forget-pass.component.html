@@ -13,7 +13,7 @@
         Please enter the email address you used to register. You will receive a
         temporary link to reset your password.
       </p>
-      <form class="pb-3 border-bottom">
+      <form [formGroup]="forgetPassForm" class="pb-3 border-bottom">
         <div class="row">
           <div class="col-12 col-lg-2 d-flex align-items-center my-1">
             <label for="inputPassword6" class="col-form-label"
@@ -21,10 +21,10 @@
             >
           </div>
           <div class="col-12 col-lg-2 me-3 my-1">
-            <input type="email" class="background-primary form-control" />
+            <input type="email" class="background-primary form-control" formControlName="email"/>
           </div>
           <div class="col-5 col-md-2 col-lg-2 my-1">
-            <button class="btn btn-dark py-2">
+            <button class="btn btn-dark py-2" (click)="submit($event)">
               Send reset link
             </button>
           </div>
