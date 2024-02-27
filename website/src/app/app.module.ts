@@ -6,10 +6,12 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from './features/shared/shared.module';
 import { LandingLayoutModule } from './features/landing-layout/landing-layout.module';
+import { SafePipe } from './pipes/safe.pipe';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SafePipe
   ],
   imports: [
     BrowserModule,
@@ -17,6 +19,9 @@ import { LandingLayoutModule } from './features/landing-layout/landing-layout.mo
     NgbModule,
     SharedModule,
     LandingLayoutModule
+  ],
+  exports:[
+    SafePipe
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -11,6 +11,8 @@ import { PackbagComponent } from './components/packbag/packbag.component';
 import { NewCollectionComponent } from './components/new-collection/new-collection.component';
 import { NewArrivalsComponent } from './components/new-arrivals/new-arrivals.component';
 import { ConnectComponent } from './components/connect/connect.component'
+import { NgImageSliderModule } from 'ng-image-slider';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,10 @@ import { ConnectComponent } from './components/connect/connect.component'
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     LandingLayoutRoutingModule,
+    NgImageSliderModule,
     NgbModule
   ],
   exports:[LandingLayoutComponent]

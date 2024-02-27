@@ -5,13 +5,13 @@ import { FooterComponent } from './components/footer/footer.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HeaderModalComponent } from './modals/header-modal/header-modal.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
 import { CustomPaginationComponent } from './components/custom-pagination/custom-pagination.component';
 
 @NgModule({
   declarations: [HeaderComponent, FooterComponent, TopbarComponent, HeaderModalComponent, CustomPaginationComponent],
-  imports: [CommonModule, NgbModule,FormsModule,NgbPaginationModule],
+  imports: [CommonModule, NgbModule,FormsModule,ReactiveFormsModule,NgbPaginationModule],
   exports: [HeaderComponent, FooterComponent, TopbarComponent,CustomPaginationComponent],
 })
 export class SharedModule {}

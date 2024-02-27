@@ -5,7 +5,15 @@
 .section-heading {
   font-size: 3.2rem;
 }
-
+.large-list{
+  display: block;
+}
+.medium-list{
+  display: none;
+}
+.small-list{
+  display: none;
+}
 .product {
   .product-row {
     padding: 2rem;
@@ -93,7 +101,7 @@
         .card {
           .img-box {
             img {
-              height: 35vh;
+              height: 55vw;
               object-fit: cover;
             }
           }
@@ -105,5 +113,25 @@
         left: 0;
       }
     }
+  }
+  .large-list{
+    display: none;
+  }
+  .medium-list{
+    display: none;
+  }
+  .small-list{
+    display: block;
+  }
+}
+@media (min-width:768px) and (max-width:992px){
+  .large-list{
+    display: none;
+  }
+  .medium-list{
+    display: block;
+  }
+  .small-list{
+    display: none;
   }
 }

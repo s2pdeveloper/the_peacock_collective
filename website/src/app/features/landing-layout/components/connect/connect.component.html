@@ -3,9 +3,10 @@
         <div class="col-11 col-md-11 col-lg-5">
             <p class="connect-text">Stay connected with us</p>
             <div class="input-wrapper">
-                <input type="text" placeholder="Your email address">
+                <form [formGroup]="mailForm"></form>
+                <input type="text" placeholder="Your email address" formControlName="email">
                 <div class="subs-box">
-                    <p>subscribe</p>
+                    <p (click)="submit()">subscribe</p>
                 </div>
             </div>
         </div>

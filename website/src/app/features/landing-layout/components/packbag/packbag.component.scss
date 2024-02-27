@@ -58,6 +58,11 @@
 @media (max-width: 767px) {
   .packbag-page {
     padding: 100px 15px;
+    .pack-img{
+      &:hover{
+        background-size: cover;
+      }
+    }
     .text-box {
       .title {
         font-size: 2rem;

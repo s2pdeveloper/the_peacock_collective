@@ -24,6 +24,171 @@ export class HeaderComponent {
     this.offcanvasService.open(content, { position: position });
   }
 
+  // Header Dropdown Data
+  categories: any[] = [
+    {
+      name: 'Women',
+      img: '../../../../../assets/images/women.jpg',
+      subCategories: [
+        {
+          subName: 'Blouse',
+          hasItems: false,
+        },
+        {
+          subName: 'Tops',
+          hasItems: true,
+          catItems: [{ itemName: 'Tops' }, { itemName: 'T-Shirts' }],
+        },
+        {
+          subName: 'Dresses',
+          hasItems: true,
+          catItems: [
+            { itemName: 'Casual Dresses' },
+            { itemName: 'Summer Dresses' },
+            { itemName: 'Evening Dresses' },
+          ],
+        },
+        {
+          subName: 'Shoes',
+          hasItems: false,
+        },
+        {
+          subName: 'Accessories',
+          hasItems: false,
+        },
+        {
+          subName: 'Hats',
+          hasItems: false,
+        },
+      ],
+    },
+    {
+      name: 'Women',
+      img: '../../../../../assets/images/women.jpg',
+      subCategories: [
+        {
+          subName: 'Blouse',
+          hasItems: false,
+        },
+        {
+          subName: 'Tops',
+          hasItems: true,
+          catItems: [{ itemName: 'Tops' }, { itemName: 'T-Shirts' }],
+        },
+        {
+          subName: 'Dresses',
+          hasItems: true,
+          catItems: [
+            { itemName: 'Casual Dresses' },
+            { itemName: 'Summer Dresses' },
+            { itemName: 'Evening Dresses' },
+          ],
+        },
+        {
+          subName: 'Shoes',
+          hasItems: false,
+        },
+        {
+          subName: 'Accessories',
+          hasItems: false,
+        },
+        {
+          subName: 'Hats',
+          hasItems: false,
+        },
+      ],
+    },
+    {
+      name: 'Women',
+      img: '../../../../../assets/images/women.jpg',
+      subCategories: [
+        {
+          subName: 'Blouse',
+          hasItems: false,
+        },
+        {
+          subName: 'Tops',
+          hasItems: true,
+          catItems: [{ itemName: 'Tops' }, { itemName: 'T-Shirts' }],
+        },
+        {
+          subName: 'Dresses',
+          hasItems: true,
+          catItems: [
+            { itemName: 'Casual Dresses' },
+            { itemName: 'Summer Dresses' },
+            { itemName: 'Evening Dresses' },
+          ],
+        },
+        {
+          subName: 'Shoes',
+          hasItems: false,
+        },
+        {
+          subName: 'Accessories',
+          hasItems: false,
+        },
+        {
+          subName: 'Hats',
+          hasItems: false,
+        },
+      ],
+    },
+    {
+      name: 'Women',
+      img: '../../../../../assets/images/women.jpg',
+      subCategories: [
+        {
+          subName: 'Blouse',
+          hasItems: false,
+        },
+        {
+          subName: 'Tops',
+          hasItems: true,
+          catItems: [{ itemName: 'Tops' }, { itemName: 'T-Shirts' }],
+        },
+        {
+          subName: 'Dresses',
+          hasItems: true,
+          catItems: [
+            { itemName: 'Casual Dresses' },
+            { itemName: 'Summer Dresses' },
+            { itemName: 'Evening Dresses' },
+          ],
+        },
+        {
+          subName: 'Shoes',
+          hasItems: false,
+        },
+        {
+          subName: 'Accessories',
+          hasItems: false,
+        },
+        {
+          subName: 'Hats',
+          hasItems: false,
+        },
+      ],
+    },
+  ];
+  simple: any[] = [
+    {
+      name: 'Tops',
+      img: '../../../../../assets/products/shoes.jpg',
+      subCategories: [
+        {
+          subName: 'Tops',
+          hasItems: false,
+        },
+        {
+          subName: 'T-Shirts',
+          hasItems: false,
+        },
+      ],
+    },
+  ];
+
+  // Cart Data
   product: any[] = [
     {
       name: 'Printed Chiffon Dress',
@@ -44,11 +209,6 @@ export class HeaderComponent {
       shipCharge: 3.2,
     },
   ];
-
-  navigateTo(path: any) {
-    this.router.navigate([path]);
-  }
-
   get totalItemPrice() {
     let totalPriceArray = this.product.map((items) => {
       return {
@@ -66,6 +226,9 @@ export class HeaderComponent {
     0
   );
 
+  navigateTo(path: any) {
+    this.router.navigate([path]);
+  }
   navigateWithParams(path: any, param: any) {
     this.router.navigate([path], { queryParams: { brand: param } });
   }

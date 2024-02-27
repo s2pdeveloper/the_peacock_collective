@@ -11,405 +11,48 @@
                 </a>
                 <div class="dropdown">
                   <div class="dropdown-inner">
-                    <div class="dropdown-item">
+                    <div class="dropdown-item" *ngFor="let c of categories">
                       <h3
                         class="item-heading"
                         (click)="navigateTo('/product/product-list')"
                       >
-                        Women
+                        {{ c?.name }}
                       </h3>
                       <div
                         class="pointer item-img pointer"
                         (click)="navigateTo('/product/product-list')"
                       >
-                        <img
-                          src="../../../../../assets/images/women.jpg"
-                          alt="Icon"
-                        />
+                        <img [src]="c?.img" alt="Icon" />
                       </div>
                       <div class="item-list-info">
                         <ul>
-                          <li (click)="navigateTo('/product/product-list')">
-                            Blouses
-                          </li>
-                          <li class="py-2">
-                            <span (click)="navigateTo('/product/product-list')"
-                              >Tops</span
+                          <li class="py-2" *ngFor="let sub of c.subCategories">
+                            <span
+                              (click)="navigateTo('/product/product-list')"
+                              >{{ sub.subName }}</span
                             >
-
                             <i
-                              (click)="catBToggle = !catBToggle"
-                              *ngIf="!catBToggle"
+                              (click)="sub.hasItems = !sub.hasItems"
+                              *ngIf="sub.hasItems && sub.catItems"
                               class="ms-1 fa-solid fa-chevron-down"
                             ></i
                             ><i
-                              (click)="catBToggle = !catBToggle"
-                              *ngIf="catBToggle"
+                              (click)="sub.hasItems = !sub.hasItems"
+                              *ngIf="!sub.hasItems && sub.catItems"
                               class="ms-1 fa-solid fa-chevron-up"
                             ></i>
-                            <ul [ngClass]="catBToggle ? 'd-block' : 'd-none'">
-                              <li class="py-2">
+                            <ul [ngClass]="sub.hasItems ? 'd-none' : 'd-block'">
+                              <li
+                                class="py-2"
+                                *ngFor="let item of sub?.catItems"
+                              >
                                 <span
                                   class="pointer"
                                   (click)="navigateTo('/product/product-list')"
-                                  >Tops</span
-                                >
-                              </li>
-                              <li class="py-2">
-                                <span
-                                  class="pointer"
-                                  (click)="navigateTo('/product/product-list')"
-                                  >T-shirts</span
+                                  >{{ item.itemName }}</span
                                 >
                               </li>
                             </ul>
-                          </li>
-                          <li class="py-2">
-                            <span (click)="navigateTo('/product/product-list')"
-                              >Dresses</span
-                            >
-                            <i
-                              (click)="catDToggle = !catDToggle"
-                              *ngIf="!catDToggle"
-                              class="ms-1 fa-solid fa-chevron-down"
-                            ></i
-                            ><i
-                              (click)="catDToggle = !catDToggle"
-                              *ngIf="catDToggle"
-                              class="ms-1 fa-solid fa-chevron-up"
-                            ></i>
-                            <ul [ngClass]="catDToggle ? 'd-block' : 'd-none'">
-                              <li class="py-2">
-                                <span
-                                  (click)="navigateTo('/product/product-list')"
-                                  >Casual Dresses</span
-                                >
-                              </li>
-                              <li class="py-2">
-                                <span
-                                  (click)="navigateTo('/product/product-list')"
-                                  >Summer Dresses</span
-                                >
-                              </li>
-                              <li class="py-2">
-                                <span
-                                  (click)="navigateTo('/product/product-list')"
-                                  >Evening Dresses</span
-                                >
-                              </li>
-                            </ul>
-                          </li>
-                          <li (click)="navigateTo('/product/product-list')">
-                            Shoes
-                          </li>
-                          <li (click)="navigateTo('/product/product-list')">
-                            Accessories
-                          </li>
-                          <li (click)="navigateTo('/product/product-list')">
-                            Hats
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-
-                    <div class="dropdown-item">
-                      <h3
-                        class="item-heading"
-                        (click)="navigateTo('/product/product-list')"
-                      >
-                        Women
-                      </h3>
-                      <div
-                        class="pointer item-img pointer"
-                        (click)="navigateTo('/product/product-list')"
-                      >
-                        <img
-                          src="../../../../../assets/images/women.jpg"
-                          alt="Icon"
-                        />
-                      </div>
-                      <div class="item-list-info">
-                        <ul>
-                          <li (click)="navigateTo('/product/product-list')">
-                            Blouses
-                          </li>
-                          <li class="py-2">
-                            <span (click)="navigateTo('/product/product-list')"
-                              >Tops</span
-                            >
-
-                            <i
-                              (click)="catBToggle = !catBToggle"
-                              *ngIf="!catBToggle"
-                              class="ms-1 fa-solid fa-chevron-down"
-                            ></i
-                            ><i
-                              (click)="catBToggle = !catBToggle"
-                              *ngIf="catBToggle"
-                              class="ms-1 fa-solid fa-chevron-up"
-                            ></i>
-                            <ul [ngClass]="catBToggle ? 'd-block' : 'd-none'">
-                              <li class="py-2">
-                                <span
-                                  class="pointer"
-                                  (click)="navigateTo('/product/product-list')"
-                                  >Tops</span
-                                >
-                              </li>
-                              <li class="py-2">
-                                <span
-                                  class="pointer"
-                                  (click)="navigateTo('/product/product-list')"
-                                  >T-shirts</span
-                                >
-                              </li>
-                            </ul>
-                          </li>
-                          <li class="py-2">
-                            <span (click)="navigateTo('/product/product-list')"
-                              >Dresses</span
-                            >
-                            <i
-                              (click)="catDToggle = !catDToggle"
-                              *ngIf="!catDToggle"
-                              class="ms-1 fa-solid fa-chevron-down"
-                            ></i
-                            ><i
-                              (click)="catDToggle = !catDToggle"
-                              *ngIf="catDToggle"
-                              class="ms-1 fa-solid fa-chevron-up"
-                            ></i>
-                            <ul [ngClass]="catDToggle ? 'd-block' : 'd-none'">
-                              <li class="py-2">
-                                <span
-                                  (click)="navigateTo('/product/product-list')"
-                                  >Casual Dresses</span
-                                >
-                              </li>
-                              <li class="py-2">
-                                <span
-                                  (click)="navigateTo('/product/product-list')"
-                                  >Summer Dresses</span
-                                >
-                              </li>
-                              <li class="py-2">
-                                <span
-                                  (click)="navigateTo('/product/product-list')"
-                                  >Evening Dresses</span
-                                >
-                              </li>
-                            </ul>
-                          </li>
-                          <li (click)="navigateTo('/product/product-list')">
-                            Shoes
-                          </li>
-                          <li (click)="navigateTo('/product/product-list')">
-                            Accessories
-                          </li>
-                          <li (click)="navigateTo('/product/product-list')">
-                            Hats
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-
-                    <div class="dropdown-item">
-                      <h3
-                        class="item-heading"
-                        (click)="navigateTo('/product/product-list')"
-                      >
-                        Women
-                      </h3>
-                      <div
-                        class="pointer item-img pointer"
-                        (click)="navigateTo('/product/product-list')"
-                      >
-                        <img
-                          src="../../../../../assets/images/women.jpg"
-                          alt="Icon"
-                        />
-                      </div>
-                      <div class="item-list-info">
-                        <ul>
-                          <li (click)="navigateTo('/product/product-list')">
-                            Blouses
-                          </li>
-                          <li class="py-2">
-                            <span (click)="navigateTo('/product/product-list')"
-                              >Tops</span
-                            >
-
-                            <i
-                              (click)="catBToggle = !catBToggle"
-                              *ngIf="!catBToggle"
-                              class="ms-1 fa-solid fa-chevron-down"
-                            ></i
-                            ><i
-                              (click)="catBToggle = !catBToggle"
-                              *ngIf="catBToggle"
-                              class="ms-1 fa-solid fa-chevron-up"
-                            ></i>
-                            <ul [ngClass]="catBToggle ? 'd-block' : 'd-none'">
-                              <li class="py-2">
-                                <span
-                                  class="pointer"
-                                  (click)="navigateTo('/product/product-list')"
-                                  >Tops</span
-                                >
-                              </li>
-                              <li class="py-2">
-                                <span
-                                  class="pointer"
-                                  (click)="navigateTo('/product/product-list')"
-                                  >T-shirts</span
-                                >
-                              </li>
-                            </ul>
-                          </li>
-                          <li class="py-2">
-                            <span (click)="navigateTo('/product/product-list')"
-                              >Dresses</span
-                            >
-                            <i
-                              (click)="catDToggle = !catDToggle"
-                              *ngIf="!catDToggle"
-                              class="ms-1 fa-solid fa-chevron-down"
-                            ></i
-                            ><i
-                              (click)="catDToggle = !catDToggle"
-                              *ngIf="catDToggle"
-                              class="ms-1 fa-solid fa-chevron-up"
-                            ></i>
-                            <ul [ngClass]="catDToggle ? 'd-block' : 'd-none'">
-                              <li class="py-2">
-                                <span
-                                  (click)="navigateTo('/product/product-list')"
-                                  >Casual Dresses</span
-                                >
-                              </li>
-                              <li class="py-2">
-                                <span
-                                  (click)="navigateTo('/product/product-list')"
-                                  >Summer Dresses</span
-                                >
-                              </li>
-                              <li class="py-2">
-                                <span
-                                  (click)="navigateTo('/product/product-list')"
-                                  >Evening Dresses</span
-                                >
-                              </li>
-                            </ul>
-                          </li>
-                          <li (click)="navigateTo('/product/product-list')">
-                            Shoes
-                          </li>
-                          <li (click)="navigateTo('/product/product-list')">
-                            Accessories
-                          </li>
-                          <li (click)="navigateTo('/product/product-list')">
-                            Hats
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-
-                    <div class="dropdown-item">
-                      <h3
-                        class="item-heading"
-                        (click)="navigateTo('/product/product-list')"
-                      >
-                        Women
-                      </h3>
-                      <div
-                        class="pointer item-img pointer"
-                        (click)="navigateTo('/product/product-list')"
-                      >
-                        <img
-                          src="../../../../../assets/images/women.jpg"
-                          alt="Icon"
-                        />
-                      </div>
-                      <div class="item-list-info">
-                        <ul>
-                          <li (click)="navigateTo('/product/product-list')">
-                            Blouses
-                          </li>
-                          <li class="py-2">
-                            <span (click)="navigateTo('/product/product-list')"
-                              >Tops</span
-                            >
-
-                            <i
-                              (click)="catBToggle = !catBToggle"
-                              *ngIf="!catBToggle"
-                              class="ms-1 fa-solid fa-chevron-down"
-                            ></i
-                            ><i
-                              (click)="catBToggle = !catBToggle"
-                              *ngIf="catBToggle"
-                              class="ms-1 fa-solid fa-chevron-up"
-                            ></i>
-                            <ul [ngClass]="catBToggle ? 'd-block' : 'd-none'">
-                              <li class="py-2">
-                                <span
-                                  class="pointer"
-                                  (click)="navigateTo('/product/product-list')"
-                                  >Tops</span
-                                >
-                              </li>
-                              <li class="py-2">
-                                <span
-                                  class="pointer"
-                                  (click)="navigateTo('/product/product-list')"
-                                  >T-shirts</span
-                                >
-                              </li>
-                            </ul>
-                          </li>
-                          <li class="py-2">
-                            <span (click)="navigateTo('/product/product-list')"
-                              >Dresses</span
-                            >
-                            <i
-                              (click)="catDToggle = !catDToggle"
-                              *ngIf="!catDToggle"
-                              class="ms-1 fa-solid fa-chevron-down"
-                            ></i
-                            ><i
-                              (click)="catDToggle = !catDToggle"
-                              *ngIf="catDToggle"
-                              class="ms-1 fa-solid fa-chevron-up"
-                            ></i>
-                            <ul [ngClass]="catDToggle ? 'd-block' : 'd-none'">
-                              <li class="py-2">
-                                <span
-                                  (click)="navigateTo('/product/product-list')"
-                                  >Casual Dresses</span
-                                >
-                              </li>
-                              <li class="py-2">
-                                <span
-                                  (click)="navigateTo('/product/product-list')"
-                                  >Summer Dresses</span
-                                >
-                              </li>
-                              <li class="py-2">
-                                <span
-                                  (click)="navigateTo('/product/product-list')"
-                                  >Evening Dresses</span
-                                >
-                              </li>
-                            </ul>
-                          </li>
-                          <li (click)="navigateTo('/product/product-list')">
-                            Shoes
-                          </li>
-                          <li (click)="navigateTo('/product/product-list')">
-                            Accessories
-                          </li>
-                          <li (click)="navigateTo('/product/product-list')">
-                            Hats
                           </li>
                         </ul>
                       </div>
@@ -690,24 +333,26 @@
                 </a>
                 <div class="dropdown">
                   <div class="dropdown-inner">
-                    <div class="dropdown-item">
-                      <h3 class="item-heading">Women</h3>
+                    <div class="dropdown-item" *ngFor="let s of simple">
+                      <h3 class="item-heading">
+                        <span class="pointer" (click)="navigateTo('/product/product-list')">
+                          {{ s.name }}
+                        </span>
+                      </h3>
                       <div class="pointer item-img">
                         <img
-                          src="../../../../../assets/images/women.jpg"
+                          (click)="navigateTo('/product/product-list')"
+                          [src]="s.img"
                           alt="Icon"
                         />
                       </div>
                       <div class="item-list-info">
                         <ul>
-                          <li>Blouses</li>
-                          <li>
-                            <span> Tops </span>
+                          <li *ngFor="let sub of s.subCategories">
+                            <span class="pointer" (click)="navigateTo('/product/product-list')">
+                              {{ sub.subName }}
+                            </span>
                           </li>
-                          <li>Dresses</li>
-                          <li>Shoes</li>
-                          <li>Accessories</li>
-                          <li>Hats</li>
                         </ul>
                       </div>
                     </div>
@@ -933,7 +578,9 @@
       <div class="container-fluid">
         <div class="row py-3 border-bottom">
           <div class="col-12 d-flex justify-content-between">
-            <p>{{product.length}} {{product.length > 1 ? 'items' : 'item'}}</p>
+            <p>
+              {{ product.length }} {{ product.length > 1 ? "items" : "item" }}
+            </p>
             <p>{{ totalItemPrice | currency }}</p>
           </div>
           <div class="col-12 d-flex justify-content-between">

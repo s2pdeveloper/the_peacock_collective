@@ -7,15 +7,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [{ path: '', component: ContactComponent }];
 @NgModule({
-  declarations: [
-    ContactComponent
-  ],
-  imports: [
-    CommonModule,
-    NgbModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule.forChild(routes)
-  ]
+    declarations: [
+        ContactComponent
+    ],
+    imports: [
+        CommonModule,
+        NgbModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule.forChild(routes),
+    ]
 })
 export class ContactModule { }
