@@ -3,8 +3,9 @@
     <div class="col-11">
       <div class="row">
         <div class="col-11">
-          <p class="py-3 text-color-primary pointer">
-            <span (click)="navigateTo('/')">Home</span> / <span>Women</span> /
+          <p class="py-3 text-color-primary">
+            <span class="pointer" (click)="navigateTo('/')">Home</span> /
+            <span class="pointer">Women</span> /
             <span>Tops</span>
           </p>
         </div>
@@ -114,14 +115,14 @@
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-3">
               <p class="mb-3 fw-bold">Color</p>
               <div class="d-flex flex-wrap">
-                <div class="color color-1"></div>
-                <div class="color color-2"></div>
-                <div class="color color-3"></div>
-                <div class="color color-4"></div>
-                <div class="color color-5"></div>
-                <div class="color color-6"></div>
-                <div class="color color-7"></div>
-                <div class="color color-8"></div>
+                <div class="color color-1" (click)="colorFilter('#f5f5dc')"></div>
+                <div class="color color-2" (click)="colorFilter('#fff')"></div>
+                <div class="color color-3" (click)="colorFilter('#434a54')"></div>
+                <div class="color color-4" (click)="colorFilter('#f39c11')"></div>
+                <div class="color color-5" (click)="colorFilter('#5d9cec')"></div>
+                <div class="color color-6" (click)="colorFilter('#a0d468')"></div>
+                <div class="color color-7" (click)="colorFilter('#f1c40f')"></div>
+                <div class="color color-8" (click)="colorFilter('#fccacd')"></div>
               </div>
             </div>
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-3">
@@ -203,7 +204,7 @@
               </div>
             </div>
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-3">
-              <p class="mb-3 fw-bold">Properties</p>
+              <p class="mb-3 fw-bold">Brand</p>
               <div class="d-flex align-items-center">
                 <input
                   class="form-check-input me-2"
@@ -238,11 +239,11 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <div class="row product-row justify-content-between">
+          <div class="row product-row">
             <div
-            (click)="navigateTo('product/product-details')"
-              class="col-6 col-md-4 col-lg-3 p-3 pointer"
-              *ngFor="let p of products"
+              (click)="navigateTo('product/product-details')"
+              class="col-6 col-md-3 col-lg-3 p-3 pointer"
+              *ngFor="let p of largeProducts"
             >
               <div class="card border-0">
                 <div class="img-box">
@@ -266,10 +267,21 @@
         <div
           class="col-3 col-md-2 col-lg-1 align-items-center d-flex justify-content-between"
         >
-          <i class="fa-solid fa-angle-left"></i>
-          <p>1</p>
-          <p>2</p>
-          <i class="fa-solid fa-angle-right"></i>
+          <p *ngIf="page > 1">
+            <i
+              class="fa-solid fa-angle-left pointer"
+              (click)="pagination('sub')"
+            ></i>
+          </p>
+          <div *ngFor="let c of collection">
+            <p (click)="page = c" class="pointer">{{c}}</p>
+          </div>
+          <p *ngIf="page < 3">
+            <i
+              class="fa-solid fa-angle-right pointer"
+              (click)="pagination('add')"
+            ></i>
+          </p>
         </div>
       </div>
     </div>

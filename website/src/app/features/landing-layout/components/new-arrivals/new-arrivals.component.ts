@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import Swiper from 'swiper';
 
 @Component({
   selector: 'app-new-arrivals',
@@ -7,9 +8,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewArrivalsComponent implements OnInit {
   constructor() {
-    this.getProdForSmallProducts();
-    this.getProdForMediumProducts();
-    this.getProdForLargeProducts();
   }
   smallProducts: any = [];
   mediumProducts: any = [];
@@ -41,87 +39,57 @@ export class NewArrivalsComponent implements OnInit {
       price: 11.5,
     },
     {
-      name: 'Product 1',
+      name: 'Product 5',
       img: '../../../../../assets/images/bridal-look.webp',
       catName: 'Blouses',
       price: 11.5,
     },
     {
-      name: 'Product 2',
+      name: 'Product 6',
       img: '../../../../../assets/images/bride-1.jpeg',
       catName: 'Blouses',
       price: 11.5,
     },
     {
-      name: 'Product 3',
+      name: 'Product 7',
       img: '../../../../../assets/images/bride-4.jpg',
       catName: 'Blouses',
       price: 11.5,
     },
     {
-      name: 'Product 4',
+      name: 'Product 8',
+      img: '../../../../../assets/images/bride-2.jpg',
+      catName: 'Blouses',
+      price: 11.5,
+    },
+    {
+      name: 'Product 9',
+      img: '../../../../../assets/images/bride-1.jpeg',
+      catName: 'Blouses',
+      price: 11.5,
+    },
+    {
+      name: 'Product 10',
       img: '../../../../../assets/images/bride-2.jpg',
       catName: 'Blouses',
       price: 11.5,
     },
   ];
 
-  getProdForSmallProducts() {
-    let smallProd = [];
-    for (const item of this.products) {
-      smallProd.push(item);
-    }
-    smallProd.splice(2, smallProd.length);
-    this.smallProducts.push(...smallProd);
-    return smallProd;
-  }
-  getProdForMediumProducts() {
-    let mediumProd = [];
-    for (const item of this.products) {
-      mediumProd.push(item);
-    }
-    mediumProd.splice(3, mediumProd.length);
-    this.mediumProducts.push(...mediumProd);
-    return mediumProd;
-  }
-  getProdForLargeProducts() {
-    let largeProd = [];
-    for (const item of this.products) {
-      largeProd.push(item);
-    }
-    console.log('largeProd',largeProd);
-    
-    largeProd.splice(4, largeProd.length);
-    this.largeProducts.push(...largeProd);
-    return largeProd;
-  }
-
-  handleNextSmall() {}
-  handlePrevSmall() {}
-  handleNextMedium() {}
-  handlePrevMedium() {}
-  handleNextLarge() {
-    this.currentIndex++;
-
-    let newData = [];
-    this.largeProducts = [];
-    newData.push(this.products);
-    newData.splice(this.currentIndex, newData.length);
-    for (const item of newData) {
-      this.largeProducts.push(...item);
-    }
-    console.log('this.largeProducts', this.largeProducts);
-
-    return newData;
-  }
-  handlePrevLarge() {
-    this.currentIndex--;
-
-  }
-
-  ngOnInit(): void {
-    // this.getProdForSmallProducts();
-    // this.getProdForMediumProducts();
-    // this.getProdForLargeProducts();
-  }
+   swiper = new Swiper('.sample-slider', {
+    loop: true,                         //loop
+    autoplay: {                         //autoplay
+        delay: 2000,  
+    },   
+    pagination: {                       //pagination(dots)
+        el: '.swiper-pagination',
+    },
+    navigation: {                       //navigation(arrows)
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+    },
+})
+ngOnInit(): void {
+  
+}
 }

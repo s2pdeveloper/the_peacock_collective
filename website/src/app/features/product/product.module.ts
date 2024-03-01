@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ProductComponent } from './product.component';
@@ -8,7 +8,8 @@ import { ProductDetailsComponent } from './components/product-details/product-de
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { FormsModule } from '@angular/forms';
 import { ProductCompareComponent } from './components/product-compare/product-compare.component';
-
+import { register } from 'swiper/element/bundle';
+register();
 const routes: Routes = [
   {
     path: '',
@@ -27,5 +28,6 @@ const routes: Routes = [
     ProductCompareComponent,
   ],
   imports: [CommonModule,NgxSliderModule,FormsModule, RouterModule.forChild(routes)],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ProductModule {}

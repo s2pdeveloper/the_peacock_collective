@@ -5,82 +5,79 @@
     </div>
     <div class="col-12 product large-list">
       <div class="row product-row">
-        <div
-          class="col-3 product-column"
-          *ngFor="let p of largeProducts"
-        >
+        <div class="col-12 product-column">
           <div class="card border-0">
-            <div class="img-box">
-              <img class="img-fluid w-100" [src]="p?.img" />
-            </div>
-            <div class="text-box p-3">
-              <div class="d-flex justify-content-between">
-                <p class="cat-name">{{ p?.catName }}</p>
-                <h5 class="fw-bold prod-price">{{ p?.price | currency }}</h5>
-              </div>
-              <p class="prod-name">{{ p?.name }}</p>
-            </div>
+            <swiper-container
+              class="img-box"
+              navigation="true"
+              slides-per-view="4"
+            >
+              <swiper-slide class="px-2 prod-cart" *ngFor="let p of products"
+                ><img class="img-fluid w-100" [src]="p?.img" />
+                <div class="text-box p-3">
+                  <div class="d-flex justify-content-between">
+                    <p class="cat-name">{{ p?.catName }}</p>
+                    <h5 class="fw-bold prod-price">
+                      {{ p?.price | currency }}
+                    </h5>
+                  </div>
+                  <p class="prod-name">{{ p?.name }}</p>
+                </div>
+              </swiper-slide>
+            </swiper-container>
           </div>
-        </div>
-      </div>
-      <div class="arrow-btns">
-        <div class="left-btn">
-          <i class="fa-solid fa-chevron-left"></i>
-        </div>
-        <div class="right-btn" >
-          <i class="fa-solid fa-chevron-right" (click)="handleNextLarge()"></i>
         </div>
       </div>
     </div>
     <div class="col-12 product medium-list">
       <div class="row product-row">
-        <div class="col-4 product-column" *ngFor="let p of mediumProducts">
+        <div class="col-12 product-column">
           <div class="card border-0">
-            <div class="img-box">
-              <img class="img-fluid w-100" [src]="p?.img" />
-            </div>
-            <div class="text-box p-3">
-              <div class="d-flex justify-content-between">
-                <p class="cat-name">{{ p?.catName }}</p>
-                <h5 class="fw-bold prod-price">{{ p?.price | currency }}</h5>
-              </div>
-              <p class="prod-name">{{ p?.name }}</p>
-            </div>
+            <swiper-container
+              class="img-box"
+              navigation="true"
+              slides-per-view="3"
+            >
+              <swiper-slide class="px-2 prod-cart" *ngFor="let p of products"
+                ><img class="img-fluid w-100" [src]="p?.img" />
+                <div class="text-box p-3">
+                  <div class="d-flex justify-content-between">
+                    <p class="cat-name">{{ p?.catName }}</p>
+                    <h5 class="fw-bold prod-price">
+                      {{ p?.price | currency }}
+                    </h5>
+                  </div>
+                  <p class="prod-name">{{ p?.name }}</p>
+                </div>
+              </swiper-slide>
+            </swiper-container>
           </div>
-        </div>
-      </div>
-      <div class="arrow-btns">
-        <div class="left-btn">
-          <i class="fa-solid fa-chevron-left"></i>
-        </div>
-        <div class="right-btn">
-          <i class="fa-solid fa-chevron-right"></i>
         </div>
       </div>
     </div>
     <div class="col-12 product small-list">
       <div class="row product-row">
-        <div class="col-6 product-column" *ngFor="let p of smallProducts">
+        <div class="col-12 product-column">
           <div class="card border-0">
-            <div class="img-box">
-              <img class="img-fluid w-100" [src]="p?.img" />
-            </div>
-            <div class="text-box p-3">
-              <div class="d-flex justify-content-between">
-                <p class="cat-name">{{ p?.catName }}</p>
-                <h5 class="fw-bold prod-price">{{ p?.price | currency }}</h5>
-              </div>
-              <p class="prod-name">{{ p?.name }}</p>
-            </div>
+            <swiper-container
+              class="img-box"
+              navigation="true"
+              slides-per-view="2"
+            >
+              <swiper-slide class="px-2 prod-cart" *ngFor="let p of products"
+                ><img class="img-fluid w-100" [src]="p?.img" />
+                <div class="text-box p-3">
+                  <div class="d-flex justify-content-between">
+                    <p class="cat-name">{{ p?.catName }}</p>
+                    <h5 class="fw-bold prod-price">
+                      {{ p?.price | currency }}
+                    </h5>
+                  </div>
+                  <p class="prod-name">{{ p?.name }}</p>
+                </div>
+              </swiper-slide>
+            </swiper-container>
           </div>
-        </div>
-      </div>
-      <div class="arrow-btns">
-        <div class="left-btn">
-          <i class="fa-solid fa-chevron-left"></i>
-        </div>
-        <div class="right-btn">
-          <i class="fa-solid fa-chevron-right"></i>
         </div>
       </div>
     </div>
