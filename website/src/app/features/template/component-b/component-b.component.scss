@@ -1,0 +1,19 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+.carousal-box {
+  background-color: transparentize(#007271, 0.9);
+}
+img{
+    height: 50vh;
+    object-fit: cover;
+}
+@media (max-width:992px){
+    .text-box{
+        margin-top: 1rem;
+    }
+    img{
+        width: 100% !important;
+       }
+}

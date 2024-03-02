@@ -8,12 +8,15 @@
     justify-content: center;
     padding: 1rem;
     background: #007271;
+    align-items: center;
     .ship-text {
       margin: auto 0;
       p {
         color: #fff;
         text-align: center;
-        
+        img{
+          height: 40px;
+        }
       }
     }
     .icons-box {

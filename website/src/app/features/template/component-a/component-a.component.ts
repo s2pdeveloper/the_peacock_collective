@@ -1,18 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import Swiper from 'swiper';
-
 @Component({
-  selector: 'app-new-arrivals',
-  templateUrl: './new-arrivals.component.html',
-  styleUrls: ['./new-arrivals.component.scss'],
+  selector: 'app-component-a',
+  templateUrl: './component-a.component.html',
+  styleUrls: ['./component-a.component.scss'],
 })
-export class NewArrivalsComponent implements OnInit {
+export class ComponentAComponent {
   constructor(private router: Router) {}
-  smallProducts: any = [];
-  mediumProducts: any = [];
-  largeProducts: any = [];
-  currentIndex = 0;
+  showNavigationArrows = false;
+  showNavigationIndicators = false;
   products: any[] = [
     {
       name: 'Product 1',
@@ -75,33 +72,20 @@ export class NewArrivalsComponent implements OnInit {
       price: 11.5,
     },
   ];
-
   swiper = new Swiper('.sample-slider', {
-    loop: true, //loop
+    loop: true,
     autoplay: {
-      //autoplay
       delay: 2000,
     },
     pagination: {
-      //pagination(dots)
       el: '.swiper-pagination',
     },
     navigation: {
-      //navigation(arrows)
       nextEl: '.swiper-button-next',
       prevEl: '.swiper-button-prev',
     },
   });
-  ngOnInit(): void {}
-
-  showNavigationIndicators = false;
   navigateTo(path: any) {
     this.router.navigate([path]);
-    let ele:any = document.getElementById('topbar');
-    ele.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-      inline: 'nearest',
-    })
   }
 }

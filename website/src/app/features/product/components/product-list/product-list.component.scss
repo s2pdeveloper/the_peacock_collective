@@ -22,8 +22,12 @@ select:focus-visible {
 .product-row {
   transition: ease-out 0.3s;
   .card {
+    position: relative;
     &:hover {
       box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    }
+    &:hover .icons{
+     opacity: 1;
     }
     .img-box {
       height: 90%;
@@ -33,6 +37,22 @@ select:focus-visible {
       .cat-name{
         font-size: 0.9rem;
         color: #acaaa6;
+      }
+    }
+    .icons{
+      opacity: 0;
+      position: absolute;
+      top: 5%;
+      right: 5%;
+      .item{
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+        border-radius: 50%;
+        margin-bottom: 0.5rem;
       }
     }
   }

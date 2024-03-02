@@ -115,14 +115,35 @@
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-3">
               <p class="mb-3 fw-bold">Color</p>
               <div class="d-flex flex-wrap">
-                <div class="color color-1" (click)="colorFilter('#f5f5dc')"></div>
+                <div
+                  class="color color-1"
+                  (click)="colorFilter('#f5f5dc')"
+                ></div>
                 <div class="color color-2" (click)="colorFilter('#fff')"></div>
-                <div class="color color-3" (click)="colorFilter('#434a54')"></div>
-                <div class="color color-4" (click)="colorFilter('#f39c11')"></div>
-                <div class="color color-5" (click)="colorFilter('#5d9cec')"></div>
-                <div class="color color-6" (click)="colorFilter('#a0d468')"></div>
-                <div class="color color-7" (click)="colorFilter('#f1c40f')"></div>
-                <div class="color color-8" (click)="colorFilter('#fccacd')"></div>
+                <div
+                  class="color color-3"
+                  (click)="colorFilter('#434a54')"
+                ></div>
+                <div
+                  class="color color-4"
+                  (click)="colorFilter('#f39c11')"
+                ></div>
+                <div
+                  class="color color-5"
+                  (click)="colorFilter('#5d9cec')"
+                ></div>
+                <div
+                  class="color color-6"
+                  (click)="colorFilter('#a0d468')"
+                ></div>
+                <div
+                  class="color color-7"
+                  (click)="colorFilter('#f1c40f')"
+                ></div>
+                <div
+                  class="color color-8"
+                  (click)="colorFilter('#fccacd')"
+                ></div>
               </div>
             </div>
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-3">
@@ -258,6 +279,13 @@
                   </div>
                   <p class="prod-name">{{ p?.name }}</p>
                 </div>
+                <div class="icons">
+                  <div class="item"><i class="fa-regular fa-heart"></i></div>
+                  <div class="item">
+                    <i class="fa-solid fa-code-compare"></i>
+                  </div>
+                  <div class="item"><i class="fa-regular fa-eye"></i></div>
+                </div>
               </div>
             </div>
           </div>
@@ -274,7 +302,7 @@
             ></i>
           </p>
           <div *ngFor="let c of collection">
-            <p (click)="page = c" class="pointer">{{c}}</p>
+            <p (click)="page = c" class="pointer">{{ c }}</p>
           </div>
           <p *ngIf="page < 3">
             <i
