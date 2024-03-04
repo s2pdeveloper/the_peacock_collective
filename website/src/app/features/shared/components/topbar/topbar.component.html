@@ -2,15 +2,22 @@
   <div class="row upper-row">
     <div class="col-11">
       <div class="row">
-        <div class="col-4 d-flex">
-          <img
+        <div class="col-4 d-flex" (click)="navigateTo('/')">
+          <img class="pointer"
             width="40"
             src="../../../../../assets/images/white-logo.png"
             alt="logo"
           />
         </div>
         <div class="col-8 col-lg-4 ship-text">
-          <p><img class="img-fluid" src="../../../../../assets/images/companyName.png" alt=""></p>
+          <p>
+            <img
+              (click)="navigateTo('/')"
+              class="img-fluid pointer"
+              src="../../../../../assets/images/companyName.png"
+              alt="Company Name"
+            />
+          </p>
         </div>
         <div class="d-none d-md-none d-lg-block col-lg-4">
           <div class="icons-box">
@@ -25,7 +32,7 @@
               ></i>
               <i
                 class="fa-solid fa-bag-shopping pointer"
-                (click)="openModal(cartModal, 'end');totalItemPrice()"
+                (click)="openModal(cartModal, 'end'); totalItemPrice()"
               ></i>
             </div>
           </div>
@@ -93,7 +100,9 @@
       <div class="container-fluid">
         <div class="row py-3 border-bottom">
           <div class="col-12 d-flex justify-content-between">
-            <p>{{product.length}} {{product.length > 1 ? 'items' : 'item'}}</p>
+            <p>
+              {{ product.length }} {{ product.length > 1 ? "items" : "item" }}
+            </p>
             <p>{{ totalItemPrice | currency }}</p>
           </div>
           <div class="col-12 d-flex justify-content-between">

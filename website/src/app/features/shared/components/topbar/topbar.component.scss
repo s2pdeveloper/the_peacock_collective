@@ -3,12 +3,14 @@
   padding: 0;
   
 }
-.container-fluid {
+#topbar {
   .upper-row {
     justify-content: center;
     padding: 1rem;
-    background: #007271;
     align-items: center;
+    background: #007271;
+    position: relative;
+    z-index: 10;
     .ship-text {
       margin: auto 0;
       p {
@@ -34,6 +36,9 @@
             cursor: pointer;
         }
       }
+    }
+    &:hover{
+      background: #007271;
     }
   }
 }

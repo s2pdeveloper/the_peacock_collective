@@ -1,8 +1,11 @@
 @import "bootstrap/scss/bootstrap";
-@import './themes/variable';
-@import './themes/custom';
+@import "./themes/variable";
+@import "./themes/custom";
+@import url('https://fonts.cdnfonts.com/css/geometric-sans-serif-v1');
+
 * {
-  font-family: "Cormorant", "serif";
+  // font-family: "Cormorant Garamond", serif;
+  font-family: 'Geometric Sans Serif v1', sans-serif;
 }
 ::-webkit-scrollbar {
   width: 2px;

@@ -1,421 +1,39 @@
-<div class="container-fluid sticky-top header-web bg-light">
-  <div class="row justify-content-center">
-    <div class="col-11">
-      <div class="row justify-content-around">
-        <div class="col-8">
-          <div class="d-flex h-100">
-            <div class="nav_menu d-flex">
-              <div class="nav_list nav_list_menu">
-                <a class="nav_link text-uppercase">
-                  <span class="nav-items">Categories</span>
-                </a>
-                <div class="dropdown">
-                  <div class="dropdown-inner">
-                    <div class="dropdown-item" *ngFor="let c of categories">
-                      <h3
-                        class="item-heading"
-                        (click)="navigateTo('/product/product-list')"
-                      >
-                        {{ c?.name }}
-                      </h3>
-                      <div
-                        class="pointer item-img pointer"
-                        (click)="navigateTo('/product/product-list')"
-                      >
-                        <img [src]="c?.img" alt="Icon" />
-                      </div>
-                      <div class="item-list-info">
-                        <ul>
-                          <li class="py-2" *ngFor="let sub of c.subCategories">
-                            <span
-                              (click)="navigateTo('/product/product-list')"
-                              >{{ sub.subName }}</span
-                            >
-                            <i
-                              (click)="sub.hasItems = !sub.hasItems"
-                              *ngIf="sub.hasItems && sub.catItems"
-                              class="ms-1 fa-solid fa-chevron-down"
-                            ></i
-                            ><i
-                              (click)="sub.hasItems = !sub.hasItems"
-                              *ngIf="!sub.hasItems && sub.catItems"
-                              class="ms-1 fa-solid fa-chevron-up"
-                            ></i>
-                            <ul [ngClass]="sub.hasItems ? 'd-none' : 'd-block'">
-                              <li
-                                class="py-2"
-                                *ngFor="let item of sub?.catItems"
-                              >
-                                <span
-                                  class="pointer"
-                                  (click)="navigateTo('/product/product-list')"
-                                  >{{ item.itemName }}</span
-                                >
-                              </li>
-                            </ul>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="nav_menu d-flex">
-              <div class="nav_list nav_list_menu">
-                <a class="nav_link text-uppercase">
-                  <span class="nav-items">Shop</span>
-                </a>
-                <div class="dropdown">
-                  <div class="dropdown-inner-shop">
-                    <div class="dropdown-item-shop">
-                      <div class="pointer item-img-shop">
-                        <img
-                          src="../../../../../assets/images/placeholder-img.svg"
-                          alt=""
-                        />
-                      </div>
-                      <div class="pointer item-img-shop">
-                        <img
-                          src="../../../../../assets/images/placeholder-img.svg"
-                          alt=""
-                        />
-                      </div>
-                      <div class="pointer item-img-shop">
-                        <img
-                          src="../../../../../assets/images/placeholder-img.svg"
-                          alt=""
-                        />
-                      </div>
-                      <div class="pointer item-img-shop">
-                        <img
-                          src="../../../../../assets/images/placeholder-img.svg"
-                          alt=""
-                        />
-                      </div>
-                    </div>
-                    <div class="dropdown-item-shop">
-                      <div class="item-list-info">
-                        <ul>
-                          <h6 class="mb-2 fw-bold pointer">Tops</h6>
-                          <li class="pointer">Tops</li>
-                          <li class="pointer">T-shirts</li>
-                        </ul>
-                      </div>
-                      <div class="item-list-info">
-                        <ul>
-                          <h6 class="mb-2 fw-bold pointer">Dresses</h6>
-                          <li class="pointer">Casual Dresses</li>
-                          <li class="pointer">Summer Dresses</li>
-                          <li class="pointer">Evening Dresses</li>
-                        </ul>
-                      </div>
-                      <div class="item-list-info">
-                        <ul>
-                          <h6 class="mb-2 fw-bold pointer">Women</h6>
-                          <li class="pointer">Blouses</li>
-                          <li class="pointer">Tops</li>
-                          <li class="pointer">Dresses</li>
-                          <li class="pointer">Shoes</li>
-                          <li class="pointer">Accessories</li>
-                          <li class="pointer">Hats</li>
-                        </ul>
-                      </div>
-                      <div class="item-list-info">
-                        <ul>
-                          <h6 class="mb-2 fw-bold pointer">Dresses</h6>
-                          <li class="pointer">Casual Dresses</li>
-                          <li class="pointer">Summer Dresses</li>
-                          <li class="pointer">Evening Dresses</li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div class="shop-dropdown">
-                      <h6 class="mb-2 fw-bold">Top Brands</h6>
-                      <div class="dropdown-item-shop">
-                        <div class="item-list-info">
-                          <img
-                            src="../../../../../assets/images/brand1.jpg"
-                            alt=""
-                          />
-                        </div>
-                        <div class="item-list-info">
-                          <img
-                            src="../../../../../assets/images/brand2.jpg"
-                            alt=""
-                          />
-                        </div>
-                        <div class="item-list-info">
-                          <img
-                            src="../../../../../assets/images/brand3.jpg"
-                            alt=""
-                          />
-                        </div>
-                        <div class="item-list-info">
-                          <img
-                            src="../../../../../assets/images/brand4.jpg"
-                            alt=""
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="links">
-                    <ul class="d-flex">
-                      <li (click)="navigateTo('/info/delivery')">Delivery</li>
-                      <li (click)="navigateTo('/info/legal-notice')">
-                        Legal Notice
-                      </li>
-                      <li (click)="navigateTo('/brand')">All manufacturers</li>
-                      <li
-                        (click)="
-                          navigateWithParams('/brand/brand-catalogue', 'Sonda')
-                        "
-                      >
-                        Sonda
-                      </li>
-                      <li
-                        (click)="
-                          navigateWithParams('/brand/brand-catalogue', 'Bower')
-                        "
-                      >
-                        Bower
-                      </li>
-                      <li
-                        (click)="
-                          navigateWithParams('/brand/brand-catalogue', '321')
-                        "
-                      >
-                        321
-                      </li>
-                      <li>Tops</li>
-                      <li>T-shirts</li>
-                      <li>Blouses</li>
-                      <li>Dresses</li>
-                      <li>Summer Dresses</li>
-                      <li>Shoes Hats</li>
-                    </ul>
-                  </div>
-                  <div class="placeholder-img my-4">
-                    <img
-                      src="../../../../../assets/images/placeholder-img-big.svg"
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="nav_menu d-flex">
-              <div class="nav_list nav_list_menu">
-                <a class="nav_link text-uppercase">
-                  <span class="nav-items">Fashion</span>
-                </a>
-                <div class="dropdown">
-                  <div class="dropdown-inner-fashion">
-                    <div>
-                      <div class="dropdown-left">
-                        <div class="dropdown-item">
-                          <h3 class="item-heading">Dresses</h3>
-                          <div class="pointer item-img">
-                            <img
-                              src="../../../../../assets/images/women.jpg"
-                              alt="Icon"
-                            />
-                          </div>
-                          <div class="item-list-info">
-                            <ul>
-                              <li>Casual Dresses</li>
-                              <li>Summer Dresses</li>
-                              <li>Evening Dresses</li>
-                            </ul>
-                          </div>
-                        </div>
-                        <div class="dropdown-item">
-                          <h3 class="item-heading">Tops</h3>
-                          <div class="pointer item-img">
-                            <img
-                              src="../../../../../assets/images/women.jpg"
-                              alt="Icon"
-                            />
-                          </div>
-                          <div class="item-list-info">
-                            <ul>
-                              <li>Tops</li>
-                              <li>T-shirts</li>
-                            </ul>
-                          </div>
-                        </div>
-                        <div class="dropdown-item">
-                          <h3 class="item-heading">Dresses</h3>
-                          <div class="pointer item-img">
-                            <img
-                              src="../../../../../assets/images/women.jpg"
-                              alt="Icon"
-                            />
-                          </div>
-                          <div class="item-list-info">
-                            <ul>
-                              <li>Casual Dresses</li>
-                              <li>Summer Dresses</li>
-                              <li>Evening Dresses</li>
-                            </ul>
-                          </div>
-                        </div>
-                        <div class="dropdown-item">
-                          <h3 class="item-heading">Women</h3>
-                          <div class="pointer item-img">
-                            <img
-                              src="../../../../../assets/images/women.jpg"
-                              alt="Icon"
-                            />
-                          </div>
-                          <div class="item-list-info">
-                            <ul>
-                              <li>Blouses</li>
-                              <li>
-                                <span> Tops </span>
-                              </li>
-                              <li>Dresses</li>
-                              <li>Shoes</li>
-                              <li>Accessories</li>
-                              <li>Hats</li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="border-top d-flex">
-                        <ul class="d-flex">
-                          <li
-                            class="p-2 pointer"
-                            (click)="navigateTo('/info/delivery')"
-                          >
-                            Delivery
-                          </li>
-                          <li
-                            class="p-2 pointer"
-                            (click)="navigateTo('/info/legal-notice')"
-                          >
-                            Legal Notice
-                          </li>
-                          <li
-                            class="p-2 pointer"
-                            (click)="navigateTo('/info/about-us')"
-                          >
-                            About us
-                          </li>
-                          <li
-                            class="p-2 pointer"
-                            (click)="navigateTo('/brand')"
-                          >
-                            All Manufacturers
-                          </li>
-                          <li class="p-2 pointer">Dresses</li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div
-                      class="dropdown-right d-flex justify-content-end align-items-end"
-                    >
-                      <img
-                        class="fashion-img"
-                        src="../../../../../assets/images/menu-bg.jpg"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="nav_menu d-flex">
-              <div class="nav_list nav_list_menu">
-                <a class="nav_link text-uppercase">
-                  <span class="nav-items">Simple</span>
-                </a>
-                <div class="dropdown">
-                  <div class="dropdown-inner">
-                    <div class="dropdown-item" *ngFor="let s of simple">
-                      <h3 class="item-heading">
-                        <span class="pointer" (click)="navigateTo('/product/product-list')">
-                          {{ s.name }}
-                        </span>
-                      </h3>
-                      <div class="pointer item-img">
-                        <img
-                          (click)="navigateTo('/product/product-list')"
-                          [src]="s.img"
-                          alt="Icon"
-                        />
-                      </div>
-                      <div class="item-list-info">
-                        <ul>
-                          <li *ngFor="let sub of s.subCategories">
-                            <span class="pointer" (click)="navigateTo('/product/product-list')">
-                              {{ sub.subName }}
-                            </span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+<div class="head" [ngClass]="scrollValue < 0 ? 'sticky-top bg-light' : ''">
+  <div class="container-fluid" id="topbar">
+    <div class="row upper-row">
+      <div class="col-11">
+        <div class="row">
+          <div class="col-4 d-flex" (click)="navigateTo('/')">
+            <img
+              width="40"
+              src="../../../../../assets/images/gold-logo.png"
+              alt="logo"
+            />
           </div>
-        </div>
-        <div class="col-4 d-flex justify-content-end">
-          <div
-            class="navbar-brand text-uppercase text-color-red nav-items"
-            (click)="navigateTo('/contact')"
-          >
-            Contact
+          <div class="col-8 col-lg-4 ship-text">
+            <p>
+              <img
+                (click)="navigateTo('/')"
+                class="img-fluid"
+                src="../../../../../assets/images/companyName.png"
+                alt="Company Name"
+              />
+            </p>
           </div>
-          <div class="d-flex align-items-center">
-            <i
-              class="fa-solid fa-bag-shopping nav-items"
-              (click)="openModal(cartModal, 'end')"
-            ></i>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="container-fluid sticky-top header-tablet bg-light">
-  <div class="row">
-    <div
-      class="col-3 d-flex flex-column align-items-center p-3 menu-items"
-      (click)="openModal(toggle, 'start')"
-    >
-      <i class="fa-solid fa-bars"></i>
-      <p>Menu</p>
-    </div>
-    <div class="col-3 d-flex flex-column align-items-center p-3 menu-items">
-      <i
-        class="fa-solid fa-magnifying-glass"
-        (click)="searchToggle = !searchToggle"
-      ></i>
-      <div class="d-flex">
-        <div class="nav_list">
-          <p class="nav_link-search" (click)="searchToggle = !searchToggle">
-            Search
-          </p>
-          <div
-            [ngClass]="
-              searchToggle ? 'dropdown-search' : 'dropdown-search-collapsed'
-            "
-          >
-            <div class="container-fluid">
-              <div
-                class="search d-flex justify-content-between align-items-center p-4 w-100"
-              >
-                <input
-                  type="text"
-                  placeholder="Search"
-                  class="form-control w-75"
-                />
+          <div class="d-none d-md-none d-lg-block col-lg-4">
+            <div class="icons-box">
+              <div class="icons">
                 <i
-                  class="fa-solid fa-magnifying-glass"
-                  (click)="searchToggle = !searchToggle"
+                  class="fa-solid fa-magnifying-glass pointer"
+                  (click)="openSearch(search)"
+                ></i>
+                <i
+                  class="fa-solid fa-user pointer"
+                  (click)="navigateTo('/auth/login')"
+                ></i>
+                <i
+                  class="fa-solid fa-bag-shopping pointer"
+                  (click)="openModal(cartModal, 'end'); totalItemPrice()"
                 ></i>
               </div>
             </div>
@@ -423,26 +41,625 @@
         </div>
       </div>
     </div>
-    <div
-      class="col-3 d-flex flex-column align-items-center p-3 menu-items"
-      (click)="navigateTo('/auth/login')"
-    >
-      <i class="fa-solid fa-user"></i>
-      <p>Sign In</p>
+  </div>
+  <div class="container-fluid header-web">
+    <div class="row justify-content-center">
+      <div class="col-11">
+        <div class="row justify-content-around">
+          <div class="col-10">
+            <div class="d-flex h-100">
+              <div class="nav_menu d-flex">
+                <div class="nav_list nav_list_menu">
+                  <a class="nav_link text-uppercase">
+                    <span class="nav-items">What’s New</span>
+                  </a>
+                  <div class="dropdown">
+                    <div class="dropdown-inner row">
+                      <div class="col-2 dropdownItem border-end">
+                        <div class="py-2">
+                          <span class="drop-items">WHAT'S NEW</span>
+                        </div>
+                        <div class="py-2">
+                          <span class="drop-items">Latest Collection</span>
+                        </div>
+                        <div class="py-2">
+                          <span class="drop-items">Sale</span>
+                        </div>
+                        <div class="py-2">
+                          <span class="drop-items">What's in Vogue </span>
+                        </div>
+                      </div>
+                      <div class="col-10 dropdownItem px-3">
+                        <swiper-container class="img-box" slides-per-view="4">
+                          <swiper-slide
+                            class="px-2 prod-cart"
+                            *ngFor="let p of categoryProducts"
+                            ><img class="prod-img w-100" [src]="p?.img" />
+                            <div class="text-box p-3">
+                              <p class="prod-name">{{ p?.name }}</p>
+                            </div>
+                          </swiper-slide>
+                        </swiper-container>
+                      </div>
+                      <!-- <div class="dropdown-item" *ngFor="let c of categories">
+                        <h3
+                          class="item-heading"
+                          (click)="navigateTo('/product/product-list')"
+                        >
+                          {{ c?.name }}
+                        </h3>
+                        <div
+                          class="pointer item-img pointer"
+                          (click)="navigateTo('/product/product-list')"
+                        >
+                          <img class="img-fit" [src]="c?.img" alt="Icon" />
+                        </div>
+                        <div class="item-list-info">
+                          <ul>
+                            <li class="py-2" *ngFor="let sub of c.subCategories">
+                              <span
+                                (click)="navigateTo('/product/product-list')"
+                                >{{ sub.subName }}</span
+                              >
+                              <i
+                                (click)="sub.hasItems = !sub.hasItems"
+                                *ngIf="sub.hasItems && sub.catItems"
+                                class="ms-1 fa-solid fa-chevron-down"
+                              ></i
+                              ><i
+                                (click)="sub.hasItems = !sub.hasItems"
+                                *ngIf="!sub.hasItems && sub.catItems"
+                                class="ms-1 fa-solid fa-chevron-up"
+                              ></i>
+                              <ul [ngClass]="sub.hasItems ? 'd-none' : 'd-block'">
+                                <li
+                                  class="py-2"
+                                  *ngFor="let item of sub?.catItems"
+                                >
+                                  <span
+                                    class="pointer"
+                                    (click)="navigateTo('/product/product-list')"
+                                    >{{ item.itemName }}</span
+                                  >
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </div>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="nav_menu d-flex">
+                <div class="nav_list nav_list_menu">
+                  <a class="nav_link text-uppercase">
+                    <span class="nav-items">Look Books </span>
+                  </a>
+                  <div class="dropdown">
+                    <div class="dropdown-inner row">
+                      <div class="col-2 dropdownItem border-end">
+                        <div class="py-2">
+                          <span class="drop-items">LOOK BOOKS</span>
+                        </div>
+                        <div class="py-2">
+                          <span class="drop-items">Everyday Chic</span>
+                        </div>
+                        <div class="py-2">
+                          <span class="drop-items">Globally Indian</span>
+                        </div>
+                        <div class="py-2">
+                          <span class="drop-items">Be my Guest</span>
+                        </div>
+                        <div class="py-2">
+                          <span class="drop-items">All about the Glam!</span>
+                        </div>
+                        <div class="py-2">
+                          <span class="drop-items">Let’s get to work</span>
+                        </div>
+                        <div class="py-2">
+                          <span class="drop-items">How iconic!</span>
+                        </div>
+                      </div>
+                      <div class="col-10 dropdownItem px-3">
+                        <swiper-container class="img-box" slides-per-view="4">
+                          <swiper-slide
+                            class="px-2 prod-cart"
+                            *ngFor="let p of categoryProducts"
+                            ><img class="prod-img w-100" [src]="p?.img" />
+                            <div class="text-box p-3">
+                              <p class="prod-name">{{ p?.name }}</p>
+                            </div>
+                          </swiper-slide>
+                        </swiper-container>
+                      </div>
+                    </div>
+                    <!-- <div class="dropdown-inner-shop">
+                      <div class="dropdown-item-shop">
+                        <div class="pointer item-img-shop">
+                          <img
+                            class="img-fit"
+                            src="../../../../../assets/images/placeholder-img.svg"
+                            alt=""
+                          />
+                        </div>
+                        <div class="pointer item-img-shop">
+                          <img
+                            class="img-fit"
+                            src="../../../../../assets/images/placeholder-img.svg"
+                            alt=""
+                          />
+                        </div>
+                        <div class="pointer item-img-shop">
+                          <img
+                            class="img-fit"
+                            src="../../../../../assets/images/placeholder-img.svg"
+                            alt=""
+                          />
+                        </div>
+                        <div class="pointer item-img-shop">
+                          <img
+                            class="img-fit"
+                            src="../../../../../assets/images/placeholder-img.svg"
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                      <div class="dropdown-item-shop">
+                        <div class="item-list-info">
+                          <ul>
+                            <h6 class="mb-2 fw-bold pointer">Tops</h6>
+                            <li class="pointer">Tops</li>
+                            <li class="pointer">T-shirts</li>
+                          </ul>
+                        </div>
+                        <div class="item-list-info">
+                          <ul>
+                            <h6 class="mb-2 fw-bold pointer">Dresses</h6>
+                            <li class="pointer">Casual Dresses</li>
+                            <li class="pointer">Summer Dresses</li>
+                            <li class="pointer">Evening Dresses</li>
+                          </ul>
+                        </div>
+                        <div class="item-list-info">
+                          <ul>
+                            <h6 class="mb-2 fw-bold pointer">Women</h6>
+                            <li class="pointer">Blouses</li>
+                            <li class="pointer">Tops</li>
+                            <li class="pointer">Dresses</li>
+                            <li class="pointer">Shoes</li>
+                            <li class="pointer">Accessories</li>
+                            <li class="pointer">Hats</li>
+                          </ul>
+                        </div>
+                        <div class="item-list-info">
+                          <ul>
+                            <h6 class="mb-2 fw-bold pointer">Dresses</h6>
+                            <li class="pointer">Casual Dresses</li>
+                            <li class="pointer">Summer Dresses</li>
+                            <li class="pointer">Evening Dresses</li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="shop-dropdown">
+                        <h6 class="mb-2 fw-bold">Top Brands</h6>
+                        <div class="dropdown-item-shop">
+                          <div class="item-list-info">
+                            <img
+                              class="img-fit"
+                              src="../../../../../assets/images/brand1.jpg"
+                              alt=""
+                            />
+                          </div>
+                          <div class="item-list-info">
+                            <img
+                              class="img-fit"
+                              src="../../../../../assets/images/brand2.jpg"
+                              alt=""
+                            />
+                          </div>
+                          <div class="item-list-info">
+                            <img
+                              class="img-fit"
+                              src="../../../../../assets/images/brand3.jpg"
+                              alt=""
+                            />
+                          </div>
+                          <div class="item-list-info">
+                            <img
+                              class="img-fit"
+                              src="../../../../../assets/images/brand4.jpg"
+                              alt=""
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div> -->
+                    <!-- <div class="links">
+                      <ul class="d-flex">
+                        <li (click)="navigateTo('/info/delivery')">Delivery</li>
+                        <li (click)="navigateTo('/info/legal-notice')">
+                          Legal Notice
+                        </li>
+                        <li (click)="navigateTo('/brand')">All manufacturers</li>
+                        <li
+                          (click)="
+                            navigateWithParams('/brand/brand-catalogue', 'Sonda')
+                          "
+                        >
+                          Sonda
+                        </li>
+                        <li
+                          (click)="
+                            navigateWithParams('/brand/brand-catalogue', 'Bower')
+                          "
+                        >
+                          Bower
+                        </li>
+                        <li
+                          (click)="
+                            navigateWithParams('/brand/brand-catalogue', '321')
+                          "
+                        >
+                          321
+                        </li>
+                        <li>Tops</li>
+                        <li>T-shirts</li>
+                        <li>Blouses</li>
+                        <li>Dresses</li>
+                        <li>Summer Dresses</li>
+                        <li>Shoes Hats</li>
+                      </ul>
+                    </div>
+                    <div class="placeholder-img my-4">
+                      <img
+                        class="img-fit"
+                        src="../../../../../assets/images/placeholder-img-big.svg"
+                        alt=""
+                      />
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+              <div class="nav_menu d-flex">
+                <div class="nav_list nav_list_menu">
+                  <a class="nav_link text-uppercase">
+                    <span class="nav-items">Fine Jewellery</span>
+                  </a>
+                  <div class="dropdown">
+                    <div class="dropdown-inner row">
+                      <div class="col-2 dropdownItem border-end">
+                        <div class="py-2">
+                          <span class="drop-items">FINE JEWELLERY</span>
+                        </div>
+                        <div class="py-2">
+                          <span class="drop-items">Earrings</span>
+                        </div>
+                        <div class="py-2">
+                          <span class="drop-items">Neck pieces</span>
+                        </div>
+                        <div class="py-2">
+                          <span class="drop-items">Heritage</span>
+                        </div>
+                        <div class="py-2">
+                          <span class="drop-items">Bangles</span>
+                        </div>
+                        <div class="py-2">
+                          <span class="drop-items">Rings</span>
+                        </div>
+                      </div>
+                      <div class="col-10 dropdownItem px-3">
+                        <swiper-container class="img-box" slides-per-view="4">
+                          <swiper-slide
+                            class="px-2 prod-cart"
+                            *ngFor="let p of categoryProducts"
+                            ><img class="prod-img w-100" [src]="p?.img" />
+                            <div class="text-box p-3">
+                              <p class="prod-name">{{ p?.name }}</p>
+                            </div>
+                          </swiper-slide>
+                        </swiper-container>
+                      </div>
+                    </div>
+                    <!-- <div class="dropdown-inner-fashion">
+                      <div>
+                        <div class="dropdown-left">
+                          <div class="dropdown-item">
+                            <h3 class="item-heading">Dresses</h3>
+                            <div class="pointer item-img">
+                              <img
+                                class="img-fit"
+                                src="../../../../../assets/images/women.jpg"
+                                alt="Icon"
+                              />
+                            </div>
+                            <div class="item-list-info">
+                              <ul>
+                                <li>Casual Dresses</li>
+                                <li>Summer Dresses</li>
+                                <li>Evening Dresses</li>
+                              </ul>
+                            </div>
+                          </div>
+                          <div class="dropdown-item">
+                            <h3 class="item-heading">Tops</h3>
+                            <div class="pointer item-img">
+                              <img
+                                class="img-fit"
+                                src="../../../../../assets/images/women.jpg"
+                                alt="Icon"
+                              />
+                            </div>
+                            <div class="item-list-info">
+                              <ul>
+                                <li>Tops</li>
+                                <li>T-shirts</li>
+                              </ul>
+                            </div>
+                          </div>
+                          <div class="dropdown-item">
+                            <h3 class="item-heading">Dresses</h3>
+                            <div class="pointer item-img">
+                              <img
+                                class="img-fit"
+                                src="../../../../../assets/images/women.jpg"
+                                alt="Icon"
+                              />
+                            </div>
+                            <div class="item-list-info">
+                              <ul>
+                                <li>Casual Dresses</li>
+                                <li>Summer Dresses</li>
+                                <li>Evening Dresses</li>
+                              </ul>
+                            </div>
+                          </div>
+                          <div class="dropdown-item">
+                            <h3 class="item-heading">Women</h3>
+                            <div class="pointer item-img">
+                              <img
+                                class="img-fit"
+                                src="../../../../../assets/images/women.jpg"
+                                alt="Icon"
+                              />
+                            </div>
+                            <div class="item-list-info">
+                              <ul>
+                                <li>Blouses</li>
+                                <li>
+                                  <span> Tops </span>
+                                </li>
+                                <li>Dresses</li>
+                                <li>Shoes</li>
+                                <li>Accessories</li>
+                                <li>Hats</li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="border-top d-flex">
+                          <ul class="d-flex">
+                            <li
+                              class="p-2 pointer"
+                              (click)="navigateTo('/info/delivery')"
+                            >
+                              Delivery
+                            </li>
+                            <li
+                              class="p-2 pointer"
+                              (click)="navigateTo('/info/legal-notice')"
+                            >
+                              Legal Notice
+                            </li>
+                            <li
+                              class="p-2 pointer"
+                              (click)="navigateTo('/info/about-us')"
+                            >
+                              About us
+                            </li>
+                            <li
+                              class="p-2 pointer"
+                              (click)="navigateTo('/brand')"
+                            >
+                              All Manufacturers
+                            </li>
+                            <li class="p-2 pointer">Dresses</li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div
+                        class="dropdown-right d-flex justify-content-end align-items-end"
+                      >
+                        <img
+                          class="img-fit"
+                          class="fashion-img"
+                          src="../../../../../assets/images/menu-bg.jpg"
+                          alt=""
+                        />
+                      </div>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+              <div class="nav_menu d-flex">
+                <div class="nav_list nav_list_menu">
+                  <a class="nav_link text-uppercase">
+                    <span class="nav-items">Womenswear</span>
+                  </a>
+                  <div class="dropdown">
+                    <div class="dropdown-inner row">
+                      <div class="col-2 dropdownItem border-end">
+                        <div class="py-2">
+                          <span class="drop-items">WOMEN'S WEAR</span>
+                        </div>
+                      </div>
+                      <div class="col-10 dropdownItem px-3">
+                        <!-- <swiper-container
+                          class="img-box"
+                          slides-per-view="4"
+                        >
+                          <swiper-slide
+                            class="px-2 prod-cart"
+                            *ngFor="let p of categoryProducts"
+                            ><img class="prod-img w-100" [src]="p?.img" />
+                            <div class="text-box p-3">
+                              <p class="prod-name">{{ p?.name }}</p>
+                            </div>
+                          </swiper-slide>
+                        </swiper-container> -->
+                      </div>
+                    </div>
+                    <!-- <div class="dropdown-inner">
+                      <div class="dropdown-item" *ngFor="let s of simple">
+                        <h3 class="item-heading">
+                          <span
+                            class="pointer"
+                            (click)="navigateTo('/product/product-list')"
+                          >
+                            {{ s.name }}
+                          </span>
+                        </h3>
+                        <div class="pointer item-img">
+                          <img
+                            class="img-fit"
+                            (click)="navigateTo('/product/product-list')"
+                            [src]="s.img"
+                            alt="Icon"
+                          />
+                        </div>
+                        <div class="item-list-info">
+                          <ul>
+                            <li *ngFor="let sub of s.subCategories">
+                              <span
+                                class="pointer"
+                                (click)="navigateTo('/product/product-list')"
+                              >
+                                {{ sub.subName }}
+                              </span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+              <div class="nav_menu d-flex">
+                <div class="nav_list nav_list_menu">
+                  <a class="nav_link text-uppercase">
+                    <span class="nav-items">Bespoke, by you</span>
+                  </a>
+                  <div class="dropdown">
+                    <div class="dropdown-inner row">
+                      <div class="col-2 dropdownItem border-end">
+                        <div class="py-2">
+                          <span class="drop-items">BESPOKE, BY YOU</span>
+                        </div>
+                      </div>
+                      <div class="col-10 dropdownItem px-3">
+                        <!-- <swiper-container
+                          class="img-box"
+                          slides-per-view="4"
+                        >
+                          <swiper-slide
+                            class="px-2 prod-cart"
+                            *ngFor="let p of categoryProducts"
+                            ><img class="prod-img w-100" [src]="p?.img" />
+                            <div class="text-box p-3">
+                              <p class="prod-name">{{ p?.name }}</p>
+                            </div>
+                          </swiper-slide>
+                        </swiper-container> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-2 d-flex justify-content-end">
+            <div
+              class="navbar-brand text-uppercase text-color-red nav-items"
+              (click)="navigateTo('/contact')"
+            >
+              Contact
+            </div>
+            <div class="d-flex align-items-center">
+              <i
+                class="fa-solid fa-bag-shopping nav-items"
+                (click)="openModal(cartModal, 'end')"
+              ></i>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div
-      (click)="openModal(cartModal, 'end')"
-      class="col-3 d-flex flex-column align-items-center p-3 menu-items"
-    >
-      <i class="fa-solid fa-bag-shopping"></i>
-      <p>Cart</p>
+  </div>
+  <div class="container-fluid header-tablet">
+    <div class="row">
+      <div
+        class="col-3 d-flex flex-column align-items-center p-3 menu-items"
+        (click)="openModal(toggle, 'start')"
+      >
+        <i class="fa-solid fa-bars"></i>
+        <p>Menu</p>
+      </div>
+      <div class="col-3 d-flex flex-column align-items-center p-3 menu-items">
+        <i
+          class="fa-solid fa-magnifying-glass"
+          (click)="searchToggle = !searchToggle"
+        ></i>
+        <div class="d-flex">
+          <div class="nav_list">
+            <p class="nav_link-search" (click)="searchToggle = !searchToggle">
+              Search
+            </p>
+            <div
+              [ngClass]="
+                searchToggle ? 'dropdown-search' : 'dropdown-search-collapsed'
+              "
+            >
+              <div class="container-fluid">
+                <div
+                  class="search d-flex justify-content-between align-items-center p-4 w-100"
+                >
+                  <input
+                    type="text"
+                    placeholder="Search"
+                    class="form-control w-75"
+                  />
+                  <i
+                    class="fa-solid fa-magnifying-glass"
+                    (click)="searchToggle = !searchToggle"
+                  ></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-3 d-flex flex-column align-items-center p-3 menu-items"
+        (click)="navigateTo('/auth/login')"
+      >
+        <i class="fa-solid fa-user"></i>
+        <p>Sign In</p>
+      </div>
+      <div
+        (click)="openModal(cartModal, 'end')"
+        class="col-3 d-flex flex-column align-items-center p-3 menu-items"
+      >
+        <i class="fa-solid fa-bag-shopping"></i>
+        <p>Cart</p>
+      </div>
     </div>
   </div>
 </div>
+
 <ng-template #toggle let-offcanvas>
   <div class="offcanvas-header m-0 px-4 py-2 bg-dark">
     <img
-      src="../../../../../assets/images/white-logo.png"
+      src="../../../../../assets/images/gold-logo.png"
       class="img-fluid-m me-3 logo-img"
       (click)="offcanvas.dismiss('Cross click')"
     />
@@ -2050,5 +2267,17 @@
         <i class="fa-solid fa-user me-1"></i>SignIn
       </div>
     </div>
+  </div>
+</ng-template>
+<ng-template #search let-modal>
+  <div
+    class="search d-flex justify-content-between align-items-center p-4 w-100"
+  >
+    <input
+      type="text"
+      placeholder="Search our catalog"
+      class="form-control w-75 background-primary"
+    />
+    <i class="fa-solid fa-magnifying-glass"></i>
   </div>
 </ng-template>
