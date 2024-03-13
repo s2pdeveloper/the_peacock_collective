@@ -1,2 +1,37 @@
-$color-primary : #8f8f8f;
+$color-primary: #8f8f8f;
+$color-teal: #007372;
+$color-leaf-green: #56b269;
+$color-cyan: #42c1b5;
+$color-blue: #1e76d6;
+$color-coral-tree: #db776a;
+$color-red: #c11a1a;
+$color-mustard: #c9a13e;
 $background-color-primary: #f8f8f8;
+
+.text-color-primary {
+  color: $color-primary;
+}
+.text-color-teal {
+  color: $color-teal;
+}
+.text-color-leaf-green {
+  color: $color-leaf-green;
+}
+.text-color-cyan {
+  color: $color-cyan;
+}
+.text-color-blue {
+  color: $color-blue;
+}
+.text-color-coral-tree {
+  color: $color-coral-tree;
+}
+.text-color-red {
+  color: $color-red;
+}
+.text-color-mustard {
+  color: $color-mustard;
+}
+.background-primary {
+  background-color: $background-color-primary;
+}

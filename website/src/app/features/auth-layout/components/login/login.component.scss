@@ -16,7 +16,14 @@
     align-items: center;
   }
 }
-
+.form-control,.input-number {
+  border: 0;
+  border-radius: 0;
+  padding: 0.5rem 1rem !important;
+}
+.background-primary {
+  background-color: #f8f8f8;
+}
 @media (max-width: 992px) and (min-width: 475px) {
   .password-input {
     display: flex;

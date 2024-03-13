@@ -9,7 +9,6 @@
           <div class="card border-0">
             <swiper-container
               class="img-box"
-              navigation="true"
               slides-per-view="4"
             >
               <swiper-slide class="px-2 prod-cart" *ngFor="let p of products"
@@ -35,7 +34,6 @@
           <div class="card border-0">
             <swiper-container
               class="img-box"
-              navigation="true"
               slides-per-view="3"
             >
               <swiper-slide class="px-2 prod-cart" *ngFor="let p of products"
@@ -61,7 +59,6 @@
           <div class="card border-0">
             <swiper-container
               class="img-box"
-              navigation="true"
               slides-per-view="2"
             >
               <swiper-slide class="px-2 prod-cart" *ngFor="let p of products"
@@ -91,21 +88,21 @@
           <button
             type="button"
             class="btn btn-primary py-2 px-3 m-2"
-            (click)="navigateTo('template/component-a')"
+            (click)="navigateTo('pages/component-a')"
           >
             Component A
           </button>
           <button
             type="button"
             class="btn btn-primary py-2 px-3 m-2"
-            (click)="navigateTo('template/component-b')"
+            (click)="navigateTo('pages/component-b')"
           >
             Component B
           </button>
           <button
             type="button"
             class="btn btn-primary py-2 px-3 m-2"
-            (click)="navigateTo('template/component-c')"
+            (click)="navigateTo('pages/component-c')"
           >
             Component C
           </button>

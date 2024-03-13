@@ -21,7 +21,7 @@
 }
 .landing-col {
   position: relative;
-  transform: translateY(-25%);
+  transform: translateY(-27%);
 }
 .landing-text {
   position: absolute;
@@ -36,9 +36,19 @@
 }
 @media (max-width: 771px) {
   .main-row {
-    height: 70vh;
+    height: 35vh;
   }
   .main-page {
-    height: 100vh;
+    height: 70vh;
+  }
+  .landing-col {
+    position: relative;
+    transform: translateY(-40%);
+  }
+  .landing-text {
+    p,
+    i {
+      font-size: 1.25rem;
+    }
   }
 }

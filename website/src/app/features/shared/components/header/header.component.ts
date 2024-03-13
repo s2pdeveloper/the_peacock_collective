@@ -1,10 +1,6 @@
-import { Component, HostListener, TemplateRef, inject } from '@angular/core';
+import { Component, ElementRef, HostListener, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  NgbModal,
-  NgbOffcanvas,
-  OffcanvasDismissReasons,
-} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-header',
@@ -12,190 +8,24 @@ import {
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  private offcanvasService = inject(NgbOffcanvas);
   searchToggle: boolean = false;
-  catBToggle: boolean = false;
-  catDToggle: boolean = false;
-  shopBToggle: boolean = false;
-  shopDToggle: boolean = false;
   qty: number = 1;
   closeResult = '';
   scrollValue: number = 0;
+  scrollPosition: any;
+  isMenuOpen: boolean = false;
+  isCartOpen: boolean = false;
+  isWNOpen: boolean = false;
+  isLBOpen: boolean = false;
+  isFWOpen: boolean = false;
+  isWWOpen: boolean = false;
 
-
-  constructor(private router: Router) {}
+  constructor(private router: Router, private el: ElementRef) {}
   private modalService = inject(NgbModal);
-  openModal(content: TemplateRef<any>, position: any) {
-    this.offcanvasService.open(content, { position: position });
+  openSearch(content: any) {
+    this.modalService.open(content, { size: 'xl', centered: true });
   }
-  openSearch(content: TemplateRef<any>) {
-    this.modalService.open(content, { centered: true, size: 'xl' });
-  }
-
-
   // Header Dropdown Data
-  categories: any[] = [
-    {
-      name: 'Women',
-      img: '../../../../../assets/images/women.jpg',
-      subCategories: [
-        {
-          subName: 'Blouse',
-          hasItems: false,
-        },
-        {
-          subName: 'Tops',
-          hasItems: true,
-          catItems: [{ itemName: 'Tops' }, { itemName: 'T-Shirts' }],
-        },
-        {
-          subName: 'Dresses',
-          hasItems: true,
-          catItems: [
-            { itemName: 'Casual Dresses' },
-            { itemName: 'Summer Dresses' },
-            { itemName: 'Evening Dresses' },
-          ],
-        },
-        {
-          subName: 'Shoes',
-          hasItems: false,
-        },
-        {
-          subName: 'Accessories',
-          hasItems: false,
-        },
-        {
-          subName: 'Hats',
-          hasItems: false,
-        },
-      ],
-    },
-    {
-      name: 'Women',
-      img: '../../../../../assets/images/women.jpg',
-      subCategories: [
-        {
-          subName: 'Blouse',
-          hasItems: false,
-        },
-        {
-          subName: 'Tops',
-          hasItems: true,
-          catItems: [{ itemName: 'Tops' }, { itemName: 'T-Shirts' }],
-        },
-        {
-          subName: 'Dresses',
-          hasItems: true,
-          catItems: [
-            { itemName: 'Casual Dresses' },
-            { itemName: 'Summer Dresses' },
-            { itemName: 'Evening Dresses' },
-          ],
-        },
-        {
-          subName: 'Shoes',
-          hasItems: false,
-        },
-        {
-          subName: 'Accessories',
-          hasItems: false,
-        },
-        {
-          subName: 'Hats',
-          hasItems: false,
-        },
-      ],
-    },
-    {
-      name: 'Women',
-      img: '../../../../../assets/images/women.jpg',
-      subCategories: [
-        {
-          subName: 'Blouse',
-          hasItems: false,
-        },
-        {
-          subName: 'Tops',
-          hasItems: true,
-          catItems: [{ itemName: 'Tops' }, { itemName: 'T-Shirts' }],
-        },
-        {
-          subName: 'Dresses',
-          hasItems: true,
-          catItems: [
-            { itemName: 'Casual Dresses' },
-            { itemName: 'Summer Dresses' },
-            { itemName: 'Evening Dresses' },
-          ],
-        },
-        {
-          subName: 'Shoes',
-          hasItems: false,
-        },
-        {
-          subName: 'Accessories',
-          hasItems: false,
-        },
-        {
-          subName: 'Hats',
-          hasItems: false,
-        },
-      ],
-    },
-    {
-      name: 'Women',
-      img: '../../../../../assets/images/women.jpg',
-      subCategories: [
-        {
-          subName: 'Blouse',
-          hasItems: false,
-        },
-        {
-          subName: 'Tops',
-          hasItems: true,
-          catItems: [{ itemName: 'Tops' }, { itemName: 'T-Shirts' }],
-        },
-        {
-          subName: 'Dresses',
-          hasItems: true,
-          catItems: [
-            { itemName: 'Casual Dresses' },
-            { itemName: 'Summer Dresses' },
-            { itemName: 'Evening Dresses' },
-          ],
-        },
-        {
-          subName: 'Shoes',
-          hasItems: false,
-        },
-        {
-          subName: 'Accessories',
-          hasItems: false,
-        },
-        {
-          subName: 'Hats',
-          hasItems: false,
-        },
-      ],
-    },
-  ];
-  simple: any[] = [
-    {
-      name: 'Tops',
-      img: '../../../../../assets/products/shoes.jpg',
-      subCategories: [
-        {
-          subName: 'Tops',
-          hasItems: false,
-        },
-        {
-          subName: 'T-Shirts',
-          hasItems: false,
-        },
-      ],
-    },
-  ];
   categoryProducts: any[] = [
     {
       name: 'Product 1',
@@ -297,10 +127,18 @@ export class HeaderComponent {
   );
 
   ngOnInit(): void {
-    window.addEventListener("wheel", event => {
+    window.addEventListener('wheel', (event) => {
       this.scrollValue = Math.sign(event.deltaY);
-  });
-    console.log('scrollValue', this.scrollValue);
+    });
+  }
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const scrollPositionValue =
+      window.pageYOffset ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop ||
+      0;
+    this.scrollPosition = scrollPositionValue;
   }
 
   navigateTo(path: any) {
@@ -308,5 +146,9 @@ export class HeaderComponent {
   }
   navigateWithParams(path: any, param: any) {
     this.router.navigate([path], { queryParams: { brand: param } });
+  }
+  navigateToDynamic(id: any) {
+    const path: String = `pages/${id}`;
+    this.router.navigate([path]);
   }
 }

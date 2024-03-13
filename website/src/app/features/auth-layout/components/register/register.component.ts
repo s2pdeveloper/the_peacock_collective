@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators,FormBuilder  } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,19 +8,24 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
-  constructor(private router: Router) {}
+  registerForm:FormGroup;
+
+  constructor(private router: Router,private fb: FormBuilder) {
+    this.registerForm = this.fb.group({
+      socialTitle: new FormControl(null, [Validators.required]),
+      fname: new FormControl('', [Validators.required]),
+      lastName: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required]),
+      birthDate: new FormControl('', [Validators.required]),
+      isReceivedOffers: new FormControl(),
+      isSignUpNewsletter: new FormControl(),
+    });
+  }
   showEye: boolean = true;
 
-  registerForm = new FormGroup({
-    socialTitle: new FormControl('', [Validators.required]),
-    firstName: new FormControl('', [Validators.required]),
-    lastName: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
-    birthDate: new FormControl('', [Validators.required]),
-    isReceivedOffers: new FormControl(),
-    isSignUpNewsletter: new FormControl(),
-  });
+ 
+   
   navigateTo(path: any) {
     this.router.navigate([path]);
   }

@@ -7,6 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from './features/shared/shared.module';
 import { LandingLayoutModule } from './features/landing-layout/landing-layout.module';
 import { SafePipe } from './pipes/safe.pipe';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,9 @@ import { SafePipe } from './pipes/safe.pipe';
     AppRoutingModule,
     NgbModule,
     SharedModule,
-    LandingLayoutModule
+    LandingLayoutModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   exports:[
     SafePipe

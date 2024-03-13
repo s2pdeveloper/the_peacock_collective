@@ -97,11 +97,11 @@ export class NewArrivalsComponent implements OnInit {
   showNavigationIndicators = false;
   navigateTo(path: any) {
     this.router.navigate([path]);
-    let ele:any = document.getElementById('topbar');
+    let ele: any = document.getElementById('topbar');
     ele.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
       inline: 'nearest',
-    })
+    });
   }
 }

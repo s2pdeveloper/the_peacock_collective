@@ -5,6 +5,7 @@ import { ComponentAComponent } from './component-a/component-a.component';
 import { ComponentBComponent } from './component-b/component-b.component';
 import { ComponentCComponent } from './component-c/component-c.component';
 import { RouterModule, Routes } from '@angular/router';
+import { RemotePageComponent } from './remote-page/remote-page.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { register } from 'swiper/element/bundle';
 register();
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'component-a', component: ComponentAComponent },
   { path: 'component-b', component: ComponentBComponent },
   { path: 'component-c', component: ComponentCComponent },
+  { path: ':id', component: RemotePageComponent },
 ];
 @NgModule({
   declarations: [
@@ -19,6 +21,7 @@ const routes: Routes = [
     ComponentAComponent,
     ComponentBComponent,
     ComponentCComponent,
+    RemotePageComponent,
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   imports: [CommonModule,NgbModule, RouterModule.forChild(routes)],

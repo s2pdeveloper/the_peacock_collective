@@ -43,7 +43,8 @@ const routes: Routes = [
   },
   { path: 'brand', loadChildren: () => import('./features/brand/brand.module').then(m => m.BrandModule) },
   { path: 'info', loadChildren: () => import('./features/information/information.module').then(m => m.InformationModule) },
-  { path: 'template', loadChildren: () => import('./features/template/template.module').then(m => m.TemplateModule) },
+  { path: 'pages', loadChildren: () => import('./features/template/template.module').then(m => m.TemplateModule) },
+  { path: 'bespoke', loadChildren: () => import('./features/bespoke/bespoke.module').then(m => m.BespokeModule) },
 ];
 
 @NgModule({

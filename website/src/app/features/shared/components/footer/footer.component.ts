@@ -7,7 +7,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent {
-  mailForm = new FormGroup({
+  footerForm = new FormGroup({
     email : new FormControl('',[Validators.required])
   })
   data: any = {
@@ -23,8 +23,8 @@ export class FooterComponent {
     vimeoLink: '',
   };
   submit(){
-    if(!!this.mailForm.value){
-      console.log('formValue',this.mailForm.value);
+    if(!!this.footerForm.value){
+      console.log('formValue',this.footerForm.value);
       
     }
   }
