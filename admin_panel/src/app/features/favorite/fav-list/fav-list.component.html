@@ -1,0 +1,123 @@
+<div class="table-container">
+  <div class="card table-card">
+    <div class="card-title">
+      <h3>Favorite List</h3>
+    </div>
+    <div class="card-header">
+      <div class="row justify-content-between">
+        <div class="col-4">
+          <div class="input-icons">
+            <div class="input-group input-group-sm">
+              <input
+                type="search"
+                class="form-control"
+                aria-label="Small"
+                placeholder="Search"
+                [(ngModel)]="search"
+                (input)="searchFn()"
+                aria-describedby="inputGroup-sizing-sm"
+              />
+              <div class="input-group-append">
+                <span class="input-group-text h-100" id="inputGroup-sizing-sm">
+                  <i class="ti ti-search"></i
+                ></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body p-4">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead class="thead">
+            <tr class="table-secondary">
+              <th scope="col">Sr. No.</th>
+              <th scope="col">Product Id</th>
+              <th scope="col">Product Name</th>
+              <th scope="col">CustomerId</th>
+              <th scope="col">First Name</th>
+              <th scope="col">Last Name</th>
+
+              <th scope="col" class="mx-auto text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody class="tbody mt-3"></tbody>
+          <tbody *ngFor="let f of allData; let i = index">
+            <td scope="row">{{ i + 1 }}</td>
+            <td scope="row">{{ f.productId }}</td>
+
+            <!-- Iterate over the product array -->
+            <ng-container *ngFor="let p of f.product">
+              <td scope="row">{{ p.productName | titlecase }}</td>
+            </ng-container>
+
+            <td scope="row">{{ f.customerId }}</td>
+
+            <!-- Iterate over the customer array -->
+            <ng-container *ngFor="let c of f.customer">
+              <td scope="row">{{ c.firstName }}</td>
+              <td scope="row">{{ c.lastName }}</td>
+            </ng-container>
+
+            <td scope="row" class="text-center">
+              <button
+                class="btn btn-sm action-btn mx-2"
+                (click)="updateUser(f)"
+                ngbTooltip="Update"
+              >
+                <i class="ti ti-edit-circle"></i>
+              </button>
+
+              <button
+                class="btn btn-sm action-btn"
+                (click)="open(f._id, deleteModal)"
+                ngbTooltip="Delete"
+              >
+                <i class="ti ti-trash"></i>
+              </button>
+            </td>
+            <ng-template #deleteModal let-modal>
+              <div class="modal-header border-0">
+                <button
+                  type="button"
+                  class="btn-close"
+                  aria-label="Close"
+                  (click)="modal.dismiss('Cross click')"
+                ></button>
+              </div>
+              <div class="modal-body border-0">
+                <h4 class="modal-title text-center" id="modal-basic-title">
+                  Are you sure you want to Delete ?
+                </h4>
+              </div>
+              <div class="modal-footer justify-content-center border-0">
+                <button
+                  type="button"
+                  class="btn px-4 btn-outline-danger"
+                  (click)="delete(f._id)"
+                >
+                  YES
+                </button>
+                <button
+                  type="button"
+                  class="btn px-4 btn-outline-primary"
+                  (click)="modal.dismiss('Cross click')"
+                >
+                  NO
+                </button>
+              </div>
+            </ng-template>
+          </tbody>
+        </table>
+      </div>
+      <app-custom-pagination
+        [(page)]="page"
+        [(pageSize)]="pageSize"
+        [(collection)]="collection"
+        (myOutput)="onChangePage(page)"
+      ></app-custom-pagination>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,121 @@
+<div class="card form-card">
+  <div class="card-header">
+    <div class="card-header-items">
+      <div class="ms-2">{{ userId ? "Update" : "Create" }}</div>
+      <div>
+        <a
+          class="back-btn btn btn-primary"
+          (click)="navigateTo('/default/offers/offers-list')"
+          ><i class="ti ti-arrow-left me-1"></i> Back</a
+        >
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="offersForm">
+      <div class="row">
+        <div class="col-md-6 mb-2">
+          <label class="form-label">
+            Title
+            <span class="text-danger">*</span>
+          </label>
+          <input
+            formControlName="title"
+            placeholder="Title"
+            type="text"
+            class="form-control"
+          />
+        </div>
+        <div class="col-md-6 mb-2">
+          <label class="form-label">
+            Products
+            <span class="text-danger">*</span>
+          </label>
+          <ng-select
+            class="ng-select-lg"
+            [items]="productOptions"
+            placeholder="Select Products"
+            bindLabel="label"
+            bindValue="_id"
+            [clearable]="false"
+            [multiple]="true"
+            formControlName="productIds"
+          >
+          </ng-select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-2">
+          <label class="form-label"> Expiration Date </label>
+          <input
+            formControlName="expirationDate"
+            placeholder="Expiration Date"
+            type="date"
+            class="form-control"
+            [min]="today"
+          />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">
+            Status
+            <span class="text-danger">*</span></label
+          >
+          <select formControlName="status" class="form-control">
+            <option selected disabled [value]="null">Select Status</option>
+            <option value="active">Active</option>
+            <option value="inactive">InActive</option>
+          </select>
+        </div>
+        <div class="col-md-6 mb-2">
+          <label class="form-label"> Discount Percentage </label>
+          <input
+            formControlName="discountPercentage"
+            placeholder="Discount Percentage"
+            type="number"
+            class="form-control"
+            min="0"
+            max="100"
+          />
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label"> Discount Amount </label>
+          <input
+            formControlName="discountAmount"
+            placeholder="Discount Amount"
+            type="number"
+            class="form-control"
+          />
+        </div>
+      </div>
+
+      <hr class="my-3" />
+      <div class="row">
+        <div class="col-12">
+          <div class="d-flex justify-content-center">
+            <button
+              (click)="reset()"
+              type="submit"
+              class="btn reset-btn btn-primary"
+            >
+              <i class="fa-solid fa-arrows-rotate me-2"></i>
+              Reset
+            </button>
+            <button
+              type="submit"
+              [class]="userId ? 'btn-warning' : 'btn-success'"
+              class="btn submit-btn"
+              (click)="submit()"
+            >
+              <i
+                [class]="userId ? 'fa-pen-to-square' : 'fa-plus'"
+                class="fa-solid me-2"
+              ></i>
+              {{ userId ? "Update" : "Create" }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

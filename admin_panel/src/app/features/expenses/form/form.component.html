@@ -1,0 +1,89 @@
+<div class="card form-card">
+  <div class="card-header">
+    <div class="card-header-items">
+      <div>{{ f["_id"].value ? "Update" : "Create" }} Expenses</div>
+      <div>
+        <a
+          class="back-btn btn btn-primary"
+          (click)="navigateTo('/default/expenses/list')"
+        >
+          <i class="ti ti-arrow-left me-1"></i> Back</a
+        >
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="expenseForm">
+      <div class="row">
+        <div class="col-md-6 mb-2">
+          <label class="form-label">
+            Date
+            <span class="text-danger">*</span>
+          </label>
+          <input
+            formControlName="date"
+            placeholder="Date"
+            type="date"
+            class="form-control"
+          />
+        </div>
+        <div class="col-md-6 mb-2">
+          <label class="form-label">
+            Amount⟨₹⟩
+            <span class="text-danger">*</span>
+          </label>
+          <input
+            formControlName="amount"
+            placeholder="Amount"
+            type="number"
+            class="form-control"
+          />
+          <div></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 mb-2">
+          <label class="form-label">
+            Description
+            <span class="text-danger">*</span>
+          </label>
+          <input
+            formControlName="description"
+            placeholder="Description"
+            type="text"
+            class="form-control"
+          />
+        </div>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="row">
+          <div class="col-12">
+            <div class="d-flex justify-content-center">
+              <button
+                (click)="reset()"
+                type="submit"
+                class="btn reset-btn btn-primary"
+              >
+                <i class="fa-solid fa-arrows-rotate me-2"></i>
+                Reset
+              </button>
+              <button
+                type="submit"
+                [class]="f['_id'].value ? 'btn-warning' : 'btn-success'"
+                class="btn submit-btn"
+                (click)="submit()"
+              >
+                <i
+                  [class]="f['_id'].value ? 'fa-pen-to-square' : 'fa-plus'"
+                  class="fa-solid me-2"
+                ></i>
+                {{ f["_id"].value ? "Update" : "Create" }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

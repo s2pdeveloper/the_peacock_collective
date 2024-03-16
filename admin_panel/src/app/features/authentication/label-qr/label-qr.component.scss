@@ -1,0 +1,60 @@
+// .card {
+//   width: calc(25% - 10px); /* 25% to fit 4 boxes in a row, -10px for the gap */
+//   height: 100px;
+// }
+.productCode {
+  font-weight: bold;
+  // margin-right: 0.6rem;
+  font-size: 0.3rem;
+  color: #7b3f04;
+  width: 1.4rem;
+}
+.saleRate {
+  color: #e71d60;
+  font-weight: bolder;
+  font-size: 0.4rem;
+  text-wrap: nowrap;
+}
+.qr-label {
+  // margin-top: -1.4rem;
+  .productCode {
+    font-weight: bold;
+    // margin-right: 0.6rem;
+    font-size: 0.4rem;
+
+    color: #7b3f04;
+  }
+  .saleRate {
+    color: #e71d60;
+    font-weight: bolder;
+    font-size: 0.4rem;
+  }
+}
+.wrapper {                
+  width: 3.2rem;                          
+  display: flex;
+  // justify-content: center;
+  align-items: center;
+  border: 0.01rem solid #b6bfc1;
+}
+@media print {
+  .pagebreak {
+    page-break-before: always;
+  } /* page-break-after works, as well */
+  body {
+    margin: 0;
+  }
+  .notPrint {
+    display: none !important;
+  }
+  button,
+  ::ng-deep .pc-header {
+    display: none !important;
+  }
+  .pc-sidebar {
+    display: none !important;
+  }
+  .pc-sidebar .navbar-wrapper {
+    display: none !important;
+  }
+}

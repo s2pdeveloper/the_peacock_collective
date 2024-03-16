@@ -1,0 +1,67 @@
+<div class="table-container">
+  <div class="card table-card">
+    <div class="card-header notPrint">
+      <div class="row justify-content-between">
+        <div class="col-4">
+          <h3>
+            QR Code List
+
+            <span class="badge rounded-pill text-bg-info ms-2 fw-bold">
+              {{ this.qrList.length }}
+            </span>
+          </h3>
+        </div>
+        <div class="d-flex col-auto justify-content-end">
+          <button
+            (click)="print()"
+            type="submit"
+            [class]="'btn-success'"
+            class="btn submit-btn me-2"
+          >
+            <i [class]="'fa fa-print'" class="fa-solid me-2"></i>
+            Print
+          </button>
+          <button (click)="back()" class="btn add-btn">
+            <i class="ti ti-arrow-left me-1"></i>
+            Back
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body p-0 bg-light-warning">
+      <div class="row row-cols-10 g-0">
+        <div class="col" *ngFor="let q of this.qrList; let i = index">
+          <div class="card text-center">
+            <qrcode
+              [qrdata]="websiteUrl + q.productId"
+              [width]="160"
+              [errorCorrectionLevel]="'M'"
+              [imageSrc]="'./assets/jpLogo.jpeg'"
+              [imageHeight]="35"
+              [imageWidth]="35"
+            ></qrcode>
+            <label class="qr-label">
+              <span class="productCode"> {{ q.productCode }}</span>
+              <span class="saleRate">
+                ₹ {{ getNumber(q.saleRate) }}
+                <!--  {{ q.saleRate + 1000 | number: "1.1-1" }} -->
+              </span>
+            </label>
+            <!-- <div class="row m-0">
+              <div class="col-12 ps-0"></div>
+            </div> -->
+            <!-- <div class="row">
+              <div class="col">
+                <small>{{ q.name }}</small>
+                  <img height="75" src="./assets/jpLogo.png" alt="" />
+                <h6 class="mt-1">{{ q.productCode }}</h6>
+              </div>
+            </div> -->
+          </div>
+          <!-- <div class="pagebreak" *ngIf="(i + 1) % 24 == 0"></div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

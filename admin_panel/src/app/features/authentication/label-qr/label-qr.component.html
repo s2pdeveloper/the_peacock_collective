@@ -1,0 +1,63 @@
+<div class="table-container">
+  <div class="card table-card">
+    <div class="card-header notPrint">
+      <div class="row justify-content-between">
+        <div class="col-4">
+          <h3>
+            QR Code List
+
+            <span class="badge rounded-pill text-bg-info ms-2 fw-bold">
+              {{ this.qrList.length }}
+            </span>
+          </h3>
+        </div>
+        <div class="d-flex col-auto justify-content-end">
+          <button
+            (click)="print()"
+            type="submit"
+            [class]="'btn-success'"
+            class="btn submit-btn me-2"
+          >
+            <i [class]="'fa fa-print'" class="fa-solid me-2"></i>
+            Print
+          </button>
+          <button (click)="back()" class="btn add-btn">
+            <i class="ti ti-arrow-left me-1"></i>
+            Back
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body p-0">
+      <div class="row row-cols-10 g-0 justify-content-start mx-3">
+      <!-- <div class="main-wrapper"> -->
+
+        <!-- <div class="col" *ngFor="let q of this.qrList; let i = index">
+          <div class="card text-center">
+            <img src="./assets/jpLogo.jpeg" [width]="100" [height]="100" />
+            <label class="qr-label">
+              <span class="productCode"> {{ q.productCode }}</span>
+              <span class="saleRate">
+                ₹ {{ getNumber(q.saleRate) }}
+              </span>
+            </label>
+          </div>
+        </div> -->
+
+        <div class="wrapper" *ngFor="let q of this.qrList; let i = index">
+          <img src="./assets/jpLogo.jpeg" [width]="20" [height]="20" />
+          <p class="productCode mb-0 mx-1">
+            {{ q.productCode }}<br />
+            <b class="saleRate"> ₹ {{ getNumber(q.saleRate) }}</b>
+          </p>
+
+          <!-- <label class="qr-label">
+              <span class="productCode"> {{ q.productCode }} </span> <br />
+              <span class="saleRate"> ₹ {{ getNumber(q.saleRate) }} </span>
+            </label> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

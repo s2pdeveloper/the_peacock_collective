@@ -1,0 +1,138 @@
+<div class="card form-card">
+  <div class="card-header">
+    <div class="card-header-items">
+      <div>{{ form["_id"].value ? "Update" : "Create" }} Product</div>
+      <div>
+        <a class="back-btn btn btn-primary" (click)="back()">
+          <i class="ti ti-arrow-left me-1"></i> Back</a
+        >
+      </div>
+    </div>
+  </div>
+  <div class="card-body mt-3 justify-content-center">
+    <form [formGroup]="productForm">
+      <div class="row">
+        <!-- Categories -->
+        <div class="col-md-4 mb-3">
+          <label class="form-label">
+            Categories
+            <span class="text-danger">*</span>
+          </label>
+          <select
+            class="form-select"
+            formControlName="category"
+            (change)="getProductCode($event)"
+          >
+            <option selected disabled [value]="null">Select Category</option>
+            <option *ngFor="let cat of categoryOptions" [value]="cat._id">
+              {{ cat.name }}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label class="form-label">
+            Product Code
+            <span class="text-danger">*</span>
+          </label>
+          <input
+            formControlName="code"
+            placeholder="Product Code"
+            type="text"
+            class="form-control"
+            readonly
+          />
+        </div>
+        <div class="col-md-4 mb-3">
+          <label class="form-label">
+            Product Name
+            <span class="text-danger">*</span>
+          </label>
+          <input
+            formControlName="name"
+            placeholder="Product Name"
+            type="text"
+            class="form-control"
+          />
+        </div>
+
+        <div class="col-md-4 mb-3">
+          <label class="form-label"> Standard Rate </label>
+          <input
+            formControlName="standardRate"
+            placeholder="Standard Rate"
+            type="number"
+            class="form-control"
+          />
+        </div>
+        <div class="col-md-4 mb-3">
+          <label class="form-label"> GST </label>
+          <input
+            formControlName="gst"
+            placeholder="GST"
+            type="number"
+            class="form-control"
+          />
+        </div>
+        <div class="col-md-4 mb-2">
+          <label class="form-label">
+            Status <span class="text-danger">*</span></label
+          >
+          <select formControlName="status" class="form-control">
+            <option selected disabled [value]="null">Select Status</option>
+            <option value="active">Active</option>
+            <option value="inactive">InActive</option>
+          </select>
+        </div>
+        <div class="col-md-12 mb-3">
+          <label class="form-label">
+            Short Description
+            <span class="text-danger">*</span>
+          </label>
+          <input
+            formControlName="shortDescription"
+            placeholder="Short Description"
+            type="text"
+            class="form-control"
+          />
+        </div>
+
+        <div class="col-md-12">
+          <label class="form-label"> Description </label>
+          <textarea
+            class="form-control"
+            formControlName="description"
+            placeholder="Description "
+            rows="3"
+          ></textarea>
+        </div>
+      </div>
+    </form>
+    <hr />
+    <div class="row">
+      <div class="col-12">
+        <div class="d-flex justify-content-center">
+          <button
+            (click)="resetForm()"
+            type="submit"
+            class="btn px-5 btn-primary mx-2 shadow rounded rounded-3 d-flex align-items-center"
+          >
+            <i class="fa-solid fa-arrows-rotate me-2"></i>
+            Reset
+          </button>
+          <button
+            type="submit"
+            [class]="form['_id'].value ? 'btn-warning' : 'btn-success'"
+            class="btn px-5 btn-success shadow rounded rounded-3 mx-2 d-flex align-items-center"
+            (click)="onSubmit()"
+          >
+            <i
+              [class]="form['_id'].value ? 'fa-pen-to-square' : 'fa-plus'"
+              class="fa-solid me-2"
+            ></i>
+            {{ form["_id"].value ? "Update" : "Save" }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+.card-title {
+  margin-bottom: 0;
+  padding: 0.6rem 1rem;
+  background: transparentize(#af6c3e, 0.9);
+  h3 {
+    color: #af6c3e;
+  }
+}
+
+.transparent {
+  background: transparentize(#6ea0ab, 0.9);
+}
+.card {
+  border-bottom: 4px solid #8d552f;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.fa-inr{
+    font-size: .9rem;
+    color: rgb(59, 61, 59);
+}

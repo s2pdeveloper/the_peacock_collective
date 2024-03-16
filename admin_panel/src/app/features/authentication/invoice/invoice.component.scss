@@ -1,0 +1,75 @@
+@media print {
+  button,
+  ::ng-deep .pc-header {
+    display: none !important;
+  }
+  .pc-sidebar {
+    display: none !important;
+  }
+}
+
+.table-responsive {
+  overflow-x: visible;
+}
+
+.table > :not(caption) > * > * {
+  padding: 0;
+}
+
+td {
+  height: 1.4rem;
+}
+
+th,
+td {
+  border: 2px solid #ddd;
+  padding: 3px;
+}
+
+.sub-table {
+  // margin: 0;
+  margin: 0px 0px 0px 10px;
+
+  tr,
+  td {
+    padding: 0;
+    border: none;
+  }
+}
+
+.header-name {
+  color: black;
+  margin-left: 30rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.thank-u-note {
+  font-size: 1.3rem;
+  font-style: italic;
+  color: black;
+  font-weight: bold;
+}
+
+.from-name,
+.bill-to {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.text-bold {
+  color: black;
+  font-size: 0.9rem;
+  font-weight: bold;
+  font-style: italic;
+}
+// }
+
+.bg{
+  background-color: #cd007e;
+}
+
+.fr{
+  float: right;
+  margin-right: 5px;
+}

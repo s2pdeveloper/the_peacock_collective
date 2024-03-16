@@ -1,0 +1,22 @@
+<!-- <div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-3">
+      <div class="card" (click)="navigateTo()">
+        <div class="card-body d-flex justify-content-center align-items-center">
+          <h4 class="text-center">Invoice Reports</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<div class="container w-75 vh-100">
+  <div class="row row-cols-2 row-cols-md-3 justify-content-center g-5">
+    <div class="col" *ngFor="let t of cards">
+      <div class="card" (click)="navigateTo(t)">
+        <div class="card-body d-flex align-self-center align-content-center">
+          <h5 class="card-title align-self-center">{{ t.displayName }}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

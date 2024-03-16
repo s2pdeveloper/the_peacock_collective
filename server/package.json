@@ -1,0 +1,40 @@
+{
+  "name": "node_express_setup",
+  "version": "1.0.0",
+  "description": "Node Express Mongoose Setup ",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon src/index.js",
+    "dev": "clear && nodemon src/index.js",
+    "prettier": "prettier --write \"src/**/*.js\"",
+    "prettier:check": "prettier --check \"src/**/*.js\"",
+    "lint": "eslint \"src/**/*.js\" --fix",
+    "lint:check": "eslint \"src/**/*.js\"",
+    "prepare": "husky install",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pratik Bangadkar",
+  "license": "ISC",
+  "dependencies": {
+    "compression": "1.7.4",
+    "cookie-parser": "1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "helmet": "7.1.0",
+    "mongoose": "^8.0.3",
+    "regenerator-runtime": "0.14.1",
+    "winston": "3.11.0"
+  },
+  "devDependencies": {
+    "eslint": "8.56.0",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-import": "2.29.1",
+    "eslint-plugin-prettier": "5.1.2",
+    "husky": "^8.0.3",
+    "nodemon": "^3.0.2",
+    "prettier": "^3.1.1"
+  }
+}
