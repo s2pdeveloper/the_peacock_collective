@@ -88,7 +88,8 @@
                       <div class="col-10 dropdownItem px-3">
                         <swiper-container class="img-box" slides-per-view="4">
                           <swiper-slide
-                            class="px-2 prod-cart"
+                            class="px-2 prod-cart" 
+                            (click)="navigateTo('/product/product-details')"
                             *ngFor="let p of categoryProducts"
                             ><img class="prod-img w-100" [src]="p?.img" />
                             <div class="text-box p-3">

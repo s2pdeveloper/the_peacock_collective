@@ -19,6 +19,22 @@
 select:focus-visible {
   outline: 0;
 }
+.background-primary {
+  background-color: #f8f8f8;
+}
+.btn-dark,
+.btn-light {
+  width: 100% !important;
+  padding: 0.5rem 0 !important;
+  border-radius: 0 !important;
+}
+input {
+  background-color: #e3e3e3;
+  border: 0;
+  &:focus {
+    background-color: #e3e3e3;
+  }
+}
 .product-row {
   transition: ease-out 0.3s;
   .card {

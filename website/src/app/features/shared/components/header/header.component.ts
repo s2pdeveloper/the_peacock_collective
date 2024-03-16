@@ -143,12 +143,30 @@ export class HeaderComponent {
 
   navigateTo(path: any) {
     this.router.navigate([path]);
+    let ele: any = document.getElementById('topbar');
+    ele.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+      inline: 'nearest',
+    });
   }
   navigateWithParams(path: any, param: any) {
     this.router.navigate([path], { queryParams: { brand: param } });
+    let ele: any = document.getElementById('topbar');
+    ele.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+      inline: 'nearest',
+    });
   }
   navigateToDynamic(id: any) {
     const path: String = `pages/${id}`;
     this.router.navigate([path]);
+    let ele: any = document.getElementById('topbar');
+    ele.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+      inline: 'nearest',
+    });
   }
 }

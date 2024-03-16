@@ -41,8 +41,44 @@ a{
     margin: 12px auto;
   }
 }
-
-
+.form-control,.input-number {
+  border: 0;
+  border-radius: 0;
+  padding: 0.5rem 1rem !important;
+}
+.form-control:focus,.input-number:focus {
+  box-shadow: none;
+  outline: none;
+  border-bottom: 1px solid #000;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+}
+.form-control:focus-visible,.input-number:focus-visible {
+  border-bottom: 1px solid #000;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  outline: none;
+}
+.btn-dark,
+.btn-light {
+  width: 100% !important;
+  padding: 0.5rem 0 !important;
+  border-radius: 0 !important;
+}
+.btn:focus {
+  box-shadow: none;
+}
+.btn:active{
+  border: 0;
+}
+input:focus{
+  box-shadow: none;
+}
+.background-primary {
+  background-color: #f8f8f8;
+}
 @media (max-width:771px){
     .top-left{
         padding: 40px;
