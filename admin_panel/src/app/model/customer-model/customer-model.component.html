@@ -1,0 +1,176 @@
+<div class="container-fluid p-0">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header p-3 d-flex justify-content-between">
+          <h3>Create Customer</h3>
+          <button
+            (click)="modelService.dismiss()"
+            class="btn btn-white border border-0"
+          >
+            <i
+              class="fa fa-md text-primary fa-xmark align-self-center shadow p-1 mb-2 bg-white rounded"
+            ></i>
+          </button>
+        </div>
+        <div class="card-body p-4">
+          <form [formGroup]="customerForm">
+            <div class="row">
+              <div class="col-md-6 mb-2">
+                <label class="form-label">
+                  Name
+                  <span class="text-danger">*</span>
+                </label>
+                <input
+                  formControlName="customerName"
+                  placeholder="Full Name"
+                  type="text"
+                  class="form-control"
+                />
+                <div></div>
+              </div>
+              <div class="col-md-6 mb-2">
+                <label class="form-label">
+                  Mobile Number
+                  <span class="text-danger">*</span>
+                </label>
+                <input
+                  formControlName="mobile"
+                  placeholder="Mobile"
+                  type="text"
+                  class="form-control"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-2">
+                <label class="form-label"> Email </label>
+                <input
+                  formControlName="email"
+                  placeholder="Email"
+                  type="text"
+                  class="form-control"
+                />
+              </div>
+              <div class="col-md-6 mb-2">
+                <label class="form-label"> Alternate Mobile </label>
+                <input
+                  formControlName="whatsUp"
+                  placeholder="AlternateMobile"
+                  type="text"
+                  class="form-control"
+                />
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label"> DOB </label>
+                <input
+                  formControlName="DOB"
+                  placeholder="DOB"
+                  type="date"
+                  class="form-control"
+                />
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label"> Currency </label>
+                <select formControlName="currency" class="form-control">
+                  <option selected disabled value="null">
+                    Select Currency
+                  </option>
+                  <option value="INR">INR</option>
+                  <option value="USD">USD</option>
+                </select>
+              </div>
+            </div>
+            <hr class="my-3" />
+            <h5 class="">Address details</h5>
+            <div class="row" formGroupName="address">
+              <div class="col-md-4 mb-2">
+                <label class="form-label"> Line 1 </label>
+                <input
+                  formControlName="line1"
+                  placeholder="line1"
+                  type="text"
+                  class="form-control"
+                />
+              </div>
+              <div class="col-md-4 mb-2">
+                <label class="form-label"> Line 2 </label>
+                <input
+                  formControlName="line2"
+                  placeholder="line2"
+                  type="text"
+                  class="form-control"
+                />
+              </div>
+              <div class="col-md-4 mb-2">
+                <label class="form-label"> City </label>
+                <input
+                  formControlName="city"
+                  placeholder="city"
+                  type="text"
+                  class="form-control"
+                />
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label"> State </label>
+                <input
+                  formControlName="state"
+                  placeholder="state"
+                  type="text"
+                  class="form-control"
+                />
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label"> Country </label>
+                <input
+                  formControlName="country"
+                  placeholder="country"
+                  type="text"
+                  class="form-control"
+                />
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label"> Pin Code </label>
+                <input
+                  formControlName="pinCode"
+                  placeholder="pinCode"
+                  type="number"
+                  class="form-control"
+                />
+              </div>
+            </div>
+            <hr class="my-3" />
+            <div class="row">
+              <div class="col-12">
+                <div class="d-flex justify-content-center">
+                  <button
+                    (click)="reset()"
+                    type="submit"
+                    class="btn reset-btn btn-primary mx-2"
+                  >
+                    <i class="fa-solid fa-arrows-rotate me-2"></i>
+                    Reset
+                  </button>
+
+                  <button
+                    type="submit"
+                    class="btn submit-btn btn-success"
+                    (click)="submit()"
+                  >
+                    <i class="fa-solid fa-plus me-2"></i>
+                    Save
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

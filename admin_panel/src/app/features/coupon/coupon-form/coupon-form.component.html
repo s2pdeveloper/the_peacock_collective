@@ -1,0 +1,118 @@
+<div class="card form-card">
+  <div class="card-header">
+    <div class="card-header-items">
+      <div class="ms-2">{{ userId ? "Update" : "Create" }} Coupon</div>
+      <div>
+        <a
+          class="back-btn btn btn-primary"
+          (click)="navigateTo('/default/coupon/coupon-list')"
+          ><i class="ti ti-arrow-left me-1"></i> Back</a
+        >
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="couponForm">
+      <div class="row">
+        <div class="col-md-6 mb-2">
+          <label class="form-label">
+            Coupon Code
+            <span class="text-danger">*</span>
+          </label>
+          <input
+            formControlName="couponCode"
+            placeholder="Coupon Code"
+            type="text"
+            class="form-control"
+            readonly
+          />
+          <div></div>
+        </div>
+        <div class="col-md-6 mb-2">
+          <label class="form-label">
+            Description
+            <span class="text-danger">*</span>
+          </label>
+          <input
+            formControlName="description"
+            placeholder="Description"
+            type="text"
+            class="form-control"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-2">
+          <label class="form-label"> Expiration Date </label>
+          <input
+            formControlName="expirationDate"
+            placeholder="Expiration Date"
+            type="date"
+            class="form-control"
+            [min]="today"
+          />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">
+            Status
+            <span class="text-danger">*</span></label
+          >
+          <select formControlName="status" class="form-control">
+            <option selected disabled [value]="null">Select Status</option>
+            <option value="active">Active</option>
+            <option value="inactive">InActive</option>
+          </select>
+        </div>
+        <div class="col-md-6 mb-2">
+          <label class="form-label"> Discount Percentage </label>
+          <input
+            formControlName="discountPercentage"
+            placeholder="Discount Percentage"
+            type="number"
+            class="form-control"
+            min="0"
+            max="100"
+          />
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label"> Discount Amount </label>
+          <input
+            formControlName="discountAmount"
+            placeholder="Discount Amount"
+            type="number"
+            class="form-control"
+          />
+        </div>
+      </div>
+
+      <hr class="my-3" />
+      <div class="row">
+        <div class="col-12">
+          <div class="d-flex justify-content-center">
+            <button
+              (click)="reset()"
+              type="submit"
+              class="btn reset-btn btn-primary"
+            >
+              <i class="fa-solid fa-arrows-rotate me-2"></i>
+              Reset
+            </button>
+            <button
+              type="submit"
+              [class]="userId ? 'btn-warning' : 'btn-success'"
+              class="btn submit-btn"
+              (click)="submit()"
+            >
+              <i
+                [class]="userId ? 'fa-pen-to-square' : 'fa-plus'"
+                class="fa-solid me-2"
+              ></i>
+              {{ userId ? "Update" : "Create" }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

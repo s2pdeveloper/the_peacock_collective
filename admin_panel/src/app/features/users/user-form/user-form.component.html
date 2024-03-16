@@ -1,0 +1,113 @@
+<div class="card form-card">
+  <div class="card-header">
+    <div class="card-header-items">
+      <div>{{ userId ? "Update" : "Create" }} User</div>
+      <div>
+        <a
+          class="back-btn btn btn-primary"
+          (click)="navigateTo('/default/user/user-list')"
+        >
+          <i class="ti ti-arrow-left me-1"></i> Back</a
+        >
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="userForm">
+      <div class="row">
+        <div class="col-md-6 mb-2">
+          <label class="form-label">
+            Name
+            <span class="text-danger">*</span>
+          </label>
+          <input
+            formControlName="name"
+            placeholder="Full Name"
+            type="text"
+            class="form-control"
+          />
+          <div></div>
+        </div>
+        <div class="col-md-6 mb-2">
+          <label class="form-label">
+            Mobile Number
+            <span class="text-danger">*</span>
+          </label>
+          <input
+            formControlName="phone"
+            placeholder="Mobile"
+            type="text"
+            class="form-control"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-2">
+          <label class="form-label">
+            Email
+            <span class="text-danger">*</span>
+          </label>
+          <input
+            formControlName="email"
+            placeholder="Email"
+            type="text"
+            class="form-control"
+          />
+        </div>
+        <div class="col-md-6 mb-2">
+          <label class="form-label">
+            Role
+            <span class="text-danger">*</span>
+          </label>
+          <select class="form-select" formControlName="role">
+            <option [value]="null">Select Role</option>
+            <option value="Owner">Owner</option>
+            <option value="Employee">Employee</option>
+          </select>
+        </div>
+        <div class="col-md-6 mb-2">
+          <label class="form-label">
+            Password <span class="text-danger">*</span>
+          </label>
+          <div class="input-group">
+            <input
+              type="password"
+              class="input form-control input-inner-shadow"
+              formControlName="password"
+              placeholder="Password"
+            />
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="row">
+          <div class="col-12">
+            <div class="d-flex justify-content-center">
+              <button
+                (click)="reset()"
+                type="submit"
+                class="btn reset-btn btn-primary"
+              >
+                <i class="fa-solid fa-arrows-rotate me-2"></i>
+                Reset
+              </button>
+              <button
+                type="submit"
+                [class]="userId ? 'btn-warning' : 'btn-success'"
+                class="btn submit-btn"
+                (click)="submit()"
+              >
+                <i
+                  [class]="userId ? 'fa-pen-to-square' : 'fa-plus'"
+                  class="fa-solid me-2"
+                ></i>
+                {{ userId ? "Update" : "Create" }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

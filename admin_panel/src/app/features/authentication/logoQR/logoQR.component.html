@@ -1,0 +1,94 @@
+<div class="table-container">
+  <div class="card table-card">
+    <div class="card-header notPrint">
+      <div class="row justify-content-between">
+        <div class="col-4">
+          <h3>Logo print List</h3>
+        </div>
+        <div class="col-auto">
+          <div class="row">
+            <label
+              for="colFormLabelSm"
+              class="col-sm-auto col-form-label col-form-label-sm"
+            >
+              No of rows
+            </label>
+            <div class="col-sm-4">
+              <input
+                type="number"
+                class="form-control form-control-sm"
+                id="colFormLabelSm"
+                placeholder="Enter no of rows"
+                placeholder="col-form-label-sm"
+                [(ngModel)]="rows"
+                (ngModelChange)="setCount($event)"
+              />
+            </div>
+            <label
+              for="colFormLabelSm"
+              class="col-sm-auto col-form-label col-form-label-sm"
+            >
+              Total Logos
+            </label>
+            <div class="col-sm-4">
+              <input
+                type="number"
+                class="form-control form-control-sm"
+                id="colFormLabelSm"
+                placeholder="Total Count"
+                [(ngModel)]="qrList.length"
+                readonly
+              />
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-auto">
+          <div class="row">
+            <label
+              for="colFormLabelSm"
+              class="col-sm-auto col-form-label col-form-label-sm"
+            >
+              Total Logos
+            </label>
+            <div class="col-sm-6">
+              <input
+                type="number"
+                class="form-control form-control-sm"
+                id="colFormLabelSm"
+                placeholder="Total Count"
+                [(ngModel)]="count"
+                readonly
+              />
+            </div>
+          </div>
+
+        </div> -->
+        <div class="d-flex col-auto justify-content-end">
+          <button
+            (click)="print()"
+            type="submit"
+            [class]="'btn-success'"
+            class="btn submit-btn me-2"
+          >
+            <i [class]="'fa fa-print'" class="fa-solid me-2"></i>
+            Print
+          </button>
+          <button (click)="back()" class="btn add-btn">
+            <i class="ti ti-arrow-left me-1"></i>
+            Back
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body p-0 bg-light-warning">
+      <div class="row row-cols-6 row-cols-md-8 g-0 justify-content-start">
+        <div class="col" *ngFor="let q of this.qrList; let i = index">
+          <div class="card logo-card text-center">
+            <img class="img-fluid" src="./assets/logo.jpeg" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

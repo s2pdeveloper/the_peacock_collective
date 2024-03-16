@@ -1,0 +1,91 @@
+<div class="table-container pb-0 mt-0">
+  <div class="card table-card m-0">
+    <div class="card-title d-flex justify-content-between">
+      <h3>Product List</h3>
+      <!-- <button
+        (click)="passDataToParent()"
+        class="btn btn-white border border-0"
+      >
+        <i class="fa fa-md text-primary fa-xmark align-self-center"></i>
+      </button> -->
+      <button
+        type="submit"
+        class="btn btn-primary"
+        (click)="passDataToParent()"
+      >
+        Save & Close
+      </button>
+    </div>
+    <div class="card-header">
+      <div class="row justify-content-between">
+        <div class="col-4">
+          <div class="input-icons">
+            <div class="input-group input-group-sm">
+              <input
+                type="search"
+                class="form-control"
+                aria-label="Small"
+                placeholder="Search"
+                [(ngModel)]="search"
+                (input)="searchFn()"
+                aria-describedby="inputGroup-sizing-sm"
+              />
+              <div class="input-group-append">
+                <span class="input-group-text h-100" id="inputGroup-sizing-sm">
+                  <i class="ti ti-search"></i
+                ></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body p-3">
+      <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+          <thead class="thead">
+            <tr class="table-secondary">
+              <th scope="col" class="mx-auto text-center">Select</th>
+              <th scope="col" class="text-start">
+                Product Code - Product Name
+              </th>
+              <th scope="col">Balance Qty</th>
+              <th scope="col">Sale Price</th>
+            </tr>
+          </thead>
+          <tbody class="tbody mt-3">
+            <tr
+              *ngFor="
+                let p of saleProducts
+                  | searchFi1ter: search
+                  | slice
+                    : (page - 1) * pageSize
+                    : (page - 1) * pageSize + pageSize;
+                let i = index
+              "
+            >
+              <td scope="row" class="text-center">
+                <input
+                  [(ngModel)]="p.isChecked"
+                  type="checkbox"
+                  class="form-check-input"
+                />
+              </td>
+              <td class="text-start">
+                {{ p.productCode }} - {{ p.productName | titlecase }}
+              </td>
+              <td>{{ p.balanceQuantity }}</td>
+              <td>{{ p.salePrice }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <app-custom-pagination
+        [(page)]="page"
+        [(pageSize)]="pageSize"
+        [(collection)]="collection"
+        (myOutput)="onChangePage(page)"
+      ></app-custom-pagination>
+    </div>
+  </div>
+</div>

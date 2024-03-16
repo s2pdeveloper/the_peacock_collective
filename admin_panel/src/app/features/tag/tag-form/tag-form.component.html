@@ -1,0 +1,102 @@
+<div class="container-fluid">
+  <div class="row my-4">
+    <div class="col-12">
+      <div class="d-flex justify-content-center">
+        <div class="card form-card">
+          <div class="card-header">
+            <div class="card-header-items">
+              <div class="ms-2">{{ tagId ? "Update" : "Create" }} Tag</div>
+              <div>
+                <a
+                  class="back-btn btn btn-primary"
+                  (click)="navigateTo('/default/tag/tag-list')"
+                  ><i class="ti ti-arrow-left me-1"></i> Back</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="card-body p-2">
+            <form [formGroup]="tagForm">
+              <div class="row">
+                <div class="col-md-6 mb-2">
+                  <label class="form-label"
+                    >Title <span class="text-danger">*</span></label
+                  >
+                  <input
+                    formControlName="title"
+                    placeholder="Title"
+                    type="text"
+                    class="form-control"
+                  />
+                  <div></div>
+                </div>
+                <div class="col-md-6 mb-2 position-relative">
+                  <label class="form-label"
+                    >Image<span class="text-danger">*</span></label
+                  >
+                  <div class="input-group">
+                    <input
+                      formControlName="tag"
+                      placeholder="image"
+                      type="file"
+                      class="form-control"
+                      accept=".png,.jpeg,.jpg,.pdf,.svg,.gif"
+                      (change)="fileChosen($event)"
+                    />
+                    <div class="input-group-append">
+                      <span
+                        class="input-group-text h-100"
+                        id="inputGroup-sizing-sm"
+                        *ngIf="url"
+                        (click)="openUrl(url)"
+                      >
+                        <i class="fa fa-eye"></i>
+                      </span>
+                    </div>
+                  </div>
+                  <div></div>
+                </div>
+                <div class="col-md-6 mb-2">
+                  <label class="form-label"
+                    >Status<span class="text-danger">*</span></label
+                  >
+                  <select formControlName="status" class="form-control">
+                    <option value="active">Active</option>
+                    <option value="inactive">InActive</option>
+                  </select>
+                  <div></div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="d-flex justify-content-center">
+                    <button
+                      (click)="reset()"
+                      type="submit"
+                      class="btn px-5 btn-primary mx-2 shadow rounded rounded-3 d-flex align-items-center"
+                    >
+                      <i class="fa-solid fa-arrows-rotate me-2"></i>
+                      Reset
+                    </button>
+                    <button
+                      type="submit"
+                      [class]="tagId ? 'btn-warning' : 'btn-success'"
+                      class="btn px-5 btn-success shadow rounded rounded-3 mx-2 d-flex align-items-center"
+                      (click)="submit()"
+                    >
+                      <i
+                        [class]="tagId ? 'fa-pen-to-square' : 'fa-plus'"
+                        class="fa-solid me-2"
+                      ></i>
+                      {{ tagId ? "Update" : "Create" }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

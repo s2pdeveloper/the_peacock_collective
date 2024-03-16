@@ -1,0 +1,311 @@
+<div class="card form-card">
+  <div class="card-header">
+    <div class="card-header-items">
+      <div>{{ f["_id"].value ? "Update" : "Create" }} Inventory</div>
+      <div>
+        <a class="back-btn btn btn-primary" (click)="back()">
+          <i class="ti ti-arrow-left me-1"></i> Back</a
+        >
+      </div>
+    </div>
+  </div>
+  <div class="card-body justify-content-center">
+    <form [formGroup]="form">
+      <div class="row">
+        <div class="col-3">
+          <label class="form-label">Search</label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            [(ngModel)]="search"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </div>
+        <div class="col-2">
+          <label class="form-label">
+            Batch No
+            <span class="text-danger">*</span>
+          </label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            formControlName="batchNumber"
+            readonly
+          />
+        </div>
+        <div class="col-2">
+          <label class="form-label"> Batch Name </label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            formControlName="batchName"
+            [readOnly]="f['_id'].value"
+          />
+        </div>
+        <div class="col-3">
+          <label class="form-label">
+            Vendor Name
+            <span class="text-danger">*</span>
+          </label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            formControlName="vendorName"
+            [readOnly]="f['_id'].value"
+          />
+        </div>
+        <div class="col-2">
+          <label class="form-label">
+            Batch Date
+            <span class="text-danger">*</span>
+          </label>
+          <input
+            type="date"
+            class="form-control form-control-sm"
+            formControlName="batchDate"
+            [readOnly]="f['_id'].value"
+          />
+        </div>
+      </div>
+      <hr class="my-3" />
+      <div class="table-responsive" style="min-height: 25vh">
+        <table class="table table-hover table-sm table-bordered text-center">
+          <thead class="thead">
+            <tr class="table-primary">
+              <th scope="col">Product Code</th>
+              <th scope="col" class="text-start">Product Name</th>
+              <th scope="col">Unit Price</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Line Value</th>
+            </tr>
+          </thead>
+          <tbody class="tbody">
+            <tr
+              *ngFor="
+                let p of productDetails
+                  | searchFi1ter: search
+                  | slice
+                    : (page - 1) * pageSize
+                    : (page - 1) * pageSize + pageSize;
+                let i = index
+              "
+            >
+              <td>{{ p?.productCode }}</td>
+              <td class="text-start">{{ p?.productName | titlecase }}</td>
+              <td>
+                <div class="d-flex justify-content-center">
+                  <input
+                    class="form-control form-control-sm w-50"
+                    type="number"
+                    [(ngModel)]="p.purchaseRate"
+                    [ngModelOptions]="{ standalone: true }"
+                    (input)="lineValueRate(p)"
+                  />
+                </div>
+              </td>
+              <td>
+                <div class="d-flex justify-content-center">
+                  <input
+                    class="form-control form-control-sm w-50"
+                    type="number"
+                    [(ngModel)]="p.quantity"
+                    [ngModelOptions]="{ standalone: true }"
+                    (input)="lineValueRate(p)"
+                  />
+                </div>
+              </td>
+              <td>{{ p?.lineValue }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <app-custom-pagination
+        [(page)]="page"
+        [(pageSize)]="pageSize"
+        [(collection)]="collection"
+        (myOutput)="onChangePage(page)"
+      ></app-custom-pagination>
+      <!-- <div class="row justify-content-between">
+        <div class="col-auto pe-0">
+          <label class="form-label">Total Value</label>
+          <input
+            type="text"
+            readonly
+            class="form-control form-control-sm"
+            formControlName="totalPrice"
+          />
+        </div>
+        <div class="col-auto align-self-end pb-2">
+          <i class="fa fa-lg text-primary fa-plus mx-2"></i>
+        </div>
+        <div class="col-auto px-0">
+          <label class="form-label">Cart Price</label>
+          <input
+            type="number"
+            class="form-control form-control-sm"
+            formControlName="cartingPrice"
+            (input)="updateNetValue()"
+          />
+        </div>
+        <div class="col-auto align-self-end pb-2">
+          <i class="fa fa-lg text-primary fa-plus mx-2"></i>
+        </div>
+        <div class="col-auto px-0">
+          <label class="form-label">Other Expenses</label>
+          <input
+            type="number"
+            class="form-control form-control-sm"
+            formControlName="otherPrice"
+            (input)="updateNetValue()"
+          />
+        </div>
+        <div class="col-auto align-self-end pb-2">
+          <i class="fa fa-lg text-danger fa-equals mx-2"></i>
+        </div>
+        <div class="col-auto ps-0">
+          <label class="form-label">Net Value </label>
+          <input
+            type="number"
+            class="form-control form-control-sm"
+            formControlName="netValue"
+          />
+        </div>
+      </div> -->
+      <hr class="my-3" />
+      <div class="row justify-content-between">
+        <div class="col-12 d-flex pe-0">
+          <div class="input-group d-flex">
+            <span class="input-group-text">Total Value</span>
+            <input
+              type="text"
+              readonly
+              class="form-control form-control-sm d-inline w-25"
+              formControlName="totalPrice"
+            />
+            <i class="fa fa-lg text-primary fa-plus mx-2 align-self-center"></i>
+          </div>
+          <div class="input-group d-flex">
+            <span class="input-group-text">Cart Price</span>
+            <input
+              type="number"
+              class="form-control form-control-sm d-inline w-25"
+              formControlName="cartingPrice"
+              (input)="updateNetValue()"
+            />
+            <i class="fa fa-lg text-primary fa-plus mx-2 align-self-center"></i>
+          </div>
+          <div class="input-group d-flex">
+            <span class="input-group-text">Other Expenses</span>
+            <input
+              type="number"
+              class="form-control form-control-sm d-inline w-25"
+              formControlName="otherPrice"
+              (input)="updateNetValue()"
+            />
+            <i
+              class="fa fa-lg text-danger fa-equals mx-2 align-self-center"
+            ></i>
+          </div>
+          <div class="input-group d-flex">
+            <span class="input-group-text">Net Value</span>
+            <input
+              type="number"
+              class="form-control form-control-sm d-inline w-25"
+              formControlName="netValue"
+            />
+            <span class="mx-2"></span>
+            <!-- <i class="fa fa-lg text-danger fa-equals  mx-2 align-self-center"></i> -->
+          </div>
+        </div>
+
+        <!-- <div class="col-auto align-self-end pb-2">
+          <i class="fa fa-lg text-primary fa-plus mx-1"></i>
+        </div> -->
+        <!-- <div class="col-3 px-0">
+          <label class="form-label">Cart Price</label>
+          <input
+            type="number"
+            class="form-control form-control-sm d-inline w-50 mx-2"
+            formControlName="cartingPrice"
+            (input)="updateNetValue()"
+          />
+          <i class="fa fa-lg text-primary fa-plus "></i>
+
+        </div> -->
+        <!-- <div class="col-auto align-self-end pb-2">
+          <i class="fa fa-lg text-primary fa-plus mx-1"></i>
+        </div> -->
+        <!-- <div class="col-auto px-0">
+          <label class="form-label">Other Expenses</label>
+          <input
+            type="number"
+            class="form-control form-control-sm d-inline w-50 mx-2"
+            formControlName="otherPrice"
+            (input)="updateNetValue()"
+          />
+          <i class="fa fa-lg text-danger fa-equals  "></i>
+
+        </div> -->
+        <!-- <div class="col-auto align-self-end pb-2">
+          <i class="fa fa-lg text-danger fa-equals mx-1"></i>
+        </div> -->
+        <!-- <div class="col-2 ps-0">
+          <label class="form-label">Net Value </label>
+          <input
+            type="number"
+            class="form-control form-control-sm d-inline w-50 mx-2"
+            formControlName="netValue"
+          />
+        </div> -->
+      </div>
+      <hr class="my-3" />
+
+      <div class="row">
+        <div class="col-12">
+          <div class="d-flex justify-content-center">
+            <button
+              type="submit"
+              class="btn reset-btn btn-primary"
+              (click)="resetForm()"
+            >
+              <i class="fa-solid fa-arrows-rotate me-2"></i>
+              Reset
+            </button>
+
+            <button
+              type="submit"
+              class="btn reset-btn btn-secondary"
+              (click)="addProduct()"
+            >
+              <i class="fa fa-plus-circle me-2" aria-hidden="true"></i>
+              Esc
+            </button>
+
+            <button
+              type="submit"
+              class="btn reset-btn btn-info"
+              (click)="preview()"
+            >
+              <i class="fa-solid fa-eye me-2"></i>
+              Preview
+            </button>
+
+            <button
+              type="submit"
+              [class]="f['_id'].value ? 'btn-warning' : 'btn-success'"
+              class="btn submit-btn"
+              [disabled]="!isPreview"
+              (click)="onSubmit()"
+            >
+              <i
+                [class]="f['_id'].value ? 'fa-pen-to-square' : 'fa-plus'"
+                class="fa-solid me-2"
+              ></i>
+              {{ f["_id"].value ? "Update" : "Create" }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

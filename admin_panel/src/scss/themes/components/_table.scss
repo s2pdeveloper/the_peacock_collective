@@ -1,0 +1,36 @@
+// ============================
+//     Table css start
+// ============================
+
+.table {
+  &.table-align-center {
+    td,
+    th {
+      vertical-align: middle;
+    }
+  }
+  thead th {
+    padding: 0.5rem 0.75rem;
+  }
+  tbody td {
+    padding: 0.25rem 0.5rem;
+  }
+  td,
+  th {
+    vertical-align: middle;
+  }
+  &.table-borderless {
+    td,
+    th {
+      border: none !important;
+    }
+  }
+}
+
+.table-hover tbody tr:hover {
+  background-color: transparentize($primary, 0.97);
+}
+.active > .page-link {
+  border: none;
+  background-color: $primary;
+}

@@ -1,0 +1,418 @@
+<div class="card form-card">
+  <div class="card-header">
+    <div class="card-header-items">
+      <div>{{ f["_id"].value ? "Update" : "Create" }} Invoice</div>
+      <div>
+        <a class="back-btn btn btn-primary" (click)="back()">
+          <i class="ti ti-arrow-left me-1"></i> Back</a
+        >
+      </div>
+    </div>
+  </div>
+  <div class="card-body justify-content-center">
+    <form [formGroup]="form">
+      <div class="row">
+        <div class="col-12 d-flex justify-content-between">
+          <div>
+            <label class="form-label">Invoice Number</label>
+            <input
+              readonly
+              formControlName="invoiceNo"
+              type="text"
+              class="form-control form-control-sm"
+            />
+          </div>
+
+          <div>
+            <label class="form-label">Customer</label>
+            <div class="input-group d-flex flex-nowrap">
+              <ng-select
+                class="ng-select-sm"
+                [items]="customerOption"
+                placeholder="Select Customer"
+                bindLabel="customerName"
+                bindValue="_id"
+                [clearable]="false"
+                formControlName="customerId"
+                (change)="setCustomerInfo($event)"
+              >
+              </ng-select>
+              <span
+                role="button"
+                class="input-group-text bg-danger"
+                (click)="openCustomerModel()"
+              >
+                <i class="fa fa-lg text-white fa-plus align-self-center"></i>
+              </span>
+            </div>
+          </div>
+          <div>
+            <label class="form-label">Mobile</label>
+            <ng-select
+              class="ng-select-sm"
+              [items]="customerOption"
+              placeholder="Select Mobile"
+              bindLabel="mobile"
+              bindValue="_id"
+              [clearable]="false"
+              [multiple]="false"
+              formControlName="customerId"
+              (change)="setCustomerInfo($event)"
+            >
+            </ng-select>
+            <!-- <input
+              readonly
+              formControlName="mobile"
+              type="text"
+              class="form-control form-control-sm"
+            /> -->
+          </div>
+          <div>
+            <label class="form-label">Whatsapp</label>
+            <input
+              formControlName="whatsUp"
+              readonly
+              type="number"
+              class="form-control form-control-sm"
+            />
+          </div>
+          <!-- <div>
+            <label class="form-label">Email</label>
+            <input
+              readonly
+              formControlName="email"
+              type="text"
+              class="form-control form-control-sm"
+            />
+          </div> -->
+          <div>
+            <label class="form-label">Payment Type</label>
+            <ng-select
+              class="ng-select-sm"
+              [items]="paymentOptions"
+              placeholder="Select Payment Type"
+              bindLabel="label"
+              bindValue="value"
+              [clearable]="false"
+              [multiple]="false"
+              formControlName="paymentType"
+            >
+            </ng-select>
+          </div>
+        </div>
+      </div>
+      <hr class="my-3" />
+      <div class="row my-3 justify-content-center">
+        <div class="col-auto align-self-end">
+          <button (click)="openProductModel()" class="btn btn-danger">
+            <i class="fa-solid fa-cart-plus fa-lg me-1"></i>
+            Add Product
+          </button>
+        </div>
+        <!-- <div class="col-auto">
+          <button (click)="openModel(couponModel)" class="btn btn-success">
+            <i class="fa-solid fa-tag fa-lg me-1"></i>
+            Apply Coupons
+          </button>
+        </div>
+        <div class="col-auto">
+          <button (click)="openModel(offersModel)" class="btn btn-info">
+            <i class="fa-solid fa-gift fa-lg me-1"></i>
+            View Offers
+          </button>
+        </div> -->
+      </div>
+      <hr class="my-3" />
+      <div class="table-responsive" style="min-height: 35vh">
+        <table class="table table-hover table-sm table-bordered text-center">
+          <thead class="thead">
+            <tr class="table-primary">
+              <th scope="col">Product Code</th>
+              <th scope="col" class="text-start">Product Name</th>
+              <th scope="col">Sale Price</th>
+              <th scope="col">Quantity</th>
+              <!-- <th scope="col">Line Value</th>
+              <th scope="col">Gst</th> -->
+              <th scope="col">Total Price</th>
+            </tr>
+          </thead>
+          <tbody class="tbody">
+            <tr
+              *ngFor="
+                let p of productDetails
+                  | slice: page * pageSize - pageSize : page * pageSize;
+                let i = index
+              "
+            >
+              <td>{{ p?.productCode }}</td>
+              <td class="text-start">{{ p?.productName | titlecase }}</td>
+              <td>
+                <input
+                  type="number"
+                  class="form-control form-control-sm d-inline w-50"
+                  [(ngModel)]="p.salePrice"
+                  [ngModelOptions]="{ standalone: true }"
+                  (input)="lineValueRate(p)"
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="form-control form-control-sm d-inline w-50"
+                  [(ngModel)]="p.quantity"
+                  [ngModelOptions]="{ standalone: true }"
+                  (input)="lineValueRate(p)"
+                />
+              </td>
+              <!-- <td>{{ p?.lineValue }}</td>
+              <td>{{ p?.appliedGst }}</td> -->
+              <td>{{ p?.totalValue }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <app-custom-pagination
+        [(page)]="page"
+        [(pageSize)]="pageSize"
+        [(collection)]="collection"
+        (myOutput)="onChangePage(page)"
+      ></app-custom-pagination>
+      <hr class="my-3" />
+      <!-- <div class="row justify-content-start">
+        <div class="col-3 d-flex pe-0">
+          <div class="input-group d-flex">
+            <span class="input-group-text">Line Value</span>
+            <input
+              type="number"
+              class="form-control form-control-sm d-inline w-25"
+              formControlName="lineValue"
+            />
+          </div>
+        </div>
+        <div class="col-3 d-flex pe-0">
+          <div class="input-group d-flex">
+            <span class="input-group-text">Total GST</span>
+            <input
+              type="number"
+              class="form-control form-control-sm d-inline w-25"
+              formControlName="gst"
+            />
+          </div>
+        </div>
+        <div class="col-3 d-flex pe-0">
+          <div class="input-group d-flex">
+            <span class="input-group-text">Net Value</span>
+            <input
+              type="number"
+              class="form-control form-control-sm d-inline w-25"
+              formControlName="netValue"
+            />
+          </div>
+        </div>
+      </div> -->
+      <div class="row justify-content-between">
+        <div class="col-12 d-flex pe-0">
+          <div class="input-group d-flex">
+            <span class="input-group-text">Total Prize</span>
+            <input
+              type="text"
+              readonly
+              class="form-control form-control-sm d-inline w-25"
+              formControlName="lineValue"
+            />
+            <i
+              class="fa fa-lg text-primary fa-minus mx-2 align-self-center"
+            ></i>
+          </div>
+          <!-- <div class="input-group d-flex">
+            <span class="input-group-text">Total GST</span>
+            <input
+              type="number"
+              class="form-control form-control-sm d-inline w-25"
+              formControlName="gst"
+              readonly
+            />
+            <i
+              class="fa fa-lg text-primary fa-minus mx-2 align-self-center"
+            ></i>
+          </div> -->
+          <div class="input-group d-flex">
+            <span class="input-group-text">Discount Rupees</span>
+            <input
+              type="number"
+              class="form-control form-control-sm d-inline w-25"
+              formControlName="coupon_offersAmount"
+              (input)="applyDiscount($event)"
+            />
+            <i
+              class="fa fa-lg text-danger fa-equals mx-2 align-self-center"
+            ></i>
+          </div>
+          <div class="input-group d-flex">
+            <span class="input-group-text">Net Value</span>
+            <input
+              type="number"
+              class="form-control form-control-sm d-inline w-25"
+              formControlName="netValue"
+              readonly
+            />
+            <span class="mx-2"></span>
+            <!-- <i class="fa fa-lg text-danger fa-equals  mx-2 align-self-center"></i> -->
+          </div>
+        </div>
+      </div>
+      <hr class="my-3" />
+
+      <div class="row">
+        <div class="col-12">
+          <div class="d-flex justify-content-center">
+            <button
+              type="submit"
+              class="btn reset-btn btn-primary"
+              (click)="resetForm()"
+            >
+              <i class="fa-solid fa-arrows-rotate me-2"></i>
+              Reset
+            </button>
+            <button
+              type="submit"
+              class="btn reset-btn btn-info"
+              (click)="preview()"
+            >
+              <i class="fa-solid fa-eye me-2"></i>
+              Preview
+            </button>
+
+            <button
+              type="submit"
+              [class]="f['_id'].value ? 'btn-warning' : 'btn-success'"
+              class="btn submit-btn"
+              [disabled]="!isPreview"
+              (click)="onSubmit()"
+            >
+              <i
+                [class]="f['_id'].value ? 'fa-pen-to-square' : 'fa-plus'"
+                class="fa-solid me-2"
+              ></i>
+              {{ f["_id"].value ? "Update" : "Create" }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<ng-template #couponModel let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Apply Coupons</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="table-responsive text-center">
+      <table class="table table-striped">
+        <thead class="thead">
+          <tr class="table-secondary">
+            <th scope="col">Select</th>
+            <th scope="col">Coupon Code</th>
+            <th scope="col">Description</th>
+            <th scope="col">Expiration Date</th>
+            <th scope="col">Discount</th>
+          </tr>
+        </thead>
+        <tbody class="tbody mt-3">
+          <tr *ngFor="let c of coupons; let i = index">
+            <td scope="row">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                [(ngModel)]="c.isApply"
+              />
+            </td>
+            <td scope="row">{{ c?.couponCode }}</td>
+            <td scope="row">{{ c?.description }}</td>
+            <td scope="row">{{ c?.expirationDate | date }}</td>
+            <td scope="row">
+              <span *ngIf="c?.discountPercentage; else elseBlock">
+                {{ c?.discountPercentage }}%
+              </span>
+              <ng-template #elseBlock>
+                {{ c?.discountAmount | currency: "INR" }}
+              </ng-template>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-primary"
+      (click)="applyCoupon()"
+    >
+      Apply
+    </button>
+  </div>
+</ng-template>
+<ng-template #offersModel let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">View Offers</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="table-responsive text-center">
+      <table class="table table-striped">
+        <thead class="thead">
+          <tr class="table-secondary">
+            <th scope="col">Sr. No.</th>
+            <th scope="col">Title</th>
+            <th scope="col">Products</th>
+            <th scope="col">Expiration Date</th>
+            <th scope="col">Discount</th>
+          </tr>
+        </thead>
+        <tbody class="tbody mt-3">
+          <tr *ngFor="let c of offers; let i = index">
+            <td scope="row">{{ i + 1 }}</td>
+            <td scope="row">{{ c?.title }}</td>
+            <td scope="row">
+              <ng-container *ngFor="let p of c?.products; let j = index">
+                {{ p?.code }}
+                <span *ngIf="j != c?.products.length - 1">,</span>
+              </ng-container>
+            </td>
+            <td scope="row">{{ c?.expirationDate | date }}</td>
+            <td scope="row">
+              <span *ngIf="c?.discountPercentage; else elseBlock">
+                {{ c?.discountPercentage }}%
+              </span>
+              <ng-template #elseBlock>
+                {{ c?.discountAmount | currency: "INR" }}
+              </ng-template>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      (click)="modal.close('Save click')"
+    >
+      Save
+    </button>
+  </div> -->
+</ng-template>

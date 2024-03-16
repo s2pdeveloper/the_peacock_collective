@@ -1,0 +1,9 @@
+.card {
+  border-bottom: 5px solid var(--bs-primary);
+  min-height: 8rem;
+  transition: 0.5s;
+  cursor: pointer;
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+}

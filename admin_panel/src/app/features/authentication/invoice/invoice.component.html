@@ -1,0 +1,293 @@
+<div class="container-fluid px-4">
+  <div class="table-responsive">
+    <div class="text-end mt-3">
+      <button
+        (click)="print()"
+        type="submit"
+        [class]="'btn-primary'"
+        class="btn submit-btn me-3"
+      >
+        <i [class]="'fa fa-download'" class="fa-solid me-2"></i>
+        Print
+      </button>
+      <button (click)="back()" class="btn btn-danger">
+        <i class="ti ti-arrow-left me-1"></i>
+        Back
+      </button>
+    </div>
+    <table class="table table-hover table-bordered external-border mt-3">
+      <thead class="thead">
+        <tr>
+          <td scope="row" colspan="5" class="p-0">
+            <table class="table mb-0">
+              <tr class="bg justify-content-center">
+                <td scope="row" colspan="3" class="text-center">
+                  <h4 class="mb-0 text-white">RECEIPT</h4>
+                </td>
+              </tr>
+              <tr class="border-bottom border-dark">
+                <td scope="row" class="header-name ps-2">Receipt No. :</td>
+                <td scope="row">{{ invoiceData?.invoiceNo }}</td>
+              </tr>
+              <tr class="border-bottom border-dark">
+                <td scope="row" class="header-name ps-2">Payment Date :</td>
+                <td scope="row">
+                  {{ invoiceData?.createdAt | date: "dd-MM-yyyy" }}
+                </td>
+              </tr>
+              <tr class="border-bottom border-dark">
+                <td scope="row" class="header-name ps-2">Payment Type :</td>
+                <td scope="row">Cash</td>
+              </tr>
+            </table>
+          </td>
+          <td scope="row" colspan="3" class="text-center">
+            <img
+              src="assets/images/logo.png"
+              alt="img"
+              height="80px"
+              width="150px"
+            />
+          </td>
+        </tr>
+        <tr class="bg">
+          <td colspan="8"></td>
+        </tr>
+        <tr>
+          <td colspan="3" class="p-0">
+            <label class="border-end text from-name ms-2">From :</label>
+          </td>
+          <td colspan="5" class="p-0">
+            <!-- <table class="table sub-table">
+              <tr>
+                <td class="border-end text bill-to">Bill To :</td>
+                <td></td>
+              </tr>
+            </table> -->
+            <label class="border-end text from-name ms-2">Bill To :</label>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="3" class="p-0">
+            <div class="d-flex justify-content-between px-2">
+              <div><b>Name</b> :</div>
+              <div>
+                {{ invoiceData?.shopDetails.name }}
+              </div>
+            </div>
+          </td>
+          <td colspan="5" class="p-0">
+            <div class="d-flex justify-content-between px-2">
+              <div><b>Name</b> :</div>
+              <div>
+                {{ invoiceData?.customer?.customerName }}
+              </div>
+            </div>
+          </td>
+        </tr>
+        <!-- <tr>
+          <td colspan="4" class="p-0">
+            <div class="d-flex justify-content-between px-2">
+              <div class="text-nowrap me-1"><b>Address</b> :</div>
+              <div class="text-wrap ms-1">
+                {{ invoiceData?.shopDetails.address?.line1 }},
+                {{ invoiceData?.shopDetails.address?.city }},
+                {{ invoiceData?.shopDetails.address?.state }},
+                {{ invoiceData?.shopDetails.address?.country }},
+                {{ invoiceData?.shopDetails.address?.pinCode }}
+              </div>
+            </div>
+          </td>
+          <td colspan="4" class="p-0">
+            <div class="d-flex justify-content-between px-2">
+              <div class="text-nowrap me-1"><b>Address</b> :</div>
+              <div class="text-wrap ms-1">
+                {{ invoiceData?.customer.address?.line1 }},
+                {{ invoiceData?.customer.address?.city }},
+                {{ invoiceData?.customer.address?.state }},
+                {{ invoiceData?.customer.address?.country }},
+                {{ invoiceData?.customer.address?.pinCode }}
+              </div>
+            </div>
+          </td>
+        </tr> -->
+        <!-- <tr>
+          <td colspan="3">
+
+          </td>
+          <td colspan="4">
+          </td>
+        </tr> -->
+        <tr>
+          <td colspan="3" class="p-0">
+            <div class="d-flex justify-content-between px-2">
+              <div><b>Phone No.</b> :</div>
+              <div>
+                {{ invoiceData?.shopDetails.mobile }}
+              </div>
+            </div>
+          </td>
+          <td colspan="5" class="p-0">
+            <div class="d-flex justify-content-between px-2">
+              <div><b>Phone No.</b> :</div>
+              <div>
+                {{ invoiceData?.customer.mobile }}
+              </div>
+            </div>
+          </td>
+        </tr>
+        <!-- <tr>
+          <td colspan="4" class="p-0">
+            <div class="d-flex justify-content-between px-2">
+              <div><b>Email ID</b> :</div>
+              <div>
+                {{ invoiceData?.shopDetails.email }}
+              </div>
+            </div>
+          </td>
+          <td colspan="4" class="p-0">
+            <div class="d-flex justify-content-between px-2">
+              <div><b>Email ID</b> :</div>
+              <div>
+                {{ invoiceData?.customer?.email }}
+              </div>
+            </div>
+          </td>
+        </tr> -->
+        <tr class="bg">
+          <td colspan="8"></td>
+        </tr>
+        <tr class="table text-center">
+          <th scope="col" class="text-bold">Sr. No.</th>
+          <th scope="col" class="text-bold">Item Code</th>
+          <th scope="col" class="text-bold">Item/Description</th>
+          <th scope="col" class="text-bold">Quantity</th>
+          <th scope="col" class="text-bold">Price/Unit (in Rs)</th>
+          <!-- <th scope="col" class="text-bold">Line Value (in Rs)</th> -->
+          <!-- <th scope="col" class="text-bold">GST (in Rs)</th> -->
+          <th scope="col" class="text-bold text-end pe-2">Amount (in Rs)</th>
+        </tr>
+      </thead>
+      <tbody class="tbody mt-3">
+        <tr
+          class="text-center"
+          *ngFor="let item of invoiceData.productDetails; let i = index"
+        >
+          <td scope="row">{{ i + 1 }}</td>
+          <td scope="row">{{ item.productCode }}</td>
+          <td scope="row">{{ item.productName | titlecase }}</td>
+          <td scope="row">{{ item.quantity }}</td>
+          <td scope="row">{{ item.salePrice }}</td>
+          <!-- <td scope="row">{{ item.lineValue }}</td> -->
+          <!-- <td scope="row">{{ item.appliedGst }}</td> -->
+          <td scope="row" class="text-end pe-2">{{ item.totalValue }}</td>
+        </tr>
+        <tr class="text-center" *ngFor="let e of emptyRows; let j = index">
+          <td scope="row"></td>
+          <td scope="row"></td>
+          <td scope="row"></td>
+          <td scope="row"></td>
+          <td scope="row"></td>
+          <td scope="row"></td>
+          <!-- <td scope="row"></td>
+          <td scope="row"></td> -->
+        </tr>
+
+        <!-- <tr class="text-center">
+          <td colspan="2" class="text-bold">Total</td>
+          <td colspan="1" class="text-bold"></td>
+          <td colspan="1" class="text-bold"></td>
+          <td colspan="1" class="text-bold"></td>
+          <td colspan="1" class="text-bold">{{ invoiceData?.totalPrice }}</td>
+        </tr> -->
+        <tr>
+          <td colspan="4" class="text-bold mb-5">
+            <u class="ps-3">Amount in Words : </u> ₹
+            {{ toWords.convert(this.invoiceData.netValue) }}
+          </td>
+          <td colspan="4" class="p-0 m-0">
+            <table class="table sub-table">
+              <tr>
+                <td>Amount</td>
+                <td class="text-end pe-3">₹ {{ invoiceData?.lineValue }}</td>
+              </tr>
+              <tr>
+                <td>Discount Amount</td>
+                <td class="text-end pe-3">
+                  ₹ {{ invoiceData?.coupon_offersAmount }}
+                </td>
+              </tr>
+              <tr>
+                <td class="text-bold">Total Amount</td>
+                <td class="text-bold text-end pe-3">
+                  ₹ {{ this.invoiceData.netValue }}
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="8" class="border-end">
+            <span class="text-bold">
+              <u>Address</u> :-
+              {{
+                invoiceData?.shopDetails?.address?.line1 +
+                  ", " +
+                  invoiceData?.shopDetails?.address?.line2 +
+                  ", " +
+                  invoiceData?.shopDetails?.address?.city +
+                  ", " +
+                  invoiceData?.shopDetails?.address?.state +
+                  ", " +
+                  invoiceData?.shopDetails?.address?.country +
+                  ", " +
+                  invoiceData?.shopDetails?.address?.pinCode
+              }}
+            </span>
+            <span class="text-bold fr">
+              <u>Time</u> :- {{ invoiceData?.shopDetails?.time ?? "" }}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <!-- <td  colspan="8" class="p-0">
+            <table class="table sub-table mb-5">
+              <tr> -->
+
+          <td colspan="8" class="border-end">
+            <u class="text-bold">Terms and Condition </u> :- All purchases are
+            final; no refunds or exchanges permitted.
+          </td>
+
+          <!-- <td class="text-bold">
+                  All purchases are final; no refunds or exchanges permitted.
+                </td> -->
+          <!-- </tr>
+            </table>
+          </td> -->
+          <!-- <td colspan="4" class="p-0">
+            <table class="table sub-table mt-5">
+              <tr>
+                <td class="border-end text-bold text-center">
+                  <u>Seal and Signature</u>
+                </td>
+                <td></td>
+              </tr>
+            </table>
+          </td> -->
+        </tr>
+
+        <!-- <tr class="bg ">
+          <td colspan="8"></td>
+        </tr>
+
+        <tr class="justify-content-center">
+          <td colspan="8" class="text-center thank-u-note">
+            Thank you !!! Visit us Again !!!
+          </td>
+        </tr> -->
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,90 @@
+<div class="card form-card">
+  <div class="card-header">
+    <div class="card-header-items">
+      <div>{{ f["_id"].value ? "Update" : "Create" }} Wastage</div>
+      <div>
+        <a
+          class="back-btn btn btn-primary"
+          (click)="navigateTo('/default/expenses/list')"
+        >
+          <i class="ti ti-arrow-left me-1"></i> Back</a
+        >
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="wastageForm">
+      <div class="row">
+        <div class="col-md-6 mb-2">
+          <label class="form-label">
+            Select Product
+            <span class="text-danger">*</span>
+          </label>
+          <ng-select
+            class="ng-select-lg"
+            [items]="productOptions"
+            placeholder="Select Products"
+            bindLabel="label"
+            bindValue="_id"
+            [clearable]="false"
+            formControlName="productId"
+          >
+          </ng-select>
+        </div>
+        <div class="col-md-6 mb-2">
+          <label class="form-label">
+            Wastage Quantity
+            <span class="text-danger">*</span>
+          </label>
+          <input
+            formControlName="quantity"
+            placeholder="Quantity"
+            type="number"
+            class="form-control"
+          />
+          <div></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 mb-2">
+          <label class="form-label"> Remark </label>
+          <input
+            formControlName="remarks"
+            placeholder="Remark"
+            type="text"
+            class="form-control"
+          />
+        </div>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="row">
+          <div class="col-12">
+            <div class="d-flex justify-content-center">
+              <button
+                (click)="reset()"
+                type="submit"
+                class="btn reset-btn btn-primary"
+              >
+                <i class="fa-solid fa-arrows-rotate me-2"></i>
+                Reset
+              </button>
+              <button
+                type="submit"
+                [class]="f['_id'].value ? 'btn-warning' : 'btn-success'"
+                class="btn submit-btn"
+                (click)="submit()"
+              >
+                <i
+                  [class]="f['_id'].value ? 'fa-pen-to-square' : 'fa-plus'"
+                  class="fa-solid me-2"
+                ></i>
+                {{ f["_id"].value ? "Update" : "Create" }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
