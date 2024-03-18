@@ -1,0 +1,124 @@
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const { OPTIONS, generateURl } = require('../config/options/global.options');
+
+module.exports = (sequelize, DataTypes) => {
+  const User = sequelize.define(
+    'User',
+    {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
+      userName: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      shopName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      role: {
+        type: DataTypes.ENUM(
+          OPTIONS.usersRoles.SUPER_ADMIN,
+          OPTIONS.usersRoles.SHOP_KEEPER
+        ),
+        allowNull: false,
+      },
+      resetPin: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      mobile: {
+        type: DataTypes.BIGINT,
+        allowNull: false,
+      },
+      anotherMobile: {
+        type: DataTypes.BIGINT,
+        allowNull: true,
+      },
+      pinCode: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      city: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      state: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      address: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      gender: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      dob: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      status: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: OPTIONS.defaultStatus.ACTIVE,
+      },
+      lastLoginAt: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
+    },
+    {
+      timestamps: true,
+      tableName: 'User',
+      indexes: [
+        {
+          name: 'PRIMARY',
+          unique: true,
+          using: 'BTREE',
+          fields: [{ name: 'id' }],
+        },
+      ],
+    }
+  );
+  User.associate = (models) => {
+    User.hasMany(models.Customer, {
+      foreignKey: 'userId',
+      as: 'customers',
+      onDelete: 'CASCADE',
+    });
+  };
+  User.prototype.generateHash = function (password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8));
+  };
+  User.prototype.validPassword = function (password) {
+    return bcrypt.compareSync(password, this.password);
+  };
+  User.prototype.genToken = function () {
+    const payload = { id: this.id, role: this.role };
+    return jwt.sign(payload, process.env.JWT_SECRET_KEY);
+  };
+  (async () => {
+    if (process.env.ENVIRONMENT !== 'prod') {
+      await sequelize.sync({ alter: false });
+    }
+  })();
+  return User;
+};

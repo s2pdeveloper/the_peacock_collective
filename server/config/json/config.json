@@ -1,0 +1,27 @@
+{
+  "development": {
+    "use_env_variable": "DEV_DATABASE_URL",
+    "logging": true
+  },
+  "test": {
+    "use_env_variable": "TEST_DATABASE_URL",
+    "logging": false
+  },
+  "uat": {
+    "use_env_variable": "UAT_DATABASE_URL",
+    "logging": true
+  },
+  "production": {
+    "use_env_variable": "DATABASE_URL",
+    "logging": true
+  },
+  "firebaseConfig": {
+    "apiKey": "",
+    "authDomain": "",
+    "projectId": "",
+    "storageBucket": "",
+    "messagingSenderId": "",
+    "appId": "",
+    "measurementId": ""
+  }
+}
