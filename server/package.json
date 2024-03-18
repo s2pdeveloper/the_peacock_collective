@@ -11,7 +11,6 @@
     "prettier:check": "prettier --check \"src/**/*.js\"",
     "lint": "eslint \"src/**/*.js\" --fix",
     "lint:check": "eslint \"src/**/*.js\"",
-    "prepare": "husky install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Pratik Bangadkar",
