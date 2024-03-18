@@ -69,17 +69,6 @@ module.exports = (sequelize, DataTypes) => {
       tableName: 'Customer',
     }
   );
-  Customer.associate = (models) => {
-    Customer.belongsTo(models.User, {
-      foreignKey: 'userId',
-      as: 'shop',
-      onDelete: 'CASCADE',
-    });
-    Customer.hasMany(models.Passbook, {
-      foreignKey: 'customerId',
-      as: 'passbooks',
-      onDelete: 'CASCADE',
-    });
-  };
+  
   return Customer;
 };

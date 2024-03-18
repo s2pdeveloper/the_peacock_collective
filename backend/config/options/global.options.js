@@ -151,7 +151,7 @@ const generateCreateData = async (createObj, requestBody) => {
   return createObj;
 };
 const generateURl = (filePath) => {
-  return filePath ? process.env.CDN_WEB_STATIC + '/image/' + filePath : null;
+  return filePath ? process.env.DOMAIN_URL + filePath : null;
 };
 const generateOTP = (length) => {
   if (process.env.ENVIRONMENT === 'development') {

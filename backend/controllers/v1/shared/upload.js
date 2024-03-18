@@ -2,6 +2,7 @@ const multer = require('multer');
 
 const paths = {
   image: './assets/images',
+  category: './assets/category',
   userImage: './assets/userImage',
   customerImage: './assets/customerImage',
 };
@@ -16,8 +17,11 @@ const imageFilter = (req, file, cb) => {
   }
 };
 
+
 let storage = multer.diskStorage({
   destination: (req, file, cb) => {
+console.log('paths[req.body.key]',paths[req.body.key]);
+
     cb(null, paths[req.body.key]);
   },
   filename: (req, file, cb) => {

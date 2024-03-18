@@ -27,7 +27,7 @@ $yellow: #faad14; // change
 $green: #52c41a; // change
 $teal: #20c997;
 $cyan: #13c2c2; // change
-
+$primary : #c11a1a;
 
 // scss-docs-start colors-map
 $colors: (
@@ -35,6 +35,7 @@ $colors: (
   "indigo": $indigo,
   "purple": $purple,
   "pink": $pink,
+  "primary": $primary,
   "red": $red,
   "orange": $orange,
   "yellow": $yellow,
@@ -48,7 +49,7 @@ $colors: (
 );
 // scss-docs-end colors-map
 
-$primary: $pink; // change
+$primary: $primary; // change
 $secondary: #8c8c8c; // change
 $success: $green; // change
 $info: $cyan; // change
