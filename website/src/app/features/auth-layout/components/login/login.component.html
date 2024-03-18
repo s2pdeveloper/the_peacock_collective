@@ -2,7 +2,8 @@
   <div class="row justify-content-center">
     <div class="col-11">
       <p class="py-3 text-color-primary">
-        <span class="pointer" (click)="navigateTo('/')">Home</span> / Log in to your account
+        <span class="pointer" (click)="navigateTo('/')">Home</span> / Log in to
+        your account
       </p>
     </div>
     <div class="col-11 py-4">
@@ -15,7 +16,11 @@
             <label for="inputPassword6" class="col-form-label">Email</label>
           </div>
           <div class="col-12 col-md-12 col-lg-8">
-            <input type="email" class="form-control background-primary" formControlName="email"/>
+            <input
+              type="email"
+              class="form-control background-primary"
+              formControlName="email"
+            />
           </div>
           <div class="col-2"></div>
         </div>
@@ -29,12 +34,15 @@
               class="form-control background-primary"
               formControlName="password"
             />
-            <div *ngIf="!showEye" class="icon-box" (click)="showEye = !showEye">
-              <i class="fa-solid fa-eye pointer"></i>
-            </div>
-            <div *ngIf="showEye" class="icon-box" (click)="showEye = !showEye">
-              <i class="fa-solid fa-eye-slash pointer"></i>
-            </div>
+              @if(showEye){
+              <div class="icon-box" (click)="showEye = !showEye">
+                <i class="fa-solid fa-eye-slash pointer"></i>
+              </div>
+              } @else{
+              <div class="icon-box" (click)="showEye = !showEye">
+                <i class="fa-solid fa-eye pointer"></i>
+              </div>
+              }
           </div>
           <div class="col-2"></div>
         </div>
@@ -47,7 +55,9 @@
         </div>
         <div class="row justify-content-center">
           <div class="col-4 col-md-2 col-lg-1 d-flex justify-content-center">
-            <button class="btn btn-dark py-2 px-3" (click)="submit($event)">Sign in</button>
+            <button class="btn btn-dark py-2 px-3" (click)="submit($event)">
+              Sign in
+            </button>
           </div>
         </div>
       </form>

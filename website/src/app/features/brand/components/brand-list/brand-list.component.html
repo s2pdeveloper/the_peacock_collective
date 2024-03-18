@@ -9,11 +9,14 @@
       <h1 class="pb-4">Brands</h1>
     </div>
     <div class="col-11 py-3 d-flex border-bottom">
-      <p class="px-2 pointer" *ngFor="let s of serials" (click)="scrollTo(s)">
+      @for(s of serials; track s.serial){
+      <p class="px-2 pointer" (click)="scrollTo(s)">
         {{ s + " " + "/" }}
       </p>
+      }
     </div>
-    <div class="col-11 py-3 border-top" *ngFor="let b of brands">
+    @for(b of brands; track b.serial){
+    <div class="col-11 py-3 border-top">
       <div class="row">
         <div class="col-3">
           <h2 [id]="b.serial">{{ b.serial }}</h2>
@@ -54,5 +57,6 @@
         </div>
       </div>
     </div>
+    }
   </div>
 </div>

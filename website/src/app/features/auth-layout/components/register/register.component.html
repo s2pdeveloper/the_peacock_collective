@@ -106,12 +106,15 @@
               class="form-control background-primary"
               formControlName="password"
             />
-            <div *ngIf="!showEye" class="icon-box" (click)="showEye = !showEye">
-              <i class="fa-solid fa-eye pointer"></i>
-            </div>
-            <div *ngIf="showEye" class="icon-box" (click)="showEye = !showEye">
-              <i class="fa-solid fa-eye-slash pointer"></i>
-            </div>
+            @if(showEye){
+              <div class="icon-box" (click)="showEye = !showEye">
+                <i class="fa-solid fa-eye-slash pointer"></i>
+              </div>
+              } @else{
+              <div class="icon-box" (click)="showEye = !showEye">
+                <i class="fa-solid fa-eye pointer"></i>
+              </div>
+              }
           </div>
         </div>
         <div class="row my-3">
