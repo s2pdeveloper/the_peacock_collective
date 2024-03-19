@@ -1,14 +1,17 @@
-const app = require('express')()
+const ApiError = require('./api.error');
 
 module.exports.errorHandler = (err, req, res, next) => {
-    console.error(err.stack); // Log the error stack trace
-    console.log("err.status", err.status);
-    console.log("err.message", err.message);
+    console.error(err?.stack); // Log the error stack trace
+    let statusCode = err.statusCode || 500;
+    let message = err.message || 'Internal Server Error';
 
-    // Send a meaningful error response to the client
-    res.status(err.status || 500).json({
-        error: {
-            message: err.message || 'Internal Server Error',
-        },
-    });
+    // Check if the error is a custom error with a specific status code
+    if (err instanceof ApiError) {
+        statusCode = err.statusCode;
+    } else {
+        message = 'Internal Server Error';
+        statusCode = 500;
+    }
+    res.status(statusCode).json({ error: message });
 };
+

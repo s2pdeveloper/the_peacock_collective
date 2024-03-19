@@ -3,8 +3,7 @@ const express = require('express');
 const compression = require('compression');
 const logger = require('morgan');
 const path = require('path');
-const errorHandler = require('errorhandler');
-// const { errorHandler } = require('./config/middlewares/error.handler');
+const { errorHandler } = require('./config/middlewares/error.handler');
 const lusca = require('lusca');
 const cors = require('cors');
 const lodash = require('lodash');
@@ -22,6 +21,7 @@ app.use(logger('dev'));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.json({ limit: '50mb' }));
 utils.onStartServerDataInsert()
+
 /**
  * Start Express server.
  */
@@ -56,21 +56,23 @@ app.use((req, res, next) => {
   }
   next();
 });
-utils.onStartServerDataInsert();
 process.on('unhandledRejection', (reason, p) => {
   console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
 });
 // Routes
 // app.use(expressValidator());
 app.use('/', indexRouter);
-// app.use(errorHandler);
-if (process.env.ENVIRONMENT === 'development') {
-  app.use(errorHandler());
-}
-app.all('*', (req, res) => {
-  return res.status(404).json({
-    code: 404,
-    message: 'API Not Found',
+app.use(errorHandler);
+
+
+app.use('*', (req, res) => {
+  res.status(404).json({
+    success: 'false',
+    message: 'Page not found',
+    error: {
+      statusCode: 404,
+      message: 'You reached a route that is not defined on this server',
+    },
   });
 });
 let dir = ['./assets/images', './assets/customerImage', './assets/userImage'];
