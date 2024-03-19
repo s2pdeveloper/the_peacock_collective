@@ -50,8 +50,8 @@ let utilsObj = {
       }
     };
   },
-  onStartServerDataInsert: () => {
-    createSuperAdminUser();
+  onStartServerDataInsert: async () => {
+   await createSuperAdminUser();
   },
 };
 module.exports = utilsObj;
@@ -62,6 +62,9 @@ module.exports = utilsObj;
     attributes: ['id'],
   });
   if (!userData) {
+    console.log('if superadmin created');
     await User.create(OPTIONS.superAdminData);
   }
+  console.log('superadmin created');
+  
 }

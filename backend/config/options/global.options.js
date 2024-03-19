@@ -1,46 +1,46 @@
-const _ = require('lodash');
-const pug = require('pug');
+const _ = require("lodash");
+const pug = require("pug");
 
 const OPTIONS = {
-  appVersion: '1.0.0',
-  appSchemaUrl: 'project_name',
-  timeZone: 'Asia/Kolkata',
-  emailSenderName: 'email sender',
+  appVersion: "1.0.0",
+  appSchemaUrl: "project_name",
+  timeZone: "Asia/Kolkata",
+  emailSenderName: "email sender",
   randomUsernameSize: 4,
   randomShopSize: 4,
   resetPasswordExpireInDays: 720,
   defaultTax: 2,
   otpExpireInDays: 1,
   elasticSearchIndexes: {
-    PRODUCT: 'product',
+    PRODUCT: "product",
   },
   elasticSearchIndexModalNames: {
-    PRODUCT: 'Product',
+    PRODUCT: "Product",
   },
   usersRoles: {
-    SUPER_ADMIN: 'SUPER ADMIN',
-    SHOP_KEEPER: 'SHOP KEEPER',
-    CUSTOMER: 'CUSTOMER',
+    SUPER_ADMIN: "SUPER_ADMIN",
+    EMPLOYEE: "EMPLOYEE",
+    CUSTOMER: "CUSTOMER",
     getAllRolesAsArray: () => {
       return [
         OPTIONS.usersRoles.SUPER_ADMIN,
-        OPTIONS.usersRoles.SHOP_KEEPER,
+        OPTIONS.usersRoles.EMPLOYEE,
         OPTIONS.usersRoles.CUSTOMER,
       ];
     },
     getAllRolesByAPAsArray: () => {
-      return [OPTIONS.usersRoles.SUPER_ADMIN, OPTIONS.usersRoles.SHOP_KEEPER];
+      return [OPTIONS.usersRoles.SUPER_ADMIN, OPTIONS.usersRoles.EMPLOYEE];
     },
   },
   genders: {
-    MALE: 'Male',
-    FEMALE: 'Female',
-    TRANSGENDER: 'Transgender',
+    MALE: "Male",
+    FEMALE: "Female",
+    TRANSGENDER: "Transgender",
   },
   planTypes: {
-    BASIC: 'Basic',
-    STANDARD: 'Standard',
-    PREMIUM: 'Premium',
+    BASIC: "Basic",
+    STANDARD: "Standard",
+    PREMIUM: "Premium",
     getAllAsArray: () => {
       return [
         OPTIONS.planTypes.BASIC,
@@ -50,75 +50,75 @@ const OPTIONS = {
     },
   },
   subscriptionTypes: {
-    YEARS: 'Years',
-    MONTHS: 'Months',
-    DAYS: 'Days',
+    YEARS: "Years",
+    MONTHS: "Months",
+    DAYS: "Days",
     getAllAsArray: () => {
       return [
         OPTIONS.subscriptionTypes.YEARS,
         OPTIONS.subscriptionTypes.MONTHS,
         OPTIONS.subscriptionTypes.DAYS,
       ];
-    }
+    },
   },
   defaultStatus: {
-    ACTIVE: 'active',
-    INACTIVE: 'inactive',
-    UNAPPROVED: 'unapproved',
-    APPROVED: 'approved',
-    REJECTED: 'rejected',
-    DELETED: 'deleted',
-    OPEN: 'open',
-    CLOSE: 'close',
+    ACTIVE: "active",
+    INACTIVE: "inactive",
+    UNAPPROVED: "unapproved",
+    APPROVED: "approved",
+    REJECTED: "rejected",
+    DELETED: "deleted",
+    OPEN: "open",
+    CLOSE: "close",
   },
   paymentModes: {
-    CREDIT: 'credit',
-    CASH: 'cash',
-    CARD: 'card',
+    CREDIT: "credit",
+    CASH: "cash",
+    CARD: "card",
   },
   devicePlatforms: {
-    ANDROID: 'android',
-    IOS: 'ios',
-    WEB: 'web',
+    ANDROID: "android",
+    IOS: "ios",
+    WEB: "web",
   },
   emailSubjects: {
-    ACCOUNT_WELCOME: 'Welcome mail',
-    ACCOUNT_VERIFY: 'Verification OTP',
-    ACCOUNT_ACTIVATE: 'Activate your account',
+    ACCOUNT_WELCOME: "Welcome mail",
+    ACCOUNT_VERIFY: "Verification OTP",
+    ACCOUNT_ACTIVATE: "Activate your account",
   },
   notificationMode: {
-    NOTIFICATION_TRIGGER_ALL: 'notification_trigger_all',
-    NOTIFICATION_TRIGGER_EMAIL: 'notification_trigger_email',
-    NOTIFICATION_TRIGGER_IN_APP: 'notification_trigger_in_app',
+    NOTIFICATION_TRIGGER_ALL: "notification_trigger_all",
+    NOTIFICATION_TRIGGER_EMAIL: "notification_trigger_email",
+    NOTIFICATION_TRIGGER_IN_APP: "notification_trigger_in_app",
   },
   subjectType: {
-    THEORY: 'Theory',
-    PRACTICAL: 'Practical',
+    THEORY: "Theory",
+    PRACTICAL: "Practical",
   },
   imageType: {
-    SLIDER: 'Slider',
+    SLIDER: "Slider",
   },
   paymentType: {
-    CREDIT: 'CREDIT',
-    ADVANCE: 'ADVANCE',
-    DEPOSIT: 'DEPOSIT',
+    CREDIT: "CREDIT",
+    ADVANCE: "ADVANCE",
+    DEPOSIT: "DEPOSIT",
   },
 
   userPreferences: {
     mobileNumber: {
-      name: 'MOBILE_NUMBER',
-      title: 'Mobile Number',
-      description: 'Are you sure you want to show Mobile Number',
+      name: "MOBILE_NUMBER",
+      title: "Mobile Number",
+      description: "Are you sure you want to show Mobile Number",
     },
     profilePicture: {
-      name: 'PROFILE_PICTURE',
-      title: 'Profile Picture',
-      description: 'Are you sure you want to show profile picture',
+      name: "PROFILE_PICTURE",
+      title: "Profile Picture",
+      description: "Are you sure you want to show profile picture",
     },
     email: {
-      name: 'EMAIL',
-      title: 'Email',
-      description: 'Are you sure you want to show your email',
+      name: "EMAIL",
+      title: "Email",
+      description: "Are you sure you want to show your email",
     },
     getAsArray: () => {
       return [
@@ -130,23 +130,27 @@ const OPTIONS = {
   },
 
   superAdminData: {
-    userName: 'Super Admin',
-    name: 'Super Admin',
-    role: 'SUPER ADMIN',
-    email: 'superadmin@gmail.com',
-    mobile: '1111111111',
-    isEmailVerified: '1',
-    isMobileNumberVerified: '0',
-    password: '$2b$08$onZXvgydrbJ03PCB7jmybujbHEUL9tY1vZQf7aCAZDr2s.mzkaLH6',
-    status: 'active',
-    createdAt: '2022-07-04 05:04:36',
-    updatedAt: '2022-07-04 05:04:36',
+    userName: "Super Admin",
+    name: "Super Admin",
+    role: "SUPER_ADMIN",
+    email: "superadmin@gmail.com",
+    mobile: "1111111111",
+    isEmailVerified: "1",
+    isMobileNumberVerified: "0",
+    password: "$2b$08$onZXvgydrbJ03PCB7jmybujbHEUL9tY1vZQf7aCAZDr2s.mzkaLH6",
+    status: "active",
+    createdAt: "2022-07-04 05:04:36",
+    updatedAt: "2022-07-04 05:04:36",
   },
 };
 const generateCreateData = async (createObj, requestBody) => {
   for (let i = Object.keys(requestBody).length - 1; i >= 0; i--) {
     let key = Object.keys(requestBody)[i];
-    createObj[key] = requestBody[key];
+    if (requestBody[key] === "null") {
+      createObj[key] = null;
+    } else {
+      createObj[key] = requestBody[key];
+    }
   }
   return createObj;
 };
@@ -154,7 +158,7 @@ const generateURl = (filePath) => {
   return filePath ? process.env.DOMAIN_URL + filePath : null;
 };
 const generateOTP = (length) => {
-  if (process.env.ENVIRONMENT === 'development') {
+  if (process.env.ENVIRONMENT === "development") {
     //TODO remove after sms integration
     return length > 4 ? 4444 : 4444;
   }
@@ -164,7 +168,7 @@ const generateOTP = (length) => {
 };
 const generateResponse = (code, payload, type, noWrapPayload) => {
   noWrapPayload = noWrapPayload || false;
-  type = type || 'unknown';
+  type = type || "unknown";
 
   if (code && code >= 300) {
     payload = _.isArray(payload) ? payload : [payload];
@@ -194,17 +198,17 @@ const generateResponse = (code, payload, type, noWrapPayload) => {
 };
 const genAbsoluteUrl = (path, type, opt) => {
   switch (type) {
-    case 'admin':
+    case "admin":
       return (
         process.env.CLIENT_REQUEST_PROTOCOL +
-        '://' +
+        "://" +
         process.env.ADMIN_HOST +
         path
       );
     default:
       return (
         process.env.CLIENT_REQUEST_PROTOCOL +
-        '://' +
+        "://" +
         process.env.CUSTOMER_HOST +
         path
       );
@@ -212,7 +216,7 @@ const genAbsoluteUrl = (path, type, opt) => {
 };
 const generateHtml = (template, data) => {
   return pug.renderFile(
-    __dirname + '/../../public/email_templates/' + template + '.pug',
+    __dirname + "/../../public/email_templates/" + template + ".pug",
     data
   );
 };

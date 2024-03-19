@@ -15,6 +15,10 @@ const {
   generateOTP,
 } = require("../../../../config/options/global.options");
 const MESSAGES = require("../../../../config/options/messages.options");
+const ApiError = require("../../../../config/middlewares/api.error");
+const {
+  asyncHandler,
+} = require("../../../../config/middlewares/async.handler");
 
 const resCode = MESSAGES.resCode;
 const Op = sequelize.Op;
@@ -22,179 +26,146 @@ const roles = OPTIONS.usersRoles;
 
 const userObj = {
   //** Get all users */
-  getAllUsers: async (req, res) => {
-    try {
-      const {
-        page = 1,
-        pageSize = 10,
-        search = null,
-        column = "createdAt",
-        direction = "DESC",
-        universityId = null,
-      } = req.query;
-      let offset = (page - 1) * pageSize || 0;
-      let query = {
-        where: {
-          role: { [Op.ne]: OPTIONS.usersRoles.SUPER_ADMIN },
-          status: OPTIONS.defaultStatus.ACTIVE,
-          ...(![undefined, null, ""].includes(search) && {
-            [Op.or]: [
-              { userName: { [Op.substring]: search } },
-              { email: { [Op.substring]: search } },
-              { mobile: { [Op.substring]: search } },
-              { anotherMobile: { [Op.substring]: search } },
-              { pinCode: { [Op.substring]: search } },
-              { city: { [Op.substring]: search } },
-              { address: { [Op.substring]: search } },
-              { state: { [Op.substring]: search } },
-            ],
-          }),
-        },
-        order: [[column, direction]],
-        attributes: {
-          exclude: ["passwordResetToken", "passwordResetExpires", "password"],
-        },
-        offset: +offset,
-        limit: +pageSize,
-      };
+  getAllUsers: asyncHandler(async (req, res) => {
+    const {
+      page = 1,
+      pageSize = 10,
+      search = null,
+      column = "createdAt",
+      direction = "DESC",
+    } = req.query;
+    let offset = (page - 1) * pageSize || 0;
+    let query = {
+      where: {
+        role: { [Op.ne]: OPTIONS.usersRoles.SUPER_ADMIN },
+        status: OPTIONS.defaultStatus.ACTIVE,
+        ...(![undefined, null, ""].includes(search) && {
+          [Op.or]: [
+            { userName: { [Op.like]: search } },
+            { email: { [Op.like]: search } },
+            { mobile: { [Op.like]: search } },
+            { anotherMobile: { [Op.like]: search } },
+            { pinCode: { [Op.like]: search } },
+            { city: { [Op.like]: search } },
+            { address: { [Op.like]: search } },
+            { state: { [Op.like]: search } },
+          ],
+        }),
+      },
+      order: [[column, direction]],
+      attributes: {
+        exclude: ["passwordResetToken", "passwordResetExpires", "password"],
+      },
+      offset: +offset,
+      limit: +pageSize,
+    };
 
-      let response = await User.findAndCountAll(query);
-      return res
-        .status(resCode.HTTP_OK)
-        .json(generateResponse(resCode.HTTP_OK, response));
-    } catch (e) {
-      const errors = MESSAGES.apiErrorStrings.SERVER_ERROR;
-      res
-        .status(resCode.HTTP_INTERNAL_SERVER_ERROR)
-        .json(generateResponse(resCode.HTTP_INTERNAL_SERVER_ERROR, errors));
-      throw new Error(e);
-    }
-  },
+    let response = await User.findAndCountAll(query);
+    return res
+      .status(resCode.HTTP_OK)
+      .json(generateResponse(resCode.HTTP_OK, response));
+  }),
   //** crate a new user */
-  create: async (req, res) => {
-    try {
-      /** check if user exist or not */
-      let userData = req.body;
-      let existingUser = await User.findOne({
-        where: { mobile: userData.mobile },
-      });
-      if (existingUser) {
-        let errors = MESSAGES.apiErrorStrings.USER_EXISTS(
-          "email address or mobile number"
+  create: asyncHandler(async (req, res) => {
+    /** check if user exist or not */
+    let userData = req.body;
+    let existingUser = await User.findOne({
+      where: { mobile: userData.mobile },
+    });
+    if (existingUser) {
+      let errors = MESSAGES.apiErrorStrings.USER_EXISTS(
+        "email address or mobile number"
+      );
+      return res
+        .status(resCode.HTTP_BAD_REQUEST)
+        .json(
+          generateResponse(
+            resCode.HTTP_BAD_REQUEST,
+            errors,
+            MESSAGES.errorTypes.OAUTH_EXCEPTION
+          )
         );
-        return res
-          .status(resCode.HTTP_BAD_REQUEST)
-          .json(
-            generateResponse(
-              resCode.HTTP_BAD_REQUEST,
-              errors,
-              MESSAGES.errorTypes.OAUTH_EXCEPTION
-            )
-          );
-      }
-      userData.password = await bcrypt.hash(
-        userData.password,
-        bcrypt.genSaltSync(8)
-      );
-      let master =  await User.create({
-        ...new User(),
-        ...userData,
-      });
-      userData.deviceInfo.userId = master.id;
-      userData.deviceInfo.geoLocation = JSON.stringify(
-        userData.deviceInfo.geoLocation
-      );
-      await userDevice.create(userData.deviceInfo);
-      await studentNotification.create({
-        userId: master.id,
-        title: MESSAGES.pushNotification.REGISTER_TITLE(master.name),
-        message: MESSAGES.pushNotification.SUCCESS_REGISTER(master.name),
-      });
-      let data = {
-        heading: MESSAGES.pushNotification.REGISTER_TITLE(master.name),
-        description: MESSAGES.pushNotification.SUCCESS_REGISTER(master.name),
-        type: "Welcome",
-      };
-      if (userData.deviceInfo.deviceId) {
-        notification([{ deviceId: userData.deviceInfo.deviceId }], data);
-      }
-      return res.status(resCode.HTTP_OK).json(
-        generateResponse(resCode.HTTP_OK, {
-          message: MESSAGES.apiSuccessStrings.SIGNUP_SUCCESS,
-        })
-      );
-    } catch (e) {
-      const errors = MESSAGES.apiErrorStrings.SERVER_ERROR;
-      res
-        .status(resCode.HTTP_INTERNAL_SERVER_ERROR)
-        .json(generateResponse(resCode.HTTP_INTERNAL_SERVER_ERROR, errors));
-      throw new Error(e);
     }
-  },
+    userData.password = await bcrypt.hash(
+      userData.password,
+      bcrypt.genSaltSync(8)
+    );
+    let master = await User.create({
+      ...new User(),
+      ...userData,
+    });
+    // userData.deviceInfo.userId = master.id;
+    // userData.deviceInfo.geoLocation = JSON.stringify(
+    //   userData.deviceInfo.geoLocation
+    // );
+    // await userDevice.create(userData.deviceInfo);
+    // await studentNotification.create({
+    //   userId: master.id,
+    //   title: MESSAGES.pushNotification.REGISTER_TITLE(master.name),
+    //   message: MESSAGES.pushNotification.SUCCESS_REGISTER(master.name),
+    // });
+    // let data = {
+    //   heading: MESSAGES.pushNotification.REGISTER_TITLE(master.name),
+    //   description: MESSAGES.pushNotification.SUCCESS_REGISTER(master.name),
+    //   type: "Welcome",
+    // };
+    // if (userData.deviceInfo.deviceId) {
+    //   notification([{ deviceId: userData.deviceInfo.deviceId }], data);
+    // }
+    return res.status(resCode.HTTP_OK).json(
+      generateResponse(resCode.HTTP_OK, {
+        message: MESSAGES.apiSuccessStrings.SIGNUP_SUCCESS,
+      })
+    );
+  }),
   //** login user to app */
-  login: async (req, res) => {
-    try {
-      let query = {
-        where: {
-          status: {
-            [Op.in]: [
-              OPTIONS.defaultStatus.ACTIVE,
-              OPTIONS.defaultStatus.INACTIVE,
-            ],
-          },
-          ...(req.body.mobile && { mobile: req.body.mobile }),
-          ...(req.body.email && { email: req.body.email.toLowerCase() }),
-          role: [
-            OPTIONS.usersRoles.SHOP_KEEPER,
-            OPTIONS.usersRoles.SUPER_ADMIN,
+  login: asyncHandler(async (req, res) => {
+    let query = {
+      where: {
+        status: {
+          [Op.in]: [
+            OPTIONS.defaultStatus.ACTIVE,
+            OPTIONS.defaultStatus.INACTIVE,
           ],
         },
-      };
-      let existingUser = await User.findOne(query);
-      if (existingUser) {
-        let isMatch = existingUser.validPassword(req.body.password);
-        if (isMatch) {
-          if (
-            existingUser.status === OPTIONS.defaultStatus.BLOCKED ||
-            existingUser.status === OPTIONS.defaultStatus.INACTIVE
-          ) {
-            let errors = MESSAGES.apiErrorStrings.USER_BLOCKED;
-            return res
-              .status(resCode.HTTP_BAD_REQUEST)
-              .json(
-                generateResponse(
-                  resCode.HTTP_BAD_REQUEST,
-                  errors,
-                  MESSAGES.errorTypes.ACCOUNT_BLOCKED
-                )
-              );
-          }
-          existingUser.lastLoginAt = new Date();
-          await existingUser.save();
-          let userObj = {
-            id: existingUser.id,
-            token: existingUser.genToken(),
-            role: existingUser.role,
-            email: existingUser.email,
-            mobile: existingUser.mobile,
-            shopName: existingUser.shopName,
-            name: existingUser.name,
-          };
-          return res
-            .status(resCode.HTTP_OK)
-            .json(generateResponse(resCode.HTTP_OK, userObj));
-        } else {
-          let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
+        ...(req.body.mobile && { mobile: req.body.mobile }),
+        ...(req.body.email && { email: req.body.email.toLowerCase() }),
+        role: [OPTIONS.usersRoles.SUPER_ADMIN, OPTIONS.usersRoles.CUSTOMER],
+      },
+    };
+    let existingUser = await User.findOne(query);
+    if (existingUser) {
+      let isMatch = existingUser.validPassword(req.body.password);
+      if (isMatch) {
+        if (
+          existingUser.status === OPTIONS.defaultStatus.BLOCKED ||
+          existingUser.status === OPTIONS.defaultStatus.INACTIVE
+        ) {
+          let errors = MESSAGES.apiErrorStrings.USER_BLOCKED;
           return res
             .status(resCode.HTTP_BAD_REQUEST)
             .json(
               generateResponse(
                 resCode.HTTP_BAD_REQUEST,
                 errors,
-                MESSAGES.errorTypes.OAUTH_EXCEPTION
+                MESSAGES.errorTypes.ACCOUNT_BLOCKED
               )
             );
         }
+        existingUser.lastLoginAt = new Date();
+        await existingUser.save();
+        let userObj = {
+          id: existingUser.id,
+          token: existingUser.genToken(),
+          role: existingUser.role,
+          email: existingUser.email,
+          mobile: existingUser.mobile,
+          shopName: existingUser.shopName,
+          name: existingUser.name,
+        };
+        return res
+          .status(resCode.HTTP_OK)
+          .json(generateResponse(resCode.HTTP_OK, userObj));
       } else {
         let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
         return res
@@ -207,155 +178,146 @@ const userObj = {
             )
           );
       }
-    } catch (e) {
-      const errors = MESSAGES.apiErrorStrings.SERVER_ERROR;
-      res
-        .status(resCode.HTTP_INTERNAL_SERVER_ERROR)
-        .json(generateResponse(resCode.HTTP_INTERNAL_SERVER_ERROR, errors));
-      throw new Error(e);
+    } else {
+      let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
+      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
-  },
+  }),
   //** get user profile */
-  getProfile: async (req, res) => {
-    try {
-      let userId = req.query.id ? req.query.id : req.user.id;
-      let query = {
-        where: {
-          status: [
-            OPTIONS.defaultStatus.ACTIVE,
-            OPTIONS.defaultStatus.INACTIVE,
-          ],
-          role: {
-            [Op.or]: OPTIONS.usersRoles.getAllRolesAsArray(),
-          },
-          id: userId,
+  getProfile: asyncHandler(async (req, res) => {
+    let userId = req.query.id ? req.query.id : req.user.id;
+    let query = {
+      where: {
+        status: [OPTIONS.defaultStatus.ACTIVE, OPTIONS.defaultStatus.INACTIVE],
+        role: {
+          [Op.or]: OPTIONS.usersRoles.getAllRolesAsArray(),
         },
-        attributes: {
-          exclude: [
-            "password",
-            "passwordResetExpires",
-            "passwordResetToken",
-            "updatedAt",
-            "isEmailVerified",
-            "lastLoginAt",
-            "verificationToken",
-            "verificationTokenExpireAt",
-          ],
-        },
-      };
-      let user = await User.findOne(query);
-      if (user) {
-        let existingUser = user.toJSON();
-        existingUser["token"] = user.genToken();
-        return res.json(generateResponse(resCode.HTTP_OK, existingUser));
-      } else {
-        const error = MESSAGES.apiErrorStrings.INVALID_REQUEST;
-        return res
-          .status(resCode.HTTP_UNAUTHORIZED)
-          .json(
-            generateResponse(
-              resCode.HTTP_UNAUTHORIZED,
-              error,
-              MESSAGES.errorTypes.INPUT_VALIDATION
-            )
-          );
-      }
-    } catch (e) {
-      const errors = MESSAGES.apiErrorStrings.SERVER_ERROR;
-      res
-        .status(resCode.HTTP_INTERNAL_SERVER_ERROR)
-        .json(generateResponse(resCode.HTTP_INTERNAL_SERVER_ERROR, errors));
-      throw new Error(e);
+        id: userId,
+      },
+      attributes: {
+        exclude: [
+          "password",
+          "passwordResetExpires",
+          "passwordResetToken",
+          "updatedAt",
+          "isEmailVerified",
+          "lastLoginAt",
+          "verificationToken",
+          "verificationTokenExpireAt",
+        ],
+      },
+    };
+    let user = await User.findOne(query);
+    if (user) {
+      let existingUser = user.toJSON();
+      existingUser["token"] = user.genToken();
+      return res.json(generateResponse(resCode.HTTP_OK, existingUser));
+    } else {
+      const error = MESSAGES.apiErrorStrings.INVALID_REQUEST;
+      throw new ApiError(error, resCode.HTTP_BAD_REQUEST);
     }
-  },
+  }),
   //** update the user profile */
-  updateProfile: async (req, res) => {
-    try {
-      let query = {
-        where: {
-          id: req.query.id ? req.query.id : req.user.id,
-          status: [
-            OPTIONS.defaultStatus.ACTIVE,
-            OPTIONS.defaultStatus.INACTIVE,
-          ],
-          role: roles.getAllRolesAsArray(),
-        },
-      };
-      let user = await User.findOne(query);
-      if (!user) {
-        const errors = MESSAGES.apiErrorStrings.INVALID_REQUEST;
+  updateProfile: asyncHandler(async (req, res) => {
+    let query = {
+      where: {
+        id: req.params.id ,
+        status: [OPTIONS.defaultStatus.ACTIVE, OPTIONS.defaultStatus.INACTIVE],
+        role: roles.getAllRolesAsArray(),
+      },
+    };
+    let user = await User.findOne(query);
+    if (!user) {
+      const errors = MESSAGES.apiErrorStrings.INVALID_REQUEST;
+      return res
+        .status(resCode.HTTP_BAD_REQUEST)
+        .json(
+          generateResponse(
+            resCode.HTTP_BAD_REQUEST,
+            errors,
+            MESSAGES.errorTypes.ENTITY_NOT_FOUND
+          )
+        );
+    }
+    user.userName = req.body.userName || user.userName;
+    user.firstName = req.body.firstName || user.firstName;
+    user.lastName = req.body.lastName || user.lastName;
+    user.shopName = req.body.shopName || user.shopName;
+    let emailChange = false;
+    if (req.body.email && user.email !== req.body.email) {
+      let existingUserWithEmail = await UserHelper.findUserWithSameData({
+        email: req.body.email.toLowerCase(),
+      });
+      if (existingUserWithEmail) {
+        const errors = MESSAGES.apiErrorStrings.USER_EXISTS("email address");
         return res
           .status(resCode.HTTP_BAD_REQUEST)
           .json(
             generateResponse(
               resCode.HTTP_BAD_REQUEST,
               errors,
-              MESSAGES.errorTypes.ENTITY_NOT_FOUND
+              MESSAGES.errorTypes.INPUT_VALIDATION
             )
           );
       }
-      user.userName = req.body.userName || user.userName;
-      user.firstName = req.body.firstName || user.firstName;
-      user.lastName = req.body.lastName || user.lastName;
-      user.shopName = req.body.shopName || user.shopName;
-      let emailChange = false;
-      if (req.body.email && user.email !== req.body.email) {
-        let existingUserWithEmail = await UserHelper.findUserWithSameData({
-          email: req.body.email.toLowerCase(),
-        });
-        if (existingUserWithEmail) {
-          const errors = MESSAGES.apiErrorStrings.USER_EXISTS("email address");
-          return res
-            .status(resCode.HTTP_BAD_REQUEST)
-            .json(
-              generateResponse(
-                resCode.HTTP_BAD_REQUEST,
-                errors,
-                MESSAGES.errorTypes.INPUT_VALIDATION
-              )
-            );
-        }
-        emailChange = true;
-        user.email = req.body.email.toLowerCase();
-        user.changeEmail = req.body.email.toLowerCase();
-      }
-      if (req.body.dob) {
-        user.dob = req.body.dob;
-      }
-      if (req.body.gender && user.gender !== req.body.gender) {
-        user.gender = req.body.gender;
-      }
+      emailChange = true;
+      user.email = req.body.email.toLowerCase();
+      user.changeEmail = req.body.email.toLowerCase();
+    }
+    if (req.body.dob) {
+      user.dob = req.body.dob;
+    }
+    if (req.body.gender && user.gender !== req.body.gender) {
+      user.gender = req.body.gender;
+    }
 
-      user.countryCode = req.body.countryCode || user.countryCode;
-      user.mobileCode = req.body.mobileCode || user.mobileCode;
-      user.mobile = req.body.mobile || user.mobile;
-      user.city = req.body.city || user.city;
-      user.state = req.body.state || user.state;
-      user.bio = req.body.bio;
-      user.address = req.body.address || user.address;
-      user.websiteUrl = req.body.websiteUrl;
-      user.countryName = req.body.countryName || user.countryName;
+    user.countryCode = req.body.countryCode || user.countryCode;
+    user.mobileCode = req.body.mobileCode || user.mobileCode;
+    user.mobile = req.body.mobile || user.mobile;
+    user.city = req.body.city || user.city;
+    user.state = req.body.state || user.state;
+    user.bio = req.body.bio;
+    user.address = req.body.address || user.address;
+    user.websiteUrl = req.body.websiteUrl;
+    user.countryName = req.body.countryName || user.countryName;
 
-      if (req.body.profilePicture) {
-        user.profilePicture = req.body.profilePicture;
-      }
-      if (req.body.coverPicture) {
-        user.coverPicture = req.body.coverPicture;
-      }
-      await user.save();
-      return res.status(resCode.HTTP_OK).json(
+    if (req.body.profilePicture) {
+      user.profilePicture = req.body.profilePicture;
+    }
+    if (req.body.coverPicture) {
+      user.coverPicture = req.body.coverPicture;
+    }
+    await user.save();
+    return res.status(resCode.HTTP_OK).json(
+      generateResponse(resCode.HTTP_OK, {
+        message: MESSAGES.apiSuccessStrings.UPDATE("User profile has been"),
+      })
+    );
+  }),
+  // delete the user profile 
+  delete: asyncHandler(async (req, res) => {
+    let query = {
+      where: {
+        status: [OPTIONS.defaultStatus.ACTIVE, OPTIONS.defaultStatus.INACTIVE],
+        id: req.params.id,
+      },
+    };
+    let existingUser = await User.findOne(query);
+    if (existingUser) {
+      existingUser.status = OPTIONS.defaultStatus.DELETED;
+      existingUser.userName =
+        existingUser.userName + Date.now() + OPTIONS.defaultStatus.DELETED;
+      await existingUser.save();
+      return res.json(
         generateResponse(resCode.HTTP_OK, {
-          message: MESSAGES.apiSuccessStrings.UPDATE("User profile has been"),
+          message: MESSAGES.apiSuccessStrings.DELETED(" User"),
         })
       );
-    } catch (e) {
-      const errors = MESSAGES.apiErrorStrings.SERVER_ERROR;
-      res
-        .status(resCode.HTTP_INTERNAL_SERVER_ERROR)
-        .json(generateResponse(resCode.HTTP_INTERNAL_SERVER_ERROR, errors));
-      throw new Error(e);
+    } else {
+      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("User");
+      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
-  },
+  }),
   //** verify email */
   emailVerify: async (req, res) => {
     try {
@@ -538,7 +500,6 @@ const userObj = {
       throw new Error(e);
     }
   },
-
   //** reset the password */
   resetPassword: async (req, res) => {
     try {
@@ -787,49 +748,6 @@ const userObj = {
           ),
         })
       );
-    } catch (e) {
-      const errors = MESSAGES.apiErrorStrings.SERVER_ERROR;
-      res
-        .status(resCode.HTTP_INTERNAL_SERVER_ERROR)
-        .json(generateResponse(resCode.HTTP_INTERNAL_SERVER_ERROR, errors));
-      throw new Error(e);
-    }
-  },
-
-  delete: async (req, res) => {
-    try {
-      let query = {
-        where: {
-          status: [
-            OPTIONS.defaultStatus.ACTIVE,
-            OPTIONS.defaultStatus.INACTIVE,
-          ],
-          id: req.params.id,
-        },
-      };
-      let existingUser = await User.findOne(query);
-      if (existingUser) {
-        existingUser.status = OPTIONS.defaultStatus.DELETED;
-        existingUser.userName =
-          existingUser.userName + Date.now() + OPTIONS.defaultStatus.DELETED;
-        await existingUser.save();
-        return res.json(
-          generateResponse(resCode.HTTP_OK, {
-            message: MESSAGES.apiSuccessStrings.DELETED(" User"),
-          })
-        );
-      } else {
-        let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("User");
-        return res
-          .status(resCode.HTTP_BAD_REQUEST)
-          .json(
-            generateResponse(
-              resCode.HTTP_BAD_REQUEST,
-              errors,
-              MESSAGES.errorTypes.OAUTH_EXCEPTION
-            )
-          );
-      }
     } catch (e) {
       const errors = MESSAGES.apiErrorStrings.SERVER_ERROR;
       res

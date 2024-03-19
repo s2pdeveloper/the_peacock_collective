@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       role: {
         type: DataTypes.ENUM(
           OPTIONS.usersRoles.SUPER_ADMIN,
-          OPTIONS.usersRoles.SHOP_KEEPER
+          OPTIONS.usersRoles.EMPLOYEE,
         ),
         allowNull: false,
       },
@@ -98,13 +98,13 @@ module.exports = (sequelize, DataTypes) => {
       ],
     }
   );
-  User.associate = (models) => {
-    User.hasMany(models.Customer, {
-      foreignKey: 'userId',
-      as: 'customers',
-      onDelete: 'CASCADE',
-    });
-  };
+  // User.associate = (models) => {
+  //   User.hasMany(models.Customer, {
+  //     foreignKey: 'userId',
+  //     as: 'customers',
+  //     onDelete: 'CASCADE',
+  //   });
+  // };
   User.prototype.generateHash = function (password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8));
   };

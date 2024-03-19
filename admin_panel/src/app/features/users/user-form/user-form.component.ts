@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { UserService } from "@shared/services/user.service";
 import { SpinnerService, ToastService } from "@core/services";
 import { ValidationService } from "@core/components";
+import userRole from "../../../type/enum";
 @Component({
   selector: "app-user-form",
   templateUrl: "./user-form.component.html",
@@ -16,6 +17,7 @@ import { ValidationService } from "@core/components";
 export class UserFormComponent {
   submitted: boolean = false;
   userId: string = null;
+  userRole = userRole;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -27,11 +29,11 @@ export class UserFormComponent {
   ) {}
 
   userForm = new FormGroup({
-    _id: new FormControl(null),
+    id: new FormControl(null),
     name: new FormControl(null, [Validators.required]),
     email: new FormControl(null, [Validators.required]),
     role: new FormControl(null),
-    phone: new FormControl(null),
+    mobile: new FormControl(null),
     password: new FormControl(null, [Validators.required]),
   });
   get f() {
@@ -55,8 +57,8 @@ export class UserFormComponent {
       key: "password",
     },
     {
-      message: "Phone No..0 is Required",
-      key: "phone",
+      message: "Mobile No..0 is Required",
+      key: "mobile",
     },
   ];
   ngOnInit(): void {
@@ -77,11 +79,10 @@ export class UserFormComponent {
     }
 
     let formData: any = this.userForm.value;
-    formData.role = "Admin";
-    if (formData._id) {
+    if (formData.id) {
       this.update(formData);
     } else {
-      delete formData._id;
+      delete formData.id;
       this.create(formData);
     }
   }
@@ -95,17 +96,15 @@ export class UserFormComponent {
   }
   update(formData) {
     this.spinner.show();
-    this.userService
-      .update(formData._id, formData)
-      .subscribe((success: any) => {
-        this.spinner.hide();
-        this.toastService.success(success.message);
-        this.router.navigate(["/default/user/user-list"]);
-      });
+    this.userService.update(formData.id ,formData).subscribe((success: any) => {
+      this.spinner.hide();
+      this.toastService.success(success.message);
+      this.router.navigate(["/default/user/user-list"]);
+    });
   }
   getDataById(id: string) {
     this.spinner.show();
-    this.userService.getById(id).subscribe((success: any) => {
+    this.userService.getById({ id: id }).subscribe((success: any) => {
       this.userForm.patchValue(success);
       this.userForm.controls["password"].setValidators(null);
       this.userForm.controls["password"].updateValueAndValidity();

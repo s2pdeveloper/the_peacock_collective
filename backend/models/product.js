@@ -1,0 +1,70 @@
+const { OPTIONS, generateURl } = require("../config/options/global.options");
+
+module.exports = (sequelize, DataTypes) => {
+  const Product = sequelize.define("Product", {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    hsn: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    gst: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    inStock: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: true,
+    },
+    isTrending: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: true,
+    },
+    cod: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: true,
+    },
+    inSale: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: true,
+    },
+    salePrice: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    returnableDays: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    soldIndividually: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: true,
+    },
+    bImage: {
+      type: DataTypes.STRING(1324),
+      allowNull: true,
+      get() {
+        if (this.getDataValue("image"))
+          return generateURl(`product/${this.getDataValue("image")}`);
+      },
+    },
+  });
+  return Product;
+};

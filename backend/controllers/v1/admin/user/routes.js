@@ -9,16 +9,16 @@ const roles = require("../../../../config/options/global.options").OPTIONS;
 const user = require("./user");
 
 app.get(
-  '/',
+  "/",
   // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN),
   user.getAllUsers
 );
 app.put(
-  "/",
-  authHandler.authenticateJWT(),
-  rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
-  validate("updateProfile"),
+  "/:id",
+  // authHandler.authenticateJWT(),
+  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.EMPLOYEE),
+  // validate("updateProfile"),
   user.updateProfile
 );
 
@@ -27,8 +27,8 @@ app.post("/login", validate("login"), user.login);
 
 app.get(
   "/profile",
-  authHandler.authenticateJWT(),
-  rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  // authHandler.authenticateJWT(),
+  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.EMPLOYEE),
   user.getProfile
 );
 app.post("/reset-password", user.resetPassword);
@@ -41,15 +41,15 @@ app.put("/change-status", authHandler.authenticateJWT(), user.changeStatus);
 
 app.delete(
   "/:id",
-  authHandler.authenticateJWT(),
-  rolePermit(roles.usersRoles.SUPER_ADMIN),
-  validate("checkParamId"),
+  // authHandler.authenticateJWT(),
+  // rolePermit(roles.usersRoles.SUPER_ADMIN),
+  // validate("checkParamId"),
   user.delete
 );
 app.post(
   "/createAndUpdateUserDevice",
   authHandler.authenticateJWT(),
-  rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.EMPLOYEE),
   user.createAndUpdateUserDevice
 );
 

@@ -34,9 +34,9 @@
             <span class="text-danger">*</span>
           </label>
           <input
-            formControlName="phone"
+            formControlName="mobile"
             placeholder="Mobile"
-            type="text"
+            type="number"
             class="form-control"
           />
         </div>
@@ -61,8 +61,8 @@
           </label>
           <select class="form-select" formControlName="role">
             <option [value]="null">Select Role</option>
-            <option value="Owner">Owner</option>
-            <option value="Employee">Employee</option>
+            <option [value]="userRole.SUPER_ADMIN">Owner</option>
+            <option [value]="userRole.EMPLOYEE">Employee</option>
           </select>
         </div>
         <div class="col-md-6 mb-2">

@@ -58,14 +58,14 @@
               <td scope="row">{{ i + 1 }}</td>
               <td scope="row">{{ c?.name }}</td>
               <td scope="row">{{ c?.email }}</td>
-              <td scope="row">{{ c?.phone }}</td>
+              <td scope="row">{{ c?.mobile }}</td>
               <td scope="row">{{ c?.role }}</td>
 
               <td scope="row" class="text-center">
                 <ng-container *ngIf="c?.role != 'Super_Admin'">
                   <button
                     class="btn action-btn btn-sm mx-2"
-                    (click)="navigateTo('/default/user/user-form', c?._id)"
+                    (click)="navigateTo('/default/user/user-form', c?.id)"
                     ngbTooltip="Update"
                   >
                     <i class="ti ti-edit-circle"></i>
@@ -103,9 +103,6 @@
     ></button>
   </div>
   <div class="modal-body border-0">
-    <h2 class="modal-title text-center text-primary" id="modal-basic-title">
-      {{ selectedRow?.name }}
-    </h2>
     <h4 class="modal-title text-center" id="modal-basic-title">
       Are you sure you want to Delete ?
     </h4>
@@ -113,14 +110,14 @@
   <div class="modal-footer justify-content-center border-0">
     <button
       type="button"
-      class="btn px-4 btn-danger"
-      (click)="deleteUser(selectedRow?._id)"
+      class="btn px-4 btn-outline-danger"
+      (click)="deleteUser(selectedRow?.id)"
     >
       YES
     </button>
     <button
       type="button"
-      class="btn px-4 btn-primary"
+      class="btn px-4 btn-outline-primary"
       (click)="modal.dismiss('Cross click')"
     >
       NO

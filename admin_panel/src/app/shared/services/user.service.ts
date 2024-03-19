@@ -7,43 +7,43 @@ import { ApiService } from "@core/services";
 export class UserService {
   readonly BASE_URL = 'user'
   routes: any = {
-    createPath: "user/register",
+    createPath: "user/signup",
     getAllPath: this.BASE_URL,
     updatePath: (id: string) => this.BASE_URL + '/' + id,
-    getByIdPath: (id: string) => `user/ profile / ${id} `,
-    deletePath: (id: string) => `user / delete /${id}`,
+    getByIdPath: (id: string) => `user/profile/${id}`,
+    deletePath: (id: string) => `user/${id}`,
   };
   constructor(private http: ApiService) { }
 
   createUser(payload: any) {
     return this.http
-      .post(this.routes.createPath, payload)
+      .post(this.BASE_URL + '/signup' , payload)
       .pipe(map((res: any) => res));
   }
   login(payload: any) {
     return this.http
-      .post(this.routes.loginPath, payload)
+      .post(this.BASE_URL + '/login', payload)
       .pipe(map((res: any) => res));
   }
   getAllUsers(params: any) {
     return this.http
-      .get(this.routes.getAllPath, params)
+      .get(this.BASE_URL, params)
       .pipe(map((res: any) => res));
   }
 
-  update(id: string, payload: any) {
+  update(id,payload: any) {
     return this.http
-      .put(this.routes.updatePath(id), payload)
+      .put(this.BASE_URL + '/' + id, payload)
       .pipe(map((res: any) => res));
   }
-  getById(id: string) {
+  getById(payload: any) {
     return this.http
-      .get(this.routes.getByIdPath(id))
+      .get(this.BASE_URL + '/profile',payload)
       .pipe(map((res: any) => res));
   }
   delete(id: string) {
     return this.http
-      .delete(this.routes.deletePath(id))
+      .delete(this.BASE_URL + '/' + id)
       .pipe(map((res: any) => res));
   }
 

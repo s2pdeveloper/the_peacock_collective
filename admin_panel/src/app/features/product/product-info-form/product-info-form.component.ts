@@ -36,7 +36,7 @@ export class ProductInfoFormComponent {
   ) {}
 
   ngOnInit(): void {
-    this.getAllMasterData();
+    // this.getAllMasterData();
   }
   FORM_ERRORS = [
     {
