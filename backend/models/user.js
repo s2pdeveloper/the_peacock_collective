@@ -16,10 +16,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      shopName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
+      // shopName: {
+      //   type: DataTypes.STRING,
+      //   allowNull: false,
+      // },
       name: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -117,7 +117,7 @@ module.exports = (sequelize, DataTypes) => {
   };
   (async () => {
     if (process.env.ENVIRONMENT !== 'prod') {
-      await sequelize.sync({ alter: false });
+      await sequelize.sync({ alter: true });
     }
   })();
   return User;

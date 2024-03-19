@@ -22,7 +22,7 @@ export class CategoryListComponent {
     private categoryService: CategoryService,
     private spinner: NgxSpinnerService,
     private toastService: ToastrService
-  ) {}
+  ) { }
   page: number = 1;
   pageSize: number = 25;
   collection: number = 0;
@@ -39,9 +39,9 @@ export class CategoryListComponent {
   add() {
     this.router.navigate(["/default/category/category-form"]);
   }
-  updateUser(category: any) {
+  update(category: any) {
     this.router.navigate(["/default/category/category-form"], {
-      queryParams: { id: category._id },
+      queryParams: { id: category.id },
     });
   }
   onChangePage(pageNo) {
@@ -76,7 +76,7 @@ export class CategoryListComponent {
 
   delete(id: any) {
     this.spinner.show();
-    this.categoryService.deleteCategoryById(id).subscribe((success: any) => {
+    this.categoryService.delete(id).subscribe((success: any) => {
       this.spinner.hide();
       this.toastService.success(success.message);
       this.modalService.dismissAll();

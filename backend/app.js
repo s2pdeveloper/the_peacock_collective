@@ -4,8 +4,8 @@ const compression = require('compression');
 const logger = require('morgan');
 const path = require('path');
 const errorHandler = require('errorhandler');
+// const { errorHandler } = require('./config/middlewares/error.handler');
 const lusca = require('lusca');
-const https = require('https');
 const cors = require('cors');
 const lodash = require('lodash');
 const _ = require('lodash');
@@ -21,6 +21,7 @@ app.use(compression());
 app.use(logger('dev'));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.json({ limit: '50mb' }));
+utils.onStartServerDataInsert()
 /**
  * Start Express server.
  */
@@ -62,7 +63,7 @@ process.on('unhandledRejection', (reason, p) => {
 // Routes
 // app.use(expressValidator());
 app.use('/', indexRouter);
-
+// app.use(errorHandler);
 if (process.env.ENVIRONMENT === 'development') {
   app.use(errorHandler());
 }

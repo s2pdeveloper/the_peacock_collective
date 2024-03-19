@@ -5,14 +5,15 @@ import { ApiService } from "@core/services";
   providedIn: "root",
 })
 export class UserService {
+  readonly BASE_URL = 'user'
   routes: any = {
     createPath: "user/register",
-    getAllPath: "user/getAll",
-    updatePath: (id: string) => `user/update/${id}`,
-    getByIdPath: (id: string) => `user/profile/${id}`,
-    deletePath: (id: string) => `user/delete/${id}`,
+    getAllPath: this.BASE_URL,
+    updatePath: (id: string) => this.BASE_URL + '/' + id,
+    getByIdPath: (id: string) => `user/ profile / ${id} `,
+    deletePath: (id: string) => `user / delete /${id}`,
   };
-  constructor(private http: ApiService) {}
+  constructor(private http: ApiService) { }
 
   createUser(payload: any) {
     return this.http

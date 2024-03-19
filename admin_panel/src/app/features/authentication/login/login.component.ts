@@ -31,7 +31,7 @@ export default class LoginComponent {
     private spinner: SpinnerService,
     private storageService: StorageService,
     private validationService: ValidationService
-  ) {}
+  ) { }
 
   loginForm = new FormGroup({
     email: new FormControl("", [Validators.required]),
@@ -48,11 +48,15 @@ export default class LoginComponent {
       return;
     }
 
-    this.spinner.show();
+    // this.spinner.show();
     this.authService.login(this.loginForm.value).subscribe((success) => {
-      this.storageService.set("Inv_Bill_User", success.payload);
-      this.spinner.hide();
+      console.log("success", success);
+
+      this.toastService.success('Login Successfully')
+      this.storageService.set("Inv_Bill_User", success);
+      // this.spinner.hide();
       let route = "./default";
+
       this.router.navigate([route]);
       this.toastService.success(success.message);
     });

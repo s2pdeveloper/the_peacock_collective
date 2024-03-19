@@ -17,7 +17,7 @@ import { DomSanitizer } from "@angular/platform-browser";
   styleUrls: ["./category-form.component.scss"],
 })
 export class CategoryFormComponent {
-  parentIdArr: any = [];
+  parentIdArr: any[] = [];
   submitted: boolean = false;
   categoryId: string = null;
   fileName: any = "";
@@ -31,18 +31,16 @@ export class CategoryFormComponent {
     private spinner: SpinnerService,
     private validationService: ValidationService,
     private domSanitizer: DomSanitizer
-  ) {}
+  ) { }
 
   categoryForm = new FormGroup({
-    _id: new FormControl(null),
+    id: new FormControl(null),
     name: new FormControl(null, [Validators.required]),
-    slug: new FormControl(null, [Validators.required]),
     image: new FormControl(null),
-    modulePrefix: new FormControl(null, [Validators.required]),
-    autoIncrementValue: new FormControl(null, [Validators.required]),
-    digit: new FormControl(4),
+    description: new FormControl(null),
     status: new FormControl("active", [Validators.required]),
     parentId: new FormControl(null),
+
   });
   options = [];
   get f() {
@@ -82,30 +80,44 @@ export class CategoryFormComponent {
     ) {
       return;
     }
-    let categoryData: any = this.categoryForm.value;
-    if (categoryData.parentId == "null") {
-      categoryData.parentId = null;
+    // let categoryData: any = this.categoryForm.value;
+    // if (categoryData.parentId == "null") {
+    //   categoryData.parentId = null;
+    // }
+    let formData: FormData = new FormData();
+    for (const key in this.categoryForm.value) {
+      if (key != 'image') {
+        console.log("key=====", key);
+
+        formData.append(key, this.categoryForm.value[key]);
+      }
     }
-    if (categoryData._id) {
-      this.update(categoryData._id, categoryData);
+    if (this.file) {
+      formData.append('key', 'category');
+      formData.append('image', this.file, this.file.name);
+    }
+
+    if (this.categoryForm.value.id) {
+      this.update(this.categoryForm.value.id, formData);
     } else {
-      this.create(categoryData);
+      formData.delete('id')
+      this.create(formData);
     }
   }
 
   create(formData) {
     this.spinner.show();
-    this.categoryService.createCategory(formData).subscribe((success: any) => {
+    this.categoryService.create(formData).subscribe((success: any) => {
       this.spinner.hide();
       this.toastService.success(success.message);
       this.router.navigate(["default/category/category-list"]);
     });
   }
 
-  update(_id, formData) {
+  update(id, formData) {
     this.spinner.show();
     this.categoryService
-      .updateCategoryById(_id, formData)
+      .update(id, formData)
       .subscribe((success: any) => {
         this.spinner.hide();
         this.toastService.success(success.message);
@@ -121,19 +133,21 @@ export class CategoryFormComponent {
     });
   }
 
-  getByParentId() {
-    this.spinner.show();
-    this.categoryService.getParentId().subscribe((success: any) => {
-      this.spinner.hide();
-      this.options = success.map((category) => ({
-        _id: category._id,
-        name: category.name,
-      }));
-      let def = { _id: "", name: "Parent" };
-      this.options.unshift(def);
-    });
-  }
+  // getByParentId() {
+  //   this.spinner.show();
+  //   this.categoryService.getParentId().subscribe((success: any) => {
+  //     this.spinner.hide();
+  //     this.options = success.map((category) => ({
+  //       id: category.id,
+  //       name: category.name,
+  //     }));
+  //     let def = { id: "", name: "Parent" };
+  //     this.options.unshift(def);
+  //   });
+  // }
   fileChosen(event: any) {
+    console.log('event.target.files', event.target.files);
+
     if (event.target.files.length) {
       if (event.target.files[0].size > 2000000) {
         this.toastService.warning(
@@ -169,13 +183,18 @@ export class CategoryFormComponent {
   }
 
   getAllMasterData() {
-    this.categoryService.getAllMasterData({}).subscribe((success: any) => {
-      this.parentIdArr = success.map((x: any) => {
-        return {
-          label: x.name,
-          value: x._id,
-        };
-      });
+    this.categoryService.getAll({ catagory: true }).subscribe((success: any) => {
+      console.log("success", success);
+      this.parentIdArr = success.rows
+      // if (success?.length) {
+      //   this.parentIdArr = success.map((x: any) => {
+      //     return {
+      //       label: x.name,
+      //       value: x.id,
+      //     };
+      //   });
+      // }
+
     });
   }
 }

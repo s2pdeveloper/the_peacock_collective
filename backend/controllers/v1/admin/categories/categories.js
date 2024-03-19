@@ -14,12 +14,18 @@ const Model = Categories;
 const modelObj = {
   create: async (req, res) => {
     try {
+      for (let key in req.body) {
+        if (req.body[key] === 'null') {
+          req.body[key] = null;
+        }
+      }
       let checkExisting = await Model.findOne({
         where: {
-          name: req.body.name,
-          parentId: req.body.parentId,
+          name: req.body.name1,
+          ...(req.body.parentId && { parentId: req.body.parentId }),
         },
       });
+      console.log("req.body", req.body);
       if (checkExisting) {
         if (
           ![undefined, null, ''].includes(req.file) &&
@@ -38,7 +44,7 @@ const modelObj = {
             )
           );
       }
-    
+
       let createObj = await generateCreateData(new Model(), req.body);
       if (![undefined, null, ''].includes(req.file)) {
         createObj.image = req.file.filename;
@@ -65,6 +71,7 @@ const modelObj = {
         column = 'createdAt',
         direction = 'DESC',
         search = null,
+        catagory = false
       } = req.query;
       let offset = (page - 1) * pageSize || 0;
       let query = {
@@ -75,6 +82,12 @@ const modelObj = {
               description: { [Op.like]: search },
             },
           }),
+          ...(catagory && {
+            parentId: {
+              [Op.ne]: null
+            }
+          })
+
         },
         order: [[column, direction]],
         // attributes: {
@@ -89,7 +102,7 @@ const modelObj = {
         limit: +pageSize,
       };
       let response = await Model.findAndCountAll(query);
-  
+
       return res
         .status(resCode.HTTP_OK)
         .json(generateResponse(resCode.HTTP_OK, response));
@@ -133,6 +146,11 @@ const modelObj = {
   },
   update: async (req, res) => {
     try {
+      for (let key in req.body) {
+        if (req.body[key] === 'null') {
+          req.body[key] = null;
+        }
+      }
       let itemDetails = await Model.findOne({
         where: {
           id: req.params.id,

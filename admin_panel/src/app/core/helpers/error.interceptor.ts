@@ -41,15 +41,15 @@ export class ErrorInterceptor implements HttpInterceptor {
           switch (errorResponse.status) {
             case 401: // login
               // redirect to login page with the return url
-              this.router.events
-                .pipe(filter((event) => event instanceof NavigationEnd))
-                .subscribe((event: any) => {
-                  this.currentRoute = event["url"];
-                });
-              this.userDetails = this.storageService.get("Inv_Bill_User");
-              this.router.navigate(["/login"], {
-                queryParams: { returnUrl: this.currentRoute },
-              });
+              // this.router.events
+              //   .pipe(filter((event) => event instanceof NavigationEnd))
+              //   .subscribe((event: any) => {
+              //     this.currentRoute = event["url"];
+              //   });
+              // this.userDetails = this.storageService.get("Inv_Bill_User");
+              // this.router.navigate(["/login"], {
+              //   queryParams: { returnUrl: this.currentRoute },
+              // });
 
               break;
             case 400: // forbidden  show server bad request message

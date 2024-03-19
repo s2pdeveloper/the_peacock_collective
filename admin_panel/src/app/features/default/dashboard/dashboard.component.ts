@@ -308,9 +308,9 @@ export default class DashboardComponent implements OnInit {
     //   );
     //   this.weekChart.render();
     // }, 500);
-    this.getDashboardDetails();
-    this.getDayWiseSales();
-    this.getTodayDataByCurrentDate();
+    // this.getDashboardDetails();
+    // this.getDayWiseSales();
+    // this.getTodayDataByCurrentDate();
   }
 
   getDashboardDetails(): void {

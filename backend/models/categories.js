@@ -22,6 +22,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      status: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: OPTIONS.defaultStatus.ACTIVE,
+      },
       image: {
         type: DataTypes.STRING(1324),
         allowNull: true,
@@ -36,17 +41,6 @@ module.exports = (sequelize, DataTypes) => {
       tableName: 'Categories',
     }
   );
-//   Customer.associate = (models) => {
-//     Customer.belongsTo(models.User, {
-//       foreignKey: 'userId',
-//       as: 'shop',
-//       onDelete: 'CASCADE',
-//     });
-//     Customer.hasMany(models.Passbook, {
-//       foreignKey: 'customerId',
-//       as: 'passbooks',
-//       onDelete: 'CASCADE',
-//     });
-//   };
+
   return Categories;
 };

@@ -8,63 +8,32 @@ import { ApiService } from "@core/services";
   providedIn: "root",
 })
 export class CategoryService {
-  routes: any = {
-    createPath: "category/create",
-    getAllPath: "category/getAll",
-    updatePath: (id: string) => `category/update/${id}`,
-    deletePath: (id: string) => `category/delete/${id}`,
-    getByIdPath: (id: string) => `category/getById/${id}`,
-    getParentIdPath: (id: string) => `category/getCategoryByParentId`,
-    getAllMasterData :"category/getAllMasterData"
-  };
-  // constructor(
-  //   private http: HttpClient,
-  //   public router: Router
-  // ) {}
+  readonly BASE_URL = 'category'
 
-  
-  constructor(private http: ApiService) {}
+  constructor(private http: ApiService) { }
 
   getAll(payload: any) {
-    return this.http.get(this.routes.getAllPath, payload).pipe(
-      map((category: any) => {
-        return category;
-      })
-    );
+    return this.http.get(this.BASE_URL, payload)
   }
-
-  getAllMasterData(payload: any) {
-    return this.http.get(this.routes.getAllMasterData, payload).pipe(
-      map((category: any) => {
-        return category;
-      })
-    );
-  }
-
-  createCategory(payload: any) {
+  create(payload: any) {
     return this.http
-      .post(this.routes.createPath, payload)
+      .post(this.BASE_URL, payload)
       .pipe(map((res: any) => res));
   }
 
-  updateCategoryById(id: any, payload: any) {
+  update(id: any, payload: any) {
     return this.http
-      .put(this.routes.updatePath(id), payload)
+      .put(this.BASE_URL + '/' + id, payload)
       .pipe(map((res: any) => res));
   }
-  deleteCategoryById(id: any) {
+  delete(id: any) {
     return this.http
-      .delete(this.routes.deletePath(id))
+      .delete(this.BASE_URL + '/' + id)
       .pipe(map((res: any) => res));
   }
   getById(id: any) {
     return this.http
-      .get(this.routes.getByIdPath(id))
-      .pipe(map((res: any) => res));
-  }
-  getParentId() {
-    return this.http
-      .get(this.routes.getParentIdPath())
+      .get(this.BASE_URL + '/' + id)
       .pipe(map((res: any) => res));
   }
 }

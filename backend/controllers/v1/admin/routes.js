@@ -11,7 +11,7 @@ const razorpay = require('./razorpay/routes');
 router.use('/user', userRoutes);
 router.use('/images', imageRoutes);
 router.use('/customer', customerRoutes);
-router.use('/categories', categoriesRoutes);
+router.use('/category', categoriesRoutes);
 router.use('/shared', shared);
 router.use('/razorpay', razorpay);
 
