@@ -89,6 +89,13 @@ const routes: Routes = [
             (m) => m.AttributeModule
           ),
       },
+      {
+        path: "vendor",
+        loadChildren: () =>
+          import("./features/vendor/vendor.module").then(
+            (m) => m.VendorModule
+          ),
+      },
 
       {
         path: "customer",

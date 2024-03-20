@@ -17,31 +17,39 @@ export class ProductInfoFormComponent {
   page: any = 1;
   pageSize: any = 10;
   search: any = "";
+  productId : any;
   categoryOptions: any = [];
   autoIncrementNos: any = {};
   file: any = null;
   fileName: any = "";
   url: any = null;
   submitted: boolean = false;
-  categoryArr = []
+  categoryArr = [];
 
   productImage: any = null;
   productImageName: any = "";
   productImageUrl: any = null;
 
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private productService: ProductService,
+    private categoryService: CategoryService,
     private spinner: SpinnerService,
     private toastService: ToastService,
-    private categoryService: CategoryService,
     private domSanitizer: DomSanitizer,
     private validationService: ValidationService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getAllCategory();
+    this.activatedRoute.queryParams.subscribe((params: any) => {
+      if (params.id) {
+        this.getById(params.id);
+        this.productId = params.id;
+      }
+    });
   }
   FORM_ERRORS = [
     {
@@ -77,20 +85,20 @@ export class ProductInfoFormComponent {
     returnableDays: new FormControl(null),
     soldIndividually: new FormControl(false),
     bannerImage: new FormControl(null),
+    status: new FormControl("active"),
   });
-
-  getAllCategory() {
-    this.categoryService.getAll({ category: true }).subscribe(success => {
-      console.log("success", success);
-      this.categoryArr = success.rows;
-    })
-  }
 
   get form() {
     return this.productForm.controls;
   }
   back() {
     this.router.navigate(["default/product/product-list"]);
+  }
+
+  getAllCategory() {
+    this.categoryService.getAll({ category: true }).subscribe((success) => {
+      this.categoryArr = success.rows;
+    });
   }
 
   onSubmit() {
@@ -101,23 +109,33 @@ export class ProductInfoFormComponent {
       return;
     }
 
+    // let formData: FormData = new FormData();
+    // for (const key in this.productForm.value) {
+    //   if (key != "image") {
+    //     console.log("key=====", key);
+
+    //     formData.append(key, this.productForm.value[key]);
+    //   }
+    // }
+    // if (this.file) {
+    //   // formData.append('key', 'category');
+    //   formData.append("image", this.file, this.file.name);
+    // }
     let formData: FormData = new FormData();
     for (const key in this.productForm.value) {
-      if (key != 'image') {
-        console.log("key=====", key);
+      if (key != 'bannerImage') {
 
         formData.append(key, this.productForm.value[key]);
       }
     }
     if (this.file) {
-      // formData.append('key', 'category');
-      formData.append('bannerImage', this.file, this.file.name);
+      formData.append('image', this.file, this.file.name);
     }
 
     if (this.productForm.value.id) {
       this.update(this.productForm.value.id, formData);
     } else {
-      formData.delete('id')
+      formData.delete("id");
       this.create(formData);
     }
   }
@@ -133,13 +151,11 @@ export class ProductInfoFormComponent {
 
   update(id, formData) {
     this.spinner.show();
-    this.productService
-      .update(id, formData)
-      .subscribe((success: any) => {
-        this.spinner.hide();
-        this.toastService.success(success.message);
-        this.router.navigate(["default/product/product-list"]);
-      });
+    this.productService.update(id, formData).subscribe((success: any) => {
+      this.spinner.hide();
+      this.toastService.success(success.message);
+      this.router.navigate(["default/product/product-list"]);
+    });
   }
 
   resetForm() {
@@ -149,6 +165,11 @@ export class ProductInfoFormComponent {
   getById(id: string) {
     this.spinner.show();
     this.productService.getById(id).subscribe((success: any) => {
+      console.log('success',success);
+      
+      if(success.bannerImage){
+        this.url=success.bannerImage;
+      }
       this.productForm.patchValue(success);
       this.spinner.hide();
     });
@@ -159,7 +180,7 @@ export class ProductInfoFormComponent {
     // );
   }
   fileChosen(event: any, key) {
-    console.log('event.target.files', event);
+    console.log("event.target.files", event);
 
     if (event.target.files.length) {
       if (event.target.files[0].size > 2000000) {
@@ -168,22 +189,22 @@ export class ProductInfoFormComponent {
         );
         return;
       }
-      let file = <File>event.target.files[0]
-
+      let file = <File>event.target.files[0];
 
       // const type = this.file.type;
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
         let base64: any = reader.result;
-        if (key == 'bannerImage') {
+        if (key == "bannerImage") {
           this.file = file;
           this.fileName = file.name;
           this.url = this.domSanitizer.bypassSecurityTrustUrl(base64);
         } else {
           this.productImage = file;
           this.productImageName = file.name;
-          this.productImageUrl = this.domSanitizer.bypassSecurityTrustUrl(base64);
+          this.productImageUrl =
+            this.domSanitizer.bypassSecurityTrustUrl(base64);
         }
       };
       reader.onerror = (error) => {

@@ -115,6 +115,14 @@ const NavigationItems = [
         url: "/default/attribute",
         icon: "fa-brands fa-product-hunt",
       },
+      {
+        id: "vendor",
+        title: "Vendor",
+        type: "item",
+        classes: "nav-item",
+        url: "/default/vendor",
+        icon: "fa-solid fa-tag",
+      },
       // {
       //   id: "inventory",
       //   title: "Inventory",

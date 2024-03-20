@@ -1,7 +1,8 @@
 const ApiError = require('./api.error');
 
 module.exports.errorHandler = (err, req, res, next) => {
-    console.error(err?.stack); // Log the error stack trace
+
+    console.error(err); // Log the error stack trace
     let statusCode = err.statusCode || 500;
     let message = err.message || 'Internal Server Error';
 
