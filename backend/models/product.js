@@ -71,6 +71,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: OPTIONS.defaultStatus.ACTIVE,
     },
   });
+
   Product.associate = (models) => {
     Product.belongsTo(models.Categories, {
       foreignKey: 'categoryId',
@@ -83,6 +84,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
     });
   };
+  
   // Product.associate = (models) => {
   //   Product.hasMany(models.Variant, {
   //     foreignKey: 'productId',

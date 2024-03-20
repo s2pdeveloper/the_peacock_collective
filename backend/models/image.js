@@ -10,10 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      type: {
-        type: DataTypes.ENUM(OPTIONS.imageType.SLIDER),
-      },
-      name: {
+      referenceId: {
         type: DataTypes.STRING,
         allowNull: true,
       },

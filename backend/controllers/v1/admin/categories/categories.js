@@ -32,9 +32,7 @@ const modelObj = {
       req.body.image = await cloudinary.uploadFromBuffer(req.file.buffer);
     }
 
-
     let createObj = await generateCreateData(new Model(), req.body);
-
     await createObj.save();
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
@@ -42,6 +40,7 @@ const modelObj = {
       })
     );
   }),
+  
   getAll: asyncHandler(async (req, res) => {
     const {
       page = 1,

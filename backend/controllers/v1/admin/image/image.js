@@ -30,6 +30,7 @@ const modelObj = {
       throw new Error(e);
     }
   },
+
   getAll: async (req, res) => {
     try {
       const {
@@ -73,6 +74,7 @@ const modelObj = {
       throw new Error(e);
     }
   },
+
   getById: async (req, res) => {
     try {
       let existingImage = await Model.findOne({
@@ -103,6 +105,7 @@ const modelObj = {
       throw new Error(e);
     }
   },
+
   update: async (req, res) => {
     try {
       let itemDetails = await Model.findOne({
@@ -154,6 +157,7 @@ const modelObj = {
       throw new Error(e);
     }
   },
+
   delete: async (req, res) => {
     try {
       let query = {

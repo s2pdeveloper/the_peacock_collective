@@ -1,5 +1,5 @@
 const sequelize = require("sequelize");
-const { Vendor } = require("../../../../models");
+const {Images} = require("../../../../models");
 const fs = require("fs");
 const {
   OPTIONS,
@@ -9,33 +9,45 @@ const {
 const MESSAGES = require("../../../../config/options/messages.options");
 const resCode = MESSAGES.resCode;
 const Op = sequelize.Op;
-const Model = Vendor;
+ const Model = Images;
 const ApiError = require("../../../../config/middlewares/api.error");
 const {
   asyncHandler,
 } = require("../../../../config/middlewares/async.handler");
-
+const cloudinary = require('../../../../shared/service/cloudinary.service');
 
 const modelObj = {
+
+
   create: asyncHandler(async (req, res) => {
-    let checkExisting = await Model.findOne({
-      where: {
-        name: req.body.name,
-      },
-    });
-    if (checkExisting) {
-      let message = MESSAGES.apiErrorStrings.Data_EXISTS("Attribute");
-      throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
-    }
+    // let checkExisting = await Model.findOne({
+    //   where: {
+    //     companyName: req.body.companyName,
+    //   },
+    // });
+    // if (checkExisting) {
+    //   let message = MESSAGES.apiErrorStrings.Data_EXISTS("Image");
+    //   throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
+    // }
+    // console.log("your file in req.",req.file);
+    // console.log("your file in buffer",req.file.buffer);
+    // if (req.file) {
+    // req.body.image = await cloudinary.uploadFromBuffer(req.file.buffer);
+    // console.log(req.body);
+    //   }
+
     let createObj = await generateCreateData(new Model(), req.body);
     await createObj.save();
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
-        message: MESSAGES.apiSuccessStrings.ADDED("Attribute"),
+        message: MESSAGES.apiSuccessStrings.ADDED("Image"),
       })
     );
   }),
+
+
   getAll: asyncHandler(async (req, res) => {
+    console.log("your model",Model)
     const {
       page = 1,
       pageSize = 10,
@@ -51,6 +63,7 @@ const modelObj = {
             name: { [Op.like]: search },
           },
         }),
+
       },
       order: [[column, direction]],
       offset: +offset,
@@ -61,35 +74,39 @@ const modelObj = {
       .status(resCode.HTTP_OK)
       .json(generateResponse(resCode.HTTP_OK, response));
   }),
+
   getById: asyncHandler(async (req, res) => {
     let existing = await Model.findOne({
       where: {
         id: req.params.id,
       },
     });
+
     if (!existing) {
-      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Attribute");
+      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Vendor");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
     return res
       .status(resCode.HTTP_OK)
       .json(generateResponse(resCode.HTTP_OK, existing));
   }),
+
   update: asyncHandler(async (req, res) => {
     let itemDetails = await Model.findOne({
       where: {
         id: req.params.id,
       },
     });
+
     if (!itemDetails) {
-      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Attribute");
+      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Vendor");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     } else {
       itemDetails = await generateCreateData(itemDetails, req.body);
       await itemDetails.save();
       return res.json(
         generateResponse(resCode.HTTP_OK, {
-          message: MESSAGES.apiSuccessStrings.UPDATE("Attribute"),
+          message: MESSAGES.apiSuccessStrings.UPDATE("Vendor"),
         })
       );
     }
@@ -104,11 +121,11 @@ const modelObj = {
     if (deletedItem) {
       return res.json(
         generateResponse(resCode.HTTP_OK, {
-          message: MESSAGES.apiSuccessStrings.DELETED("Attribute"),
+          message: MESSAGES.apiSuccessStrings.DELETED("Vendor")
         })
       );
     } else {
-      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Attribute");
+      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Vendor");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
   }),
