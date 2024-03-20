@@ -66,6 +66,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
   });
+
   Product.associate = (models) => {
     Product.belongsTo(models.Categories, {
       foreignKey: 'categoryId',
@@ -78,6 +79,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
     });
   };
+  
   // Product.associate = (models) => {
   //   Product.hasMany(models.Variant, {
   //     foreignKey: 'productId',

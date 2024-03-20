@@ -37,7 +37,6 @@ export default class LoginComponent {
     email: new FormControl("", [Validators.required]),
     password: new FormControl("", [Validators.required]),
   });
-
   navigateTo(path: any) {
     this.router.navigate([path]);
   }
@@ -47,11 +46,9 @@ export default class LoginComponent {
     ) {
       return;
     }
-
     // this.spinner.show();
     this.authService.login(this.loginForm.value).subscribe((success) => {
       console.log("success", success);
-
       this.toastService.success('Login Successfully')
       this.storageService.set("Inv_Bill_User", success);
       // this.spinner.hide();
