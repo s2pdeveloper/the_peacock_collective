@@ -1,11 +1,10 @@
 <div class="card form-card">
   <div class="card-header">
     <div class="card-header-items">
-      <div>{{ form["_id"].value ? "Update" : "Create" }} Product</div>
+      <div>{{ form["id"].value ? "Update" : "Create" }} Product</div>
       <div>
         <a class="back-btn btn btn-primary" (click)="back()">
-          <i class="ti ti-arrow-left me-1"></i> Back</a
-        >
+          <i class="ti ti-arrow-left me-1"></i> Back</a>
       </div>
     </div>
   </div>
@@ -17,12 +16,7 @@
             Product Name
             <span class="text-danger">*</span>
           </label>
-          <input
-            formControlName="name"
-            placeholder="Product Name"
-            type="text"
-            class="form-control"
-          />
+          <input formControlName="name" placeholder="Product Name" type="text" class="form-control" />
         </div>
         <!-- Categories -->
         <div class="col-md-4 mb-3">
@@ -30,80 +24,93 @@
             Categories
             <span class="text-danger">*</span>
           </label>
-          <select
-            class="form-select"
-            formControlName="category"
-            (change)="getProductCode($event)"
-          >
+          <select class="form-select" formControlName="categoryId" (change)="getProductCode($event)">
             <option selected disabled [value]="null">Select Category</option>
-            <option *ngFor="let cat of categoryOptions" [value]="cat._id">
+            <option *ngFor="let cat of categoryArr" [value]="cat.id">
               {{ cat.name }}
             </option>
           </select>
         </div>
         <div class="col-md-4 mb-3">
           <label class="form-label">
-            Product Code
+            Hsn
             <span class="text-danger">*</span>
           </label>
-          <input
-            formControlName="code"
-            placeholder="Product Code"
-            type="text"
-            class="form-control"
-          />
+          <input formControlName="hsn" placeholder="Hsn" type="text" class="form-control" />
         </div>
 
 
-        <div class="col-md-4 mb-3">
+        <!-- <div class="col-md-4 mb-3">
           <label class="form-label"> Standard Rate </label>
-          <input
-            formControlName="standardRate"
-            placeholder="Standard Rate"
-            type="number"
-            class="form-control"
-          />
-        </div>
+          <input formControlName="standardRate" placeholder="Standard Rate" type="number" class="form-control" />
+        </div> -->
         <div class="col-md-4 mb-3">
           <label class="form-label"> GST </label>
-          <input
-            formControlName="gst"
-            placeholder="GST"
-            type="number"
-            class="form-control"
-          />
+          <input formControlName="gst" placeholder="GST" type="number" class="form-control" />
         </div>
-        <div class="col-md-4 mb-2">
-          <label class="form-label">
-            Status <span class="text-danger">*</span></label
-          >
-          <select formControlName="status" class="form-control">
-            <option selected disabled [value]="null">Select Status</option>
-            <option value="active">Active</option>
-            <option value="inactive">InActive</option>
-          </select>
+        <div class="row mb-3 mx-3">
+          <div class="form-check col-md-3">
+            <label class="form-check-label" for="flexCheckDefault">
+              In Stock
+            </label>
+            <input formControlName="inStock" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          </div>
+          <div class="form-check col-md-3">
+            <label class="form-check-label" for="flexCheckDefault">
+              Is Trending
+            </label>
+            <input formControlName="isTrending" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          </div>
+          <div class="form-check col-md-3">
+            <label class="form-check-label" for="flexCheckDefault">
+              COD
+            </label>
+            <input formControlName="cod" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          </div>
+          <div class="form-check col-md-3">
+            <label class="form-check-label" for="flexCheckDefault">
+              Sold Individually
+            </label>
+            <input formControlName="soldIndividually" class="form-check-input" type="checkbox" value=""
+              id="flexCheckDefault">
+          </div>
         </div>
-        <div class="col-md-12 mb-3">
-          <label class="form-label">
-            Short Description
-            <span class="text-danger">*</span>
-          </label>
-          <input
-            formControlName="shortDescription"
-            placeholder="Short Description"
-            type="text"
-            class="form-control"
-          />
+        <div class="row mb-3 mx-3">
+          <div class="form-check col-md-3">
+            <label class="form-check-label" for="flexCheckDefault">
+              In Sale
+            </label>
+            <input formControlName="inSale" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">
+              Sale Price
+            </label>
+            <input formControlName="salePrice" placeholder="Sale Price" type="number" class="form-control" />
+          </div>
+          <div class="col-md-4 mb-3">
+            <label class="form-label">
+              Returnable Days
+            </label>
+            <input formControlName="returnableDays" placeholder="Returnable Days" type="number" class="form-control" />
+          </div>
         </div>
 
         <div class="col-md-12">
           <label class="form-label"> Description </label>
-          <textarea
-            class="form-control"
-            formControlName="description"
-            placeholder="Description "
-            rows="3"
-          ></textarea>
+          <textarea class="form-control" formControlName="description" placeholder="Description " rows="3"></textarea>
+        </div>
+        <div class="col-md-12 my-2">
+          <label class="form-label me-2">
+            Image
+          </label>
+          <div style="display: inline-block">
+            <input [multiple]="false" type="file" id="file" name="file" (change)="fileChosen($event,'bannerImage')" />
+          </div>
+        </div>
+        <div *ngIf="this.url">
+          <img class="image" [src]="url" alt="image">
         </div>
       </div>
     </form>
@@ -111,25 +118,15 @@
     <div class="row">
       <div class="col-12">
         <div class="d-flex justify-content-center">
-          <button
-            (click)="resetForm()"
-            type="submit"
-            class="btn px-5 btn-primary mx-2 shadow rounded rounded-3 d-flex align-items-center"
-          >
+          <button (click)="resetForm()" type="submit"
+            class="btn px-5 btn-primary mx-2 shadow rounded rounded-3 d-flex align-items-center">
             <i class="fa-solid fa-arrows-rotate me-2"></i>
             Reset
           </button>
-          <button
-            type="submit"
-            [class]="form['_id'].value ? 'btn-warning' : 'btn-success'"
-            class="btn px-5 btn-success shadow rounded rounded-3 mx-2 d-flex align-items-center"
-            (click)="onSubmit()"
-          >
-            <i
-              [class]="form['_id'].value ? 'fa-pen-to-square' : 'fa-plus'"
-              class="fa-solid me-2"
-            ></i>
-            {{ form["_id"].value ? "Update" : "Save" }}
+          <button type="submit" [class]="form['id'].value ? 'btn-warning' : 'btn-success'"
+            class="btn px-5 btn-success shadow rounded rounded-3 mx-2 d-flex align-items-center" (click)="onSubmit()">
+            <i [class]="form['id'].value ? 'fa-pen-to-square' : 'fa-plus'" class="fa-solid me-2"></i>
+            {{ form["id"].value ? "Update" : "Save" }}
           </button>
         </div>
       </div>

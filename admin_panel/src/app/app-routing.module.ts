@@ -83,6 +83,14 @@ const routes: Routes = [
           ),
       },
       {
+        path: "attribute",
+        loadChildren: () =>
+          import("./features/attribute/attribute.module").then(
+            (m) => m.AttributeModule
+          ),
+      },
+
+      {
         path: "customer",
         loadChildren: () =>
           import("./features/customer/customer.module").then(
@@ -161,4 +169,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

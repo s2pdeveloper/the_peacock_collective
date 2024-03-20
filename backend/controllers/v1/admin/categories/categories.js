@@ -12,38 +12,29 @@ const Op = sequelize.Op;
 const Model = Categories;
 const ApiError = require('../../../../config/middlewares/api.error');
 const { asyncHandler } = require('../../../../config/middlewares/async.handler');
+const cloudinary = require('../../../../shared/service/cloudinary.service');
 
 const modelObj = {
   create: asyncHandler(async (req, res) => {
 
-    for (let key in req.body) {
-      if (req.body[key] === 'null') {
-        req.body[key] = null;
-      }
-    }
+
     let checkExisting = await Model.findOne({
       where: {
         name: req.body.name,
         ...(req.body.parentId && { parentId: req.body.parentId }),
       },
     });
-    console.log("req.body", req.body);
     if (checkExisting) {
-      if (
-        ![undefined, null, ''].includes(req.file) &&
-        fs.existsSync(req.file.path)
-      ) {
-        fs.unlinkSync(req.file.path);
-      }
       let message = MESSAGES.apiErrorStrings.Data_EXISTS('Categories');
       throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
-
     }
+    if (req.file) {
+      req.body.image = await cloudinary.uploadFromBuffer(req.file.buffer);
+    }
+
 
     let createObj = await generateCreateData(new Model(), req.body);
-    if (![undefined, null, ''].includes(req.file)) {
-      createObj.image = req.file.filename;
-    }
+
     await createObj.save();
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
@@ -112,38 +103,30 @@ const modelObj = {
   }),
   update: asyncHandler(async (req, res) => {
 
-    for (let key in req.body) {
-      if (req.body[key] === 'null') {
-        req.body[key] = null;
-      }
-    }
     let itemDetails = await Model.findOne({
       where: {
         id: req.params.id,
       },
     });
+
+    // console.log("itemDetails============", itemDetails);
     if (!itemDetails) {
-      if (
-        ![undefined, null, ''].includes(req.file) &&
-        fs.existsSync(req.file.path)
-      ) {
-        fs.unlinkSync(req.file.path);
-      }
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS('Categories');
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST)
 
     } else {
-      itemDetails = await generateCreateData(itemDetails, req.body);
-      if (![undefined, null, ''].includes(req.file)) {
+      if (req.file) {
         if (itemDetails.image) {
-          let path = `assets/${itemDetails.image.split('image/')[1]}`;
-          if (fs.existsSync(path)) {
-            fs.unlinkSync(path);
-          }
+          await cloudinary.deleteFile(itemDetails.image);
         }
-        itemDetails.image = req.file.filename;
+        console.log("req.file.path", req.file);
+        req.body.image = await cloudinary.uploadFromBuffer(req.file.buffer);
       }
+
+      itemDetails = await generateCreateData(itemDetails, req.body);
+
       await itemDetails.save();
+
       return res.json(
         generateResponse(resCode.HTTP_OK, {
           message: MESSAGES.apiSuccessStrings.UPDATE('Categories'),
@@ -159,14 +142,13 @@ const modelObj = {
       },
     };
     let item = await Model.findOne(query);
-    let imagePath =
-      item && item.image && item.image != 'undefined' ? item.image : null;
+    if (item && item?.image) {
+      await cloudinary.deleteFile(item.image);
+    }
+
     let deletedItem = await Model.destroy(query);
+    console.log("deletedItemdeletedItem", deletedItem);
     if (deletedItem) {
-      let path = `assets/${imagePath.split('image/')[1]}`;
-      if (fs.existsSync(path)) {
-        fs.unlinkSync(path);
-      }
       return res.json(
         generateResponse(resCode.HTTP_OK, {
           message: MESSAGES.apiSuccessStrings.DELETED('Categories'),

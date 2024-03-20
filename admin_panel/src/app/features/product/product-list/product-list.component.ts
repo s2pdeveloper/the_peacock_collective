@@ -26,9 +26,9 @@ export class ProductListComponent {
     private activated: ActivatedRoute,
     private spinner: SpinnerService,
     private toastService: ToastrService
-  ) {}
+  ) { }
 
-  updateUser(c: any) {}
+  updateUser(c: any) { }
   ngOnInit(): void {
     this.getAll();
   }
@@ -68,7 +68,7 @@ export class ProductListComponent {
 
   deleteProduct(id: any) {
     this.spinner.show();
-    this.productService.deleteProductById(id).subscribe((success: any) => {
+    this.productService.delete(id).subscribe((success: any) => {
       this.spinner.hide();
       this.toastService.success(success.message);
       this.modalService.dismissAll();
@@ -83,7 +83,7 @@ export class ProductListComponent {
       pageSize: this.pageSize,
       search: this.search,
     };
-    this.productService.getAllProduct(params).subscribe((success: any) => {
+    this.productService.getAll(params).subscribe((success: any) => {
       this.spinner.hide();
       this.products = success.rows;
       this.collection = success.count;
@@ -109,7 +109,7 @@ export class ProductListComponent {
       size: "lg",
     });
     modalRef.result.then(
-      (result) => {},
+      (result) => { },
       (dismiss) => {
         this.getAll();
       }

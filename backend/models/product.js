@@ -57,14 +57,40 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: false,
       allowNull: true,
     },
-    bImage: {
+    bannerImage: {
       type: DataTypes.STRING(1324),
       allowNull: true,
       get() {
-        if (this.getDataValue("image"))
-          return generateURl(`product/${this.getDataValue("image")}`);
+        if (this.getDataValue("bannerImage"))
+          return generateURl(this.getDataValue("bannerImage"));
       },
     },
   });
+  Product.associate = (models) => {
+    Product.belongsTo(models.Categories, {
+      foreignKey: 'categoryId',
+      as: 'productWithCategory',
+      onDelete: 'CASCADE',
+    });
+    Product.hasMany(models.ProductImage, {
+      foreignKey: 'productId',
+      as: 'productImages',
+      onDelete: 'CASCADE',
+    });
+  };
+  // Product.associate = (models) => {
+  //   Product.hasMany(models.Variant, {
+  //     foreignKey: 'productId',
+  //     as: 'productWithVariants',
+  //     onDelete: 'CASCADE',
+  //   });
+  // };
+  // Variant.associate = (models) => {
+  //   Variant.belongsTo(models.Product, {
+  //     foreignKey: 'productId',
+  //     as: '',
+  //     onDelete: 'CASCADE',
+  //   });
+  // };
   return Product;
 };

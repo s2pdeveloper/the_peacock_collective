@@ -23,6 +23,11 @@ export class ProductInfoFormComponent {
   fileName: any = "";
   url: any = null;
   submitted: boolean = false;
+  categoryArr = []
+
+  productImage: any = null;
+  productImageName: any = "";
+  productImageUrl: any = null;
 
   constructor(
     private router: Router,
@@ -33,10 +38,10 @@ export class ProductInfoFormComponent {
     private categoryService: CategoryService,
     private domSanitizer: DomSanitizer,
     private validationService: ValidationService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    // this.getAllMasterData();
+    this.getAllCategory();
   }
   FORM_ERRORS = [
     {
@@ -58,16 +63,28 @@ export class ProductInfoFormComponent {
     },
   ];
   productForm = new FormGroup({
-    _id: new FormControl(null),
-    code: new FormControl(null, [Validators.required]),
+    id: new FormControl(null),
     name: new FormControl(null, [Validators.required]),
-    category: new FormControl(null, [Validators.required]),
+    categoryId: new FormControl(null, [Validators.required]),
     description: new FormControl(null),
-    shortDescription: new FormControl(null, [Validators.required]),
-    standardRate: new FormControl(null),
-    status: new FormControl("active", [Validators.required]),
-    gst: new FormControl(3),
+    hsn: new FormControl(null),
+    gst: new FormControl(null),
+    inStock: new FormControl(false),
+    isTrending: new FormControl(false),
+    cod: new FormControl(false),
+    inSale: new FormControl(false),
+    salePrice: new FormControl(null),
+    returnableDays: new FormControl(null),
+    soldIndividually: new FormControl(false),
+    bannerImage: new FormControl(null),
   });
+
+  getAllCategory() {
+    this.categoryService.getAll({ category: true }).subscribe(success => {
+      console.log("success", success);
+      this.categoryArr = success.rows;
+    })
+  }
 
   get form() {
     return this.productForm.controls;
@@ -83,29 +100,41 @@ export class ProductInfoFormComponent {
     ) {
       return;
     }
-    let productData: any = this.productForm.value;
 
-    if (productData._id) {
-      this.update(productData._id, productData);
+    let formData: FormData = new FormData();
+    for (const key in this.productForm.value) {
+      if (key != 'image') {
+        console.log("key=====", key);
+
+        formData.append(key, this.productForm.value[key]);
+      }
+    }
+    if (this.file) {
+      // formData.append('key', 'category');
+      formData.append('bannerImage', this.file, this.file.name);
+    }
+
+    if (this.productForm.value.id) {
+      this.update(this.productForm.value.id, formData);
     } else {
-      delete productData._id;
-      this.create(productData);
+      formData.delete('id')
+      this.create(formData);
     }
   }
 
   create(formData) {
     this.spinner.show();
-    this.productService.createProduct(formData).subscribe((success: any) => {
+    this.productService.create(formData).subscribe((success: any) => {
       this.spinner.hide();
       this.toastService.success(success.message);
       this.router.navigate(["default/product/product-list"]);
     });
   }
 
-  update(_id, formData) {
+  update(id, formData) {
     this.spinner.show();
     this.productService
-      .updateProductById(_id, formData)
+      .update(id, formData)
       .subscribe((success: any) => {
         this.spinner.hide();
         this.toastService.success(success.message);
@@ -115,7 +144,7 @@ export class ProductInfoFormComponent {
 
   resetForm() {
     this.productForm.reset();
-    this.getAllMasterData();
+    // this.getAllMasterData();
   }
   getById(id: string) {
     this.spinner.show();
@@ -125,19 +154,52 @@ export class ProductInfoFormComponent {
     });
   }
   getProductCode(ev) {
-    this.productForm.controls["code"].setValue(
-      this.autoIncrementNos[ev.target.value]
-    );
+    // this.productForm.controls["code"].setValue(
+    //   this.autoIncrementNos[ev.target.value]
+    // );
   }
-  getAllMasterData() {
-    this.productService.getAllMasterData({}).subscribe((success: any) => {
-      this.autoIncrementNos = success.autoIncrementNos;
-      this.categoryOptions = success.categories;
-      this.activatedRoute.queryParams.subscribe((params: any) => {
-        if (params.id) {
-          this.getById(params.id);
+  fileChosen(event: any, key) {
+    console.log('event.target.files', event);
+
+    if (event.target.files.length) {
+      if (event.target.files[0].size > 2000000) {
+        this.toastService.warning(
+          "Unable to upload file of size more than 1MB"
+        );
+        return;
+      }
+      let file = <File>event.target.files[0]
+
+
+      // const type = this.file.type;
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        let base64: any = reader.result;
+        if (key == 'bannerImage') {
+          this.file = file;
+          this.fileName = file.name;
+          this.url = this.domSanitizer.bypassSecurityTrustUrl(base64);
+        } else {
+          this.productImage = file;
+          this.productImageName = file.name;
+          this.productImageUrl = this.domSanitizer.bypassSecurityTrustUrl(base64);
         }
-      });
-    });
+      };
+      reader.onerror = (error) => {
+        console.error(error);
+      };
+    }
   }
+  // getAllMasterData() {
+  //   this.productService.getAllMasterData({}).subscribe((success: any) => {
+  //     this.autoIncrementNos = success.autoIncrementNos;
+  //     this.categoryOptions = success.categories;
+  //     this.activatedRoute.queryParams.subscribe((params: any) => {
+  //       if (params.id) {
+  //         this.getById(params.id);
+  //       }
+  //     });
+  //   });
+  // }
 }

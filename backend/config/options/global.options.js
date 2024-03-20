@@ -155,7 +155,7 @@ const generateCreateData = async (createObj, requestBody) => {
   return createObj;
 };
 const generateURl = (filePath) => {
-  return filePath ? process.env.DOMAIN_URL + filePath : null;
+  return filePath ? process.env.CLOUDINARY_PATH + filePath : null;
 };
 const generateOTP = (length) => {
   if (process.env.ENVIRONMENT === "development") {

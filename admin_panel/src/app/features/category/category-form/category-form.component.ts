@@ -64,7 +64,6 @@ export class CategoryFormComponent {
 
   ngOnInit(): void {
     this.getAllMasterData();
-    // this.getByParentId();
     this.activated.queryParams.subscribe((params: any) => {
       if (params.id) {
         this.getDataById(params.id);
@@ -146,7 +145,7 @@ export class CategoryFormComponent {
   //   });
   // }
   fileChosen(event: any) {
-    console.log('event.target.files', event.target.files);
+    console.log('event.target.files', event);
 
     if (event.target.files.length) {
       if (event.target.files[0].size > 2000000) {

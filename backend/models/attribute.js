@@ -17,6 +17,13 @@ module.exports = (sequelize, DataTypes) => {
       value: {
         type: DataTypes.STRING,
         allowNull: false,
+        set(value) {
+          this.setDataValue('value', JSON.stringify(value));
+        },
+        get() {
+          const value = this.getDataValue('value');
+          return value ? JSON.parse(value) : null;
+        }
       },
       status: {
         type: DataTypes.STRING,

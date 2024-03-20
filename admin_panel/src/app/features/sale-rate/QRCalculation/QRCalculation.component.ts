@@ -68,7 +68,7 @@ export class QRCalculationComponent implements OnInit {
     this.spinner.show();
     let params = {};
     this.productService
-      .generateQRPrintData(params)
+      .getAll(params)
       .subscribe((success: any) => {
         this.spinner.hide();
         this.products = success.products;

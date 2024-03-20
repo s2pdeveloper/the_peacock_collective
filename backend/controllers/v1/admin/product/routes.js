@@ -21,7 +21,10 @@ app.post(
   "/",
   // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
-  upload.single("image"),
+  upload.fields([
+    { name: 'bannerImage', maxCount: 1 },
+    { name: 'productImage', maxCount: 10 }
+  ]),
   // validate("createCustomer"),
   controller.create
 );

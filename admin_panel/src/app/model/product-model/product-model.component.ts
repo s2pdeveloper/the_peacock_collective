@@ -25,7 +25,11 @@ export class ProductModelComponent {
   search: any = "";
   selectedProducts: IInvoiceDetails = null;
 
-  constructor(public activeModal: NgbActiveModal) {}
+  fileName: any = "";
+  url: any = null;
+  file: any = null;
+
+  constructor(public activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {
     this.collection = this.saleProducts.length;

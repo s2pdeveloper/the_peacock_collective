@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         get() {
           if (this.getDataValue('image'))
-            return generateURl(`category/${this.getDataValue('image')}`);
+            return generateURl(this.getDataValue('image'));
         },
       },
     },

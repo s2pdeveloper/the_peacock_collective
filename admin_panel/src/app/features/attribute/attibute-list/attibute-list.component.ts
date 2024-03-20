@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AttributeService } from '@shared/services/attribute.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 
@@ -14,7 +15,9 @@ export class AttibuteListComponent {
   constructor(
     private router: Router,
     private spinner: NgxSpinnerService,
-    private toastService: ToastrService
+    private toastService: ToastrService,
+    private attributeService: AttributeService,
+
   ) { }
   page: number = 1;
   pageSize: number = 25;
@@ -59,20 +62,20 @@ export class AttibuteListComponent {
       pageSize: this.pageSize,
       search: this.search,
     };
-    // this.categoryService.getAll(params).subscribe((success: any) => {
-    //   this.spinner.hide();
-    //   this.allData = success.rows;
-    //   this.collection = success.count;
-    // });
+    this.attributeService.getAll(params).subscribe((success: any) => {
+      this.spinner.hide();
+      this.allData = success.rows;
+      this.collection = success.count;
+    });
   }
 
   delete(id: any) {
     this.spinner.show();
-    // this.categoryService.delete(id).subscribe((success: any) => {
-      this.spinner.hide();
-      // this.toastService.success(success.message);
-      // this.modalService.dismissAll();
-      // this.getAll();
-    // });
+    this.attributeService.delete(id).subscribe((success: any) => {
+    this.spinner.hide();
+    this.toastService.success(success.message);
+    this.modalService.dismissAll();
+    this.getAll();
+    });
   }
 }

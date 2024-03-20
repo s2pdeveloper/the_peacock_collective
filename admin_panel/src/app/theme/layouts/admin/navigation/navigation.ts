@@ -107,6 +107,14 @@ const NavigationItems = [
         url: "/default/product",
         icon: "fa-brands fa-product-hunt",
       },
+      {
+        id: "attribute",
+        title: "Attribute",
+        type: "item",
+        classes: "nav-item",
+        url: "/default/attribute",
+        icon: "fa-brands fa-product-hunt",
+      },
       // {
       //   id: "inventory",
       //   title: "Inventory",
@@ -173,7 +181,7 @@ const NavigationItems = [
       //   url: "/default/new-invoice/list",
       //   icon: "fa-solid fa-clipboard-list",
       // },
-      
+
       // fa-solid fa-cart-flatbed-suitcase
       // {
       //   id: 'card',

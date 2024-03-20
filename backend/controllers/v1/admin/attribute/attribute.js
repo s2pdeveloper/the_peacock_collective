@@ -17,6 +17,7 @@ const {
 
 const modelObj = {
   create: asyncHandler(async (req, res) => {
+
     let checkExisting = await Model.findOne({
       where: {
         name: req.body.name,
@@ -51,7 +52,7 @@ const modelObj = {
             name: { [Op.like]: search },
           },
         }),
-        
+
       },
       order: [[column, direction]],
       offset: +offset,
@@ -87,6 +88,7 @@ const modelObj = {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Attribute");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     } else {
+      itemDetails = await generateCreateData(itemDetails, req.body);
       await itemDetails.save();
       return res.json(
         generateResponse(resCode.HTTP_OK, {

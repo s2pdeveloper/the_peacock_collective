@@ -35,6 +35,7 @@ import { CustomPaginationComponent } from "@core/components/custom-pagination/cu
 import { ProductModelComponent } from "src/app/model/product-model/product-model.component";
 import { CustomerModelComponent } from "src/app/model/customer-model/customer-model.component";
 import { CustomerModelNewComponent } from "src/app/model/customer-model-new/customer-model-new.component";
+import { JoinPipe } from "./pipes/join.pipe";
 
 const PIPES: any = [
   SearchFilterPipe,
@@ -42,6 +43,7 @@ const PIPES: any = [
   // ToWordsPipe,
   LabelTranslatePipe,
   CompanyCurrencyPipe,
+  JoinPipe
 ];
 const DIRECTIVES: any = [
   NgbdSortableHeader,
@@ -76,4 +78,4 @@ const MODULES: any = [
     ...PIPES,
   ],
 })
-export class SharedModule {}
+export class SharedModule { }

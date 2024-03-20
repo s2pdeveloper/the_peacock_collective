@@ -56,8 +56,9 @@
           <label class="form-label me-2">
             Image
           </label>
+       
           <div style="display: inline-block">
-            <input #myInput [multiple]="false" id="file" name="file" (change)="fileChosen($event)" type="file" />
+            <input [multiple]="false" type="file" id="file" name="file" (change)="fileChosen($event)" />
           </div>
         </div>
       </div>
