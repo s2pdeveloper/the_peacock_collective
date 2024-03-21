@@ -27,8 +27,7 @@ export class ProductInfoFormComponent {
   submitted: boolean = false;
   categoryArr = [];
   attributeArr = [];
-  attribute = [];
-  attrArr: any[] = [];
+  attributes = [];
   productImage: any = null;
   productImageName: any = "";
   productImageUrl: any = null;
@@ -107,8 +106,8 @@ export class ProductInfoFormComponent {
   }
   getAllAttribute() {
     this.attributeService.getAll({}).subscribe((success) => {
-      this.attributeArr = success.rows;
-      console.log("attributeArr", this.attributeArr);
+      this.attributes = success.rows;
+      console.log("attributeArr", this.attributes);
     });
   }
 
@@ -141,12 +140,21 @@ export class ProductInfoFormComponent {
     if (this.file) {
       formData.append("image", this.file, this.file.name);
     }
+    if(this.attributeArr.length){
+      let attr=this.attributes.filter(x=> this.attributeArr.includes(x.id)).map(y=>{
+        return{
+          id:y.id,
+          name:y.name
+        }
+      })
+      formData.append("attributeArr", JSON.stringify(attr));
+
+    }
 
     if (this.productForm.value.id) {
       this.update(this.productForm.value.id, formData);
     } else {
       formData.delete("id");
-      formData.append("attrArr", JSON.stringify(this.attrArr));
       this.create(formData);
     }
   }
@@ -181,6 +189,10 @@ export class ProductInfoFormComponent {
       if (success.bannerImage) {
         this.url = success.bannerImage;
       }
+      if(success?.productWithProdAttributeMap && success?.productWithProdAttributeMap.length){
+        this.attributeArr=success?.productWithProdAttributeMap.map(x=>x.attributeId);
+      }
+      
       this.productForm.patchValue(success);
       this.spinner.hide();
     });
@@ -224,16 +236,14 @@ export class ProductInfoFormComponent {
     }
   }
   onAttrChange(ev: any) {
-    this.attrArr = [];
+    this.attributeArr = [];
     console.log("ev", ev);
     for (const item of ev) {
-      this.attrArr.push({
-        id: item.id,
-        name: item.name,
-      });
+      this.attributeArr.push(item.id);
     }
+    this.attributeArr=[...this.attributeArr]
 
-    console.log("attr333333333333333333", this.attrArr);
+    console.log("attr333333333333333333", this.attributeArr);
   }
   // getAllMasterData() {
   //   this.productService.getAllMasterData({}).subscribe((success: any) => {

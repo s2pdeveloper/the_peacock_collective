@@ -96,11 +96,11 @@
             <span class="text-danger">*</span></label
           >
           <ng-select 
-            [items]="attributeArr"
+            [items]="attributes"
             [multiple]="true"
             bindLabel="name"
             bindValue="id"
-            [(ngModel)]="attribute"
+            [(ngModel)]="attributeArr"
             [ngModelOptions]="{standalone: true}"
             (change)="onAttrChange($event)"
           >
