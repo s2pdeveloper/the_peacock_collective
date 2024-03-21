@@ -1,4 +1,4 @@
-const { Product, ProductImage, ProdAttributeMap } = require("../../../../models");
+const { Product, ProdAttributeMap } = require("../../../../models");
 const {
   OPTIONS,
   generateResponse,
