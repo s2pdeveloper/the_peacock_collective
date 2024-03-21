@@ -1,5 +1,7 @@
 const sequelize = require('sequelize');
 const { Product } = require('../../../../models');
+const { ProdAttributeMap } = require('../../../../models');
+
 const fs = require('fs');
 const {
   OPTIONS,
@@ -40,6 +42,7 @@ const modelObj = {
 
     // }
 
+
     if (checkExisting) {
 
       let message = MESSAGES.apiErrorStrings.Data_EXISTS('Product');
@@ -51,7 +54,18 @@ const modelObj = {
     if (![undefined, null, ''].includes(req.file)) {
       createObj.bImage = req.file.filename;
     }
-    await createObj.save();
+    let product = await createObj.save();
+    if (req.body.attributeArr.length) {
+      let payloadMap = req.body.attributeArr.map(x => {
+        return {
+          attributeId: x,
+          productId: product.id
+        }
+      })
+
+      await ProdAttributeMap.bulkCreate([payloadMap]);
+
+    }
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
         message: MESSAGES.apiSuccessStrings.ADDED('Product'),
@@ -118,6 +132,24 @@ const modelObj = {
         id: req.params.id,
       },
     });
+
+    if (req.body.attributeArr.length) {
+      let deleteQuery = {
+        where: {
+          productId: req.params.id,
+        },
+      }
+      await Model.destroy(deleteQuery);
+
+      let payloadMap = req.body.attributeArr.map(x => {
+        return {
+          attributeId: x,
+          productId: req.params.id
+        }
+      })
+      await ProdAttributeMap.bulkCreate([payloadMap]);
+    }
+
     if (!itemDetails) {
 
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS('Product');
@@ -147,9 +179,18 @@ const modelObj = {
       },
     };
     let item = await Model.findOne(query);
+    if (item && item?.bannerImage) {
+      await cloudinary.deleteFile(item.bannerImage);
+    }
 
     let deletedItem = await Model.destroy(query);
     if (deletedItem) {
+      let deleteQuery = {
+        where: {
+          productId: req.params.id,
+        },
+      }
+      await ProdAttributeMap.destroy(deleteQuery);
 
       return res.json(
         generateResponse(resCode.HTTP_OK, {
