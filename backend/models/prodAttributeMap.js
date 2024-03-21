@@ -23,12 +23,5 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
     });
   };
-  // ProdAttributeMap.associate = (models) => {
-  //   ProdAttributeMap.belongsToMany(models.Product, {
-  //     foreignKey: 'productId',
-  //     as: 'ProdAttributeMapWithProducts',
-  //     onDelete: 'CASCADE',
-  //   });
-  // };
   return ProdAttributeMap;
 };

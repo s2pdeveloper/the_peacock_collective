@@ -14,10 +14,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-  
       price: {
         type: DataTypes.FLOAT,
         allowNull: false,
+        set(price) {
+          price ? this.setDataValue('value', price.toFixed(2)) : null
+        },
       },
       qty: {
         type: DataTypes.INTEGER,
@@ -37,6 +39,13 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
     });
   };
+  // Variant.associate = (models) => {
+  //   Variant.hasMany(models.AttrVariantMap, {
+  //     foreignKey: 'variantId',
+  //     as: 'variantWithAttrVariantMap',
+  //     onDelete: 'CASCADE',
+  //   });
+  // };
 
   return Variant;
 };

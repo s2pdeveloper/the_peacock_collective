@@ -7,9 +7,10 @@ const customerRoutes = require('./customer/routes');
 const categoriesRoutes = require("./categories/routes")
 const attributeRoutes = require("./attribute/routes")
 const productRoutes = require("./product/routes")
-const shared = require('./shared/route');
-const razorpay = require('./razorpay/routes');
-const vendor=require("./vendor/routes");
+const sharedRoutes = require('./shared/route');
+const razorpayRoutes = require('./razorpay/routes');
+const vendorRoutes = require("./vendor/routes");
+const variantRoutes = require("./variant/routes");
 
 router.use('/user', userRoutes);
 router.use('/images', imageRoutes);
@@ -17,9 +18,10 @@ router.use('/customer', customerRoutes);
 router.use('/category', categoriesRoutes);
 router.use('/attribute', attributeRoutes);
 router.use('/product', productRoutes);
-router.use('/shared', shared);
-router.use('/razorpay', razorpay);
-router.use('/vendor', vendor);
+router.use('/shared', sharedRoutes);
+router.use('/razorpay', razorpayRoutes);
+router.use('/vendor', vendorRoutes);
+router.use('/variant', variantRoutes);
 
 
 module.exports = router;

@@ -20,13 +20,13 @@ module.exports = (sequelize, DataTypes) => {
       collection: "AttrVariantMap",
     }
   );
-  // AttrVariantMap.associate = (models) => {
-  //   AttrVariantMap.belongsTo(models.Product, {
-  //     foreignKey: 'productId',
-  //     as: 'AttrVariantMapWithAttributes',
-  //     onDelete: 'CASCADE',
-  //   });
-  // };
+  AttrVariantMap.associate = (models) => {
+    AttrVariantMap.belongsTo(models.Attribute, {
+      foreignKey: 'attributeId',
+      as: 'AttrVariantMapWithAttributes',
+      onDelete: 'CASCADE',
+    });
+  };
   // AttrVariantMap.associate = (models) => {
   //   AttrVariantMap.belongsToMany(models.Product, {
   //     foreignKey: 'productId',

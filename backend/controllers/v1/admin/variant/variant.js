@@ -1,5 +1,6 @@
+
 const Sequelize = require('sequelize');
-const { Product, ProdAttributeMap } = require("../../../../models");
+const { Variant, AttrVariantMap } = require("../../../../models");
 const {
   OPTIONS,
   generateResponse,
@@ -8,13 +9,10 @@ const {
 const MESSAGES = require("../../../../config/options/messages.options");
 const resCode = MESSAGES.resCode;
 const Op = Sequelize.Op;
-
-const Model = Product;
+const Model = Variant;
 const ApiError = require("../../../../config/middlewares/api.error");
-const {
-  asyncHandler,
-} = require("../../../../config/middlewares/async.handler");
-const cloudinary = require("../../../../shared/service/cloudinary.service");
+const { asyncHandler } = require("../../../../config/middlewares/async.handler");
+
 
 const modelObj = {
   create: asyncHandler(async (req, res) => {
@@ -23,35 +21,28 @@ const modelObj = {
         name: req.body.name,
       },
     });
-
-
     if (checkExisting) {
-      let message = MESSAGES.apiErrorStrings.Data_EXISTS("Product");
+      let message = MESSAGES.apiErrorStrings.Data_EXISTS("Variant");
       throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
     }
-
-    if (req.file) {
-      req.body.bannerImage = await cloudinary.uploadFromBuffer(req.file.buffer);
-    }
-
-
     let createObj = await generateCreateData(new Model(), req.body);
+    let variant = await createObj.save();
 
-    let product = await createObj.save();
     if (req.body.attributeArr.length) {
+
       let payloadMap = req.body.attributeArr.map(x => {
         return {
           attributeId: x.id,
-          productId: product.id
+          value: x.value,
+          variantId: variant.id
         }
       })
-
-      await ProdAttributeMap.bulkCreate([payloadMap]);
-
+      await AttrVariantMap.bulkCreate([payloadMap]);
     }
+
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
-        message: MESSAGES.apiSuccessStrings.ADDED("Product"),
+        message: MESSAGES.apiSuccessStrings.ADDED("Variant"),
       })
     );
   }),
@@ -66,27 +57,22 @@ const modelObj = {
     let offset = (page - 1) * pageSize || 0;
     let query = {
       where: {
-        ...(!!search && {
+        ...(search && {
           [Op.or]: {
             name: { [Op.like]: search },
           },
         }),
       },
+      include: {
+        model: AttrVariantMap,
+        as: "variantWithAttrVariantMap"
+        // attributes: ['id', 'title', 'course_id', 'start_date', 'end_date']
+      },
       order: [[column, direction]],
-      // attributes: {
-      //   exclude: ['userId'],
-      // },
-      // include: {
-      //   model: User,
-      //   as: 'shop',
-      //   attributes: ['id', 'name', 'mobile'],
-      // },
       offset: +offset,
       limit: +pageSize,
     };
-    console.log("getll all product");
     let response = await Model.findAndCountAll(query);
-
     return res
       .status(resCode.HTTP_OK)
       .json(generateResponse(resCode.HTTP_OK, response));
@@ -97,12 +83,11 @@ const modelObj = {
         id: req.params.id,
       },
       include: {
-        model: ProdAttributeMap,
-        // attributes: ['id', 'title', 'course_id', 'start_date', 'end_date']
+        model: AttrVariantMap,
       },
     });
     if (!existing) {
-      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Product");
+      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Variant");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
     return res
@@ -114,43 +99,35 @@ const modelObj = {
       where: {
         id: req.params.id,
       },
-
     });
 
-    if (req.body.attributeArr.length) {
-      let deleteQuery = {
-        where: {
-          productId: req.params.id,
-        },
-      }
-      await ProdAttributeMap.destroy(deleteQuery);
-
-      let payloadMap = req.body.attributeArr.map(x => {
-        return {
-          attributeId: x.id,
-          productId: req.params.id
-        }
-      })
-      await ProdAttributeMap.bulkCreate([payloadMap]);
-    }
-
     if (!itemDetails) {
-      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Product");
+      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Variant");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     } else {
 
-      if (req.file) {
-        if (itemDetails?.bannerImage) {
-          await cloudinary.deleteFile(itemDetails.bannerImage);
+      if (req.body.attributeArr.length) {
+        let deleteQuery = {
+          where: {
+            productId: req.params.id,
+          },
         }
-        req.body.bannerImage = await cloudinary.uploadFromBuffer(req.file.buffer);
-      }
+        await AttrVariantMap.destroy(deleteQuery);
 
+        let payloadMap = req.body.attributeArr.map(x => {
+          return {
+            attributeId: x.id,
+            value: x.value,
+            variantId: variant.id
+          }
+        })
+        await AttrVariantMap.bulkCreate([payloadMap]);
+      }
       itemDetails = await generateCreateData(itemDetails, req.body);
       await itemDetails.save();
       return res.json(
         generateResponse(resCode.HTTP_OK, {
-          message: MESSAGES.apiSuccessStrings.UPDATE("Product"),
+          message: MESSAGES.apiSuccessStrings.UPDATE("Variant"),
         })
       );
     }
@@ -161,27 +138,21 @@ const modelObj = {
         id: req.params.id,
       },
     };
-    let item = await Model.findOne(query);
-    if (item && item?.bannerImage) {
-      await cloudinary.deleteFile(item.bannerImage);
-    }
-
     let deletedItem = await Model.destroy(query);
     if (deletedItem) {
       let deleteQuery = {
         where: {
-          productId: req.params.id,
+          variantId: req.params.id,
         },
       }
-      await ProdAttributeMap.destroy(deleteQuery);
-
+      await AttrVariantMap.destroy(deleteQuery);
       return res.json(
         generateResponse(resCode.HTTP_OK, {
-          message: MESSAGES.apiSuccessStrings.DELETED("Product"),
+          message: MESSAGES.apiSuccessStrings.DELETED("Variant"),
         })
       );
     } else {
-      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Product");
+      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Variant");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
   }),
