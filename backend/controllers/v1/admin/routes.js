@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const userRoutes = require('./user/routes');
-const imageRoutes = require('./images/routes');
+const imageRoutes = require('./productImages/routes');
 
 const customerRoutes = require('./customer/routes');
 const categoriesRoutes = require("./categories/routes")
@@ -13,7 +13,7 @@ const vendorRoutes = require("./vendor/routes");
 const variantRoutes = require("./variant/routes");
 
 router.use('/user', userRoutes);
-router.use('/images', imageRoutes);
+router.use('/productImages', imageRoutes);
 router.use('/customer', customerRoutes);
 router.use('/category', categoriesRoutes);
 router.use('/attribute', attributeRoutes);
