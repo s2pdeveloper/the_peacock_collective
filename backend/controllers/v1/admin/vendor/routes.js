@@ -1,12 +1,11 @@
 const app = require("express")();
 const authHandler = require("../../../../config/middlewares/auth.middleware");
-const upload = require("../../shared/upload");
 const {
   validate,
   rolePermit,
 } = require("../../../../config/middlewares/utils");
 const roles = require("../../../../config/options/global.options").OPTIONS;
-const controller = require("./product");
+const controller = require("./vendor");
 
 // app.get(
 //   '/getAll',
@@ -16,11 +15,11 @@ const controller = require("./product");
 // );
 app.get("/", controller.getAll);
 
+
 app.post(
   "/",
   // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
-  upload.single("image"),
   // validate("createCustomer"),
   controller.create
 );
@@ -32,6 +31,7 @@ app.get(
   // validate("checkParamId"),
   controller.getById
 );
+
 app.delete(
   "/:id",
   // authHandler.authenticateJWT(),
@@ -44,7 +44,6 @@ app.put(
   "/:id",
   // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
-  upload.single("image"),
   // validate("updateCustomer"),
   controller.update
 );

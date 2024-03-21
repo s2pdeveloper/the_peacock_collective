@@ -86,13 +86,11 @@ export class CategoryFormComponent {
     let formData: FormData = new FormData();
     for (const key in this.categoryForm.value) {
       if (key != 'image') {
-        console.log("key=====", key);
 
         formData.append(key, this.categoryForm.value[key]);
       }
     }
     if (this.file) {
-      formData.append('key', 'category');
       formData.append('image', this.file, this.file.name);
     }
 

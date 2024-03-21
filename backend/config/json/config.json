@@ -1,18 +1,14 @@
 {
   "development": {
-    "use_env_variable": "DEV_DATABASE_URL",
-    "logging": true
+    "use_env_variable": "LOCAL_DATABASE_URL",
+    "logging": false
   },
   "test": {
     "use_env_variable": "TEST_DATABASE_URL",
     "logging": false
   },
-  "uat": {
-    "use_env_variable": "UAT_DATABASE_URL",
-    "logging": true
-  },
   "production": {
-    "use_env_variable": "DATABASE_URL",
+    "use_env_variable": "PROD_DATABASE_URL",
     "logging": true
   },
   "firebaseConfig": {

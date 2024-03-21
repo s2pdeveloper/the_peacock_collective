@@ -15,7 +15,7 @@ const db = {};
 
 let sequelize;
 if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+  sequelize = new Sequelize(process.env[config.use_env_variable], config,);
 } else {
   sequelize = new Sequelize(
     config.database,
@@ -27,8 +27,11 @@ if (config.use_env_variable) {
 
 sequelize
   .authenticate()
-  .then(() => {
+  .then(async() => {
     console.log('Database connection has been established successfully.');
+      if (process.env.ENVIRONMENT !== 'prod') {
+        await sequelize.sync({ alter: false });
+      }
   })
   .catch((err) => {
     console.error('Unable to connect to the database:', err);
@@ -55,5 +58,7 @@ for (let i = Object.keys(db).length - 1; i >= 0; i--) {
 }
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+
+
 
 module.exports = db;

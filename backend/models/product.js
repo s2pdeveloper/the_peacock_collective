@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     hsn: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: true,
     },
     gst: {
@@ -65,7 +65,13 @@ module.exports = (sequelize, DataTypes) => {
           return generateURl(this.getDataValue("bannerImage"));
       },
     },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: OPTIONS.defaultStatus.ACTIVE,
+    },
   });
+
   Product.associate = (models) => {
     Product.belongsTo(models.Categories, {
       foreignKey: 'categoryId',

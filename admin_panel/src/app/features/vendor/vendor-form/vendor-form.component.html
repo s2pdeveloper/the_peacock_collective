@@ -1,0 +1,106 @@
+<div class="card form-card">
+  <div class="card-header">
+    <div class="card-header-items">
+      <div>{{ vendorForm.value.id ? "Update" : "Create" }} Vendor</div>
+      <div>
+        <a class="back-btn btn btn-primary" (click)="back()">
+          <i class="ti ti-arrow-left me-1"></i> Back</a
+        >
+      </div>
+    </div>
+  </div>
+  <div class="card-body justify-content-center">
+    <form [formGroup]="vendorForm">
+      <div class="row">
+        <div class="col-md-4 mb-2">
+          <label class="form-label">
+            Name
+            <span class="text-danger">*</span></label
+          >
+          <input
+            formControlName="name"
+            placeholder="name"
+            type="text"
+            class="form-control"
+          />
+        </div>
+        <div class="col-md-4 mb-2">
+          <label class="form-label">
+            email
+            <span class="text-danger">*</span></label
+          >
+          <input
+            formControlName="email"
+            placeholder="email"
+            type="text"
+            class="form-control"
+          />
+        </div>
+        <div class="col-md-4 mb-2">
+          <label class="form-label">
+            Phone Number
+            <span class="text-danger">*</span></label
+          >
+          <input
+            formControlName="phoneNumber"
+            placeholder="Phone Number"
+            type="number"
+            class="form-control"
+          />
+        </div>
+        <div class="col-md-4 mb-2">
+          <label class="form-label">
+            Company Name
+            <span class="text-danger">*</span></label
+          >
+          <input
+            formControlName="companyName"
+            placeholder="Company Name"
+            type="number"
+            class="form-control"
+          />
+        </div>
+        <div class="col-md-4 mb-2">
+          <label class="form-label">
+            GST
+            <span class="text-danger">*</span></label
+          >
+          <input
+            formControlName="gst"
+            placeholder="GST"
+            type="number"
+            class="form-control"
+          />
+        </div>
+      </div>
+
+      <hr />
+      <div class="row">
+        <div class="col-12">
+          <div class="d-flex justify-content-center">
+            <button
+              (click)="reset()"
+              type="submit"
+              class="btn px-5 btn-primary mx-2 shadow rounded rounded-3 d-flex align-items-center"
+            >
+              <i class="fa-solid fa-arrows-rotate me-2"></i>
+              Reset
+            </button>
+            <button
+              type="submit"
+              [class]="vendorForm.value.id ? 'btn-warning' : 'btn-success'"
+              class="btn px-5 btn-success shadow rounded rounded-3 mx-2 d-flex align-items-center"
+              (click)="submit()"
+            >
+              <i
+                [class]="vendorForm.value.id ? 'fa-pen-to-square' : 'fa-plus'"
+                class="fa-solid me-2"
+              ></i>
+              {{ vendorForm.value.id ? "Update" : "Create" }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

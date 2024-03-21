@@ -115,10 +115,6 @@ module.exports = (sequelize, DataTypes) => {
     const payload = { id: this.id, role: this.role };
     return jwt.sign(payload, process.env.JWT_SECRET_KEY);
   };
-  (async () => {
-    if (process.env.ENVIRONMENT !== 'prod') {
-      await sequelize.sync({ alter: true });
-    }
-  })();
+
   return User;
 };

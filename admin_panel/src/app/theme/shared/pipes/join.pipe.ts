@@ -10,7 +10,7 @@ export class JoinPipe implements PipeTransform {
     transform(value: any[], key) {
         try {
             if (value.length) {
-                return value.map((x) => x[key]).join(',');
+                return value.map((x) => x[key]).join(' | ');
             } else {
                 return null
             }

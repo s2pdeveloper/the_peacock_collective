@@ -53,10 +53,10 @@
           <thead class="thead">
             <tr class="table-secondary">
               <!-- <th scope="col">Image</th> -->
-              <th scope="col">Product Code</th>
-              <th scope="col" class="text-start">Name</th>
+              <th scope="col" class="text-start">Product Name</th>
+              <th scope="col" >Product Code</th>
               <!-- <th scope="col">Description</th> -->
-              <th scope="col">Std Rate</th>
+              <th scope="col">Image</th>
               <th scope="col">GST Rate</th>
               <th scope="col">Category Name</th>
               <th scope="col">Status</th>
@@ -70,21 +70,21 @@
                   {{ image.image }}
                 </span>
               </td> -->
-              <td scope="row">{{ p.code }}</td>
               <td scope="row" class="text-start">
                 <span placement="top" [ngbTooltip]="p.name">
                   {{ p.name | titlecase }}</span
                 >
               </td>
+              <td scope="row">{{ p.hsn }}</td>
               <!-- <td scope="row" class="text-start">
                 <span placement="top" [ngbTooltip]="p.shortDescription">
                   {{ p.shortDescription }}</span
                 >
               </td> -->
-              <td scope="row" class="text-center">{{ p.standardRate }}</td>
+              <td scope="row" class="text-center"><img width="30" height="30" src={{p.bannerImage}} alt=""></td>
               <td scope="row" class="text-center">{{ p.gst }}</td>
               <td scope="row">
-                {{ p.categoryName }}
+                {{ p.categoryId }}
               </td>
               <td scope="row" class="text-center">
                 <span
@@ -99,7 +99,7 @@
               <td scope="row" class="text-center">
                 <button
                   class="btn action-btn btn-sm mx-2"
-                  (click)="navigateTo('/default/product/product-form', p._id)"
+                  (click)="navigateTo('/default/product/product-form', p.id)"
                   ngbTooltip="Update"
                 >
                   <i class="ti ti-edit-circle"></i>
@@ -154,7 +154,7 @@
   <div class="modal-footer justify-content-center border-0">
     <button
       class="btn px-4 btn-outline-danger"
-      (click)="deleteProduct(selectedRow._id)"
+      (click)="deleteProduct(selectedRow.id)"
     >
       YES
     </button>
