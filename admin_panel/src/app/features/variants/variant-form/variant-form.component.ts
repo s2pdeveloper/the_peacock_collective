@@ -7,63 +7,95 @@ import {
 } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SpinnerService, ToastService } from "@core/services";
+import { ProductService } from "@shared/services/product.service";
+import { VariantsService } from "@shared/services/variants.service";
 import { VendorService } from "@shared/services/vendor.service";
 
 @Component({
-  selector: 'app-variant-form',
-  templateUrl: './variant-form.component.html',
-  styleUrls: ['./variant-form.component.scss']
+  selector: "app-variant-form",
+  templateUrl: "./variant-form.component.html",
+  styleUrls: ["./variant-form.component.scss"],
 })
 export class VariantFormComponent {
-  vendorForm = this.fb.group({
+  options = [];
+  vendorId: number = null;
+  selectedAttr = [];
+
+  variantForm = this.fb.group({
     id: new FormControl(null),
-    name: new FormControl(null, [Validators.required]),
+    sku: new FormControl(null, [Validators.required]),
     price: new FormControl(null),
     qty: new FormControl(null),
     productId: new FormControl(null),
   });
-  options = [];
-  vendorId: number = null;
+  // FORM_ERRORS = [
+  //   {
+  //     message: "Name is required",
+  //     key: "name",
+  //   },
+  //   {
+  //     message: "Company Name is required",
+  //     key: "companyName",
+  //   },
+  //   {
+  //     message: "Status is required",
+  //     key: "status",
+  //   },
+  // ];
+
+  attributes = [];
 
   constructor(
     private router: Router,
     private activated: ActivatedRoute,
     private toastService: ToastService,
     private spinner: SpinnerService,
-    private vendorService: VendorService,
+    private variantsService: VariantsService,
+    private productService: ProductService,
+
     private fb: FormBuilder
   ) {}
   get f() {
-    return this.vendorForm.controls;
+    return this.variantForm.controls;
   }
 
-  FORM_ERRORS = [
-    {
-      message: "Name is required",
-      key: "name",
-    },
-    {
-      message: "Company Name is required",
-      key: "companyName",
-    },
-    {
-      message: "Status is required",
-      key: "status",
-    },
-  ];
-
   ngOnInit(): void {
-    // this.getAllMasterData();
     this.activated.queryParams.subscribe((params: any) => {
       if (params.id) {
-        this.getDataById(params.id);
-        this.vendorId = params.id;
+        this.getProductAttribute(params.id);
+        this.f['productId'].setValue(Number(params.id))
+        // this.getDataById(params.id);
+        // this.vendorId = params.id;
       }
+    });
+  }
+  getProductAttribute(id) {
+    this.spinner.show();
+    this.productService.getById(id).subscribe((success: any) => {
+      console.log("success", success);
+      if (
+        success?.productWithProdAttributeMap &&
+        success?.productWithProdAttributeMap.length
+      ) {
+        for (const item of success?.productWithProdAttributeMap) {
+          this.attributes.push({
+            label: item?.ProdAttributeMapWithAttributes?.name,
+            value: item.attributeId,
+            attributes: item?.ProdAttributeMapWithAttributes.value.map(
+              (x) => x.value
+            ),
+          });
+        }
+      }
+      console.log("this.attributes", this.attributes);
+
+      // this.variantForm.patchValue(success);
+      this.spinner.hide();
     });
   }
 
   submit() {
-    console.log(this.vendorForm.value);
+    console.log(this.variantForm.value);
 
     // this.submitted = true;
     // if (
@@ -72,10 +104,11 @@ export class VariantFormComponent {
     //   return;
     // }
 
-    let formData = this.vendorForm.value;
+    let formData:any = this.variantForm.value;
+    formData.attributeArr = this.selectedAttr;
 
-    if (this.vendorForm.value.id) {
-      this.update(this.vendorForm.value.id, formData);
+    if (this.variantForm.value.id) {
+      this.update(this.variantForm.value.id, formData);
     } else {
       // formData.delete('id')
       delete formData.id;
@@ -85,52 +118,56 @@ export class VariantFormComponent {
 
   create(formData) {
     this.spinner.show();
-    this.vendorService.create(formData).subscribe((success: any) => {
+    this.variantsService.create(formData).subscribe((success: any) => {
       this.spinner.hide();
       this.toastService.success(success.message);
-      this.router.navigate(["default/vendor/vendor-list"]);
+      this.router.navigate(["default/variant/variant-list"]);
     });
   }
 
   update(id, formData) {
     this.spinner.show();
-    this.vendorService.update(id, formData).subscribe((success: any) => {
+    this.variantsService.update(id, formData).subscribe((success: any) => {
       this.spinner.hide();
       this.toastService.success(success.message);
-      this.router.navigate(["default/vendor/vendor-list"]);
+      this.router.navigate(["default/variant/variant-list"]);
     });
   }
   getDataById(id) {
     this.spinner.show();
-    this.vendorService.getById(id).subscribe((success: any) => {
-      this.vendorForm.patchValue(success);
+    this.variantsService.getById(id).subscribe((success: any) => {
+      this.variantForm.patchValue(success);
       this.spinner.hide();
     });
   }
 
-  // getByParentId() {
-  //   this.spinner.show();
-  //   this.categoryService.getParentId().subscribe((success: any) => {
-  //     this.spinner.hide();
-  //     this.options = success.map((category) => ({
-  //       id: category.id,
-  //       name: category.name,
-  //     }));
-  //     let def = { id: "", name: "Parent" };
-  //     this.options.unshift(def);
-  //   });
-  // }
-
   back() {
-    this.router.navigate(["default/vendor/vendor-list"]);
+    this.router.navigate(["default/variant/variant-list"]);
   }
   reset() {
-    this.vendorForm.reset();
-    if (this.vendorId) {
-      this.getDataById(this.vendorId);
-    }
+    // this.variantForm.reset();
+    // if (this.vendorId) {
+    //   this.getDataById(this.vendorId);
+    // }
   }
   openUrl(url) {
     window.open(url, "_blank");
+  }
+  onAttrChange(ev: any, id: any) {
+    console.log("ev", ev.target.value, "id", id);
+    let index = this.selectedAttr.findIndex((x) => x.attrId == id) 
+    if (index == -1) {
+      this.selectedAttr.push({
+        value: ev.target.value,
+        attrId: id,
+      });
+    } else {
+      this.selectedAttr[index] = {
+        value: ev.target.value,
+        attrId: id,
+      };
+    }
+    console.log('this.selectedAttr',this.selectedAttr);
+    
   }
 }

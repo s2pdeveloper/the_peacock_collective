@@ -115,8 +115,15 @@
                 </button>
                 <button
                   class="btn action-btn btn-sm mx-2"
-                  (click)="getProductById(p.id)"
+                  (click)="navigateTo('/default/product/product-image',p.id)"
                   ngbTooltip="Images"
+                >
+                  <i class="fa-solid fa-image"></i>
+                </button>
+                <button
+                  class="btn action-btn btn-sm mx-2"
+                  (click)="navigateTo('/default/variant/variant-form',p.id)"
+                  ngbTooltip="variant"
                 >
                   <i class="fa-solid fa-image"></i>
                 </button>

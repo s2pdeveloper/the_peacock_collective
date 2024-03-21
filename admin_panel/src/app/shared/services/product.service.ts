@@ -33,6 +33,11 @@ export class ProductService {
       .get(this.BASE_URL + '/' + id)
       .pipe(map((res: any) => res));
   }
+  getProductAttributeById(id: any) {
+    return this.http
+      .get(this.BASE_URL + '/product-attribute/' + id)
+      .pipe(map((res: any) => res));
+  }
   
 
 }

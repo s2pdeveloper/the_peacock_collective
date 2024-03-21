@@ -90,8 +90,6 @@ export class ProductInfoFormComponent {
     bannerImage: new FormControl(null),
     status: new FormControl("active"),
   });
-  selectedCar: any;
-
   get form() {
     return this.productForm.controls;
   }

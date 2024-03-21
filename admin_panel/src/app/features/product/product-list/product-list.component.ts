@@ -59,11 +59,7 @@ export class ProductListComponent {
     } else {
       this.router.navigate([page]);
     }
-    this.activated.queryParams.subscribe((params: any) => {
-      if (params.id) {
-        this.getProductById(params.id);
-      }
-    });
+
   }
 
   deleteProduct(id: any) {
@@ -89,17 +85,7 @@ export class ProductListComponent {
       this.collection = success.count;
     });
   }
-
-  getProductById(id) {
-    this.spinner.show();
-    this.productService.getById(id).subscribe((success) => {
-      this.spinner.hide();
-      this.router.navigate(["/default/product/product-image"], {
-        queryParams: { id },
-      });
-    });
-  }
-
+ 
   /**
    * open modal to bulk upload product
    */

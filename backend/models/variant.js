@@ -10,16 +10,16 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },
-      name: {
+      sku: {
         type: DataTypes.STRING,
         allowNull: false,
       },
       price: {
         type: DataTypes.FLOAT,
         allowNull: false,
-        set(price) {
-          price ? this.setDataValue('value', price.toFixed(2)) : null
-        },
+        // set(price) {
+        //   price ? this.setDataValue('value', price.toFixed(2)) : null
+        // },
       },
       qty: {
         type: DataTypes.INTEGER,

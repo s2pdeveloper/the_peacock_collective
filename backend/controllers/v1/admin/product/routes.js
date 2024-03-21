@@ -26,12 +26,21 @@ app.post(
 );
 
 app.get(
+  "product-attribute/:id",
+  // authHandler.authenticateJWT(),
+  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  // validate("checkParamId"),
+  controller.getProductAttribute
+);
+app.get(
   "/:id",
   // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
   // validate("checkParamId"),
   controller.getById
 );
+
+
 app.delete(
   "/:id",
   // authHandler.authenticateJWT(),
@@ -48,5 +57,6 @@ app.put(
   // validate("updateCustomer"),
   controller.update
 );
+
 
 module.exports = app;

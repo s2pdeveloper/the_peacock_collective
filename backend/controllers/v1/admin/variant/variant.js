@@ -18,7 +18,7 @@ const modelObj = {
   create: asyncHandler(async (req, res) => {
     let checkExisting = await Model.findOne({
       where: {
-        name: req.body.name,
+        sku: req.body.sku,
       },
     });
     if (checkExisting) {
@@ -28,16 +28,17 @@ const modelObj = {
     let createObj = await generateCreateData(new Model(), req.body);
     let variant = await createObj.save();
 
-    if (req.body.attributeArr.length) {
+    if (req.body?.attributeArr && req.body?.attributeArr.length) {
 
       let payloadMap = req.body.attributeArr.map(x => {
         return {
-          attributeId: x.id,
-          value: x.name,
+          attributeId: x.attrId,
+          value: x.value,
           variantId: variant.id
+
         }
       })
-      await AttrVariantMap.bulkCreate([payloadMap]);
+      await AttrVariantMap.bulkCreate(payloadMap);
     }
 
     return res.status(resCode.HTTP_OK).json(
@@ -106,23 +107,23 @@ const modelObj = {
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     } else {
 
-      if (req.body.attributeArr.length) {
-        let deleteQuery = {
-          where: {
-            productId: req.params.id,
-          },
-        }
-        await AttrVariantMap.destroy(deleteQuery);
+      // if (req.body?.attributeArr && req.body?.attributeArr.length) {
+      //   let deleteQuery = {
+      //     where: {
+      //       productId: req.params.id,
+      //     },
+      //   }
+      //   await AttrVariantMap.destroy(deleteQuery);
 
-        let payloadMap = req.body.attributeArr.map(x => {
-          return {
-            attributeId: x.id,
-            value: x.name,
-            variantId: variant.id
-          }
-        })
-        await AttrVariantMap.bulkCreate([payloadMap]);
-      }
+      //   let payloadMap = req.body.attributeArr.map(x => {
+      //     return {
+      //       attributeId: x.attrId,
+      //       value: x.value,
+      //       variantId: variant.id
+      //     }
+      //   })
+      //   await AttrVariantMap.bulkCreate(payloadMap);
+      // }
       itemDetails = await generateCreateData(itemDetails, req.body);
       await itemDetails.save();
       return res.json(

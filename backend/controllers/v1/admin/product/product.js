@@ -216,6 +216,30 @@ const modelObj = {
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
   }),
+  getProductAttribute: asyncHandler(async (req, res) => {
+    let existing = await ProdAttributeMap.findAll({
+      where: {
+        productId: req.params.id,
+      },
+    //   include:[ {
+    //     model: ProdAttributeMap,
+    //     as: 'productWithProdAttributeMap',
+    //     // attributes: ['id', 'title', 'course_id', 'start_date', 'end_date']
+    //     paranoid: true, required: false,
+
+    // }
+    // ]
+    });
+    if (!existing) {
+      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Product");
+      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
+    }
+    return res
+      .status(resCode.HTTP_OK)
+      .json(generateResponse(resCode.HTTP_OK, existing));
+  }),
+
+
 };
 
 module.exports = modelObj;
