@@ -15,14 +15,12 @@ const controller = require("./images");
 //   controller.getAll
 // );
 app.get("/", controller.getAll);
-
-
 app.post(
   "/",
   // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
   // validate("createCustomer"),
-  upload.single('file'),
+  upload.single('productImage'),
   controller.create
 );
 
@@ -47,6 +45,7 @@ app.put(
   // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
   // validate("updateCustomer"),
+  upload.single("productImage"),
   controller.update
 );
 

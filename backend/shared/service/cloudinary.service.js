@@ -21,16 +21,16 @@ module.exports.deleteFile = async (file) => {
       if (err) {
         console.error("err", err);
         rejects(err);
+        throw new ApiError('File upload fail', resCode.HTTP_BAD_REQUEST);
       } else {
         console.info("result", result);
-        resolve();
+        resolve(result);
       }
     });
   });
 };
 
 module.exports.uploadFile = async (path) => {
-
   return new Promise((resolve, rejects) => {
     cloud.uploader.upload_large(
       path,
