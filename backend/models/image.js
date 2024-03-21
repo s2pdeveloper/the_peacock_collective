@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      referenceId: {
+      productId: {
         type: DataTypes.STRING,
         allowNull: true,
       },
@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         get() {
           if (this.getDataValue('image'))
-            return generateURl(`images/${this.getDataValue('image')}`);
+            return generateURl(`${this.getDataValue('image')}`);
         },
       },
       status: {
