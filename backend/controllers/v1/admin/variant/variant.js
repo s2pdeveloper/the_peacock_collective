@@ -33,7 +33,7 @@ const modelObj = {
       let payloadMap = req.body.attributeArr.map(x => {
         return {
           attributeId: x.id,
-          value: x.value,
+          value: x.name,
           variantId: variant.id
         }
       })
@@ -117,7 +117,7 @@ const modelObj = {
         let payloadMap = req.body.attributeArr.map(x => {
           return {
             attributeId: x.id,
-            value: x.value,
+            value: x.name,
             variantId: variant.id
           }
         })

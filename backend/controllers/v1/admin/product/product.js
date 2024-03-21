@@ -38,17 +38,22 @@ const modelObj = {
     let createObj = await generateCreateData(new Model(), req.body);
 
     let product = await createObj.save();
-    if (req.body.attributeArr.length) {
-      let payloadMap = req.body.attributeArr.map(x => {
-        return {
-          attributeId: x.id,
-          productId: product.id
-        }
-      })
+    if (req.body?.attributeArr) {
+      req.body.attributeArr = JSON.parse(req.body.attributeArr);
+      console.log("req.body.attributeArr len", req.body.attributeArr.length);
+      if (req.body.attributeArr.length) {
+        let payloadMap = req.body.attributeArr.map(x => {
+          return {
+            attributeId: x.id,
+            productId: product.id
+          }
+        })
 
-      await ProdAttributeMap.bulkCreate([payloadMap]);
+        await ProdAttributeMap.bulkCreate([payloadMap]);
 
+      }
     }
+
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
         message: MESSAGES.apiSuccessStrings.ADDED("Product"),
@@ -84,7 +89,6 @@ const modelObj = {
       offset: +offset,
       limit: +pageSize,
     };
-    console.log("getll all product");
     let response = await Model.findAndCountAll(query);
 
     return res
