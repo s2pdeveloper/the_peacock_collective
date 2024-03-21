@@ -10,17 +10,16 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },
-      // name: {
-      //   type: DataTypes.STRING,
-      //   allowNull: false,
-      // },
-      // value: {
-      //   type: DataTypes.STRING,
-      //   allowNull: false,
-      // },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       price: {
         type: DataTypes.FLOAT,
         allowNull: false,
+        set(price) {
+          price ? this.setDataValue('value', price.toFixed(2)) : null
+        },
       },
       qty: {
         type: DataTypes.INTEGER,
@@ -33,19 +32,20 @@ module.exports = (sequelize, DataTypes) => {
       collection: "Variant",
     }
   );
+  Variant.associate = (models) => {
+    Variant.hasMany(models.AttrVariantMap, {
+      foreignKey: 'variantId',
+      as: 'variantWithAttrVariantMap',
+      onDelete: 'CASCADE',
+    });
+  };
   // Variant.associate = (models) => {
-  //   Variant.belongsTo(models.Attribute, {
-  //     foreignKey: 'attrNameId',
-  //     as: 'variantWithAttrName',
+  //   Variant.hasMany(models.AttrVariantMap, {
+  //     foreignKey: 'variantId',
+  //     as: 'variantWithAttrVariantMap',
   //     onDelete: 'CASCADE',
   //   });
   // };
-  // Variant.associate = (models) => {
-  //   Variant.belongsTo(models.Attribute, {
-  //     foreignKey: 'attrValueId',
-  //     as: 'variantWithAttrValue',
-  //     onDelete: 'CASCADE',
-  //   });
-  // };
+
   return Variant;
 };

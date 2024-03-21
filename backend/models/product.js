@@ -84,20 +84,17 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
     });
   };
-  
-  // Product.associate = (models) => {
-  //   Product.hasMany(models.Variant, {
-  //     foreignKey: 'productId',
-  //     as: 'productWithVariants',
-  //     onDelete: 'CASCADE',
-  //   });
-  // };
-  // Variant.associate = (models) => {
-  //   Variant.belongsTo(models.Product, {
-  //     foreignKey: 'productId',
-  //     as: '',
-  //     onDelete: 'CASCADE',
-  //   });
-  // };
+  Product.associate = (models) => {
+    Product.hasMany(models.Variant, {
+      foreignKey: 'productId',
+      as: 'productWithVariants',
+      onDelete: 'CASCADE',
+    });
+    Product.hasMany(models.ProdAttributeMap, {
+      foreignKey: 'productId',
+      as: 'productWithProdAttributeMap',
+      onDelete: 'CASCADE',
+    });
+  };
   return Product;
 };
