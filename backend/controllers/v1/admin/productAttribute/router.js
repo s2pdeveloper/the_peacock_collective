@@ -6,14 +6,9 @@ const {
 } = require("../../../../config/middlewares/utils");
 const upload = require("../../shared/upload");
 const roles = require("../../../../config/options/global.options").OPTIONS;
-const controller = require("./images");
+const controller = require("./productAttribute");
 
-// app.get(
-//   '/getAll',
-//   authHandler.authenticateJWT(),
-//   rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
-//   controller.getAll
-// );
+
 app.get("/", controller.getAll);
 app.post(
   "/",

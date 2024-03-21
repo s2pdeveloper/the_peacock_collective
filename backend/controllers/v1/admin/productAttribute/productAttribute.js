@@ -1,5 +1,5 @@
 const sequelize = require("sequelize");
-const { Images } = require("../../../../models");
+const { ProdAttributeMap } = require("../../../../models");
 const fs = require("fs");
 const {
   OPTIONS,
@@ -9,7 +9,7 @@ const {
 const MESSAGES = require("../../../../config/options/messages.options");
 const resCode = MESSAGES.resCode;
 const Op = sequelize.Op;
-const Model = Images;
+const Model = ProdAttributeMap;
 const ApiError = require("../../../../config/middlewares/api.error");
 const {
   asyncHandler,
@@ -30,12 +30,10 @@ const modelObj = {
     // }
     // console.log("your file in req.", req.file);
     // console.log("your file in buffer", req.file.buffer);
-    if (req.file) {
-      req.body.image = await cloudinary.uploadFromBuffer(req.file.buffer);
-      console.log(req.body);
-    } else {
-      return;
-    }
+    // if (req.file) {
+    //   req.body.image = await cloudinary.uploadFromBuffer(req.file.buffer);
+    //   console.log(req.body);
+    // } 
 
     let createObj = await generateCreateData(new Model(), req.body);
     await createObj.save();
@@ -82,7 +80,7 @@ const modelObj = {
     });
 
     if (!existing) {
-      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("ProductImage");
+      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("productAttribute");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
     return res
@@ -97,21 +95,21 @@ const modelObj = {
       },
     });
     if (!itemDetails) {
-      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("ProductImage");
+      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("productAttribute");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
-    if(req.file){
-      console.log('itemDetails.image',itemDetails.image);
-     await  cloudinary.deleteFile(itemDetails.image);
-     req.body.image = await cloudinary.uploadFromBuffer(req.file.buffer);
-      console.log(req.body);
-    }
+    // if(req.file){
+    //   console.log('itemDetails.image',itemDetails.image);
+    //  await  cloudinary.deleteFile(itemDetails.image);
+    //  req.body.image = await cloudinary.uploadFromBuffer(req.file.buffer);
+    //   console.log(req.body);
+    // }
 
     itemDetails = await generateCreateData(itemDetails, req.body);
     await itemDetails.save();
     return res.json(
       generateResponse(resCode.HTTP_OK, {
-        message: MESSAGES.apiSuccessStrings.UPDATE("ProductImage"),
+        message: MESSAGES.apiSuccessStrings.UPDATE("productAttribute"),
       })
     );
   }),
@@ -125,15 +123,15 @@ const modelObj = {
     let existing = await Model.findOne(query);
     // let deletedItem = await Model.destroy(query);
     if (existing) {
-      await  cloudinary.deleteFile(existing.image);
+    //   await  cloudinary.deleteFile(existing.image);
       await Model.destroy(query);
       return res.json(
         generateResponse(resCode.HTTP_OK, {
-          message: MESSAGES.apiSuccessStrings.DELETED("ProductImage"),
+          message: MESSAGES.apiSuccessStrings.DELETED("productAttribute"),
         })
       );
     } else {
-      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("ProductImage");
+      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("productAttribute");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
   }),

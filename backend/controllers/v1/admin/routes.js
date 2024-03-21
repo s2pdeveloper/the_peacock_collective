@@ -11,6 +11,7 @@ const sharedRoutes = require('./shared/route');
 const razorpayRoutes = require('./razorpay/routes');
 const vendorRoutes = require("./vendor/routes");
 const variantRoutes = require("./variant/routes");
+const productAttribute = require("./productAttribute/router");
 
 router.use('/user', userRoutes);
 router.use('/productImages', imageRoutes);
@@ -22,6 +23,7 @@ router.use('/shared', sharedRoutes);
 router.use('/razorpay', razorpayRoutes);
 router.use('/vendor', vendorRoutes);
 router.use('/variant', variantRoutes);
+router.use('/productAttribute', productAttribute);
 
 
 module.exports = router;
