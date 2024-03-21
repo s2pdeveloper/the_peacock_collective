@@ -1,17 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { SpinnerService, ToastService } from '@core/services';
-import { AttributeService } from '@shared/services/attribute.service';
+import { Component, OnInit } from "@angular/core";
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { SpinnerService, ToastService } from "@core/services";
+import { AttributeService } from "@shared/services/attribute.service";
 
 @Component({
-  selector: 'app-attibute-form',
-  templateUrl: './attibute-form.component.html',
-  styleUrls: ['./attibute-form.component.scss']
+  selector: "app-attibute-form",
+  templateUrl: "./attibute-form.component.html",
+  styleUrls: ["./attibute-form.component.scss"],
 })
 export class AttibuteFormComponent implements OnInit {
-
-
   attributeForm = this.fb.group({
     id: new FormControl(null),
     name: new FormControl(null, [Validators.required]),
@@ -28,15 +32,14 @@ export class AttibuteFormComponent implements OnInit {
     private spinner: SpinnerService,
     private attributeService: AttributeService,
     private fb: FormBuilder
-  ) { }
+  ) {}
   get f() {
     return this.attributeForm.controls;
   }
   // Helper method to get the 'items' FormArray
 
   get attributeValues(): FormArray {
-    return this.attributeForm.get('value') as FormArray;
-
+    return this.attributeForm.get("value") as FormArray;
   }
   FORM_ERRORS = [
     {
@@ -60,18 +63,16 @@ export class AttibuteFormComponent implements OnInit {
         this.getDataById(params.id);
         this.attributeId = params.id;
       } else {
-        this.addValue()
-
+        this.addValue();
       }
     });
   }
-  newValue(value = ''): FormGroup {
+  newValue(value = ""): FormGroup {
     return this.fb.group({
-      value: ['', Validators.required],
-    })
+      value: ["", Validators.required],
+    });
   }
-  addValue(value = '') {
-
+  addValue(value = "") {
     // Add the new form group to the FormArray
     this.attributeValues.push(this.newValue(value));
   }
@@ -112,19 +113,21 @@ export class AttibuteFormComponent implements OnInit {
 
   update(id, formData) {
     this.spinner.show();
-    this.attributeService
-      .update(id, formData)
-      .subscribe((success: any) => {
-        this.spinner.hide();
-        this.toastService.success(success.message);
-        this.router.navigate(["default/attribute/attribute-list"]);
-      });
+    this.attributeService.update(id, formData).subscribe((success: any) => {
+      this.spinner.hide();
+      this.toastService.success(success.message);
+      this.router.navigate(["default/attribute/attribute-list"]);
+    });
   }
   getDataById(id) {
     this.spinner.show();
     this.attributeService.getById(id).subscribe((success: any) => {
-      for (const item of success.value) {
-        this.addValue(item.value)
+      if (success.value) {
+        for (const item of success?.value) {
+          this.addValue(item.value);
+        }
+      }else{
+        this.addValue();
       }
       this.attributeForm.patchValue(success);
       this.spinner.hide();
@@ -156,9 +159,6 @@ export class AttibuteFormComponent implements OnInit {
   openUrl(url) {
     window.open(url, "_blank");
   }
-
-
-
 
   // getAllMasterData() {
   //   this.categoryService.getAll({ catagory: true }).subscribe((success: any) => {

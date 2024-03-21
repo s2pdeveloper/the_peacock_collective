@@ -96,6 +96,13 @@ const routes: Routes = [
             (m) => m.VendorModule
           ),
       },
+      {
+        path: "variant",
+        loadChildren: () =>
+          import("./features/variants/variants.module").then(
+            (m) => m.VariantsModule
+          ),
+      },
 
       {
         path: "customer",

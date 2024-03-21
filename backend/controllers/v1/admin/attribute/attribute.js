@@ -1,5 +1,5 @@
 const sequelize = require("sequelize");
-const { Vendor } = require("../../../../models");
+const { Attribute } = require("../../../../models");
 const fs = require("fs");
 const {
   OPTIONS,
@@ -9,7 +9,7 @@ const {
 const MESSAGES = require("../../../../config/options/messages.options");
 const resCode = MESSAGES.resCode;
 const Op = sequelize.Op;
-const Model = Vendor;
+const Model = Attribute;
 const ApiError = require("../../../../config/middlewares/api.error");
 const {
   asyncHandler,

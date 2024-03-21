@@ -90,7 +90,7 @@ export class VendorFormComponent {
     this.vendorService.create(formData).subscribe((success: any) => {
       this.spinner.hide();
       this.toastService.success(success.message);
-      this.router.navigate(["default/attribute/attribute-list"]);
+      this.router.navigate(["default/vendor/vendor-list"]);
     });
   }
 
@@ -99,7 +99,7 @@ export class VendorFormComponent {
     this.vendorService.update(id, formData).subscribe((success: any) => {
       this.spinner.hide();
       this.toastService.success(success.message);
-      this.router.navigate(["default/attribute/attribute-list"]);
+      this.router.navigate(["default/vendor/vendor-list"]);
     });
   }
   getDataById(id) {
@@ -124,7 +124,7 @@ export class VendorFormComponent {
   // }
 
   back() {
-    this.router.navigate(["default/attribute/attribute-list"]);
+    this.router.navigate(["default/vendor/vendor-list"]);
   }
   reset() {
     this.vendorForm.reset();

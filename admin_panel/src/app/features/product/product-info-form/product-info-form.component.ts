@@ -4,6 +4,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ValidationService } from "@core/components";
 import { SpinnerService, ToastService } from "@core/services";
+import { AttributeService } from "@shared/services/attribute.service";
 import { CategoryService } from "@shared/services/category.service";
 import { ProductService } from "@shared/services/product.service";
 
@@ -17,7 +18,7 @@ export class ProductInfoFormComponent {
   page: any = 1;
   pageSize: any = 10;
   search: any = "";
-  productId : any;
+  productId: any;
   categoryOptions: any = [];
   autoIncrementNos: any = {};
   file: any = null;
@@ -25,17 +26,19 @@ export class ProductInfoFormComponent {
   url: any = null;
   submitted: boolean = false;
   categoryArr = [];
-
+  attributeArr = [];
+  attribute = [];
+  attrArr: any[] = [];
   productImage: any = null;
   productImageName: any = "";
   productImageUrl: any = null;
-
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private productService: ProductService,
     private categoryService: CategoryService,
+    private attributeService: AttributeService,
     private spinner: SpinnerService,
     private toastService: ToastService,
     private domSanitizer: DomSanitizer,
@@ -44,6 +47,7 @@ export class ProductInfoFormComponent {
 
   ngOnInit(): void {
     this.getAllCategory();
+    this.getAllAttribute();
     this.activatedRoute.queryParams.subscribe((params: any) => {
       if (params.id) {
         this.getById(params.id);
@@ -87,17 +91,24 @@ export class ProductInfoFormComponent {
     bannerImage: new FormControl(null),
     status: new FormControl("active"),
   });
+  selectedCar: any;
 
   get form() {
     return this.productForm.controls;
   }
-  back() {
+  navigateTo() {
     this.router.navigate(["default/product/product-list"]);
   }
 
   getAllCategory() {
     this.categoryService.getAll({ category: true }).subscribe((success) => {
       this.categoryArr = success.rows;
+    });
+  }
+  getAllAttribute() {
+    this.attributeService.getAll({}).subscribe((success) => {
+      this.attributeArr = success.rows;
+      console.log("attributeArr", this.attributeArr);
     });
   }
 
@@ -123,19 +134,19 @@ export class ProductInfoFormComponent {
     // }
     let formData: FormData = new FormData();
     for (const key in this.productForm.value) {
-      if (key != 'bannerImage') {
-
+      if (key != "bannerImage") {
         formData.append(key, this.productForm.value[key]);
       }
     }
     if (this.file) {
-      formData.append('image', this.file, this.file.name);
+      formData.append("image", this.file, this.file.name);
     }
 
     if (this.productForm.value.id) {
       this.update(this.productForm.value.id, formData);
     } else {
       formData.delete("id");
+      formData.append("attrArr", JSON.stringify(this.attrArr));
       this.create(formData);
     }
   }
@@ -165,10 +176,10 @@ export class ProductInfoFormComponent {
   getById(id: string) {
     this.spinner.show();
     this.productService.getById(id).subscribe((success: any) => {
-      console.log('success',success);
-      
-      if(success.bannerImage){
-        this.url=success.bannerImage;
+      console.log("success", success);
+
+      if (success.bannerImage) {
+        this.url = success.bannerImage;
       }
       this.productForm.patchValue(success);
       this.spinner.hide();
@@ -211,6 +222,18 @@ export class ProductInfoFormComponent {
         console.error(error);
       };
     }
+  }
+  onAttrChange(ev: any) {
+    this.attrArr = [];
+    console.log("ev", ev);
+    for (const item of ev) {
+      this.attrArr.push({
+        id: item.id,
+        name: item.name,
+      });
+    }
+
+    console.log("attr333333333333333333", this.attrArr);
   }
   // getAllMasterData() {
   //   this.productService.getAllMasterData({}).subscribe((success: any) => {

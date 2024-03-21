@@ -1,0 +1,138 @@
+<div class="table-container">
+    <div class="card table-card">
+      <div class="card-title">
+        <h3>Vendor List</h3>
+      </div>
+      <div class="card-header">
+        <div class="row justify-content-between">
+          <div class="col-4">
+            <div class="input-icons">
+              <div class="input-group input-group-sm">
+                <input
+                  type="search"
+                  class="form-control"
+                  aria-label="Small"
+                  placeholder="Search"
+                  (input)="searchFn()"
+                  aria-describedby="inputGroup-sizing-sm"
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text h-100" id="inputGroup-sizing-sm">
+                    <i class="ti ti-search"></i
+                  ></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-3 text-right">
+            <button (click)="navigateTo('/default/vendor/vendor-form',null)" class="btn add-btn">
+              <i class="ti ti-plus me-1"></i>
+              Add Vendor
+            </button>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card-body p-3">
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered">
+            <thead class="thead">
+              <tr class="table-secondary">
+                <th scope="col">Sr. No.</th>
+                <th scope="col" class="text-start">Name</th>
+                <th scope="col">Company Name</th>
+                <th scope="col">Company GST</th>
+                <th scope="col">Mobile No.</th>
+                <th scope="col">Status</th>
+                <th scope="col" class="mx-auto text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody class="tbody mt-3">
+              <tr *ngFor="let c of allData; let i = index">
+                <td scope="row">{{ i + 1 }}</td>
+                <td scope="row" class="text-start">{{ c?.name }}</td>
+  
+                <td scope="row">
+                  {{ c?.companyName }}
+                </td>
+  
+                <td scope="row">
+                  {{ c?.gst }}
+                </td>
+  
+                <td scope="row">
+                  {{ c?.phoneNumber }}
+                </td>
+  
+                <td scope="row" class="text-center">
+                  <span
+                    class="badge rounded-pill  text-bg-{{
+                      c.status == 'active' ? 'success' : 'danger'
+                    }} px-2"
+                  >
+                    {{ c.status | titlecase }}</span
+                  >
+                </td>
+  
+                <td scope="row" class="text-center">
+                  <button
+                    class="btn btn-sm action-btn mx-2"
+                    (click)="update(c)"
+                    ngbTooltip="Edit"
+                  >
+                    <i class="ti ti-edit-circle"></i>
+                  </button>
+  
+                  <button
+                    class="btn btn-sm action-btn"
+                    (click)="open(c.id, deleteModal)"
+                    ngbTooltip="Delete"
+                  >
+                    <i class="ti ti-trash"></i>
+                  </button>
+                </td>
+                <ng-template #deleteModal let-modal>
+                  <div class="modal-header border-0">
+                    <button
+                      type="button"
+                      class="btn-close"
+                      aria-label="Close"
+                      (click)="modal.dismiss('Cross click')"
+                    ></button>
+                  </div>
+                  <div class="modal-body border-0">
+                    <h4 class="modal-title text-center" id="modal-basic-title">
+                      Are you sure you want to Delete ?
+                    </h4>
+                  </div>
+                  <div class="modal-footer justify-content-center border-0">
+                    <button
+                      type="button"
+                      class="btn px-4 btn-outline-danger"
+                      (click)="delete(selectedRow)"
+                    >
+                      YES
+                    </button>
+                    <button
+                      type="button"
+                      class="btn px-4 btn-outline-primary"
+                      (click)="modal.dismiss('Cross click')"
+                    >
+                      NO
+                    </button>
+                  </div>
+                </ng-template>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <app-custom-pagination
+          [(page)]="page"
+          [(pageSize)]="pageSize"
+          [(collection)]="collection"
+          (myOutput)="onChangePage(page)"
+        ></app-custom-pagination>
+      </div>
+    </div>
+  </div>
+  

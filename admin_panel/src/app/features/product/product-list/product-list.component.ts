@@ -94,7 +94,7 @@ export class ProductListComponent {
     this.spinner.show();
     this.productService.getById(id).subscribe((success) => {
       this.spinner.hide();
-      this.router.navigate(["/default/product/product-view"], {
+      this.router.navigate(["/default/product/product-image"], {
         queryParams: { id },
       });
     });
