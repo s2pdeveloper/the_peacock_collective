@@ -39,7 +39,4 @@ export class VariantsService {
       .get(this.BASE_URL + '/getByProductId/' + id)
       .pipe(map((res: any) => res));
   }
-  getAllProductVariant(payload: any) {
-    return this.http.get(this.BASE_URL + '/getAllProductVariant', payload)
-  }
 }

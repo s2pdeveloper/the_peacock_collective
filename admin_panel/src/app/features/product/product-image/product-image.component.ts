@@ -1,18 +1,22 @@
 import { Component } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { DomSanitizer } from "@angular/platform-browser";
+import {
+  FormGroup,
+  Validators,
+  FormControl,
+} from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ValidationService } from "@core/components";
 import { SpinnerService, ToastService } from "@core/services";
-import { ProductService } from "@shared/services/product.service";
+import { CategoryService } from "@shared/services/category.service";
+import { ValidationService } from "@core/components";
+import { DomSanitizer } from "@angular/platform-browser";
 import { ProductImageService } from "@shared/services/productImage.service";
 
 @Component({
-  selector: "app-product-images",
-  templateUrl: "./product-images.component.html",
-  styleUrls: ["./product-images.component.scss"],
+  selector: 'app-product-image',
+  templateUrl: './product-image.component.html',
+  styleUrls: ['./product-image.component.scss']
 })
-export class ProductImagesComponent {
+export class ProductImageComponent {
   fileName: any = "";
   url: any = null;
   file: any = null;
@@ -25,7 +29,7 @@ export class ProductImagesComponent {
     private spinner: SpinnerService,
     private validationService: ValidationService,
     private domSanitizer: DomSanitizer
-  ) {}
+  ) { }
 
   imageForm = new FormGroup({
     id: new FormControl(null),
@@ -56,9 +60,8 @@ export class ProductImagesComponent {
   ngOnInit(): void {
     this.activated.queryParams.subscribe((params: any) => {
       if (params.id) {
-        this.getByProductId(params.id);
+        this.getDataById(params.id);
         this.productId = params.id;
-        this.f["productId"].setValue(params.id);
       }
     });
   }
@@ -72,24 +75,30 @@ export class ProductImagesComponent {
 
   submit() {
     // this.submitted = true;
+    if (
+      this.validationService.checkErrors(this.imageForm, this.FORM_ERRORS)
+    ) {
+      return;
+    }
     // let categoryData: any = this.imageForm.value;
     // if (categoryData.parentId == "null") {
     //   categoryData.parentId = null;
     // }
     let formData: FormData = new FormData();
     for (const key in this.imageForm.value) {
-      if (key != "image") {
+      if (key != 'image') {
+
         formData.append(key, this.imageForm.value[key]);
       }
     }
     if (this.file) {
-      formData.append("image", this.file, this.file.name);
+      formData.append('image', this.file, this.file.name);
     }
 
     if (this.imageForm.value.id) {
       this.update(this.imageForm.value.id, formData);
     } else {
-      formData.delete("id");
+      formData.delete('id')
       this.create(formData);
     }
   }
@@ -99,17 +108,19 @@ export class ProductImagesComponent {
     this.productImageService.create(formData).subscribe((success: any) => {
       this.spinner.hide();
       this.toastService.success(success.message);
-      this.getByProductId(this.productId);
+      this.router.navigate(["default/category/category-list"]);
     });
   }
 
   update(id, formData) {
     this.spinner.show();
-    this.productImageService.update(id, formData).subscribe((success: any) => {
-      this.spinner.hide();
-      this.toastService.success(success.message);
-      // this.router.navigate(["default/category/category-list"]);
-    });
+    this.productImageService
+      .update(id, formData)
+      .subscribe((success: any) => {
+        this.spinner.hide();
+        this.toastService.success(success.message);
+        this.router.navigate(["default/category/category-list"]);
+      });
   }
   getDataById(id: string) {
     this.spinner.show();
@@ -119,16 +130,9 @@ export class ProductImagesComponent {
       this.spinner.hide();
     });
   }
-  deleteImg(id: string) {
-    this.spinner.show();
-    this.productImageService.delete(id).subscribe((success: any) => {
-      this.spinner.hide();
-      this.getByProductId(this.productId);
-    });
-  }
 
   fileChosen(event: any) {
-    console.log("event.target.files", event);
+    console.log('event.target.files', event);
 
     if (event.target.files.length) {
       if (event.target.files[0].size > 2000000) {
@@ -152,7 +156,7 @@ export class ProductImagesComponent {
     }
   }
   back() {
-    this.router.navigate(["default/product/product-list"]);
+    this.router.navigate(["default/category/category-list"]);
   }
   reset() {
     this.imageForm.reset();

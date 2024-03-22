@@ -18,9 +18,11 @@ import { VendorService } from "@shared/services/vendor.service";
 })
 export class VariantFormComponent {
   options = [];
-  vendorId: number = null;
+  productId: number = null;
   selectedAttr = [];
-
+  variantList: any = [];
+  attributes = [];
+  isEdit: boolean = false;
   variantForm = this.fb.group({
     id: new FormControl(null),
     sku: new FormControl(null, [Validators.required]),
@@ -43,8 +45,6 @@ export class VariantFormComponent {
   //   },
   // ];
 
-  attributes = [];
-
   constructor(
     private router: Router,
     private activated: ActivatedRoute,
@@ -63,9 +63,10 @@ export class VariantFormComponent {
     this.activated.queryParams.subscribe((params: any) => {
       if (params.id) {
         this.getProductAttribute(params.id);
-        this.f['productId'].setValue(Number(params.id))
+        this.f["productId"].setValue(Number(params.id));
         // this.getDataById(params.id);
-        // this.vendorId = params.id;
+        this.productId = params.id;
+        this.getAll();
       }
     });
   }
@@ -93,7 +94,18 @@ export class VariantFormComponent {
       this.spinner.hide();
     });
   }
+  getAll() {
+    this.spinner.show();
+    this.variantsService
+      .getByProductId(this.productId)
+      .subscribe((success: any) => {
+        console.log("success,", success);
+        this.variantList = success;
+        console.log("this.variantList", this.variantList);
 
+        this.spinner.hide();
+      });
+  }
   submit() {
     console.log(this.variantForm.value);
 
@@ -104,33 +116,66 @@ export class VariantFormComponent {
     //   return;
     // }
 
-    let formData:any = this.variantForm.value;
-    formData.attributeArr = this.selectedAttr;
+    let formData: any = this.variantForm.value;
+    // console.log("this.selectedAttr",this.selectedAttr);
 
-    if (this.variantForm.value.id) {
-      this.update(this.variantForm.value.id, formData);
+    formData.attributeArr = this.variantList;
+
+    if (this.variantList.id) {
+      // this.update(this.variantList.id, this.variantList);
     } else {
       // formData.delete('id')
       delete formData.id;
       this.create(formData);
     }
   }
-
+  add() {
+    let formData: any = this.variantForm.value;
+    formData.attributeArr = JSON.parse(JSON.stringify(this.selectedAttr));
+    // if(this.checkDuplicateAttrVariant(formData.attributeArr)){
+    // return  this.toastService.error('Duplicate entry');
+    // }
+    // this.variantList.push(formData);
+    console.log("this.variantList", this.variantList);
+    this.create(formData);
+  
+  }
+  checkDuplicateAttrVariant(attributeArr = []) {
+    let isDuplicate = false;
+    for (const item of this.variantList) {
+      if (
+        item.attributeArr &&
+        item.attributeArr.every((x) =>
+          attributeArr.some((y) => x.value == y.value)
+        )
+      ) {
+        isDuplicate = true;
+      }
+    }
+    return isDuplicate;
+  }
   create(formData) {
+    // console.log("formData",formData);
+    // return
     this.spinner.show();
     this.variantsService.create(formData).subscribe((success: any) => {
       this.spinner.hide();
       this.toastService.success(success.message);
-      this.router.navigate(["default/variant/variant-list"]);
+      this.reset();
+      this.getAll();
+      // this.router.navigate(["default/variant/variant-list"]);
     });
   }
 
-  update(id, formData) {
+  update() {
+    let formData: any = this.variantForm.value;
+    let id = formData.id;
     this.spinner.show();
     this.variantsService.update(id, formData).subscribe((success: any) => {
       this.spinner.hide();
       this.toastService.success(success.message);
-      this.router.navigate(["default/variant/variant-list"]);
+      this.getAll();
+      this. reset();
     });
   }
   getDataById(id) {
@@ -140,34 +185,67 @@ export class VariantFormComponent {
       this.spinner.hide();
     });
   }
+  delete(id) {
+    this.spinner.show();
+    this.variantsService.delete(id).subscribe((success: any) => {
+      this.getAll()
+      this.spinner.hide();
+    });
+  }
 
   back() {
-    this.router.navigate(["default/variant/variant-list"]);
+    this.router.navigate(["default/product/product-list"]);
   }
   reset() {
-    // this.variantForm.reset();
-    // if (this.vendorId) {
-    //   this.getDataById(this.vendorId);
+    let attributeCopy=structuredClone(this.attributes)
+    this.attributes=[]
+    this.attributes=[...attributeCopy]
+    this.f['price'].setValue(null);
+    this.f['sku'].setValue(null);
+    this.f['qty'].setValue(null);
+    this.f['id'].setValue(null);
+    this.isEdit=false;
+    // if (this.productId) {
+    //   this.getProductAttribute(this.productId);
     // }
   }
   openUrl(url) {
     window.open(url, "_blank");
   }
-  onAttrChange(ev: any, id: any) {
-    console.log("ev", ev.target.value, "id", id);
-    let index = this.selectedAttr.findIndex((x) => x.attrId == id) 
+  onAttrChange(ev: any, at: any) {
+    console.log("ev", ev.target.value, "id", at);
+    let index = this.selectedAttr.findIndex((x) => x.attrId == at.value);
     if (index == -1) {
       this.selectedAttr.push({
         value: ev.target.value,
-        attrId: id,
+        attrId: at.value,
+        label: at.label,
       });
     } else {
       this.selectedAttr[index] = {
         value: ev.target.value,
-        attrId: id,
+        attrId: at.value,
+        label: at.label,
       };
     }
-    console.log('this.selectedAttr',this.selectedAttr);
-    
+    console.log("this.selectedAttr", this.selectedAttr);
+  }
+  variantEvent(data: {action:string,data:any}) {
+    console.log("datadata", data);
+
+    switch (data.action) {
+      case "EDIT":
+        this.isEdit = true;
+        this.variantForm.patchValue(data.data);
+        // this.getDataById(data.id);
+        break;
+      case "DELETE":
+        // this.variantList = this.variantList.filter((x) => x.id !== data.id);
+        this.delete(data.data.id)
+        break;
+
+      default:
+        break;
+    }
   }
 }

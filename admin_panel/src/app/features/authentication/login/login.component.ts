@@ -55,7 +55,7 @@ export default class LoginComponent {
       let route = "./default";
 
       this.router.navigate([route]);
-      this.toastService.success(success.message);
+      // this.toastService.success(success.message);
     });
   }
 }

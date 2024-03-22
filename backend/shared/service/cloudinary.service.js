@@ -21,7 +21,7 @@ module.exports.deleteFile = async (file) => {
       if (err) {
         console.error("err", err);
         rejects(err);
-        throw new ApiError('File upload fail', resCode.HTTP_BAD_REQUEST);
+        throw new ApiError('File delete fail', resCode.HTTP_BAD_REQUEST);
       } else {
         console.info("result", result);
         resolve(result);
@@ -66,6 +66,7 @@ module.exports.uploadFromBuffer = (buffer) => {
           console.log("result--", result);
           resolve(result.secure_url.split('upload/')[1]);
         } else {
+          throw new ApiError('File upload fail', resCode.HTTP_BAD_REQUEST);
           reject(error);
         }
       }

@@ -26,6 +26,12 @@ module.exports = (sequelize, DataTypes) => {
       as: 'AttrVariantMapWithAttributes',
       onDelete: 'CASCADE',
     });
+    // AttrVariantMap.hasMany(models.AttrVariantMapMultiAttr, {
+    //   foreignKey: 'AttrVariantMapId',
+    //   as: 'AttrVariantMapWithMultiAttributes',
+    //   onDelete: 'CASCADE',
+    // });
+    
   };
   // AttrVariantMap.associate = (models) => {
   //   AttrVariantMap.belongsToMany(models.Product, {

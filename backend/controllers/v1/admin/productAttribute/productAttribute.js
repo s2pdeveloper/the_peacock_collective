@@ -104,7 +104,6 @@ const modelObj = {
     //  req.body.image = await cloudinary.uploadFromBuffer(req.file.buffer);
     //   console.log(req.body);
     // }
-
     itemDetails = await generateCreateData(itemDetails, req.body);
     await itemDetails.save();
     return res.json(
@@ -119,7 +118,6 @@ const modelObj = {
         id: req.params.id,
       },
     };
-
     let existing = await Model.findOne(query);
     // let deletedItem = await Model.destroy(query);
     if (existing) {

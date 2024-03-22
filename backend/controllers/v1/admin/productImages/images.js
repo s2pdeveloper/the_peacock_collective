@@ -90,6 +90,22 @@ const modelObj = {
       .json(generateResponse(resCode.HTTP_OK, existing));
   }),
 
+  getByProductId: asyncHandler(async (req, res) => {
+    let existing = await Model.findAll({
+      where: {
+        productId: req.params.id,
+      },
+    });
+
+    // if (!existing) {
+    //   let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("ProductImage");
+    //   throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
+    // }
+    return res
+      .status(resCode.HTTP_OK)
+      .json(generateResponse(resCode.HTTP_OK, existing));
+  }),
+
   update: asyncHandler(async (req, res) => {
     let itemDetails = await Model.findOne({
       where: {
@@ -100,10 +116,10 @@ const modelObj = {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("ProductImage");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
-    if(req.file){
-      console.log('itemDetails.image',itemDetails.image);
-     await  cloudinary.deleteFile(itemDetails.image);
-     req.body.image = await cloudinary.uploadFromBuffer(req.file.buffer);
+    if (req.file) {
+      console.log('itemDetails.image', itemDetails.image);
+      await cloudinary.deleteFile(itemDetails.image);
+      req.body.image = await cloudinary.uploadFromBuffer(req.file.buffer);
       console.log(req.body);
     }
 
@@ -125,7 +141,7 @@ const modelObj = {
     let existing = await Model.findOne(query);
     // let deletedItem = await Model.destroy(query);
     if (existing) {
-      await  cloudinary.deleteFile(existing.image);
+      await cloudinary.deleteFile(existing.image);
       await Model.destroy(query);
       return res.json(
         generateResponse(resCode.HTTP_OK, {

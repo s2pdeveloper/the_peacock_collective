@@ -1,12 +1,11 @@
-import { Injectable } from '@angular/core';
-import { ApiService } from '@core/services';
-import { map } from 'rxjs';
-
+import { Injectable } from "@angular/core";
+import { ApiService } from "@core/services";
+import { map } from "rxjs";
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
-export class VariantsService {
-  readonly BASE_URL = 'variant'
+export class ProductImageService {
+  readonly BASE_URL = 'productImages'
 
   constructor(private http: ApiService) { }
 
@@ -39,7 +38,7 @@ export class VariantsService {
       .get(this.BASE_URL + '/getByProductId/' + id)
       .pipe(map((res: any) => res));
   }
-  getAllProductVariant(payload: any) {
-    return this.http.get(this.BASE_URL + '/getAllProductVariant', payload)
-  }
+
+
+
 }

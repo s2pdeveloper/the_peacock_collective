@@ -13,8 +13,8 @@ const controller = require("./variant");
 //   rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
 //   controller.getAll
 // );
-app.get("/", controller.getAll);
 
+app.get("/", controller.getAll);
 
 app.post(
   "/",
@@ -23,6 +23,17 @@ app.post(
   // validate("createCustomer"),
   controller.create
 );
+
+app.get(
+  "/getByProductId/:id",
+  // authHandler.authenticateJWT(),
+  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  // validate("checkParamId"),
+  controller.getByProductId
+);
+
+app.get("/getAllProductVariant", controller.getAllProductVariant);
+
 
 app.get(
   "/:id",

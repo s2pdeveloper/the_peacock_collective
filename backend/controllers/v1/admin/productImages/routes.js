@@ -20,9 +20,19 @@ app.post(
   // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
   // validate("createCustomer"),
-  upload.single('productImage'),
+  upload.single('image'),
   controller.create
 );
+
+
+app.get(
+  "/getByProductId/:id",
+  // authHandler.authenticateJWT(),
+  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  // validate("checkParamId"),
+  controller.getByProductId
+);
+
 
 app.get(
   "/:id",

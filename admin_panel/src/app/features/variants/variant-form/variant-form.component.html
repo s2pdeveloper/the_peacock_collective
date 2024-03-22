@@ -12,17 +12,6 @@
   <div class="card-body justify-content-center">
     <form [formGroup]="variantForm">
       <div class="row">
-        <div class="col-md-4 mb-3" *ngFor="let at of attributes">
-          <label class="form-label">Select {{ at.label }}</label>
-          <select class="form-select" (change)="onAttrChange($event, at.value)">
-            <option selected disabled [value]="null">
-              Select {{ at.label }}
-            </option>
-            <option *ngFor="let val of at.attributes" [value]="val">
-              {{ val }}
-            </option>
-          </select>
-        </div>
         <div class="col-md-4 mb-2">
           <label class="form-label">
             SKU
@@ -44,33 +33,69 @@
           >
           <input formControlName="qty" type="number" class="form-control" />
         </div>
-      </div>
+        <div class="col-md-4 mb-3" *ngFor="let at of attributes">
+          <label class="form-label">Select {{ at.label }}</label>
+          <select class="form-select" (change)="onAttrChange($event, at)">
+            <option selected disabled [value]="null">
+              Select {{ at.label }}
+            </option>
+            <option
+              *ngFor="let val of at.attributes"
+              [disabled]="isEdit"
+              [value]="val"
+            >
+              {{ val }}
+            </option>
+          </select>
+        </div>
 
-      <hr />
+        <div class="col-12 my-3">
+          <div class="row">
+            <div class="col-12">
+              <div class="d-flex justify-content-center">
+                <button
+                  (click)="reset()"
+                  type="submit"
+                  class="btn px-5 btn-primary mx-2 shadow rounded rounded-3 d-flex align-items-center"
+                >
+                  <i class="fa-solid fa-arrows-rotate me-2"></i>
+                  Reset
+                </button>
+                <button
+                  *ngIf="!isEdit"
+                  type="submit"
+                  class="btn px-5 btn-success shadow rounded rounded-3 mx-2 d-flex align-items-center"
+                  (click)="add()"
+                >
+                  <i
+                    [class]="
+                      variantForm.value.id != null
+                        ? 'fa-pen-to-square'
+                        : 'fa-plus'
+                    "
+                    class="fa-solid me-2"
+                  ></i>
+                  Create
+                </button>
+                <button
+                  *ngIf="isEdit"
+                  (click)="update()"
+                  class="btn px-5 btn-warning shadow rounded rounded-3 mx-2 d-flex align-items-center"
+                >
+                  <i class="fa-pen-to-square fa-solid me-2"></i>
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-12">
-          <div class="d-flex justify-content-center">
-            <button
-              (click)="reset()"
-              type="submit"
-              class="btn px-5 btn-primary mx-2 shadow rounded rounded-3 d-flex align-items-center"
-            >
-              <i class="fa-solid fa-arrows-rotate me-2"></i>
-              Reset
-            </button>
-            <button
-              type="submit"
-              [class]="variantForm.value.id ? 'btn-warning' : 'btn-success'"
-              class="btn px-5 btn-success shadow rounded rounded-3 mx-2 d-flex align-items-center"
-              (click)="submit()"
-            >
-              <i
-                [class]="variantForm.value.id ? 'fa-pen-to-square' : 'fa-plus'"
-                class="fa-solid me-2"
-              ></i>
-              {{ variantForm.value.id ? "Update" : "Create" }}
-            </button>
-          </div>
+          <app-variant-list
+            [variantList]="variantList"
+            (customEvent)="variantEvent($event)"
+          ></app-variant-list>
         </div>
       </div>
     </form>

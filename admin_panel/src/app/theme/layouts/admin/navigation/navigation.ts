@@ -124,13 +124,22 @@ const NavigationItems = [
         icon: "fa-solid fa-tag",
       },
       {
-        id: "variant",
-        title: "Variant",
+        id: "all-variants",
+        title: "All variants",
         type: "item",
         classes: "nav-item",
-        url: "/default/variant",
+        url: "/default/all-variants",
         icon: "fa-solid fa-tag",
       },
+      
+      // {
+      //   id: "variant",
+      //   title: "Variant",
+      //   type: "item",
+      //   classes: "nav-item",
+      //   url: "/default/variant",
+      //   icon: "fa-solid fa-tag",
+      // },
       // {
       //   id: "inventory",
       //   title: "Inventory",

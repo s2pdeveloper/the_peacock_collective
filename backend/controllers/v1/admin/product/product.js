@@ -84,12 +84,13 @@ const modelObj = {
       include: {
         model: ProdAttributeMap,
         as: 'productWithProdAttributeMap',
+        paranoid: true, required: false,
         // attributes: ['id', 'name', 'mobile'],
-        // include: {
-        //   model: Attribute,
-        //   as: 'ProdAttributeMapWithAttributes',
-        //   // attributes: ['id', 'name', 'mobile'],
-        // },
+      },
+      include: {
+        model: Categories,
+        as: 'productWithCategory',
+        // attributes: ['id', 'name', 'mobile'],
       },
       offset: +offset,
       limit: +pageSize,
