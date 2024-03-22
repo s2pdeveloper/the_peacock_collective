@@ -168,15 +168,7 @@ const userObj = {
           .json(generateResponse(resCode.HTTP_OK, userObj));
       } else {
         let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
-        return res
-          .status(resCode.HTTP_BAD_REQUEST)
-          .json(
-            generateResponse(
-              resCode.HTTP_BAD_REQUEST,
-              errors,
-              MESSAGES.errorTypes.OAUTH_EXCEPTION
-            )
-          );
+        throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
       }
     } else {
       let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
@@ -221,7 +213,7 @@ const userObj = {
   updateProfile: asyncHandler(async (req, res) => {
     let query = {
       where: {
-        id: req.params.id ,
+        id: req.params.id,
         status: [OPTIONS.defaultStatus.ACTIVE, OPTIONS.defaultStatus.INACTIVE],
         role: roles.getAllRolesAsArray(),
       },

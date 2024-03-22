@@ -9,6 +9,7 @@ import { SharedModule } from "src/app/theme/shared/shared.module";
 import { NgImageSliderModule } from "ng-image-slider";
 import { ProductBulkUploadComponent } from "./product-bulk-upload/product-bulk-upload.component";
 import { UploadService } from "@shared/services/upload.service";
+import { ProductImageComponent } from './product-image/product-image.component';
 const routes: Routes = [
   {
     path: "",
@@ -24,6 +25,7 @@ const routes: Routes = [
     ProductInfoFormComponent,
     ProductListComponent,
     ProductBulkUploadComponent,
+    ProductImageComponent,
   ],
   imports: [
     CommonModule,

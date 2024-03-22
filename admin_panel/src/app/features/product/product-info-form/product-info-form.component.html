@@ -181,16 +181,6 @@
             </div>
             <input id="file" accept="image/*" type="file"[multiple]="false" (change)="fileChosen($event, 'bannerImage')"/>
           </label>
-          <!-- <label class="form-label me-2"> Image </label>
-          <div style="display: inline-block">
-            <input
-              [multiple]="false"
-              type="file"
-              id="file"
-              name="file"
-              (change)="fileChosen($event, 'bannerImage')"
-            />
-          </div> -->
         </div>
         <div *ngIf="url">
           <img class="image" [src]="url" alt="image" />
