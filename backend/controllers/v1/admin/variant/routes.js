@@ -15,6 +15,7 @@ const controller = require("./variant");
 // );
 
 app.get("/", controller.getAll);
+app.get("/updateAll", controller.updateAll);
 
 app.post(
   "/",
@@ -33,6 +34,7 @@ app.get(
 );
 
 app.get("/getAllProductVariant", controller.getAllProductVariant);
+app.get("/download", controller.download);
 
 
 app.get(

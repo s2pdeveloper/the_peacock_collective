@@ -1,6 +1,6 @@
 
 const Sequelize = require('sequelize');
-const { Variant, AttrVariantMap,Attribute,Product } = require("../../../../models");
+const { Variant, AttrVariantMap, Attribute, Product } = require("../../../../models");
 const {
   OPTIONS,
   generateResponse,
@@ -12,6 +12,7 @@ const Op = Sequelize.Op;
 const Model = Variant;
 const ApiError = require("../../../../config/middlewares/api.error");
 const { asyncHandler } = require("../../../../config/middlewares/async.handler");
+const { generateCsv } = require('../../../../shared/repositories/generate-excel.repository');
 
 
 const modelObj = {
@@ -19,35 +20,35 @@ const modelObj = {
 
 
 
-      let checkExisting = await Model.findOne({
-        where: {
-          sku: req.body.sku,
-        },
-      });
-      if (checkExisting) {
-        let message = MESSAGES.apiErrorStrings.Data_EXISTS("Variant");
-        throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
-      }
+    let checkExisting = await Model.findOne({
+      where: {
+        sku: req.body.sku,
+      },
+    });
+    if (checkExisting) {
+      let message = MESSAGES.apiErrorStrings.Data_EXISTS("Variant");
+      throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
+    }
 
-      let createObj = await generateCreateData(new Model(), req.body);
-      let variant = await createObj.save();
-  
-      if (req.body?.attributeArr && req.body?.attributeArr.length) {
-  
-        let payloadMap = req.body.attributeArr.map(x => {
-          return {
-            attributeId: x.attrId,
-            value: x.value,
-            variantId: variant.id
-          }
-        })
-        await AttrVariantMap.bulkCreate(payloadMap);
-      }
+    let createObj = await generateCreateData(new Model(), req.body);
+    let variant = await createObj.save();
 
-    
-  
-  
- 
+    if (req.body?.attributeArr && req.body?.attributeArr.length) {
+
+      let payloadMap = req.body.attributeArr.map(x => {
+        return {
+          attributeId: x.attrId,
+          value: x.value,
+          variantId: variant.id
+        }
+      })
+      await AttrVariantMap.bulkCreate(payloadMap);
+    }
+
+
+
+
+
 
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
@@ -110,11 +111,11 @@ const modelObj = {
       },
       include: {
         model: AttrVariantMap,
-        as:'variantWithAttrVariantMap',
+        as: 'variantWithAttrVariantMap',
         // paranoid: true, required: false,
         include: {
           model: Attribute,
-          as:'AttrVariantMapWithAttributes'
+          as: 'AttrVariantMapWithAttributes'
         },
       },
     });
@@ -134,23 +135,23 @@ const modelObj = {
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     } else {
 
-      // if (req.body?.attributeArr && req.body?.attributeArr.length) {
-      //   let deleteQuery = {
-      //     where: {
-      //       productId: req.params.id,
-      //     },
-      //   }
-      //   await AttrVariantMap.destroy(deleteQuery);
+      if (req.body?.attributeArr && req.body?.attributeArr.length) {
+        let deleteQuery = {
+          where: {
+            productId: req.params.id,
+          },
+        }
+        await AttrVariantMap.destroy(deleteQuery);
 
-      //   let payloadMap = req.body.attributeArr.map(x => {
-      //     return {
-      //       attributeId: x.attrId,
-      //       value: x.value,
-      //       variantId: variant.id
-      //     }
-      //   })
-      //   await AttrVariantMap.bulkCreate(payloadMap);
-      // }
+        let payloadMap = req.body.attributeArr.map(x => {
+          return {
+            attributeId: x.attrId,
+            value: x.value,
+            variantId: variant.id
+          }
+        })
+        await AttrVariantMap.bulkCreate(payloadMap);
+      }
       itemDetails = await generateCreateData(itemDetails, req.body);
       await itemDetails.save();
       return res.json(
@@ -202,21 +203,21 @@ const modelObj = {
       //   }),
       // },
       distinct: true,
-      include:[
+      include: [
         {
           model: AttrVariantMap,
           as: "variantWithAttrVariantMap",
-          include:{
-              model: Attribute,
-              as: "AttrVariantMapWithAttributes"
+          include: {
+            model: Attribute,
+            as: "AttrVariantMapWithAttributes"
           }
         },
         {
           model: Product,
           as: "variantWithProduct"
-          
+
         }
-      ] ,
+      ],
       order: [[column, direction]],
       offset: +offset,
       limit: +pageSize,
@@ -225,6 +226,75 @@ const modelObj = {
     return res
       .status(resCode.HTTP_OK)
       .json(generateResponse(resCode.HTTP_OK, response));
+  }),
+  download: asyncHandler(async (req, res) => {
+    const {
+      page = 1,
+      pageSize = 10,
+      column = "createdAt",
+      direction = "DESC",
+      search = null,
+    } = req.query;
+    let offset = (page - 1) * pageSize || 0;
+    let query = {
+      // where: {
+      //   ...(search && {
+      //     [Op.or]: {
+      //       name: { [Op.like]: search },
+      //     },
+      //   }),
+      // },
+      distinct: true,
+      include: [
+        {
+          model: AttrVariantMap,
+          as: "variantWithAttrVariantMap",
+          include: {
+            model: Attribute,
+            as: "AttrVariantMapWithAttributes"
+          }
+        },
+        {
+          model: Product,
+          as: "variantWithProduct"
+
+        }
+      ],
+      order: [[column, direction]],
+      // offset: +offset,
+      // limit: +pageSize,
+    };
+    let response = await Model.findAndCountAll(query);
+
+    //  columns = [
+    //     { header: 'Id', key: 'id', width: 10 },
+    //     { header: 'Name', key: 'name', width: 32 },
+    //     { header: 'D.O.B.', key: 'DOB', width: 10 }
+    // ];
+    // generateCsv()
+    return res
+      .status(resCode.HTTP_OK)
+      .json(generateResponse(resCode.HTTP_OK, response));
+  }),
+  updateAll: asyncHandler(async (req, res) => {
+
+    let promissArr = req.body.map(x => {
+      return User.update({ qty: x.qty, price: x.price }, {
+        where: {
+          id: x.id,
+        },
+      });
+    })
+    Promise.allSettled(promissArr).then((values) => {
+      console.log(values);
+      return res.json(
+        generateResponse(resCode.HTTP_OK, {
+          message: MESSAGES.apiSuccessStrings.UPDATE("Variant"),
+        })
+      );
+    });
+
+
   }),
 };
 

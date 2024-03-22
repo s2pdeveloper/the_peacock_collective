@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       value: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
     },
     {
@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     //   as: 'AttrVariantMapWithMultiAttributes',
     //   onDelete: 'CASCADE',
     // });
-    
+
   };
   // AttrVariantMap.associate = (models) => {
   //   AttrVariantMap.belongsToMany(models.Product, {

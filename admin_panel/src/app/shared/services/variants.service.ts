@@ -24,6 +24,11 @@ export class VariantsService {
       .put(this.BASE_URL + '/' + id, payload)
       .pipe(map((res: any) => res));
   }
+  updateAll(payload: any) {
+    return this.http
+      .put(this.BASE_URL + '/updateAll', payload)
+      .pipe(map((res: any) => res));
+  }
   delete(id: any) {
     return this.http
       .delete(this.BASE_URL + '/' + id)

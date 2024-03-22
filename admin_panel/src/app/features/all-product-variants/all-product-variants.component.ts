@@ -22,7 +22,7 @@ export class AllProductVariantsComponent {
     private variantService: VariantsService,
     private toastService: ToastService,
     private spinner: NgxSpinnerService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getAllProductVariant();
@@ -43,6 +43,23 @@ export class AllProductVariantsComponent {
     };
     this.spinner.show();
     this.variantService.update(data.id, payload).subscribe((success: any) => {
+      this.spinner.hide();
+      this.toastService.success(success.message);
+    });
+  }
+  updateAll() {
+    let payload = this.variants.filter(x => x?.edit).map(y => {
+      return {
+        id: y.id,
+        price: y.price,
+        qty: y.qty,
+      }
+    });
+    console.log("payload", payload);
+
+
+    this.spinner.show();
+    this.variantService.updateAll(payload).subscribe((success: any) => {
       this.spinner.hide();
       this.toastService.success(success.message);
     });

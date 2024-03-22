@@ -19,16 +19,16 @@ export class VariantListComponent {
     private activated: ActivatedRoute,
     private spinner: SpinnerService,
     private toastService: ToastService
-  ) {}
+  ) { }
   @Input() variantList: any = [];
   @Output() customEvent = new EventEmitter<any>();
   selectedRow;
   ngOnInit(): void {
     this.attributeList = this.variantList.map(
       (x) => x
-      );
-      console.log('this.attributeList',this.attributeList);
-    
+    );
+    console.log('this.attributeList', this.attributeList);
+
   }
   navigateTo(page, id) {
     if (id) {
@@ -40,12 +40,12 @@ export class VariantListComponent {
     }
   }
   update(data: any, index) {
-    data.id = data.id ? data.id : index;
+    // data.id = data.id ? data.id : index;
     this.customEvent.emit({ action: "EDIT", data: data });
   }
 
   open(s: any, content: any, index) {
-    s.id = s.id ? s.id : index;
+    // s.id = s.id ? s.id : index;
     this.selectedRow = s;
     this.modalService.open(content, { centered: true });
   }

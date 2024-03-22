@@ -8,22 +8,19 @@
         <div class="col-4">
           <div class="input-icons">
             <div class="input-group input-group-sm">
-              <input
-                type="search"
-                class="form-control"
-                aria-label="Small"
-                placeholder="Search"
-                [(ngModel)]="search"
-                (input)="searchFn()"
-                aria-describedby="inputGroup-sizing-sm"
-              />
+              <input type="search" class="form-control" aria-label="Small" placeholder="Search" [(ngModel)]="search"
+                (input)="searchFn()" aria-describedby="inputGroup-sizing-sm" />
               <div class="input-group-append">
                 <span class="input-group-text h-100" id="inputGroup-sizing-sm">
-                  <i class="ti ti-search"></i
-                ></span>
+                  <i class="ti ti-search"></i></span>
               </div>
             </div>
           </div>
+        </div>
+        <div class="col-4">
+          <button class="btn btn-sm action-btn mx-2" (click)="updateAll()" ngbTooltip="Edit">
+            <i class="ti ti-edit-circle"></i> Update
+          </button>
         </div>
       </div>
     </div>
@@ -46,7 +43,7 @@
               <td scope="row">
                 <p *ngFor="let at of c.variantWithAttrVariantMap">
                   {{
-                    at?.AttrVariantMapWithAttributes?.name + " | " + at.value
+                  at?.AttrVariantMapWithAttributes?.name + " | " + at.value
                   }}
                 </p>
               </td>
@@ -54,53 +51,27 @@
 
               <td scope="row">
                 <div class="d-flex justify-content-center align-items-center">
-                  <button
-                    [disabled]="c?.qty < 0 || c?.qty == 0"
-                    class="btn btn-sm btn-outline-none py-0 border-0"
-                    (click)="c.qty = c.qty - 1;qtyChange(c)"
-                  >
-                    <i
-                      class="fa-solid fs-3 fa-minus-square text-primary fa-5x mx-0"
-                      aria-hidden="true"
-                    ></i>
+                  <button [disabled]="c?.qty <=1" class="btn btn-sm btn-outline-none py-0 border-0"
+                    (click)="c.qty = c.qty - 1;c.edit=true">
+                    <i class="fa-solid fs-3 fa-minus-square text-primary fa-5x mx-0" aria-hidden="true"></i>
                   </button>
-                  <input
-                    class="form-control w-25"
-                    type="number"
-                    [(ngModel)]="c.qty"
-                    [ngModelOptions]="{ standalone: true }"
-                    (ngModelChange)="qtyChange(c)"
-                  />
-                  <button
-                  class="btn btn-sm btn-outline-none py-0 border-0"
-                  (click)="c.qty = c.qty + 1;qtyChange(c)"
-                >
-                  <i
-                    class="fa-solid fs-3 fa-plus-square text-primary fa-5x mx-0"
-                    aria-hidden="true"
-                  ></i>
-                </button>
+                  <input class="form-control w-25" type="number" [(ngModel)]="c.qty"
+                    [ngModelOptions]="{ standalone: true }" (change)="c.edit=true" />
+                  <button class="btn btn-sm btn-outline-none py-0 border-0" (click)="c.qty = c.qty + 1;c.edit=true">
+                    <i class="fa-solid fs-3 fa-plus-square text-primary fa-5x mx-0" aria-hidden="true"></i>
+                  </button>
                 </div>
               </td>
               <td scope="row" class="text-center">
                 <div class="d-flex justify-content-center">
 
-                  <input
-                  class="form-control w-25"
-                  type="number"
-                  [(ngModel)]="c.price"
-                  [ngModelOptions]="{ standalone: true }"
-                  (ngModelChange)="priceChange(c)"
-                />
+                  <input class="form-control w-25" type="number" [(ngModel)]="c.price"
+                    [ngModelOptions]="{ standalone: true }" (change)="c.edit=true" />
                 </div>
               </td>
 
               <td scope="row" class="text-center">
-                <button
-                  class="btn btn-sm action-btn mx-2"
-                  (click)="update(c)"
-                  ngbTooltip="Edit"
-                >
+                <button class="btn btn-sm action-btn mx-2" (click)="update(c)" ngbTooltip="Edit">
                   <i class="ti ti-edit-circle"></i>
                 </button>
               </td>
