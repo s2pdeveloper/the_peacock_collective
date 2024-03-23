@@ -287,6 +287,11 @@ const modelObj = {
     })
     Promise.allSettled(promissArr).then((values) => {
       console.log(values);
+      for (const result of values) {
+        if (result.status == 'rejected') {
+          throw new ApiError('error in update variant', resCode.HTTP_BAD_REQUEST);
+        }
+      }
       return res.json(
         generateResponse(resCode.HTTP_OK, {
           message: MESSAGES.apiSuccessStrings.UPDATE("Variant"),
