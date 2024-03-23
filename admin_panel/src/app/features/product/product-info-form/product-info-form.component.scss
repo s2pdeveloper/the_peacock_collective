@@ -1,0 +1,17 @@
+.cross-btn {
+    width: 25px;
+    height: 25px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 5%;
+    right: 5%;
+  }
+  .new-img {
+    height: 200px;
+    width: 200px !important;
+    object-fit: contain;
+  }
+  

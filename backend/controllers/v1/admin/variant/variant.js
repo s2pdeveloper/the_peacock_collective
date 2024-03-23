@@ -1,6 +1,11 @@
-
-const Sequelize = require('sequelize');
-const { Variant, AttrVariantMap, Attribute, Product } = require("../../../../models");
+const Sequelize = require("sequelize");
+const {
+  Variant,
+  AttrVariantMap,
+  Attribute,
+  Product,
+  sequelize,
+} = require("../../../../models");
 const {
   OPTIONS,
   generateResponse,
@@ -11,15 +16,15 @@ const resCode = MESSAGES.resCode;
 const Op = Sequelize.Op;
 const Model = Variant;
 const ApiError = require("../../../../config/middlewares/api.error");
-const { asyncHandler } = require("../../../../config/middlewares/async.handler");
-const { generateCsv } = require('../../../../shared/repositories/generate-excel.repository');
-
+const {
+  asyncHandler,
+} = require("../../../../config/middlewares/async.handler");
+const {
+  generateCsv,
+} = require("../../../../shared/repositories/generate-excel.repository");
 
 const modelObj = {
   create: asyncHandler(async (req, res) => {
-
-
-
     let checkExisting = await Model.findOne({
       where: {
         sku: req.body.sku,
@@ -34,21 +39,15 @@ const modelObj = {
     let variant = await createObj.save();
 
     if (req.body?.attributeArr && req.body?.attributeArr.length) {
-
-      let payloadMap = req.body.attributeArr.map(x => {
+      let payloadMap = req.body.attributeArr.map((x) => {
         return {
           attributeId: x.attrId,
           value: x.value,
-          variantId: variant.id
-        }
-      })
+          variantId: variant.id,
+        };
+      });
       await AttrVariantMap.bulkCreate(payloadMap);
     }
-
-
-
-
-
 
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
@@ -75,7 +74,7 @@ const modelObj = {
       },
       include: {
         model: AttrVariantMap,
-        as: "variantWithAttrVariantMap"
+        as: "variantWithAttrVariantMap",
         // attributes: ['id', 'title', 'course_id', 'start_date', 'end_date']
       },
       order: [[column, direction]],
@@ -111,11 +110,11 @@ const modelObj = {
       },
       include: {
         model: AttrVariantMap,
-        as: 'variantWithAttrVariantMap',
+        as: "variantWithAttrVariantMap",
         // paranoid: true, required: false,
         include: {
           model: Attribute,
-          as: 'AttrVariantMapWithAttributes'
+          as: "AttrVariantMapWithAttributes",
         },
       },
     });
@@ -134,22 +133,21 @@ const modelObj = {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Variant");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     } else {
-
       if (req.body?.attributeArr && req.body?.attributeArr.length) {
         let deleteQuery = {
           where: {
             productId: req.params.id,
           },
-        }
+        };
         await AttrVariantMap.destroy(deleteQuery);
 
-        let payloadMap = req.body.attributeArr.map(x => {
+        let payloadMap = req.body.attributeArr.map((x) => {
           return {
             attributeId: x.attrId,
             value: x.value,
-            variantId: variant.id
-          }
-        })
+            variantId: variant.id,
+          };
+        });
         await AttrVariantMap.bulkCreate(payloadMap);
       }
       itemDetails = await generateCreateData(itemDetails, req.body);
@@ -173,7 +171,7 @@ const modelObj = {
         where: {
           variantId: req.params.id,
         },
-      }
+      };
       await AttrVariantMap.destroy(deleteQuery);
       return res.json(
         generateResponse(resCode.HTTP_OK, {
@@ -209,15 +207,24 @@ const modelObj = {
           as: "variantWithAttrVariantMap",
           include: {
             model: Attribute,
-            as: "AttrVariantMapWithAttributes"
-          }
+            as: "AttrVariantMapWithAttributes",
+          },
         },
         {
           model: Product,
-          as: "variantWithProduct"
-
-        }
+          as: "variantWithProduct",
+        },
       ],
+      attributes : {
+        include: [
+          "id",
+          "price",
+          "productId",
+          "qty",
+          "sku",
+          [sequelize.literal("0"), "addQty"],
+        ],
+      },
       order: [[column, direction]],
       offset: +offset,
       limit: +pageSize,
@@ -251,14 +258,13 @@ const modelObj = {
           as: "variantWithAttrVariantMap",
           include: {
             model: Attribute,
-            as: "AttrVariantMapWithAttributes"
-          }
+            as: "AttrVariantMapWithAttributes",
+          },
         },
         {
           model: Product,
-          as: "variantWithProduct"
-
-        }
+          as: "variantWithProduct",
+        },
       ],
       order: [[column, direction]],
       // offset: +offset,
@@ -277,19 +283,24 @@ const modelObj = {
       .json(generateResponse(resCode.HTTP_OK, response));
   }),
   updateAll: asyncHandler(async (req, res) => {
-
-    let promissArr = req.body.map(x => {
-      return User.update({ qty: x.qty, price: x.price }, {
-        where: {
-          id: x.id,
-        },
-      });
-    })
+    let promissArr = req.body.map((x) => {
+      return User.update(
+        { qty: x.qty, price: x.price },
+        {
+          where: {
+            id: x.id,
+          },
+        }
+      );
+    });
     Promise.allSettled(promissArr).then((values) => {
       console.log(values);
       for (const result of values) {
-        if (result.status == 'rejected') {
-          throw new ApiError('error in update variant', resCode.HTTP_BAD_REQUEST);
+        if (result.status == "rejected") {
+          throw new ApiError(
+            "error in update variant",
+            resCode.HTTP_BAD_REQUEST
+          );
         }
       }
       return res.json(
@@ -298,8 +309,6 @@ const modelObj = {
         })
       );
     });
-
-
   }),
 };
 

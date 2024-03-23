@@ -138,15 +138,16 @@ export class ProductInfoFormComponent {
     if (this.file) {
       formData.append("image", this.file, this.file.name);
     }
-    if(this.attributeArr.length){
-      let attr=this.attributes.filter(x=> this.attributeArr.includes(x.id)).map(y=>{
-        return{
-          id:y.id,
-          name:y.name
-        }
-      })
+    if (this.attributeArr.length) {
+      let attr = this.attributes
+        .filter((x) => this.attributeArr.includes(x.id))
+        .map((y) => {
+          return {
+            id: y.id,
+            name: y.name,
+          };
+        });
       formData.append("attributeArr", JSON.stringify(attr));
-
     }
 
     if (this.productForm.value.id) {
@@ -174,7 +175,9 @@ export class ProductInfoFormComponent {
       this.router.navigate(["default/product/product-list"]);
     });
   }
-
+  deleteImg() {
+    this.url = null;
+  }
   resetForm() {
     this.productForm.reset();
     // this.getAllMasterData();
@@ -187,10 +190,15 @@ export class ProductInfoFormComponent {
       if (success.bannerImage) {
         this.url = success.bannerImage;
       }
-      if(success?.productWithProdAttributeMap && success?.productWithProdAttributeMap.length){
-        this.attributeArr=success?.productWithProdAttributeMap.map(x=>x.attributeId);
+      if (
+        success?.productWithProdAttributeMap &&
+        success?.productWithProdAttributeMap.length
+      ) {
+        this.attributeArr = success?.productWithProdAttributeMap.map(
+          (x) => x.attributeId
+        );
       }
-      
+
       this.productForm.patchValue(success);
       this.spinner.hide();
     });
@@ -239,7 +247,7 @@ export class ProductInfoFormComponent {
     for (const item of ev) {
       this.attributeArr.push(item.id);
     }
-    this.attributeArr=[...this.attributeArr]
+    this.attributeArr = [...this.attributeArr];
 
     console.log("attr333333333333333333", this.attributeArr);
   }

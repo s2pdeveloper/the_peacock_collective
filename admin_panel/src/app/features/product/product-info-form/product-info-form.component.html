@@ -95,13 +95,13 @@
             Attribute
             <span class="text-danger">*</span></label
           >
-          <ng-select 
+          <ng-select
             [items]="attributes"
             [multiple]="true"
             bindLabel="name"
             bindValue="id"
             [(ngModel)]="attributeArr"
-            [ngModelOptions]="{standalone: true}"
+            [ngModelOptions]="{ standalone: true }"
             (change)="onAttrChange($event)"
           >
           </ng-select>
@@ -198,6 +198,12 @@
             </label>
             <div *ngIf="url" class="image">
               <img class="w-100" [src]="url" alt="image" />
+              <button
+                class="btn btn-outline-danger cross-btn"
+                (click)="deleteImg()"
+              >
+                <i class="fa-solid fa-xmark"></i>
+              </button>
             </div>
           </div>
         </div>

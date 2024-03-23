@@ -17,6 +17,7 @@ export class AllProductVariantsComponent {
   column: string = "createdAt";
   direction: number = -1;
   search: any = "";
+  addQty:number = 0;
   constructor(
     private router: Router,
     private variantService: VariantsService,
@@ -48,16 +49,21 @@ export class AllProductVariantsComponent {
     });
   }
   updateAll() {
+    let isNan=false
     let payload = this.variants.filter(x => x?.edit).map(y => {
+      if(isNaN(y.addQty)){
+        isNan=true
+      }
       return {
         id: y.id,
         price: y.price,
-        qty: y.qty,
+        qty: !isNaN(y.addQty) ? (y.qty + y.addQty) : y.qty,
       }
     });
-    console.log("payload", payload);
-
-
+    if(isNan){
+      this.toastService.warning("Qty is Not a Number")
+      return
+    }
     this.spinner.show();
     this.variantService.updateAll(payload).subscribe((success: any) => {
       this.spinner.hide();

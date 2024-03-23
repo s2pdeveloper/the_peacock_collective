@@ -99,6 +99,7 @@ export class ProductImagesComponent {
     this.productImageService.create(formData).subscribe((success: any) => {
       this.spinner.hide();
       this.toastService.success(success.message);
+      this.url = null;
       this.getByProductId(this.productId);
     });
   }

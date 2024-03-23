@@ -4,14 +4,13 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-bespoke',
   templateUrl: './bespoke.component.html',
-  styleUrls: ['./bespoke.component.scss']
+  styleUrls: ['./bespoke.component.scss'],
 })
 export class BespokeComponent {
   constructor(private activatedRoute: ActivatedRoute) {}
   data: any = {
     pageName: '',
-    description:
-      'I am enamored by details that most people often miss. The twinkle in one’s eyes and the way they smile. The perfection in imperfect pleats, and the graceful movement of the pallu. The fragrance of an old book and the memories it drives. These tiny details that really make your heart smile. I try to bring those through my collection that will always be proudly Made in India.',
+    description: '',
   };
   products: any[] = [
     {

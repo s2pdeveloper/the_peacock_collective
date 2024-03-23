@@ -113,7 +113,7 @@ const NavigationItems = [
         type: "item",
         classes: "nav-item",
         url: "/default/attribute",
-        icon: "fa-brands fa-product-hunt",
+        icon: "fa-brands fa-angular",
       },
       {
         id: "vendor",
