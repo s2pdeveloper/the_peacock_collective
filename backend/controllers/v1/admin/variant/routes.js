@@ -15,7 +15,6 @@ const controller = require("./variant");
 // );
 
 app.get("/", controller.getAll);
-app.get("/updateAll", controller.updateAll);
 
 app.post(
   "/",
@@ -51,6 +50,7 @@ app.delete(
   // validate("checkParamId"),
   controller.delete
 );
+app.put("/updateAll", controller.updateAll);
 
 app.put(
   "/:id",

@@ -284,7 +284,7 @@ const modelObj = {
   }),
   updateAll: asyncHandler(async (req, res) => {
     let promissArr = req.body.map((x) => {
-      return User.update(
+      return Model.update(
         { qty: x.qty, price: x.price },
         {
           where: {
