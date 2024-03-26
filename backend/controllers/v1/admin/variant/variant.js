@@ -30,6 +30,7 @@ const modelObj = {
         sku: req.body.sku,
       },
     });
+    console.log("request in variant",req.body);
     if (checkExisting) {
       let message = MESSAGES.apiErrorStrings.Data_EXISTS("Variant");
       throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
@@ -37,6 +38,7 @@ const modelObj = {
 
     let createObj = await generateCreateData(new Model(), req.body);
     let variant = await createObj.save();
+    console.log("your variant in after created",variant)
 
     if (req.body?.attributeArr && req.body?.attributeArr.length) {
       let payloadMap = req.body.attributeArr.map((x) => {
