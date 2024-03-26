@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.FLOAT,
         allowNull: false,
         set(price) {
-          price ? this.setDataValue('value', price.toFixed(2)) : null
+          price ? this.setDataValue('price', price.toFixed(2)) : null
         },
       },
       qty: {

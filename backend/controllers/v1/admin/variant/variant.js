@@ -21,15 +21,16 @@ const modelObj = {
         name: req.body.name,
       },
     });
+    console.log("request in variant",req.body);
     if (checkExisting) {
       let message = MESSAGES.apiErrorStrings.Data_EXISTS("Variant");
       throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
     }
     let createObj = await generateCreateData(new Model(), req.body);
     let variant = await createObj.save();
+    console.log("your variant in after created",variant)
 
-    if (req.body.attributeArr.length) {
-
+    if (req.body.attributeArr && req.body.attributeArr.length > 0) {
       let payloadMap = req.body.attributeArr.map(x => {
         return {
           attributeId: x.id,

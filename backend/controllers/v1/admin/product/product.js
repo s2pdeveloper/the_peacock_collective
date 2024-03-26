@@ -20,7 +20,7 @@ const modelObj = {
   create: asyncHandler(async (req, res) => {
     let checkExisting = await Model.findOne({
       where: {
-        name: req.body.name,
+        name:{ [Op.iLike]:  req.body.name },
       },
     });
 
@@ -71,9 +71,9 @@ const modelObj = {
     let offset = (page - 1) * pageSize || 0;
     let query = {
       where: {
-        ...(!!search && {
+        ...(search && {
           [Op.or]: {
-            name: { [Op.like]: search },
+            name: { [Op.iLike]: `%${search}%` },
           },
         }),
       },

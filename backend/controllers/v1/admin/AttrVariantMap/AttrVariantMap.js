@@ -1,5 +1,5 @@
 const sequelize = require("sequelize");
-const { ProdAttributeMap } = require("../../../../models");
+const { AttrVariantMap } = require("../../../../models");
 const fs = require("fs");
 const {
   OPTIONS,
@@ -9,37 +9,20 @@ const {
 const MESSAGES = require("../../../../config/options/messages.options");
 const resCode = MESSAGES.resCode;
 const Op = sequelize.Op;
-const Model = ProdAttributeMap;
+const Model = AttrVariantMap;
 const ApiError = require("../../../../config/middlewares/api.error");
 const {
   asyncHandler,
 } = require("../../../../config/middlewares/async.handler");
-const cloudinary = require("../../../../shared/service/cloudinary.service");
+
 
 const modelObj = {
   create: asyncHandler(async (req, res) => {
-    // let checkExisting = await Model.findOne({
-    //   where: {
-    //     companyName: req.body.companyName,
-    //   },
-    // });
-    // if (checkExisting) {
-    //   let message = MESSAGES.apiErrorStrings.Data_EXISTS("Image");
-    //   throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
-    //   return;
-    // }
-    // console.log("your file in req.", req.file);
-    // console.log("your file in buffer", req.file.buffer);
-    // if (req.file) {
-    //   req.body.image = await cloudinary.uploadFromBuffer(req.file.buffer);
-    //   console.log(req.body);
-    // }
-
     let createObj = await generateCreateData(new Model(), req.body);
     await createObj.save();
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
-        message: MESSAGES.apiSuccessStrings.ADDED("Image"),
+        message: MESSAGES.apiSuccessStrings.ADDED("AttrVariantMap"),
       })
     );
   }),
@@ -80,7 +63,7 @@ const modelObj = {
     });
     if (!existing) {
       let errors =
-        MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("productAttribute");
+        MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("AttrVariantMap");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
     return res
@@ -96,14 +79,14 @@ const modelObj = {
     });
     if (!itemDetails) {
       let errors =
-        MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("productAttribute");
+        MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("AttrVariantMap");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
     itemDetails = await generateCreateData(itemDetails, req.body);
     await itemDetails.save();
     return res.json(
       generateResponse(resCode.HTTP_OK, {
-        message: MESSAGES.apiSuccessStrings.UPDATE("productAttribute"),
+        message: MESSAGES.apiSuccessStrings.UPDATE("AttrVariantMap"),
       })
     );
   }),
@@ -119,12 +102,12 @@ const modelObj = {
       await Model.destroy(query);
       return res.json(
         generateResponse(resCode.HTTP_OK, {
-          message: MESSAGES.apiSuccessStrings.DELETED("productAttribute"),
+          message: MESSAGES.apiSuccessStrings.DELETED("AttrVariantMap"),
         })
       );
     } else {
       let errors =
-        MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("productAttribute");
+        MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("AttrVariantMap");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
   }),

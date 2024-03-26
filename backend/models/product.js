@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      set(name) {
+        name ? this.setDataValue('name', name.trim()) : null
+      },
     },
     description: {
       type: DataTypes.STRING,
