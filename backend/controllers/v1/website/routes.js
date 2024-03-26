@@ -21,8 +21,8 @@ const common=require("./common/routes")
 
 
 
-router.use('/product',product);
-router.use('/category',category);
+// router.use('/product',product);
+// router.use('/category',category);
 router.use('/common',common);
 // router.use('/order',order)
 

@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       parentId: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: true,
       },
       name: {
@@ -41,11 +41,15 @@ module.exports = (sequelize, DataTypes) => {
       tableName: 'Categories',
     }
   );
-  
+
   Categories.associate = (models) => {
     Categories.hasMany(models.Categories, {
       foreignKey: 'parentId',
       as: 'subcatagories',
+    });
+    Categories.belongsTo(models.Categories, {
+      foreignKey: 'parentId',
+      as: 'categories',
     });
 
   };
