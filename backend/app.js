@@ -60,7 +60,7 @@ process.on('unhandledRejection', (reason, p) => {
 });
 // Routes
 // app.use(expressValidator());
-// app.use('/', indexRouter);
+app.use('/', indexRouter);
 
 app.use(errorHandler);
 

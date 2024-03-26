@@ -57,5 +57,3 @@ exports.generateCsv = async (data, column, sheetName, res) => {
 
   res.end();
 };
-
-
