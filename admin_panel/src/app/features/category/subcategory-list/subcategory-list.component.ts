@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { Router, RouterModule } from "@angular/router";
 import { NgxSpinnerService } from "ngx-spinner";
 import { ToastrService } from "ngx-toastr";
@@ -11,11 +11,12 @@ import {
 import { inject } from "@angular/core";
 
 @Component({
-  selector: "app-category-list",
-  templateUrl: "./category-list.component.html",
-  styleUrls: ["./category-list.component.scss"],
+  selector: 'app-subcategory-list',
+  templateUrl: './subcategory-list.component.html',
+  styleUrls: ['./subcategory-list.component.scss']
 })
-export class CategoryListComponent {
+export class SubcategoryListComponent {
+  @Input() parentId: number = null;
   private modalService = inject(NgbModal);
   constructor(
     private router: Router,
@@ -23,6 +24,8 @@ export class CategoryListComponent {
     private spinner: NgxSpinnerService,
     private toastService: ToastrService
   ) { }
+  @Output() customEvent = new EventEmitter<any>();
+
   page: number = 1;
   pageSize: number = 25;
   collection: number = 0;
@@ -39,10 +42,11 @@ export class CategoryListComponent {
   add() {
     this.router.navigate(["/default/category/category-form"]);
   }
-  update(category: any) {
-    this.router.navigate(["/default/category/category-form"], {
-      queryParams: { id: category.id },
-    });
+  update(data: any) {
+    // this.router.navigate(["/default/category/category-form"], {
+    //   queryParams: { id: category.id },
+    // });
+    this.customEvent.emit({ action: 'EDIT', data: data })
   }
 
   onChangePage(pageNo) {
@@ -72,7 +76,8 @@ export class CategoryListComponent {
       page: this.page,
       pageSize: this.pageSize,
       search: this.search,
-      category: true
+      parentId: this.parentId,
+      category: false
     };
     this.categoryService.getAll(params).subscribe((success: any) => {
       this.spinner.hide();
