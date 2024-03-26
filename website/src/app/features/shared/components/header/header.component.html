@@ -88,7 +88,7 @@
                       <div class="col-10 dropdownItem px-3">
                         <swiper-container class="img-box" slides-per-view="4">
                           <swiper-slide
-                            class="px-2 prod-cart" 
+                            class="px-2 prod-cart"
                             (click)="navigateTo('/product/product-details')"
                             *ngFor="let p of categoryProducts"
                             ><img class="prod-img w-100" [src]="p?.img" />
@@ -160,19 +160,39 @@
                           <span class="drop-items">LOOK BOOKS</span>
                         </div>
                         <div class="py-2">
-                          <span class="drop-items">Everyday Chic</span>
+                          <span
+                            class="drop-items"
+                            (click)="navigateToDynamic('Everyday Chic')"
+                            >Everyday Chic</span
+                          >
                         </div>
                         <div class="py-2">
-                          <span class="drop-items">Globally Indian</span>
+                          <span
+                            class="drop-items"
+                            (click)="navigateToDynamic('Globally Indian')"
+                            >Globally Indian</span
+                          >
                         </div>
                         <div class="py-2">
-                          <span class="drop-items">Be my Guest</span>
+                          <span
+                            class="drop-items"
+                            (click)="navigateToDynamic('Be my Guest')"
+                            >Be my Guest</span
+                          >
                         </div>
                         <div class="py-2">
-                          <span class="drop-items">All about the Glam!</span>
+                          <span
+                            class="drop-items"
+                            (click)="navigateToDynamic('All about the Glam!')"
+                            >All about the Glam!</span
+                          >
                         </div>
                         <div class="py-2">
-                          <span class="drop-items">Let’s get to work</span>
+                          <span
+                            class="drop-items"
+                            (click)="navigateToDynamic('Let’s get to work')"
+                            >Let’s get to work</span
+                          >
                         </div>
                         <div class="py-2">
                           <span class="drop-items">How iconic!</span>

@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const { Product, ProdAttributeMap } = require("../../../../models");
+const { Product, ProdAttributeMap,Attribute,Categories } = require("../../../../models");
 const {
   OPTIONS,
   generateResponse,
@@ -49,7 +49,7 @@ const modelObj = {
           }
         })
 
-        await ProdAttributeMap.bulkCreate([payloadMap]);
+        await ProdAttributeMap.bulkCreate(payloadMap);
 
       }
     }
@@ -81,11 +81,17 @@ const modelObj = {
       // attributes: {
       //   exclude: ['userId'],
       // },
-      // include: {
-      //   model: User,
-      //   as: 'shop',
-      //   attributes: ['id', 'name', 'mobile'],
-      // },
+      include: {
+        model: ProdAttributeMap,
+        as: 'productWithProdAttributeMap',
+        paranoid: true, required: false,
+        // attributes: ['id', 'name', 'mobile'],
+      },
+      include: {
+        model: Categories,
+        as: 'productWithCategory',
+        // attributes: ['id', 'name', 'mobile'],
+      },
       offset: +offset,
       limit: +pageSize,
     };
@@ -100,10 +106,27 @@ const modelObj = {
       where: {
         id: req.params.id,
       },
-      include: {
+      include:[ {
         model: ProdAttributeMap,
+        as: 'productWithProdAttributeMap',
         // attributes: ['id', 'title', 'course_id', 'start_date', 'end_date']
+        paranoid: true, required: false,
+
+        include: {
+          model: Attribute,
+          as: 'ProdAttributeMapWithAttributes',
+          // attributes: ['id', 'title', 'course_id', 'start_date', 'end_date']
+          // paranoid: true, required: false
+        },
       },
+      { 
+          model: Categories,
+          as: 'productWithCategory',
+          // attributes: ['id', 'title', 'course_id', 'start_date', 'end_date']
+          // paranoid: true, required: false
+        
+      }
+    ]
     });
     if (!existing) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Product");
@@ -121,21 +144,26 @@ const modelObj = {
 
     });
 
-    if (req.body.attributeArr.length) {
-      let deleteQuery = {
-        where: {
-          productId: req.params.id,
-        },
-      }
-      await ProdAttributeMap.destroy(deleteQuery);
 
-      let payloadMap = req.body.attributeArr.map(x => {
-        return {
-          attributeId: x.id,
-          productId: req.params.id
+    if (req.body?.attributeArr) {
+      req.body.attributeArr = JSON.parse(req.body.attributeArr);
+    
+        let deleteQuery = {
+          where: {
+            productId: req.params.id,
+          },
         }
-      })
-      await ProdAttributeMap.bulkCreate([payloadMap]);
+        await ProdAttributeMap.destroy(deleteQuery);
+  
+        let payloadMap = req.body.attributeArr.map(x => {
+          return {
+            attributeId: x.id,
+            productId: req.params.id
+          }
+        })
+        await ProdAttributeMap.bulkCreate(payloadMap);
+      
+   
     }
 
     if (!itemDetails) {
@@ -189,6 +217,30 @@ const modelObj = {
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
   }),
+  getProductAttribute: asyncHandler(async (req, res) => {
+    let existing = await ProdAttributeMap.findAll({
+      where: {
+        productId: req.params.id,
+      },
+    //   include:[ {
+    //     model: ProdAttributeMap,
+    //     as: 'productWithProdAttributeMap',
+    //     // attributes: ['id', 'title', 'course_id', 'start_date', 'end_date']
+    //     paranoid: true, required: false,
+
+    // }
+    // ]
+    });
+    if (!existing) {
+      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Product");
+      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
+    }
+    return res
+      .status(resCode.HTTP_OK)
+      .json(generateResponse(resCode.HTTP_OK, existing));
+  }),
+
+
 };
 
 module.exports = modelObj;

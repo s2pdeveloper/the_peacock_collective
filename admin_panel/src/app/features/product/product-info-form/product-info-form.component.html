@@ -3,7 +3,7 @@
     <div class="card-header-items">
       <div>{{ form["id"].value ? "Update" : "Create" }} Product</div>
       <div>
-        <a class="back-btn btn btn-primary" (click)="back()">
+        <a class="back-btn btn btn-primary" (click)="navigateTo()">
           <i class="ti ti-arrow-left me-1"></i> Back</a
         >
       </div>
@@ -71,15 +71,6 @@
           </div>
         </div>
         <div class="col-md-4 mb-3">
-          <label class="form-label"> Sale Price </label>
-          <input
-            formControlName="salePrice"
-            placeholder="Sale Price"
-            type="number"
-            class="form-control"
-          />
-        </div>
-        <div class="col-md-4 mb-3">
           <label class="form-label"> Returnable Days </label>
           <input
             formControlName="returnableDays"
@@ -87,74 +78,6 @@
             type="number"
             class="form-control"
           />
-        </div>
-        <div class="form-check col-md-2 mb-3">
-          <label class="form-check-label" for="stock">
-            In Stock
-          </label>
-          <input
-            formControlName="inStock"
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            id="stock"
-          />
-        </div>
-        <div class="form-check col-md-2 mb-3">
-          <label class="form-check-label" for="trend">
-            Is Trending
-          </label>
-          <input
-            formControlName="isTrending"
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            id="trend"
-          />
-        </div>
-        <div class="form-check col-md-2 mb-3">
-          <label class="form-check-label" for="cod"> COD </label>
-          <input
-            formControlName="cod"
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            id="cod"
-          />
-        </div>
-        <div class="form-check col-md-2 mb-3">
-          <label class="form-check-label" for="soldIndi">
-            Sold Individually
-          </label>
-          <input
-            formControlName="soldIndividually"
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            id="soldIndi"
-          />
-        </div>
-        <div class="form-check col-md-2 mb-3">
-          <label class="form-check-label" for="sale">
-            In Sale
-          </label>
-          <input
-            formControlName="inSale"
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            id="sale"
-          />
-        </div>
-
-        <div class="col-md-8 ps-0 mb-3">
-          <label class="form-label"> Description </label>
-          <textarea
-            class="form-control"
-            formControlName="description"
-            placeholder="Description "
-            rows="3"
-          ></textarea>
         </div>
         <div class="col-md-4 mb-2">
           <label class="form-label">
@@ -167,23 +90,122 @@
             <option value="inactive">InActive</option>
           </select>
         </div>
-        <div class="col-md-12 my-2 d-flex justify-content-center">
-          <label for="file" class="file-upload-label">
-            <div class="file-upload-design">
-              <svg viewBox="0 0 640 512" height="1em">
-                <path
-                  d="M144 480C64.5 480 0 415.5 0 336c0-62.8 40.2-116.2 96.2-135.9c-.1-2.7-.2-5.4-.2-8.1c0-88.4 71.6-160 160-160c59.3 0 111 32.2 138.7 80.2C409.9 102 428.3 96 448 96c53 0 96 43 96 96c0 12.2-2.3 23.8-6.4 34.6C596 238.4 640 290.1 640 352c0 70.7-57.3 128-128 128H144zm79-217c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l39-39V392c0 13.3 10.7 24 24 24s24-10.7 24-24V257.9l39 39c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0l-80 80z"
-                ></path>
-              </svg>
-              <p>Drag and Drop</p>
-              <p>or</p>
-              <span class="browse-button">Browse file</span>
-            </div>
-            <input id="file" accept="image/*" type="file"[multiple]="false" (change)="fileChosen($event, 'bannerImage')"/>
-          </label>
+        <div class="col-md-4 mb-2 ps-0">
+          <label class="form-label">
+            Attribute
+            <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="attributes"
+            [multiple]="true"
+            bindLabel="name"
+            bindValue="id"
+            [(ngModel)]="attributeArr"
+            [ngModelOptions]="{ standalone: true }"
+            (change)="onAttrChange($event)"
+          >
+          </ng-select>
         </div>
-        <div *ngIf="url">
-          <img class="image" [src]="url" alt="image" />
+        <div class="form-check col-md-2 mb-3">
+          <label class="form-check-label" for="stock"> In Stock </label>
+          <input
+            formControlName="inStock"
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="stock"
+          />
+        </div>
+        <div class="form-check col-md-2 mb-3">
+          <label class="form-check-label" for="trend"> Is Trending </label>
+          <input
+            formControlName="isTrending"
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="trend"
+          />
+        </div>
+        <div class="form-check col-md-2 mb-3">
+          <label class="form-check-label" for="cod"> Cash on Delivery </label>
+          <input
+            formControlName="cod"
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="cod"
+          />
+        </div>
+        <!-- <div class="form-check col-md-2 mb-3">
+          <label class="form-check-label" for="soldIndi">
+            Sold Individually
+          </label>
+          <input
+            formControlName="soldIndividually"
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="soldIndi"
+          />
+        </div>
+        <div class="form-check col-md-2 mb-3">
+          <label class="form-check-label" for="sale"> In Sale </label>
+          <input
+            formControlName="inSale"
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="sale"
+          />
+        </div> -->
+
+        <div class="col-md-12 ps-0 mb-3">
+          <label class="form-label"> Description </label>
+          <textarea
+            class="form-control"
+            formControlName="description"
+            placeholder="Description "
+            rows="3"
+          ></textarea>
+        </div>
+
+        <div class="col-md-4 ps-0 mb-3">
+          <div>
+            <label class="form-label">
+              Banner Image
+              <span class="text-danger">*</span>
+            </label>
+          </div>
+          <div>
+            <label for="file" class="file-upload-label" *ngIf="!url">
+              <div class="file-upload-design">
+                <svg viewBox="0 0 640 512" height="1em">
+                  <path
+                    d="M144 480C64.5 480 0 415.5 0 336c0-62.8 40.2-116.2 96.2-135.9c-.1-2.7-.2-5.4-.2-8.1c0-88.4 71.6-160 160-160c59.3 0 111 32.2 138.7 80.2C409.9 102 428.3 96 448 96c53 0 96 43 96 96c0 12.2-2.3 23.8-6.4 34.6C596 238.4 640 290.1 640 352c0 70.7-57.3 128-128 128H144zm79-217c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l39-39V392c0 13.3 10.7 24 24 24s24-10.7 24-24V257.9l39 39c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0l-80 80z"
+                  ></path>
+                </svg>
+                <p>Drag and Drop</p>
+                <p>or</p>
+                <span class="browse-button">Browse file</span>
+              </div>
+              <input
+                id="file"
+                accept="image/*"
+                type="file"
+                [multiple]="false"
+                (change)="fileChosen($event, 'bannerImage')"
+              />
+            </label>
+            <div *ngIf="url" class="image">
+              <img class="w-100" [src]="url" alt="image" />
+              <button
+                class="btn btn-outline-danger cross-btn"
+                (click)="deleteImg()"
+              >
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </form>

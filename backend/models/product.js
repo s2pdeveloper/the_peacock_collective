@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      set(name) {
-        name ? this.setDataValue('name', name.trim()) : null
+      set(value) {
+        value ? this.setDataValue('name', value.trim()) : null
       },
     },
     description: {
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     gst: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: true,
     },
     inStock: {
@@ -75,7 +75,9 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
+
   Product.associate = (models) => {
+
     Product.belongsTo(models.Categories, {
       foreignKey: 'categoryId',
       as: 'productWithCategory',
@@ -86,8 +88,6 @@ module.exports = (sequelize, DataTypes) => {
       as: 'productImages',
       onDelete: 'CASCADE',
     });
-  };
-  Product.associate = (models) => {
     Product.hasMany(models.Variant, {
       foreignKey: 'productId',
       as: 'productWithVariants',

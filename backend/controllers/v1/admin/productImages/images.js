@@ -91,16 +91,16 @@ const modelObj = {
   }),
 
   getByProductId: asyncHandler(async (req, res) => {
-    let existing = await Model.finAll({
+    let existing = await Model.findAll({
       where: {
         productId: req.params.id,
       },
     });
 
-    if (!existing) {
-      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("ProductImage");
-      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
-    }
+    // if (!existing) {
+    //   let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("ProductImage");
+    //   throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
+    // }
     return res
       .status(resCode.HTTP_OK)
       .json(generateResponse(resCode.HTTP_OK, existing));

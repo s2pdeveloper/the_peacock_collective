@@ -4,6 +4,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ValidationService } from "@core/components";
 import { SpinnerService, ToastService } from "@core/services";
+import { AttributeService } from "@shared/services/attribute.service";
 import { CategoryService } from "@shared/services/category.service";
 import { ProductService } from "@shared/services/product.service";
 
@@ -17,7 +18,7 @@ export class ProductInfoFormComponent {
   page: any = 1;
   pageSize: any = 10;
   search: any = "";
-  productId : any;
+  productId: any;
   categoryOptions: any = [];
   autoIncrementNos: any = {};
   file: any = null;
@@ -25,17 +26,18 @@ export class ProductInfoFormComponent {
   url: any = null;
   submitted: boolean = false;
   categoryArr = [];
-
+  attributeArr = [];
+  attributes = [];
   productImage: any = null;
   productImageName: any = "";
   productImageUrl: any = null;
-
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private productService: ProductService,
     private categoryService: CategoryService,
+    private attributeService: AttributeService,
     private spinner: SpinnerService,
     private toastService: ToastService,
     private domSanitizer: DomSanitizer,
@@ -44,6 +46,7 @@ export class ProductInfoFormComponent {
 
   ngOnInit(): void {
     this.getAllCategory();
+    this.getAllAttribute();
     this.activatedRoute.queryParams.subscribe((params: any) => {
       if (params.id) {
         this.getById(params.id);
@@ -87,17 +90,22 @@ export class ProductInfoFormComponent {
     bannerImage: new FormControl(null),
     status: new FormControl("active"),
   });
-
   get form() {
     return this.productForm.controls;
   }
-  back() {
+  navigateTo() {
     this.router.navigate(["default/product/product-list"]);
   }
 
   getAllCategory() {
     this.categoryService.getAll({ category: true }).subscribe((success) => {
       this.categoryArr = success.rows;
+    });
+  }
+  getAllAttribute() {
+    this.attributeService.getAll({}).subscribe((success) => {
+      this.attributes = success.rows;
+      console.log("attributeArr", this.attributes);
     });
   }
 
@@ -123,13 +131,23 @@ export class ProductInfoFormComponent {
     // }
     let formData: FormData = new FormData();
     for (const key in this.productForm.value) {
-      if (key != 'bannerImage') {
-
+      if (key != "bannerImage") {
         formData.append(key, this.productForm.value[key]);
       }
     }
     if (this.file) {
-      formData.append('image', this.file, this.file.name);
+      formData.append("image", this.file, this.file.name);
+    }
+    if (this.attributeArr.length) {
+      let attr = this.attributes
+        .filter((x) => this.attributeArr.includes(x.id))
+        .map((y) => {
+          return {
+            id: y.id,
+            name: y.name,
+          };
+        });
+      formData.append("attributeArr", JSON.stringify(attr));
     }
 
     if (this.productForm.value.id) {
@@ -157,7 +175,9 @@ export class ProductInfoFormComponent {
       this.router.navigate(["default/product/product-list"]);
     });
   }
-
+  deleteImg() {
+    this.url = null;
+  }
   resetForm() {
     this.productForm.reset();
     // this.getAllMasterData();
@@ -165,11 +185,20 @@ export class ProductInfoFormComponent {
   getById(id: string) {
     this.spinner.show();
     this.productService.getById(id).subscribe((success: any) => {
-      console.log('success',success);
-      
-      if(success.bannerImage){
-        this.url=success.bannerImage;
+      console.log("success", success);
+
+      if (success.bannerImage) {
+        this.url = success.bannerImage;
       }
+      if (
+        success?.productWithProdAttributeMap &&
+        success?.productWithProdAttributeMap.length
+      ) {
+        this.attributeArr = success?.productWithProdAttributeMap.map(
+          (x) => x.attributeId
+        );
+      }
+
       this.productForm.patchValue(success);
       this.spinner.hide();
     });
@@ -211,6 +240,16 @@ export class ProductInfoFormComponent {
         console.error(error);
       };
     }
+  }
+  onAttrChange(ev: any) {
+    this.attributeArr = [];
+    console.log("ev", ev);
+    for (const item of ev) {
+      this.attributeArr.push(item.id);
+    }
+    this.attributeArr = [...this.attributeArr];
+
+    console.log("attr333333333333333333", this.attributeArr);
   }
   // getAllMasterData() {
   //   this.productService.getAllMasterData({}).subscribe((success: any) => {

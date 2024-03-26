@@ -10,15 +10,15 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },
-      name: {
+      sku: {
         type: DataTypes.STRING,
         allowNull: false,
       },
       price: {
         type: DataTypes.FLOAT,
         allowNull: false,
-        set(price) {
-          price ? this.setDataValue('price', price.toFixed(2)) : null
+        set(value) {
+          value ? this.setDataValue('price', value.toFixed(2)) : null
         },
       },
       qty: {
@@ -36,6 +36,11 @@ module.exports = (sequelize, DataTypes) => {
     Variant.hasMany(models.AttrVariantMap, {
       foreignKey: 'variantId',
       as: 'variantWithAttrVariantMap',
+      onDelete: 'CASCADE',
+    });
+    Variant.belongsTo(models.Product, {
+      foreignKey: 'productId',
+      as: 'variantWithProduct',
       onDelete: 'CASCADE',
     });
   };

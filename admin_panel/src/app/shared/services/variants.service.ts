@@ -1,11 +1,12 @@
-import { Injectable } from "@angular/core";
-import { ApiService } from "@core/services";
-import { map } from "rxjs";
+import { Injectable } from '@angular/core';
+import { ApiService } from '@core/services';
+import { map } from 'rxjs';
+
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root'
 })
-export class ProductService {
-  readonly BASE_URL = 'product'
+export class VariantsService {
+  readonly BASE_URL = 'variant'
 
   constructor(private http: ApiService) { }
 
@@ -23,6 +24,11 @@ export class ProductService {
       .put(this.BASE_URL + '/' + id, payload)
       .pipe(map((res: any) => res));
   }
+  updateAll(payload: any) {
+    return this.http
+      .put(this.BASE_URL + '/updateAll', payload)
+      .pipe(map((res: any) => res));
+  }
   delete(id: any) {
     return this.http
       .delete(this.BASE_URL + '/' + id)
@@ -33,11 +39,12 @@ export class ProductService {
       .get(this.BASE_URL + '/' + id)
       .pipe(map((res: any) => res));
   }
-  getProductAttributeById(id: any) {
+  getByProductId(id: any) {
     return this.http
-      .get(this.BASE_URL + '/product-attribute/' + id)
+      .get(this.BASE_URL + '/getByProductId/' + id)
       .pipe(map((res: any) => res));
   }
-  
-
+  getAllProductVariant(payload: any) {
+    return this.http.get(this.BASE_URL + '/getAllProductVariant', payload)
+  }
 }

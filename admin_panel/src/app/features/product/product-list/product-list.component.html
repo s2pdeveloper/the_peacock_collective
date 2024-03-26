@@ -54,9 +54,9 @@
             <tr class="table-secondary">
               <!-- <th scope="col">Image</th> -->
               <th scope="col" class="text-start">Product Name</th>
+              <th scope="col">Image</th>
               <th scope="col" >Product Code</th>
               <!-- <th scope="col">Description</th> -->
-              <th scope="col">Image</th>
               <th scope="col">GST Rate</th>
               <th scope="col">Category Name</th>
               <th scope="col">Status</th>
@@ -75,16 +75,17 @@
                   {{ p.name | titlecase }}</span
                 >
               </td>
+              <td scope="row" class="text-center"><img width="30" height="30" src={{p.bannerImage}} alt=""></td>
               <td scope="row">{{ p.hsn }}</td>
               <!-- <td scope="row" class="text-start">
                 <span placement="top" [ngbTooltip]="p.shortDescription">
                   {{ p.shortDescription }}</span
                 >
               </td> -->
-              <td scope="row" class="text-center"><img width="30" height="30" src={{p.bannerImage}} alt=""></td>
+            
               <td scope="row" class="text-center">{{ p.gst }}</td>
               <td scope="row">
-                {{ p.categoryId }}
+                {{ p?.productWithCategory?.name }}
               </td>
               <td scope="row" class="text-center">
                 <span
@@ -112,13 +113,20 @@
                 >
                   <i class="ti ti-trash"></i>
                 </button>
-                <!-- <button
+                <button
                   class="btn action-btn btn-sm mx-2"
-                  (click)="getProductById(p._id)"
-                  ngbTooltip="View"
+                  (click)="navigateTo('/default/product/product-image',p.id)"
+                  ngbTooltip="Images"
                 >
-                  <i class="fa-solid fa-eye"></i>
-                </button> -->
+                  <i class="fa-solid fa-image"></i>
+                </button>
+                <button
+                  class="btn action-btn btn-sm mx-2"
+                  (click)="navigateTo('/default/variant/variant-form',p.id)"
+                  ngbTooltip="variant"
+                >
+                <i class="fa-brands fa-vimeo-v"></i>
+                </button>
               </td>
             </tr>
           </tbody>

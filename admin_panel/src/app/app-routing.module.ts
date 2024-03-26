@@ -96,6 +96,20 @@ const routes: Routes = [
             (m) => m.VendorModule
           ),
       },
+      {
+        path: "variant",
+        loadChildren: () =>
+          import("./features/variants/variants.module").then(
+            (m) => m.VariantsModule
+          ),
+      },
+      {
+        path: "all-variants",
+        loadChildren: () =>
+          import("./features/all-product-variants/all-product-variants.module").then(
+            (m) => m.AllProductVariantsModule
+          ),
+      },
 
       {
         path: "customer",
@@ -168,6 +182,8 @@ const routes: Routes = [
             (m) => m.NewInvoiceModule
           ),
       },
+
+      
     ],
   },
 ];

@@ -113,7 +113,7 @@ const NavigationItems = [
         type: "item",
         classes: "nav-item",
         url: "/default/attribute",
-        icon: "fa-brands fa-product-hunt",
+        icon: "fa-brands fa-angular",
       },
       {
         id: "vendor",
@@ -123,6 +123,23 @@ const NavigationItems = [
         url: "/default/vendor",
         icon: "fa-solid fa-tag",
       },
+      {
+        id: "all-variants",
+        title: "All variants",
+        type: "item",
+        classes: "nav-item",
+        url: "/default/all-variants",
+        icon: "fa-solid fa-tag",
+      },
+      
+      // {
+      //   id: "variant",
+      //   title: "Variant",
+      //   type: "item",
+      //   classes: "nav-item",
+      //   url: "/default/variant",
+      //   icon: "fa-solid fa-tag",
+      // },
       // {
       //   id: "inventory",
       //   title: "Inventory",

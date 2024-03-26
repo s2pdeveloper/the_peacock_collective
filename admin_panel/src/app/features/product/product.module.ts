@@ -9,7 +9,8 @@ import { SharedModule } from "src/app/theme/shared/shared.module";
 import { NgImageSliderModule } from "ng-image-slider";
 import { ProductBulkUploadComponent } from "./product-bulk-upload/product-bulk-upload.component";
 import { UploadService } from "@shared/services/upload.service";
-import { ProductImageComponent } from './product-image/product-image.component';
+import { ProductImagesComponent } from './product-images/product-images.component';
+import { NgSelectModule } from "@ng-select/ng-select";
 const routes: Routes = [
   {
     path: "",
@@ -19,13 +20,14 @@ const routes: Routes = [
   { path: "product-list", component: ProductListComponent },
 
   { path: "product-form", component: ProductInfoFormComponent },
+  { path: "product-image", component: ProductImagesComponent },
 ];
 @NgModule({
   declarations: [
     ProductInfoFormComponent,
     ProductListComponent,
     ProductBulkUploadComponent,
-    ProductImageComponent,
+    ProductImagesComponent,
   ],
   imports: [
     CommonModule,
@@ -34,6 +36,7 @@ const routes: Routes = [
     NgImageSliderModule,
     CustomPaginationComponent,
     SharedModule,
+    NgSelectModule, 
     RouterModule.forChild(routes),
   ],
   providers: [UploadService],
