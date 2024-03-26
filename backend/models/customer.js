@@ -1,8 +1,8 @@
-const { OPTIONS, generateURl } = require('../config/options/global.options');
+const { OPTIONS, generateURl } = require("../config/options/global.options");
 
 module.exports = (sequelize, DataTypes) => {
   const Customer = sequelize.define(
-    'Customer',
+    "Customer",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -10,65 +10,73 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },
-      // userId: {
-      //   type: DataTypes.INTEGER,
-      //   allowNull: false,
-      //   references: {
-      //     model: 'User',
-      //     key: 'id',
-      //   },
+      // isDelete: {
+      //   type: DataTypes.BOOLEAN, // Corrected type
+      //   allowNull: true,
+      //   defaultValue: false, 
       // },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      mobile: {
-        type: DataTypes.BIGINT,
-        allowNull: false,
-      },
-      anotherMobile: {
-        type: DataTypes.BIGINT,
-        allowNull: true,
-      },
       email: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
       },
-      pinCode: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      },
-      city: {
+     
+      firstName: {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      state: {
+      lastName: {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      address: {
+      gender: {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      balance: {
-        type: DataTypes.DECIMAL(10, 2),
+      phone: {
+        type: DataTypes.STRING,
         allowNull: true,
-        defaultValue: 0,
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+
+      DOB: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
+
+      emailVerified: {
+        type: DataTypes.BOOLEAN, // Corrected type
+        allowNull: false,
+        defaultValue: false, 
+      },
+      phoneVerified: {
+        type: DataTypes.BOOLEAN, // Corrected type
+        allowNull: false,
+        defaultValue: false, 
+      },
+
+      status: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: "active",
+        enum: ["active", "inactive"],
       },
       image: {
         type: DataTypes.STRING(1324),
         allowNull: true,
         get() {
-          if (this.getDataValue('image'))
-            return generateURl(`customerImage/${this.getDataValue('image')}`);
+          if (this.getDataValue("image"))
+            return generateURl(`customerImage/${this.getDataValue("image")}`);
         },
       },
     },
     {
       timestamps: true,
-      tableName: 'Customer',
+      tableName: "Customer",
     }
   );
-  
+
   return Customer;
 };

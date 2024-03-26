@@ -15,12 +15,10 @@ const cartSchema = mongoose.Schema(
             enum: defaultStatus.getAllStatusAsArray(),
             default: defaultStatus.ACTIVE,
           },
-
         createdBy: {
             type: String,
             required: false,
         },
-
         modifiedBy: {
             type: String,
             required: false,

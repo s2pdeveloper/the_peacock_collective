@@ -42,12 +42,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   
-  Categories.associate = (models) => {
-    Categories.hasMany(models.Categories, {
-      foreignKey: 'parentId',
-      as: 'subcatagories',
-    });
+  // Categories.associate = (models) => {
+  //   Categories.hasMany(models.Categories, {
+  //     foreignKey: 'parentId',
+  //     as: 'subcatagories',
+  //   });
 
-  };
+  // };
   return Categories;
 };

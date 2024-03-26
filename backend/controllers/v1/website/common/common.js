@@ -240,48 +240,7 @@ const modelObj = {
 //   }),
 
 
-getAllCategory: asyncHandler(async(req,res)=>{
-    const {
-              page = 1,
-              pageSize = 10,
-              column = "createdAt",
-              direction = "DESC",
-              search = null,
-            } = req.query;
-        
-            console.log("your query",search);
-            let offset = (page - 1) * pageSize || 0;
-            let query = {
-              where: {
-                  ...(search && {
-                  [Op.or]: {
-                    name: { [Op.like]: `%${search}%` },
-                    description: { [Op.like]: `%${search}%`},
-                    // description: { [Op.iLike]: `%${search}%` },
-                  },
-               }),
-              },
-              order: [[column, direction]],
-              // attributes: {
-              //   exclude: ['userId'],
-              // },
-        
-              include: {
-                model: Categories,
-                as: 'subcatagories',
-                // attributes: ['id', 'name', 'mobile'],
-              },
-            //   offset: +offset,
-            //   limit: +pageSize,
-            };
-            let response = await Categories.findAndCountAll(query);
-        
-            return res
-              .status(resCode.HTTP_OK)
-              .json(generateResponse(resCode.HTTP_OK, response));
+}
 
-})
-
-};
 
 module.exports = modelObj;
