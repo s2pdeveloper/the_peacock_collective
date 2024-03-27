@@ -10,7 +10,7 @@ const app = require("express")();
 // const controller=require("./common")
 
 app.get(
-  "/category",
+  "/",
   //   authHandler.authenticateJWT(),
   //   rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
   //   validate("checkParamId"),

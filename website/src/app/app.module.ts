@@ -8,6 +8,9 @@ import { SharedModule } from './features/shared/shared.module';
 import { LandingLayoutModule } from './features/landing-layout/landing-layout.module';
 import { SafePipe } from './pipes/safe.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor } from './core/services';
 
 @NgModule({
   declarations: [
@@ -20,13 +23,26 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NgbModule,
     SharedModule,
     LandingLayoutModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    ToastrModule.forRoot({
+      timeOut: 3000, // Time to close the toaster (in milliseconds)
+      positionClass: "toast-top-right", // Toast position
+      closeButton: true, // Show close button
+      progressBar: true, // Show progress bar
+    }),
   ],
-  exports:[
+  exports: [
     SafePipe
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
