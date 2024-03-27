@@ -67,6 +67,9 @@
                 <button class="btn btn-sm action-btn" (click)="open(c.id, deleteModal)" ngbTooltip="Delete">
                   <i class="ti ti-trash"></i>
                 </button>
+                <button class="btn btn-sm action-btn" (click)="subCatagory(c)" ngbTooltip="Add Subcategory">
+                  <i class="ti ti-plus"></i>
+                </button>
               </td>
               <ng-template #deleteModal let-modal>
                 <div class="modal-header border-0">

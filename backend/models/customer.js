@@ -10,11 +10,11 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },
-      // isDelete: {
-      //   type: DataTypes.BOOLEAN, // Corrected type
-      //   allowNull: true,
-      //   defaultValue: false, 
-      // },
+      isDelete: {
+        type: DataTypes.BOOLEAN, // Corrected type
+        allowNull: true,
+        defaultValue: false, 
+      },
       email: {
         type: DataTypes.STRING,
         allowNull: false,

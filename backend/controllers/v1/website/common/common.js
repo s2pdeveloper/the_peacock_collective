@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const { Product, ProdAttributeMap,Attribute,Categories } = require("../../../../models");
+const { Product, ProdAttributeMap, Attribute, Categories, Variant } = require("../../../../models");
 const {
   OPTIONS,
   generateResponse,
@@ -16,38 +16,37 @@ const {
 } = require("../../../../config/middlewares/async.handler");
 const cloudinary = require("../../../../shared/service/cloudinary.service");
 
-const modelObj = {
-//   create: asyncHandler(async (req, res) => {
-//     let checkExisting = await Model.findOne({
-//       where: {
-//         name:req.body.name ,
-//       },
-//     });
-//     if (checkExisting) {
-//       let message = MESSAGES.apiErrorStrings.Data_EXISTS("Product");
-//       throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
-//     }
-//     if (req.file) {
-//       req.body.bannerImage = await cloudinary.uploadFromBuffer(req.file.buffer);
-//     }
-//     let createObj = await generateCreateData(new Model(), req.body);
 
-//     let product = await createObj.save();
-//     if (req.body?.attributeArr) {
-//       req.body.attributeArr = JSON.parse(req.body.attributeArr);
-//       console.log("req.body.attributeArr len", req.body.attributeArr.length);
-//       if (req.body.attributeArr.length) {
-//         let payloadMap = req.body.attributeArr.map(x => {
-//           return {
-//             attributeId: x.id,
-//             productId: product.id
-//           }
-//         })
+module.exports.getAllCategory = asyncHandler(async (req, res) => {
 
-//         await ProdAttributeMap.bulkCreate(payloadMap);
+  let query = {
+    where: {
+      parentId: null
+    },
+    order: [[column, direction]],
+    include: {
+      model: Categories,
+      as: 'subcatagories',
+    },
+  };
 
-//       }
-//     }
+  const promissArr = [
+    Categories.findAll(query),
+    Product.findAll({}),
+    Attribute.findAll({}),
+    Variant.findAll({}),
+  ]
+  Promise.all(promissArr).then((values) => {
+    const result = {
+      categories: values[0],
+      products: values[1],
+      attributes: values[2],
+      variants: values[3],
+    }
+    return res
+      .status(resCode.HTTP_OK)
+      .json(generateResponse(resCode.HTTP_OK, result));
+  });
 
 //     return res.status(resCode.HTTP_OK).json(
 //       generateResponse(resCode.HTTP_OK, {
@@ -243,4 +242,3 @@ const modelObj = {
 }
 
 
-module.exports = modelObj;

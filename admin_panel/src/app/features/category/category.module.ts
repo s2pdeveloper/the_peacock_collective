@@ -9,6 +9,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { ToastrModule } from "ngx-toastr";
 import { CustomPaginationComponent } from "@core/components/custom-pagination/custom-pagination.component";
 import { NgbTooltipModule } from "@ng-bootstrap/ng-bootstrap";
+import { SubcategoryListComponent } from './subcategory-list/subcategory-list.component';
 const routes: Routes = [
   {
     path: "",
@@ -20,7 +21,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [CategoryFormComponent, CategoryListComponent],
+  declarations: [CategoryFormComponent, CategoryListComponent, SubcategoryListComponent],
   imports: [
     CommonModule,
     FormsModule,

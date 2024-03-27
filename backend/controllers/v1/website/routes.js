@@ -15,6 +15,10 @@ router.use('/category',category);
 // router.use('/common',common);
 router.use('/cart',cart);
 router.use('/customer',customer)
+// router.use('/product',product);
+// router.use('/category',category);
+router.use('/common',common);
+// router.use('/order',order)
 
 
 module.exports = router;
