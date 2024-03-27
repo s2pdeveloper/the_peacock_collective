@@ -40,12 +40,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-
       DOB: {
         type: DataTypes.DATE,
         allowNull: true,
       },
-
       emailVerified: {
         type: DataTypes.BOOLEAN, // Corrected type
         allowNull: false,
@@ -77,6 +75,5 @@ module.exports = (sequelize, DataTypes) => {
       tableName: "Customer",
     }
   );
-
   return Customer;
 };
