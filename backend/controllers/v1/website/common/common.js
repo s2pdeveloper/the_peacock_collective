@@ -14,27 +14,37 @@ const ApiError = require("../../../../config/middlewares/api.error");
 const {
   asyncHandler,
 } = require("../../../../config/middlewares/async.handler");
-const cloudinary = require("../../../../shared/service/cloudinary.service");
 
 
 module.exports.getAllCategory = asyncHandler(async (req, res) => {
 
-  let query = {
+  let column = "createdAt";
+  let direction = "ASC";
+
+  let categoryQuery = {
     where: {
       parentId: null
     },
-    order: [[column, direction]],
     include: {
       model: Categories,
       as: 'subcatagories',
     },
+    order: [[column, direction]],
+  };
+  let variantQuery = {
+    where: {
+      price: {
+        [Op.gte]: 1,
+      },
+    },
+    order: [[column, direction]],
   };
 
   const promissArr = [
-    Categories.findAll(query),
+    Categories.findAll(categoryQuery),
     Product.findAll({}),
     Attribute.findAll({}),
-    Variant.findAll({}),
+    Variant.findAll(variantQuery),
   ]
   Promise.all(promissArr).then((values) => {
     const result = {
@@ -46,6 +56,8 @@ module.exports.getAllCategory = asyncHandler(async (req, res) => {
     return res
       .status(resCode.HTTP_OK)
       .json(generateResponse(resCode.HTTP_OK, result));
+  }).catch(err => {
+    throw new ApiError('Internal Server Error', resCode.HTTP_INTERNAL_SERVER_ERROR);
   });
 
 
