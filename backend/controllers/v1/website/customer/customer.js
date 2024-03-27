@@ -18,6 +18,7 @@ const cloudinary = require("../../../../shared/service/cloudinary.service");
 
 const modelObj = {
   create: asyncHandler(async (req, res) => {
+    console.log("your hit the create customer with",req.body)
     let checkExisting = await Model.findOne({
       where: {
         email:req.body.email ,
@@ -52,8 +53,8 @@ const modelObj = {
       where: {
           ...(search && {
           [Op.or]: {
-            name: { [Op.like]: `%${search}%` },
-            description: { [Op.like]: `%${search}%`},
+            email: { [Op.like]: `%${search}%` },
+            // description: { [Op.like]: `%${search}%`},
             // description: { [Op.iLike]: `%${search}%` },
           },
        }),
@@ -62,17 +63,17 @@ const modelObj = {
       // attributes: {
       //   exclude: ['userId'],
       // },
-      include: {
-        model: ProdAttributeMap,
-        as: 'productWithProdAttributeMap',
-        paranoid: true, required: false,
-        // attributes: ['id', 'name', 'mobile'],
-      },
-      include: {
-        model: Categories,
-        as: 'productWithCategory',
-        // attributes: ['id', 'name', 'mobile'],
-      },
+      // include: {
+      //   model: ProdAttributeMap,
+      //   as: 'productWithProdAttributeMap',
+      //   paranoid: true, required: false,
+      //   // attributes: ['id', 'name', 'mobile'],
+      // },
+      // include: {
+      //   model: Categories,
+      //   as: 'productWithCategory',
+      //   // attributes: ['id', 'name', 'mobile'],
+      // },
       offset: +offset,
       limit: +pageSize,
     };
@@ -87,36 +88,17 @@ const modelObj = {
       where: {
         id: req.params.id,
       },
-      include:[ {
-        model: ProdAttributeMap,
-        as: 'productWithProdAttributeMap',
-        // attributes: ['id', 'title', 'course_id', 'start_date', 'end_date']
-        paranoid: true, required: false,
-
-        include: {
-          model: Attribute,
-          as: 'ProdAttributeMapWithAttributes',
-          // attributes: ['id', 'title', 'course_id', 'start_date', 'end_date']
-          // paranoid: true, required: false
-        },
-      },
-      { 
-          model: Categories,
-          as: 'productWithCategory',
-          // attributes: ['id', 'title', 'course_id', 'start_date', 'end_date']
-          // paranoid: true, required: false
-        
-      }
-    ]
     });
+
     if (!existing) {
-      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Product");
+      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("User");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
     return res
       .status(resCode.HTTP_OK)
       .json(generateResponse(resCode.HTTP_OK, existing));
   }),
+
   update: asyncHandler(async (req, res) => {
     let itemDetails = await Model.findOne({
       where: {
@@ -124,7 +106,6 @@ const modelObj = {
       },
 
     });
-
 
     if (req.body?.attributeArr) {
       req.body.attributeArr = JSON.parse(req.body.attributeArr);
@@ -142,9 +123,7 @@ const modelObj = {
             productId: req.params.id
           }
         })
-        await ProdAttributeMap.bulkCreate(payloadMap);
-      
-   
+        await ProdAttributeMap.bulkCreate(payloadMap);  
     }
 
     if (!itemDetails) {
@@ -168,6 +147,8 @@ const modelObj = {
       );
     }
   }),
+
+
   delete: asyncHandler(async (req, res) => {
     let query = {
       where: {
@@ -175,29 +156,25 @@ const modelObj = {
       },
     };
     let item = await Model.findOne(query);
-    if (item && item?.bannerImage) {
-      await cloudinary.deleteFile(item.bannerImage);
+    if(!item){
+      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("User");
+          throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
+    }
+    if (item && item?.profileImage) {
+      await cloudinary.deleteFile(item.profileImage);
     }
 
     let deletedItem = await Model.destroy(query);
-    if (deletedItem) {
-      let deleteQuery = {
-        where: {
-          productId: req.params.id,
-        },
-      }
-      await ProdAttributeMap.destroy(deleteQuery);
-
       return res.json(
         generateResponse(resCode.HTTP_OK, {
-          message: MESSAGES.apiSuccessStrings.DELETED("Product"),
+          message: MESSAGES.apiSuccessStrings.DELETED("User"),
         })
       );
-    } else {
-      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Product");
-      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
-    }
+ 
   }),
+
+
+
   getProductAttribute: asyncHandler(async (req, res) => {
     let existing = await ProdAttributeMap.findAll({
       where: {

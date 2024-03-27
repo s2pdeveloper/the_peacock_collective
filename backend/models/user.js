@@ -16,10 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      // shopName: {
-      //   type: DataTypes.STRING,
-      //   allowNull: false,
-      // },
+      
       name: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -108,13 +105,14 @@ module.exports = (sequelize, DataTypes) => {
   User.prototype.generateHash = function (password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8));
   };
+
   User.prototype.validPassword = function (password) {
     return bcrypt.compareSync(password, this.password);
   };
+
   User.prototype.genToken = function () {
     const payload = { id: this.id, role: this.role };
     return jwt.sign(payload, process.env.JWT_SECRET_KEY);
   };
-
   return User;
 };

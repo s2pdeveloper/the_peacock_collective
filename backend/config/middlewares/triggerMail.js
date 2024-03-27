@@ -34,24 +34,26 @@ let readHTMLFile = (path, callback) => {
 
 exports.sendForgetMail = (req, data) => {
   let mailOptions = {
-    from: `S2P ${process.env.EMAIL_SEND_ID}`,
+    from: `${process.env.EMAIL_SEND_ID}`,
     to: null,
-    subject: null,
+    subject: data.subject,
     text: null,
     html: null,
-    attachments: null,
+    attachments:null,
   };
-  readHTMLFile('templates/forget-pwd.html', async (err, html) => {
+  console.log("you hit the sendforgetMail",data);
+  readHTMLFile(`${__dirname}/../../models/helpers/templates/${data.template}`, async (err, html) => {
     let template = handlebars.compile(html);
     let replacements = data;
     mailOptions.html = template(replacements);
-    mailOptions.subject = 'Forget Password';
+    // mailOptions.subject = 'Forget Password';
     mailOptions.to = data.email;
     triggerMail(mailOptions);
   });
 };
 
 const triggerMail = (mailOptions) => {
+  console.log("last point of sending email",mailOptions);
   transporter.sendMail(mailOptions, (err, info) => {
     if (err) {
       console.log(err);

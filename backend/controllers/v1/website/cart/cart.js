@@ -68,7 +68,7 @@ const modelObj = {
       order: [[column, direction]],
       include: {
         model: Variant,
-        as: 'variant',
+        as: 'cartWithVariants',
         // paranoid: true, required: false,
          attributes: ['price','qty'],
       },

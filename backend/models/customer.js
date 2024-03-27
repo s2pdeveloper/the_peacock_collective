@@ -1,8 +1,8 @@
-const { OPTIONS, generateURl } = require("../config/options/global.options");
 
+const { OPTIONS, generateURl } = require('../config/options/global.options');
 module.exports = (sequelize, DataTypes) => {
   const Customer = sequelize.define(
-    "Customer",
+    'Customer',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -72,8 +72,19 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       timestamps: true,
-      tableName: "Customer",
+      tableName: 'Customer',
     }
   );
+  Customer.prototype.generateHash = function (password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8));
+  };
+
+  Customer.prototype.validPassword = function (password) {
+    return bcrypt.compareSync(password, this.password);
+  };
+  Customer.prototype.genToken = function () {
+    const payload = { id: this.id, role: this.role };
+    return jwt.sign(payload, process.env.JWT_SECRET_KEY);
+  };
   return Customer;
-};
+}

@@ -1,8 +1,8 @@
-const { OPTIONS, generateURl } = require('../config/options/global.options');
+const { OPTIONS, generateURl } = require("../config/options/global.options");
 
 module.exports = (sequelize, DataTypes) => {
   const Categories = sequelize.define(
-    'Categories',
+    "Categories",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -31,34 +31,27 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(1324),
         allowNull: true,
         get() {
-          if (this.getDataValue('image'))
-            return generateURl(this.getDataValue('image'));
+          if (this.getDataValue("image"))
+            return generateURl(this.getDataValue("image"));
         },
       },
     },
     {
       timestamps: true,
-      tableName: 'Categories',
+      tableName: "Categories",
     }
   );
-  
-  // Categories.associate = (models) => {
-  //   Categories.hasMany(models.Categories, {
-  //     foreignKey: 'parentId',
-  //     as: 'subcatagories',
-  //   });
 
   Categories.associate = (models) => {
     Categories.hasMany(models.Categories, {
-      foreignKey: 'parentId',
-      as: 'subcatagories',
+      foreignKey: "parentId",
+      as: "subcatagories",
     });
     Categories.belongsTo(models.Categories, {
-      foreignKey: 'parentId',
-      as: 'categories',
+      foreignKey: "parentId",
+      as: "categories",
     });
-
-  // };
+  };
   return Categories;
-}
-}
+
+};

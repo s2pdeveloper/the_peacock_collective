@@ -1,56 +1,57 @@
 const app = require("express")();
 const authHandler = require("../../../../config/middlewares/auth.middleware");
 const {
-  rolePermit,
-  validate,
+  // rolePermit,
+  // validate,
 } = require("../../../../config/middlewares/utils");
 
 const roles = require("../../../../config/options/global.options").OPTIONS;
-const user = require("./user");
+const controller = require("./user");
 
 app.get(
   "/",
   // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN),
-  user.getAllUsers
+  controller.getAllUsers
 );
+app.post("/",controller.create);
 app.put(
   "/:id",
   // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.EMPLOYEE),
   // validate("updateProfile"),
-  user.updateProfile
+  controller.updateProfile
 );
 
-app.post("/signup", user.create);
-app.post("/login", validate("login"), user.login);
+app.post("/signup", controller.create);
+app.post("/login", controller.login);
 
 app.get(
   "/profile",
   // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.EMPLOYEE),
-  user.getProfile
+  controller.getProfile
 );
-app.post("/reset-password", user.resetPassword);
-app.post("/forgot-password", user.forgetPassword);
-app.post("/set-password", user.setPassword);
+app.post("/resetPassword", controller.resetPassword);
+app.post("/forgotPassword", controller.forgetPassword);
+app.post("/setPassword", controller.setPassword);
 
-app.post("/send-token", user.sendToken);
-app.post("/verify-token", user.verifyToken);
-app.put("/change-status", authHandler.authenticateJWT(), user.changeStatus);
+app.post("/send-token", controller.sendToken);
+app.post("/verify-token", controller.verifyToken);
+app.put("/change-status", authHandler.authenticateJWT(), controller.changeStatus);
 
 app.delete(
   "/:id",
   // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN),
   // validate("checkParamId"),
-  user.delete
+  controller.delete
 );
 app.post(
   "/createAndUpdateUserDevice",
-  authHandler.authenticateJWT(),
-  rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.EMPLOYEE),
-  user.createAndUpdateUserDevice
+  // authHandler.authenticateJWT(),
+  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.EMPLOYEE),
+  controller.createAndUpdateUserDevice
 );
 
 module.exports = app;

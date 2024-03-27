@@ -10,10 +10,6 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },
-
-     
-      
-
       qty: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -23,7 +19,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
-   
     },
     {
       timestamps: true,
@@ -34,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
   Cart.associate = (models) => {
     Cart.belongsTo(models.Variant, {
       foreignKey: 'variantId',
-      as: 'variant',
+      as: 'cartWithVariants',
       onDelete: 'CASCADE',
     });
   };

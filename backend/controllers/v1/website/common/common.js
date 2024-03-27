@@ -240,5 +240,5 @@ module.exports.getAllCategory = asyncHandler(async (req, res) => {
 
 
 }
-
+)
 

@@ -47,7 +47,10 @@ fs.readdirSync(__dirname)
       sequelize,
       Sequelize.DataTypes
     );
+    // console.log("model==================>",model?.name);
+    if (model?.name) {
     db[model.name] = model;
+    }
   });
 
 for (let i = Object.keys(db).length - 1; i >= 0; i--) {
