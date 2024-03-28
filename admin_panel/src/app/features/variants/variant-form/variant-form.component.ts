@@ -202,8 +202,6 @@ export class VariantFormComponent {
   }
 
   variantEvent(data: { action: string, data: any }) {
-    console.log("datadata", data.data);
-
     switch (data.action) {
       case "EDIT":
         if (data.data.id) {
@@ -217,15 +215,10 @@ export class VariantFormComponent {
           }
         }
         this.variantForm.patchValue(data.data);
-        console.log("this.variantForm", this.variantForm.value);
-
-        // this.getDataById(data.id);
         break;
       case "DELETE":
-        // this.variantList = this.variantList.filter((x) => x.id !== data.id);
         this.delete(data.data.id)
         break;
-
       default:
         break;
     }
