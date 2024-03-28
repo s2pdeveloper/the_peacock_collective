@@ -63,9 +63,15 @@ export class CategoryFormComponent {
   ];
 
   ngOnInit(): void {
-    this.getAllMasterData();
     this.activated.queryParams.subscribe((params: any) => {
+      if (params?.parendId) {
+        this.getAllMasterData(false);
+        this.categoryForm.controls.parentId.setValue(params?.parendId);
+        console.log("this.categoryForm", this.categoryForm.value);
+
+      }
       if (params.id) {
+        this.getAllMasterData(true);
         this.getDataById(params.id);
         this.categoryId = params.id;
       }
@@ -179,8 +185,8 @@ export class CategoryFormComponent {
     window.open(url, "_blank");
   }
 
-  getAllMasterData() {
-    this.categoryService.getAll({ catagory: true }).subscribe((success: any) => {
+  getAllMasterData(category) {
+    this.categoryService.getAll({ category: category }).subscribe((success: any) => {
       console.log("success", success);
       this.parentIdArr = success.rows
       // if (success?.length) {
@@ -193,5 +199,19 @@ export class CategoryFormComponent {
       // }
 
     });
+  }
+  customEventHandler(ev) {
+    switch (ev.action) {
+      case 'EDIT':
+        if (ev.data.image) {
+          this.url = ev.data.image;
+        }
+        this.categoryForm.patchValue(ev.data);
+        break;
+
+      default:
+        break;
+    }
+
   }
 }

@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      set(value) {
+        value ? this.setDataValue('name', value.trim()) : null
+      },
     },
     description: {
       type: DataTypes.STRING,
@@ -21,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     gst: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: true,
     },
     inStock: {

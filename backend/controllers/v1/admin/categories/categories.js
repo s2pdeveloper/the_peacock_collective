@@ -40,7 +40,7 @@ const modelObj = {
       })
     );
   }),
-  
+
   getAll: asyncHandler(async (req, res) => {
     const {
       page = 1,
@@ -48,8 +48,10 @@ const modelObj = {
       column = 'createdAt',
       direction = 'DESC',
       search = null,
-      catagory = false
+      category = false,
+      parentId = null
     } = req.query;
+    console.log("catagorycatagorycatagory", category);
     let offset = (page - 1) * pageSize || 0;
     let query = {
       where: {
@@ -59,11 +61,20 @@ const modelObj = {
             description: { [Op.like]: search },
           },
         }),
-        ...(catagory && {
+        ...(!category && {
           parentId: {
             [Op.ne]: null
           }
+        }),
+        ...(category && {
+          parentId: {
+            [Op.eq]: null
+          }
+        }),
+        ...(parentId && {
+          parentId: parentId
         })
+
 
       },
       order: [[column, direction]],

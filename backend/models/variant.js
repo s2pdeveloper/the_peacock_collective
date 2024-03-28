@@ -44,6 +44,8 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
     });
   };
+
+  
   // Variant.associate = (models) => {
   //   Variant.hasMany(models.AttrVariantMap, {
   //     foreignKey: 'variantId',

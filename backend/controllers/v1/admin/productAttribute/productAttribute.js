@@ -33,7 +33,7 @@ const modelObj = {
     // if (req.file) {
     //   req.body.image = await cloudinary.uploadFromBuffer(req.file.buffer);
     //   console.log(req.body);
-    // } 
+    // }
 
     let createObj = await generateCreateData(new Model(), req.body);
     await createObj.save();
@@ -78,9 +78,9 @@ const modelObj = {
         id: req.params.id,
       },
     });
-
     if (!existing) {
-      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("productAttribute");
+      let errors =
+        MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("productAttribute");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
     return res
@@ -95,15 +95,10 @@ const modelObj = {
       },
     });
     if (!itemDetails) {
-      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("productAttribute");
+      let errors =
+        MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("productAttribute");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
-    // if(req.file){
-    //   console.log('itemDetails.image',itemDetails.image);
-    //  await  cloudinary.deleteFile(itemDetails.image);
-    //  req.body.image = await cloudinary.uploadFromBuffer(req.file.buffer);
-    //   console.log(req.body);
-    // }
     itemDetails = await generateCreateData(itemDetails, req.body);
     await itemDetails.save();
     return res.json(
@@ -112,6 +107,7 @@ const modelObj = {
       })
     );
   }),
+
   delete: asyncHandler(async (req, res) => {
     let query = {
       where: {
@@ -119,9 +115,7 @@ const modelObj = {
       },
     };
     let existing = await Model.findOne(query);
-    // let deletedItem = await Model.destroy(query);
     if (existing) {
-    //   await  cloudinary.deleteFile(existing.image);
       await Model.destroy(query);
       return res.json(
         generateResponse(resCode.HTTP_OK, {
@@ -129,7 +123,8 @@ const modelObj = {
         })
       );
     } else {
-      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("productAttribute");
+      let errors =
+        MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("productAttribute");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
   }),

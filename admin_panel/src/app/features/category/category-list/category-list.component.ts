@@ -44,6 +44,7 @@ export class CategoryListComponent {
       queryParams: { id: category.id },
     });
   }
+
   onChangePage(pageNo) {
     if (pageNo > 0) {
       this.page = pageNo;
@@ -59,6 +60,11 @@ export class CategoryListComponent {
       ? this.getAll()
       : null;
   }
+  subCatagory(catagory) {
+    this.router.navigate(["/default/category/category-form"], {
+      queryParams: { parendId: catagory.id },
+    });
+  }
 
   getAll() {
     this.spinner.show();
@@ -66,6 +72,7 @@ export class CategoryListComponent {
       page: this.page,
       pageSize: this.pageSize,
       search: this.search,
+      category: true
     };
     this.categoryService.getAll(params).subscribe((success: any) => {
       this.spinner.hide();

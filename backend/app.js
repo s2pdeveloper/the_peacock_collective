@@ -11,7 +11,6 @@ const _ = require('lodash');
 let fs = require('fs');
 const utils = require('./config/middlewares/utils');
 const indexRouter = require('./controllers/index');
-
 global._ = lodash;
 const app = express();
 app.use(cors('*'));
@@ -20,7 +19,7 @@ app.use(compression());
 app.use(logger('dev'));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.json({ limit: '50mb' }));
-utils.onStartServerDataInsert()
+// utils.onStartServerDataInsert()
 
 /**
  * Start Express server.
