@@ -9,9 +9,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
 import { CustomPaginationComponent } from './components/custom-pagination/custom-pagination.component';
 import { register } from 'swiper/element/bundle';
+import { TagProductPipe } from 'src/app/pipes/tag-product.pipe';
+import { TagCategoryPipe } from 'src/app/pipes/tag-category.pipe';
+import { HomeProductPipe } from 'src/app/pipes/home-product.pipe';
 register();
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, TopbarComponent, HeaderModalComponent, CustomPaginationComponent],
+  declarations: [HeaderComponent, FooterComponent, TopbarComponent, HeaderModalComponent, CustomPaginationComponent,TagProductPipe,TagCategoryPipe],
   imports: [CommonModule, NgbModule,FormsModule,ReactiveFormsModule,NgbPaginationModule],
   exports: [HeaderComponent, FooterComponent, TopbarComponent,CustomPaginationComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]

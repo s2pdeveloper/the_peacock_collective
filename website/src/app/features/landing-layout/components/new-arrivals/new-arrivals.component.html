@@ -1,7 +1,7 @@
 <div class="container-fluid py-5">
   <div class="row">
     <div class="col-12 py-4 d-flex justify-content-center">
-      <p class="section-heading">The Bridal Edit</p>
+      <p class="section-heading">{{commonService?.allData?.categories[0]?.name}}</p>
     </div>
     <div class="col-12 product large-list">
       <div class="row product-row">
@@ -11,8 +11,8 @@
               <swiper-slide
                 class="px-2 prod-cart"
                 (click)="navigateTo('/product/product-details')"
-                *ngFor="let p of products"
-                ><img class="img-fluid w-100" [src]="p?.img" />
+                *ngFor="let p of commonService.allData.products | homeProduct : commonService?.allData?.categories[0]"
+                ><img class="img-fluid w-100" [src]="p?.bannerImage" />
                 <div class="text-box p-3">
                   <div class="d-flex justify-content-between">
                     <p class="cat-name">{{ p?.catName }}</p>
@@ -33,8 +33,8 @@
         <div class="col-12 product-column">
           <div class="card border-0">
             <swiper-container class="img-box" slides-per-view="3">
-              <swiper-slide class="px-2 prod-cart" *ngFor="let p of products"
-                ><img class="img-fluid w-100" [src]="p?.img" />
+              <swiper-slide class="px-2 prod-cart" *ngFor="let p of commonService.allData.products"
+                ><img class="img-fluid w-100" [src]="p?.bannerImage" />
                 <div class="text-box p-3">
                   <div class="d-flex justify-content-between">
                     <p class="cat-name">{{ p?.catName }}</p>
@@ -55,8 +55,8 @@
         <div class="col-12 product-column">
           <div class="card border-0">
             <swiper-container class="img-box" slides-per-view="2">
-              <swiper-slide class="px-2 prod-cart" *ngFor="let p of products"
-                ><img class="img-fluid w-100" [src]="p?.img" />
+              <swiper-slide class="px-2 prod-cart" *ngFor="let p of commonService.allData.products"
+                ><img class="img-fluid w-100" [src]="p?.bannerImage">
                 <div class="text-box p-3">
                   <div class="d-flex justify-content-between">
                     <p class="cat-name">{{ p?.catName }}</p>

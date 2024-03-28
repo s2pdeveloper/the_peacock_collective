@@ -98,6 +98,11 @@ module.exports = (sequelize, DataTypes) => {
       as: 'productWithProdAttributeMap',
       onDelete: 'CASCADE',
     });
+    Product.hasMany(models.ProdTagMap, {
+      foreignKey: 'productId',
+      as: 'productWithTagMap',
+      onDelete: 'CASCADE',
+    });
   };
   return Product;
 };

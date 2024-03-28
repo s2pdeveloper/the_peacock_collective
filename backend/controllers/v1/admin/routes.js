@@ -13,6 +13,7 @@ const vendorRoutes = require("./vendor/routes");
 const variantRoutes = require("./variant/routes");
 const productAttributeRoutes = require("./productAttribute/router");
 const AttrVariantMap = require("./AttrVariantMap/routes");
+const tagsRoutes = require("./tag/routes");
 
 router.use('/user', userRoutes);
 router.use('/productImages', productImageRoutes);
@@ -26,6 +27,7 @@ router.use('/vendor', vendorRoutes);
 router.use('/variant', variantRoutes);
 router.use('/productAttribute', productAttributeRoutes);
 router.use('/AttrVariantMap', AttrVariantMap);
+router.use('/tag', tagsRoutes);
 
 
 module.exports = router;
