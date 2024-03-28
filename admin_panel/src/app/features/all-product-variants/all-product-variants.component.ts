@@ -94,21 +94,4 @@ export class AllProductVariantsComponent {
       ? this.getAllProductVariant()
       : null;
   }
-  qtyChange(data: any) {
-    console.log("data", data);
-    let index = this.variants.map((x) => x.id).indexOf(data.id);
-    let balQty = this.variants.find((x) => x.id === data.id)?.qty;
-    if (balQty < data.qty) {
-      this.toastService.warning(
-        "Enter quantity is greater quantity than balanced quantity"
-      );
-    }
-    this.variants[index].qty = Number(data.qty);
-  }
-  priceChange(data: any) {
-    console.log("data", data);
-    let index = this.variants.map((x) => x.id).indexOf(data.id);
-    let price = this.variants.find((x) => x.id === data.id)?.price;
-    this.variants[index].price = Number(data.price);
-  }
 }

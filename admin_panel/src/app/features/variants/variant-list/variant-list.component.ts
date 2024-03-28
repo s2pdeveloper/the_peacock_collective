@@ -39,12 +39,12 @@ export class VariantListComponent {
       this.router.navigate([page]);
     }
   }
-  update(data: any, index) {
+  update(data: any) {
     // data.id = data.id ? data.id : index;
     this.customEvent.emit({ action: "EDIT", data: data });
   }
 
-  open(s: any, content: any, index) {
+  open(s: any, content: any) {
     // s.id = s.id ? s.id : index;
     this.selectedRow = s;
     this.modalService.open(content, { centered: true });
