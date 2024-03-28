@@ -1,8 +1,10 @@
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const { OPTIONS, generateURl } = require("../config/options/global.options");
 
-const { OPTIONS, generateURl } = require('../config/options/global.options');
 module.exports = (sequelize, DataTypes) => {
   const Customer = sequelize.define(
-    'Customer',
+    "Customer",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -13,13 +15,13 @@ module.exports = (sequelize, DataTypes) => {
       isDelete: {
         type: DataTypes.BOOLEAN, // Corrected type
         allowNull: true,
-        defaultValue: false, 
+        defaultValue: false,
       },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-     
+
       firstName: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -47,12 +49,12 @@ module.exports = (sequelize, DataTypes) => {
       emailVerified: {
         type: DataTypes.BOOLEAN, // Corrected type
         allowNull: false,
-        defaultValue: false, 
+        defaultValue: false,
       },
       phoneVerified: {
         type: DataTypes.BOOLEAN, // Corrected type
         allowNull: false,
-        defaultValue: false, 
+        defaultValue: false,
       },
 
       status: {
@@ -61,7 +63,18 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: "active",
         enum: ["active", "inactive"],
       },
-      image: {
+
+      lastLoginAt: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
+
+      resetPin: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+
+      profileImage: {
         type: DataTypes.STRING(1324),
         allowNull: true,
         get() {
@@ -72,13 +85,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       timestamps: true,
-      tableName: 'Customer',
+      tableName: "Customer",
     }
   );
   Customer.prototype.generateHash = function (password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8));
   };
-
   Customer.prototype.validPassword = function (password) {
     return bcrypt.compareSync(password, this.password);
   };
@@ -87,4 +99,4 @@ module.exports = (sequelize, DataTypes) => {
     return jwt.sign(payload, process.env.JWT_SECRET_KEY);
   };
   return Customer;
-}
+};

@@ -6,15 +6,9 @@ const {
   rolePermit,
 } = require("../../../../config/middlewares/utils");
 const roles = require("../../../../config/options/global.options").OPTIONS;
-
 const controller=require('./customer')
 
-// app.get(
-//   '/getAll',
-//   authHandler.authenticateJWT(),
-//   rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
-//   controller.getAll
-// );
+
 
 
 app.get("/", controller.getAll);
@@ -28,13 +22,6 @@ app.post(
   controller.create
 );
 
-// app.get(
-//   "product-attribute/:id",
-//   // authHandler.authenticateJWT(),
-//   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
-//   // validate("checkParamId"),
-//   controller.getProductAttribute
-// );
 app.get(
   "/:id",
   // authHandler.authenticateJWT(),
@@ -51,13 +38,61 @@ app.delete(
   controller.delete
 );
 
-// app.put(
-//   "/:id",
-//   // authHandler.authenticateJWT(),
-//   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
-//   upload.single("image"),
-//   // validate("updateCustomer"),
-//   controller.update
-// );
+app.get(
+  "/verifyEmail/:id",
+  // authHandler.authenticateJWT(),
+  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  // upload.single("image"),
+  // validate("updateCustomer"),
+  controller.verifyEmail
+);
+
+app.put(
+  "/updatePassword",
+  // authHandler.authenticateJWT(),
+  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  // upload.single("image"),
+  // validate("updateCustomer"),
+  controller.updatePassword
+);
+
+
+app.put(
+  "/forgetPassword",
+  // authHandler.authenticateJWT(),
+  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  // upload.single("image"),
+  // validate("updateCustomer"),
+  controller.forgetPassword
+);
+
+
+app.post(
+  "/gotoCheck",
+  // authHandler.authenticateJWT(),
+  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  (req,res,next)=>{
+  console.log("You are comming here")
+  next();
+  },
+  controller.gotoCheck
+);
+
+
+app.put(
+  "/:id",
+  // authHandler.authenticateJWT(),
+  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  // upload.single("image"),
+  // validate("updateCustomer"),
+  controller.update
+);
+
+
+
+
+
+
+app.post('/login',controller.login);
 
 module.exports = app;
