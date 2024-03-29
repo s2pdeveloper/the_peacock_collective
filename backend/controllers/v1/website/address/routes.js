@@ -34,30 +34,39 @@ app.post(
 //   // validate("checkParamId"),
 //   controller.getProductAttribute
 // );
-// app.get(
-//   "/:id",
-//   // authHandler.authenticateJWT(),
-//   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
-//   // validate("checkParamId"),
-//   controller.getById
-// );
 
-// app.delete(
-//   "/:id",
-//   // authHandler.authenticateJWT(),
-//   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
-//   // validate("checkParamId"),
-//   controller.delete
-// );
+app.get(
+  "/:id",
+  // authHandler.authenticateJWT(),
+  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  // validate("checkParamId"),
+  controller.getById
+);
 
-// app.put(
-//   "/:id",
-//   // authHandler.authenticateJWT(),
-//   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
-//   upload.single("image"),
-//   // validate("updateCustomer"),
-//   controller.update
-// );
+app.delete(
+  "/:id",
+  // authHandler.authenticateJWT(),
+  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  // validate("checkParamId"),
+  controller.delete
+);
+
+app.put(
+  "/makeDefault",
+  // authHandler.authenticateJWT(),
+  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  // validate("updateCustomer"),
+  controller.makeDefault
+);
+app.put(
+  "/:id",
+  // authHandler.authenticateJWT(),
+  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  upload.single("image"),
+  // validate("updateCustomer"),
+  controller.update
+);
 
 
+app.get('/byUserId/:id',controller.getAllByUserId)
 module.exports = app;

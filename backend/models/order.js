@@ -10,10 +10,6 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },
-    //   addressId: {
-    //     type: DataTypes.INTEGER,
-    //     allowNull: false,
-    //   },
     },
     {
       timestamps: true,
