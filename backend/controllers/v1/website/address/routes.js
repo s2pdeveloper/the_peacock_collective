@@ -6,7 +6,7 @@ const {
   rolePermit,
 } = require("../../../../config/middlewares/utils");
 const roles = require("../../../../config/options/global.options").OPTIONS;
- const controller = require("./order");
+ const controller = require("./address");
 
 // app.get(
 //   '/getAll',
