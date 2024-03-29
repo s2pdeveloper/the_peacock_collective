@@ -130,15 +130,15 @@ export class VariantFormComponent {
         this.toastService.error('duplicate sku')
         return true;
       }
-      if (
-        item.variantWithAttrVariantMap.length &&
-        item.variantWithAttrVariantMap.every((x) =>
-          this.attributes.some((y) => y.selectedValue == x.value)
-        )
-      ) {
-        this.toastService.error('duplicate attribute');
-        return true;
-      }
+      // if (
+      //   item.variantWithAttrVariantMap.length &&
+      //   item.variantWithAttrVariantMap.every((x) =>
+      //     this.attributes.some((y) => y.selectedValue == x.value)
+      //   )
+      // ) {
+      //   this.toastService.error('duplicate attribute');
+      //   return true;
+      // }
     }
     return false;
   }

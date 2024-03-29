@@ -25,48 +25,77 @@
     </div>
     <div class="col-11 py-4">
       <div class="row py-3">
-        <div class="col-12 col-md-12 col-lg-6">
-          <img
-            class="img-fluid"
-            src="../../../../../assets/products/bag-1.jpg"
-            alt=""
-          />
-          <img
-            class="img-fluid"
-            src="../../../../../assets/products/bag-2.jpg"
-            alt=""
-          />
-          <img
-            class="img-fluid"
-            src="../../../../../assets/products/bag-3.jpg"
-            alt=""
-          />
+        <div
+          class="col-12 col-md-6 col-lg-6"
+          *ngFor="let item of commonService.allData.products"
+        >
+          <ng-container *ngFor="let img of item.productImages">
+            <img class="img-fluid" [src]="img.image" alt="product-image" />
+          </ng-container>
         </div>
         <div
-          class="col-12 col-md-12 col-lg-6 d-flex flex-column py-4 align-items-center"
+          class="col-12 col-md-6 col-lg-6 d-flex flex-column py-4 align-items-center"
         >
           <div class="row justify-content-center">
             <div class="col-12 pb-3">
-              <h2 class="text-center">Leather bag</h2>
-              <h2 class="text-center">{{ 120.5 | currency }}</h2>
+              <h2 class="text-center">{{ products.name }}</h2>
+              <h2 class="text-center">
+                {{ products.productWithVariants[0].price | currency : "INR" }}
+              </h2>
             </div>
             <div class="col-10 py-3 border-top border-bottom">
               <p class="mb-2">
-                Sleeveless knee-length chiffon dress. V-neckline with elastic
-                under the bust lining.
+                {{products.description}}
               </p>
               <div class="row py-2 justify-content-center">
-                <div class="col-4 col-lg-3">
+                <div
+                  class="col-4 col-lg-3 d-flex flex-column align-items-center"
+                  *ngFor="let item of attrArr"
+                >
+                  <ng-container [ngSwitch]="item.type">
+                    <ng-container *ngSwitchCase="'color'">
+                      <!-- <div class="col-4 col-lg-3"> -->
+                      <p class="text-center">Color</p>
+                      <div class="d-flex justify-content-center">
+                        <div
+                          [style.background-color]="val"
+                          *ngFor="let val of item.value"
+                          class="color m-2"
+                        ></div>
+                      </div>
+                      <!-- </div> -->
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'text'">
+                      <!-- <div class="col-4 col-lg-3"> -->
+                      <p class="text-center">Select {{ item.name }}</p>
+                      <div
+                        class="p-2 w-75 m-2 d-flex input-div background-primary justify-content-center align-items-center"
+                      >
+                        <select class="w-100">
+                          <option
+                            [value]="val"
+                            *ngFor="let val of item.value"
+                          >
+                            {{ val }}
+                          </option>
+                        </select>
+                      </div>
+                      <!-- </div> -->
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'number'"> </ng-container>
+                  </ng-container>
+                </div>
+                <!-- <div class="col-4 col-lg-3">
                   <p class="text-center">Size</p>
                   <div
-                  class=" p-2 w-75 m-2 d-flex input-div background-primary justify-content-center align-items-center"
-                >
-                  <select class="w-100">
-                    <option value="1">S</option>
-                    <option value="2">M</option>
-                    <option value="3">L</option>
-                  </select>
-                </div>
+                    class="p-2 w-75 m-2 d-flex input-div background-primary justify-content-center align-items-center"
+                  >
+                    <select class="w-100">
+                      <option value="1">S</option>
+                      <option value="2">M</option>
+                      <option value="3">L</option>
+                    </select>
+                  </div>
                 </div>
                 <div class="col-4 col-lg-3">
                   <p>Color</p>
@@ -74,7 +103,7 @@
                     <div class="color color-6 m-2"></div>
                     <div class="color color-7 m-2"></div>
                   </div>
-                </div>
+                </div> -->
               </div>
               <div class="row py-2 justify-content-center">
                 <div
@@ -163,7 +192,7 @@
       <p class="product-text">8 other products in the same category:</p>
       <div class="col-12 product">
         <div class="row product-row">
-          <div
+          <!-- <div
             class="col-6 col-md-4 col-lg-3 product-column"
             *ngFor="let p of products"
           >
@@ -179,7 +208,7 @@
                 <p class="prod-name">{{ p?.name }}</p>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

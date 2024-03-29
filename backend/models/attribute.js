@@ -14,6 +14,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      type: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: "text",
+        enum: ["text", "number", "color"],
+      },
       value: {
         type: DataTypes.STRING,
         allowNull: false,

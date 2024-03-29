@@ -24,7 +24,7 @@ export class CategoryListComponent {
     private toastService: ToastrService
   ) { }
   page: number = 1;
-  pageSize: number = 25;
+  pageSize: number = 10;
   collection: number = 0;
   column: string = "createdAt";
   direction: number = -1;

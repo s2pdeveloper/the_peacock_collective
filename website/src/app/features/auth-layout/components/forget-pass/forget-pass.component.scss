@@ -10,6 +10,24 @@
 .background-primary {
   background-color: #f8f8f8;
 }
+.form-control:focus,.input-number:focus {
+  box-shadow: none;
+  outline: none;
+  border-bottom: 1px solid #000;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+}
+.form-control:focus-visible,.input-number:focus-visible {
+  border-bottom: 1px solid #000;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  outline: none;
+}
+.pointer{
+  cursor: pointer;
+}
 @media (min-width: 430px) and (max-width: 575px) {
   .btn {
     width: 70% !important;

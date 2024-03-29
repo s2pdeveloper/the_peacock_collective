@@ -11,7 +11,6 @@ import { CustomPaginationComponent } from './components/custom-pagination/custom
 import { register } from 'swiper/element/bundle';
 import { TagProductPipe } from 'src/app/pipes/tag-product.pipe';
 import { TagCategoryPipe } from 'src/app/pipes/tag-category.pipe';
-import { HomeProductPipe } from 'src/app/pipes/home-product.pipe';
 register();
 @NgModule({
   declarations: [HeaderComponent, FooterComponent, TopbarComponent, HeaderModalComponent, CustomPaginationComponent,TagProductPipe,TagCategoryPipe],

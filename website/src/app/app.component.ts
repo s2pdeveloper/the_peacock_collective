@@ -8,6 +8,7 @@ import { CommonService } from './services/common.service';
 })
 export class AppComponent implements OnInit {
   title = 'website';
+  loader=true
   constructor(private commonService: CommonService) {}
   ngOnInit(): void {
     this.getAllMasterData();
@@ -16,6 +17,7 @@ export class AppComponent implements OnInit {
   getAllMasterData() {
     this.commonService.getAllMasterData({}).subscribe((success) => {
       this.commonService.allData = success.result
+      this.loader=false
     });
   }
 }
