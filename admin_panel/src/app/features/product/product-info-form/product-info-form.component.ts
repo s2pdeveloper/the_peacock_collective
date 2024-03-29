@@ -7,6 +7,7 @@ import { SpinnerService, ToastService } from "@core/services";
 import { AttributeService } from "@shared/services/attribute.service";
 import { CategoryService } from "@shared/services/category.service";
 import { ProductService } from "@shared/services/product.service";
+import { TagsService } from "@shared/services/tags.service";
 
 @Component({
   selector: "app-product-info-form",
@@ -28,6 +29,7 @@ export class ProductInfoFormComponent {
   categoryArr = [];
   attributeArr = [];
   attributes = [];
+  tags = [];
   productImage: any = null;
   productImageName: any = "";
   productImageUrl: any = null;
@@ -38,22 +40,13 @@ export class ProductInfoFormComponent {
     private productService: ProductService,
     private categoryService: CategoryService,
     private attributeService: AttributeService,
+    private tagsService: TagsService,
     private spinner: SpinnerService,
     private toastService: ToastService,
     private domSanitizer: DomSanitizer,
     private validationService: ValidationService
   ) {}
 
-  ngOnInit(): void {
-    this.getAllCategory();
-    this.getAllAttribute();
-    this.activatedRoute.queryParams.subscribe((params: any) => {
-      if (params.id) {
-        this.getById(params.id);
-        this.productId = params.id;
-      }
-    });
-  }
   FORM_ERRORS = [
     {
       message: "Category is Required",
@@ -88,11 +81,25 @@ export class ProductInfoFormComponent {
     returnableDays: new FormControl(null),
     soldIndividually: new FormControl(false),
     bannerImage: new FormControl(null),
+    tagId: new FormControl([]),
     status: new FormControl("active"),
   });
   get form() {
     return this.productForm.controls;
   }
+
+  ngOnInit(): void {
+    this.getAllCategory();
+    this.getAllAttribute();
+    this.getAllTags();
+    this.activatedRoute.queryParams.subscribe((params: any) => {
+      if (params.id) {
+        this.getById(params.id);
+        this.productId = params.id;
+      }
+    });
+  }
+
   navigateTo() {
     this.router.navigate(["default/product/product-list"]);
   }
@@ -100,6 +107,11 @@ export class ProductInfoFormComponent {
   getAllCategory() {
     this.categoryService.getAll({ category: true }).subscribe((success) => {
       this.categoryArr = success.rows;
+    });
+  }
+  getAllTags() {
+    this.tagsService.getAll({}).subscribe((success) => {
+      this.tags = success.rows;
     });
   }
   getAllAttribute() {
@@ -131,6 +143,13 @@ export class ProductInfoFormComponent {
     // }
     let formData: FormData = new FormData();
     for (const key in this.productForm.value) {
+      if (key == "tagId") {
+        formData.append(
+          key,
+          JSON.stringify(this.productForm.value[key])
+        );
+        continue;
+      }
       if (key != "bannerImage") {
         formData.append(key, this.productForm.value[key]);
       }
@@ -197,6 +216,9 @@ export class ProductInfoFormComponent {
         this.attributeArr = success?.productWithProdAttributeMap.map(
           (x) => x.attributeId
         );
+      }
+      if(success?.productWithTagMap.length){
+        success.tagId=success?.productWithTagMap.map(x=>x.tagId);
       }
 
       this.productForm.patchValue(success);

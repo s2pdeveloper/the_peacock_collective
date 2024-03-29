@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonService } from 'src/app/services/common.service';
 import Swiper from 'swiper';
 
 @Component({
@@ -8,73 +9,11 @@ import Swiper from 'swiper';
   styleUrls: ['./new-arrivals.component.scss'],
 })
 export class NewArrivalsComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor(private router: Router, public commonService: CommonService) {}
   smallProducts: any = [];
   mediumProducts: any = [];
   largeProducts: any = [];
   currentIndex = 0;
-  products: any[] = [
-    {
-      name: 'Product 1',
-      img: '../../../../../assets/images/bridal-look.webp',
-      catName: 'Blouses',
-      price: 11.5,
-    },
-    {
-      name: 'Product 2',
-      img: '../../../../../assets/images/bride-1.jpeg',
-      catName: 'Blouses',
-      price: 11.5,
-    },
-    {
-      name: 'Product 3',
-      img: '../../../../../assets/images/bride-4.jpg',
-      catName: 'Blouses',
-      price: 11.5,
-    },
-    {
-      name: 'Product 4',
-      img: '../../../../../assets/images/bride-2.jpg',
-      catName: 'Blouses',
-      price: 11.5,
-    },
-    {
-      name: 'Product 5',
-      img: '../../../../../assets/images/bridal-look.webp',
-      catName: 'Blouses',
-      price: 11.5,
-    },
-    {
-      name: 'Product 6',
-      img: '../../../../../assets/images/bride-1.jpeg',
-      catName: 'Blouses',
-      price: 11.5,
-    },
-    {
-      name: 'Product 7',
-      img: '../../../../../assets/images/bride-4.jpg',
-      catName: 'Blouses',
-      price: 11.5,
-    },
-    {
-      name: 'Product 8',
-      img: '../../../../../assets/images/bride-2.jpg',
-      catName: 'Blouses',
-      price: 11.5,
-    },
-    {
-      name: 'Product 9',
-      img: '../../../../../assets/images/bride-1.jpeg',
-      catName: 'Blouses',
-      price: 11.5,
-    },
-    {
-      name: 'Product 10',
-      img: '../../../../../assets/images/bride-2.jpg',
-      catName: 'Blouses',
-      price: 11.5,
-    },
-  ];
 
   swiper = new Swiper('.sample-slider', {
     loop: true, //loop

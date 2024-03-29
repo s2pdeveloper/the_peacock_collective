@@ -101,8 +101,25 @@
             bindLabel="name"
             bindValue="id"
             [(ngModel)]="attributeArr"
+            placeholder="Select Attribute"
+
             [ngModelOptions]="{ standalone: true }"
             (change)="onAttrChange($event)"
+          >
+          </ng-select>
+        </div>
+        <div class="col-md-4 mb-2 ps-0">
+          <label class="form-label">
+            Tags
+            <span class="text-danger">*</span></label
+          >
+          <ng-select
+            [items]="tags"
+            [multiple]="true"
+            bindLabel="title"
+            bindValue="id"
+            formControlName="tagId"
+            placeholder="Select Tags"
           >
           </ng-select>
         </div>

@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const { Product, ProdAttributeMap,Attribute,Categories } = require("../../../../models");
+const { Product, ProdAttributeMap,Attribute,Categories,ProdTagMap } = require("../../../../models");
 const {
   OPTIONS,
   generateResponse,
@@ -47,6 +47,20 @@ const modelObj = {
         await ProdAttributeMap.bulkCreate(payloadMap);
 
       }
+    }
+    if(req?.body?.tagId){
+      req.body.tagId = JSON.parse(req.body.tagId);
+      if(req.body.tagId.length){
+        let tagArr=req.body.tagId.map(x=>{
+          return {
+            tagId:x,
+            productId: product.id
+          }
+        })
+        await ProdTagMap.bulkCreate(tagArr)
+      }
+    
+
     }
 
     return res.status(resCode.HTTP_OK).json(
@@ -124,7 +138,14 @@ const modelObj = {
           // attributes: ['id', 'title', 'course_id', 'start_date', 'end_date']
           // paranoid: true, required: false
         
-      }
+      },
+      { 
+        model: ProdTagMap,
+        as: 'productWithTagMap',
+        // attributes: ['id', 'title', 'course_id', 'start_date', 'end_date']
+        // paranoid: true, required: false
+      
+    }
     ]
     });
     if (!existing) {
@@ -142,7 +163,7 @@ const modelObj = {
       },
 
     });
-
+    req.body.tagId = JSON.parse(req.body?.tagId);
 
     if (req.body?.attributeArr) {
       req.body.attributeArr = JSON.parse(req.body.attributeArr);
@@ -163,6 +184,21 @@ const modelObj = {
         await ProdAttributeMap.bulkCreate(payloadMap);
       
    
+    }
+    if (req.body?.tagId.length) {
+      let deleteQuery = {
+        where: {
+          productId: req.params.id,
+        },
+      }
+      await ProdTagMap.destroy(deleteQuery);
+      let tagArr=req.body.tagId.map(x=>{
+        return {
+          tagId:x,
+          productId: req.params.id
+        }
+      })
+      await ProdTagMap.bulkCreate(tagArr)
     }
 
     if (!itemDetails) {

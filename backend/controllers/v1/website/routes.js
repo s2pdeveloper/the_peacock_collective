@@ -10,12 +10,16 @@ const cart=require("./cart/routes")
 const address=require("./address/routes")
 const order=require("./order/routes")
 
+const tag = require("./tag/routes")
 
 
 router.use('/product',product);
 router.use('/category',category);
 router.use('/cart',cart);
 router.use('/customer',customer)
+router.use('/tag',tag);
+// router.use('/product',product);
+// router.use('/category',category);
 router.use('/common',common);
 router.use('/order',order)
 router.use('/address',address)

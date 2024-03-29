@@ -13,26 +13,29 @@ import { NewArrivalsComponent } from './components/new-arrivals/new-arrivals.com
 import { ConnectComponent } from './components/connect/connect.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { register } from 'swiper/element/bundle';
+import { SharedModule } from '../shared/shared.module';
+import { HomeProductPipe } from "../../pipes/home-product.pipe";
 register();
 @NgModule({
-  declarations: [
-    LandingLayoutComponent,
-    MainComponent,
-    FollowUsComponent,
-    WhoWeAreComponent,
-    PackbagComponent,
-    NewCollectionComponent,
-    NewArrivalsComponent,
-    ConnectComponent
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    LandingLayoutRoutingModule,
-    NgbModule
-  ],
-  schemas:[CUSTOM_ELEMENTS_SCHEMA],
-  exports:[LandingLayoutComponent]
+    declarations: [
+        LandingLayoutComponent,
+        MainComponent,
+        FollowUsComponent,
+        WhoWeAreComponent,
+        PackbagComponent,
+        NewCollectionComponent,
+        NewArrivalsComponent,
+        ConnectComponent
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    exports: [LandingLayoutComponent],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        LandingLayoutRoutingModule,
+        NgbModule, SharedModule,
+        HomeProductPipe
+    ]
 })
 export class LandingLayoutModule { }

@@ -1,19 +1,16 @@
-import { Injectable } from "@angular/core";
-import { map } from "rxjs";
-import { ApiService } from "../core/services";
+import { Injectable } from '@angular/core';
+import { map } from 'rxjs';
+import { ApiService } from '../core/services';
 @Injectable({
-    providedIn: "root",
+  providedIn: 'root',
 })
 export class CommonService {
-    readonly BASE_URL = 'common'
+  readonly BASE_URL = 'common';
+  allData: any = [];
 
-    constructor(private http: ApiService) { }
+  constructor(private http: ApiService) {}
 
-    getAllMasterData(payload: any) {
-        return this.http
-            .get(this.BASE_URL, payload)
-            .pipe(map((res: any) => res));
-    }
-
-
+  getAllMasterData(payload: any) {
+    return this.http.get(this.BASE_URL, payload).pipe(map((res: any) => res));
+  }
 }

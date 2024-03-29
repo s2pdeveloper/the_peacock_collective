@@ -1,6 +1,7 @@
 import { Component, ElementRef, HostListener, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-header',
@@ -19,8 +20,12 @@ export class HeaderComponent {
   isLBOpen: boolean = false;
   isFWOpen: boolean = false;
   isWWOpen: boolean = false;
-
-  constructor(private router: Router, private el: ElementRef) {}
+  activeTagId=null
+  constructor(
+    private router: Router,
+    private el: ElementRef,
+    public commonService: CommonService
+  ) {}
   private modalService = inject(NgbModal);
   openSearch(content: any) {
     this.modalService.open(content, { size: 'xl', centered: true });
@@ -140,7 +145,6 @@ export class HeaderComponent {
       0;
     this.scrollPosition = scrollPositionValue;
   }
-
   navigateTo(path: any) {
     this.router.navigate([path]);
     let ele: any = document.getElementById('topbar');

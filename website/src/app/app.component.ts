@@ -4,23 +4,18 @@ import { CommonService } from './services/common.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
   title = 'website';
-  constructor(
-    private commonService: CommonService
-  ) {
-
-  }
+  constructor(private commonService: CommonService) {}
   ngOnInit(): void {
-    this.getAllMasterData()
+    this.getAllMasterData();
   }
 
   getAllMasterData() {
-    this.commonService.getAllMasterData({}).subscribe(success => {
-      console.log("success=====", success);
-
-    })
+    this.commonService.getAllMasterData({}).subscribe((success) => {
+      this.commonService.allData = success.result
+    });
   }
 }

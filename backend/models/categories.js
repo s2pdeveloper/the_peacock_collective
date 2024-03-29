@@ -46,10 +46,12 @@ module.exports = (sequelize, DataTypes) => {
     Categories.hasMany(models.Categories, {
       foreignKey: "parentId",
       as: "subcatagories",
+      onDelete: 'CASCADE',
     });
     Categories.belongsTo(models.Categories, {
       foreignKey: "parentId",
       as: "categories",
+      onDelete: 'CASCADE',
     });
   };
   return Categories;
