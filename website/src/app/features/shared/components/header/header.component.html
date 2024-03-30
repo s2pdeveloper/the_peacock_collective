@@ -7,7 +7,7 @@
     <div class="row upper-row">
       <div class="col-11">
         <div class="row">
-          <div class="col-4 d-flex pointer" (click)="navigateTo('/')">
+          <div class="col-4 d-flex pointer" (click)="navigateTo('/',null)">
             <img
               width="55"
               src="../../../../../assets/images/gold-logo.png"
@@ -17,7 +17,7 @@
           <div class="col-8 col-lg-4 ship-text">
             <p>
               <img
-                (click)="navigateTo('/')"
+                (click)="navigateTo('/',null)"
                 class="img-fluid pointer"
                 src="../../../../../assets/images/companyName.png"
                 alt="Company Name"
@@ -33,7 +33,7 @@
                 ></i>
                 <i
                   class="fa-solid fa-user pointer"
-                  (click)="navigateTo('/auth/login')"
+                  (click)="navigateTo('/auth/login',null)"
                 ></i>
                 <i
                   class="fa-solid fa-bag-shopping pointer"
@@ -84,7 +84,7 @@
                         <swiper-container class="img-box" slides-per-view="4">
                           <swiper-slide
                             class="px-2 prod-cart"
-                            (click)="navigateTo('/product/product-details')"
+                            (click)="navigateTo('/product/product-details',p?.id)"
                             *ngFor="
                               let p of commonService.allData.products
                                 | tagProduct : activeTagId
@@ -109,7 +109,7 @@
           <div class="col-2 d-flex justify-content-end">
             <div
               class="navbar-brand text-uppercase text-color-red nav-items"
-              (click)="navigateTo('/contact')"
+              (click)="navigateTo('/contact',null)"
             >
               Contact
             </div>
@@ -172,7 +172,7 @@
       </div>
       <div
         class="col-3 d-flex flex-column align-items-center p-3 menu-items"
-        (click)="navigateTo('/auth/login')"
+        (click)="navigateTo('/auth/login',null)"
       >
         <i class="fa-solid fa-user"></i>
         <p>Sign In</p>
@@ -214,7 +214,7 @@
       </div>
       <div
         class="option-item border-bottom d-flex justify-content-between py-3"
-        (click)="navigateTo('/contact'); isMenuOpen = !isMenuOpen"
+        (click)="navigateTo('/contact',null); isMenuOpen = !isMenuOpen"
       >
         <p class="w-75 text-uppercase">Contact</p>
       </div>
@@ -241,7 +241,7 @@
         <div>
           <img
             (click)="
-              navigateTo('/product/product-details'); isCartOpen = !isCartOpen
+              navigateTo('/product/product-details',p?.id); isCartOpen = !isCartOpen
             "
             class="img-fluid pointer"
             [src]="p.img"
@@ -251,7 +251,7 @@
         <div class="d-flex justify-content-center bg-white flex-column p-3">
           <p
             (click)="
-              navigateTo('/product/product-details'); isCartOpen = !isCartOpen
+              navigateTo('/product/product-details',p?.id); isCartOpen = !isCartOpen
             "
             class="pointer"
           >
@@ -308,7 +308,7 @@
             <button
               type="button"
               class="btn btn-dark py-2"
-              (click)="navigateTo('/order/checkout'); isCartOpen = !isCartOpen"
+              (click)="navigateTo('/order/checkout',null); isCartOpen = !isCartOpen"
             >
               Checkout
             </button>
@@ -317,7 +317,7 @@
             <button
               type="button"
               class="btn btn-light py-2"
-              (click)="navigateTo('/order/cart'); isCartOpen = !isCartOpen"
+              (click)="navigateTo('/order/cart',null); isCartOpen = !isCartOpen"
             >
               Cart
             </button>

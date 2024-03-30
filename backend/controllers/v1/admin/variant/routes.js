@@ -1,4 +1,5 @@
 const app = require("express")();
+const upload = require("../../shared/upload");
 const authHandler = require("../../../../config/middlewares/auth.middleware");
 const {
   validate,
@@ -18,6 +19,7 @@ app.get("/", controller.getAll);
 
 app.post(
   "/",
+  upload.single("image"),
   // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
   // validate("createCustomer"),
@@ -54,6 +56,7 @@ app.put("/updateAll", controller.updateAll);
 
 app.put(
   "/:id",
+  upload.single("image"),
   // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
   // validate("updateCustomer"),

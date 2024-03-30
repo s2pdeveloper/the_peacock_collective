@@ -144,10 +144,18 @@ select{
   width: 30px;
   height: 30px;
 }
-img{
-  min-height: auto;
-  max-height: auto;
+.banner-img{
   max-width: 100%;
   min-width: 100%;
+  min-height: 90vh;
+  max-height: 90vh;
   object-fit: cover;
+
+}
+.variant-img{
+  width: 200px;
+  height: 130px;
+}
+.img-border{
+  border: 2px solid #000;
 }

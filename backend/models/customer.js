@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       isDelete: {
-        type: DataTypes.BOOLEAN, // Corrected type
+        type: DataTypes.BOOLEAN,
         allowNull: true,
         defaultValue: false,
       },
@@ -21,7 +21,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-
+      socialTitle: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       firstName: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -47,12 +50,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
       },
       emailVerified: {
-        type: DataTypes.BOOLEAN, // Corrected type
+        type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
       },
       phoneVerified: {
-        type: DataTypes.BOOLEAN, // Corrected type
+        type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
       },

@@ -10,10 +10,6 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      productId: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
       image: {
         type: DataTypes.STRING(1324),
         allowNull: true,

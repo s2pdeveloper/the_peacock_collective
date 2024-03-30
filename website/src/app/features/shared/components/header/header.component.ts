@@ -149,8 +149,8 @@ export class HeaderComponent {
       0;
     this.scrollPosition = scrollPositionValue;
   }
-  navigateTo(path: any) {
-    this.router.navigate([path]);
+  navigateTo(path: any,id:any) {
+    this.router.navigate([path], { queryParams: { id: id } });
     let ele: any = document.getElementById('topbar');
     ele.scrollIntoView({
       behavior: 'smooth',

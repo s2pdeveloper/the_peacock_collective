@@ -8,7 +8,7 @@ const {
   Images,
   Tag,
   AttrVariantMap,
-  ProdTagMap
+  ProdTagMap,
 } = require("../../../../models");
 const {
   OPTIONS,
@@ -49,7 +49,6 @@ module.exports.getAllCategory = asyncHandler(async (req, res) => {
   };
 
   const productQuery = {
-    
     include: [
       {
         model: Variant,
@@ -57,23 +56,26 @@ module.exports.getAllCategory = asyncHandler(async (req, res) => {
         where: {
           qty: { [Op.gt]: 0 },
         },
-        include: {
-          model: AttrVariantMap,
-          as: "variantWithAttrVariantMap",
-          include: {
-            model: Attribute,
-            as: "AttrVariantMapWithAttributes",
+        include: [
+          {
+            model: AttrVariantMap,
+            as: "variantWithAttrVariantMap",
+            include: {
+              model: Attribute,
+              as: "AttrVariantMapWithAttributes",
+            },
           },
-        },
+          {
+            model: Images,
+            as: "variantImages",
+          },
+        ],
       },
       {
         model: ProdTagMap,
         as: "productWithTagMap",
       },
-      {
-        model: Images,
-        as: "productImages",
-      },
+
       {
         model: Categories,
         as: "productWithCategory",

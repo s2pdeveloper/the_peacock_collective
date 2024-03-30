@@ -121,7 +121,7 @@ const NavigationItems = [
         type: "item",
         classes: "nav-item",
         url: "/default/vendor",
-        icon: "fa-solid fa-tag",
+        icon: "fa-solid fa-user-tie",
       },
       {
         id: "all-variants",
@@ -129,7 +129,7 @@ const NavigationItems = [
         type: "item",
         classes: "nav-item",
         url: "/default/all-variants",
-        icon: "fa-solid fa-tag",
+        icon: "fa-brands fa-vimeo",
       },
       
       // {
