@@ -26,11 +26,11 @@ app.post(
 
 
 app.get(
-  "/getByProductId/:id",
+  "/getByVariantId/:id",
   // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
   // validate("checkParamId"),
-  controller.getByProductId
+  controller.getByVariantId
 );
 
 

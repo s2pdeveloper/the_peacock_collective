@@ -1,12 +1,14 @@
 import { Component, ElementRef, HostListener, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TagCategoryPipe } from 'src/app/pipes/tag-category.pipe';
 import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
+  providers: [TagCategoryPipe],
 })
 export class HeaderComponent {
   searchToggle: boolean = false;
@@ -15,16 +17,18 @@ export class HeaderComponent {
   scrollValue: number = 0;
   scrollPosition: any;
   isMenuOpen: boolean = false;
+  isCatOpen: boolean = false;
   isCartOpen: boolean = false;
-  isWNOpen: boolean = false;
-  isLBOpen: boolean = false;
-  isFWOpen: boolean = false;
-  isWWOpen: boolean = false;
-  activeTagId=null
+  category: any = {
+    title: '',
+    categories: [],
+  };
+  activeTagId = null;
   constructor(
     private router: Router,
     private el: ElementRef,
-    public commonService: CommonService
+    public commonService: CommonService,
+    private tagCatPipe: TagCategoryPipe
   ) {}
   private modalService = inject(NgbModal);
   openSearch(content: any) {
@@ -145,8 +149,8 @@ export class HeaderComponent {
       0;
     this.scrollPosition = scrollPositionValue;
   }
-  navigateTo(path: any) {
-    this.router.navigate([path]);
+  navigateTo(path: any,id:any) {
+    this.router.navigate([path], { queryParams: { id: id } });
     let ele: any = document.getElementById('topbar');
     ele.scrollIntoView({
       behavior: 'smooth',
@@ -172,5 +176,22 @@ export class HeaderComponent {
       block: 'start',
       inline: 'nearest',
     });
+  }
+  handleCategory(data: any) {
+    this.activeTagId = data.id;
+    let tagCategory = this.tagCatPipe.transform(
+      this.commonService?.allData?.products,
+      this.activeTagId
+    );
+    this.category.title = data.title;
+    this.category.categories.push(...tagCategory);
+    this.isCatOpen = !this.isCatOpen;
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+  handleDataRemove() {
+    this.isCatOpen = !this.isCatOpen;
+    this.isMenuOpen = !this.isMenuOpen;
+    this.category.title = '';
+    this.category.categories = [];
   }
 }

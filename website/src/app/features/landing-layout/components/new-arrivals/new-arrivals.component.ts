@@ -34,8 +34,8 @@ export class NewArrivalsComponent implements OnInit {
   ngOnInit(): void {}
 
   showNavigationIndicators = false;
-  navigateTo(path: any) {
-    this.router.navigate([path]);
+  navigateTo(path: any, param: any) {
+    this.router.navigate([path], { queryParams: { id: param } });
     let ele: any = document.getElementById('topbar');
     ele.scrollIntoView({
       behavior: 'smooth',

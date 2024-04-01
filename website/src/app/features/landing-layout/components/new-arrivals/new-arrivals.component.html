@@ -10,17 +10,17 @@
             <swiper-container class="img-box" slides-per-view="4">
               <swiper-slide
                 class="px-2 prod-cart"
-                (click)="navigateTo('/product/product-details')"
+                (click)="navigateTo('/product/product-details',p?.id)"
                 *ngFor="let p of commonService.allData.products | homeProduct : commonService?.allData?.categories[0]"
                 ><img class="img-fluid w-100" [src]="p?.bannerImage" />
                 <div class="text-box p-3">
                   <div class="d-flex justify-content-between">
-                    <p class="cat-name">{{ p?.catName }}</p>
+                    <p class="cat-name">{{ p?.productWithCategory?.name }}</p>
                     <h5 class="fw-bold prod-price">
-                      {{ p?.price | currency }}
+                      {{ p?.productWithVariants[0]?.price | currency }}
                     </h5>
                   </div>
-                  <p class="prod-name">{{ p?.name }}</p>
+                  <p class="prod-name">{{ p?.productWithVariants[0]?.sku }}</p>
                 </div>
               </swiper-slide>
             </swiper-container>
@@ -37,12 +37,12 @@
                 ><img class="img-fluid w-100" [src]="p?.bannerImage" />
                 <div class="text-box p-3">
                   <div class="d-flex justify-content-between">
-                    <p class="cat-name">{{ p?.catName }}</p>
+                    <p class="cat-name">{{ p?.productWithCategory?.name }}</p>
                     <h5 class="fw-bold prod-price">
-                      {{ p?.price | currency }}
+                      {{ p?.productWithVariants[0]?.price | currency }}
                     </h5>
                   </div>
-                  <p class="prod-name">{{ p?.name }}</p>
+                  <p class="prod-name">{{ p?.productWithVariants[0]?.sku }}</p>
                 </div>
               </swiper-slide>
             </swiper-container>
@@ -59,12 +59,12 @@
                 ><img class="img-fluid w-100" [src]="p?.bannerImage">
                 <div class="text-box p-3">
                   <div class="d-flex justify-content-between">
-                    <p class="cat-name">{{ p?.catName }}</p>
+                    <p class="cat-name">{{ p?.productWithCategory?.name }}</p>
                     <h5 class="fw-bold prod-price">
-                      {{ p?.price | currency }}
+                      {{ p?.productWithVariants[0]?.price | currency }}
                     </h5>
                   </div>
-                  <p class="prod-name">{{ p?.name }}</p>
+                  <p class="prod-name">{{ p?.productWithVariants[0]?.sku }}</p>
                 </div>
               </swiper-slide>
             </swiper-container>
@@ -73,7 +73,7 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <!-- <div class="row">
     <div class="col-12 py-4 d-flex flex-column align-items-center">
       <p class="section-heading">Templates</p>
 
@@ -103,5 +103,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>

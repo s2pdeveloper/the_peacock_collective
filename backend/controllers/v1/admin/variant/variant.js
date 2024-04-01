@@ -30,7 +30,7 @@ const modelObj = {
         sku: req.body.sku,
       },
     });
-    console.log("request in variant",req.body);
+    console.log("request in variant", req.body);
     if (checkExisting) {
       let message = MESSAGES.apiErrorStrings.Data_EXISTS("Variant");
       throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
@@ -38,7 +38,7 @@ const modelObj = {
 
     let createObj = await generateCreateData(new Model(), req.body);
     let variant = await createObj.save();
-    console.log("your variant in after created",variant)
+    console.log("your variant in after created", variant);
 
     if (req.body?.attributeArr && req.body?.attributeArr.length) {
       let payloadMap = req.body.attributeArr.map((x) => {
@@ -71,6 +71,7 @@ const modelObj = {
         ...(search && {
           [Op.or]: {
             name: { [Op.like]: search },
+      
           },
         }),
       },
@@ -138,7 +139,7 @@ const modelObj = {
       if (req.body?.attributeArr && req.body?.attributeArr.length) {
         let deleteQuery = {
           where: {
-            productId: req.params.id,
+            variantId: itemDetails.id,
           },
         };
         await AttrVariantMap.destroy(deleteQuery);
@@ -147,7 +148,7 @@ const modelObj = {
           return {
             attributeId: x.attrId,
             value: x.value,
-            variantId: variant.id,
+            variantId: itemDetails.id,
           };
         });
         await AttrVariantMap.bulkCreate(payloadMap);
@@ -217,7 +218,7 @@ const modelObj = {
           as: "variantWithProduct",
         },
       ],
-      attributes : {
+      attributes: {
         include: [
           "id",
           "price",

@@ -90,10 +90,10 @@ const modelObj = {
       .json(generateResponse(resCode.HTTP_OK, existing));
   }),
 
-  getByProductId: asyncHandler(async (req, res) => {
+  getByVariantId: asyncHandler(async (req, res) => {
     let existing = await Model.findAll({
       where: {
-        productId: req.params.id,
+        variantId: req.params.id,
       },
     });
 

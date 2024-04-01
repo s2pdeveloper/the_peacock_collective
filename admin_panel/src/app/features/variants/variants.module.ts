@@ -6,6 +6,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { CustomPaginationComponent } from "@core/components/custom-pagination/custom-pagination.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgSelectModule } from "@ng-select/ng-select";
+import { VariantImagesComponent } from './variant-images/variant-images.component';
 const routes: Routes = [
   {
     path: "",
@@ -14,10 +15,11 @@ const routes: Routes = [
   },
   { path: "variant-list", component: VariantListComponent },
   { path: "variant-form", component: VariantFormComponent },
+  { path: "variant-images", component: VariantImagesComponent },
 ];
 
 @NgModule({
-  declarations: [VariantListComponent, VariantFormComponent],
+  declarations: [VariantListComponent, VariantFormComponent, VariantImagesComponent],
   imports: [CommonModule, RouterModule.forChild(routes),CustomPaginationComponent,FormsModule,ReactiveFormsModule,NgSelectModule],
 })
 export class VariantsModule {}

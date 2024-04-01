@@ -20,7 +20,7 @@
 .btn-dark,
 .btn-light {
   width: 100% !important;
-  padding: 0.5rem 0 !important;
+  padding: 0.5rem !important;
   border-radius: 0 !important;
 }
 input {
@@ -144,9 +144,18 @@ select{
   width: 30px;
   height: 30px;
 }
-.color-6 {
-  background-color: #a0d468;
+.banner-img{
+  max-width: 100%;
+  min-width: 100%;
+  min-height: 90vh;
+  max-height: 90vh;
+  object-fit: cover;
+
 }
-.color-7 {
-  background-color: #f1c40f;
+.variant-img{
+  width: 200px;
+  height: 130px;
+}
+.img-border{
+  border: 2px solid #000;
 }

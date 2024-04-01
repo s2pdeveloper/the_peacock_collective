@@ -25,7 +25,7 @@
               >Social title</label
             >
           </div>
-          <div class="col-12 col-lg-2 d-flex me-3 my-1">
+          <div class="col-12 col-lg-2 d-flex me-3 my-1" >
             <div class="d-flex px-2 align-items-center">
               <input
                 class="form-check-input me-2 background-primary"
@@ -60,7 +60,7 @@
             <input
               type="text"
               class="form-control background-primary"
-              formControlName="fname"
+              formControlName="firstName"
             />
             <p class="small-text text-muted mt-1">
               Only letters and the dot (.) character, followed by a space, are
@@ -124,17 +124,17 @@
           <div class="col-12 col-lg-8 me-3 my-1">
             <div class="d-flex mb-1">
               <input
-                type="text"
+                type="date"
                 class="form-control background-primary"
                 placeholder="MM/DD/YYYY"
-                formControlName="birthDate"
+                formControlName="DOB"
               />
               <div class="opt-box">Optional</div>
             </div>
             <p>(E.g.: 05/31/1970)</p>
           </div>
         </div>
-        <div class="row my-3">
+        <!-- <div class="row my-3">
           <div class="col-12 col-lg-2 my-1"></div>
           <div class="col-12 col-lg-8 me-3 my-1">
             <div class="d-flex align-items-center my-2">
@@ -165,12 +165,12 @@
               our contact info in the legal notice.</i
             >
           </div>
-        </div>
+        </div> -->
         <div class="row my-3 justify-content-center">
           <div class="col-3 col-md-2 col-lg-1">
             <button
               class="btn bg-dark p-2 w-100 text-light rounded-0"
-              (click)="submit($event)"
+              (click)="submit()"
             >
               Save
             </button>

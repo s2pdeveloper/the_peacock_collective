@@ -19,11 +19,13 @@ export class AttibuteFormComponent implements OnInit {
   attributeForm = this.fb.group({
     id: new FormControl(null),
     name: new FormControl(null, [Validators.required]),
+    type: new FormControl(null),
     value: this.fb.array([]),
     status: new FormControl("active", [Validators.required]),
   });
   options = [];
   attributeId: number = null;
+  type: any;
 
   constructor(
     private router: Router,
@@ -41,20 +43,6 @@ export class AttibuteFormComponent implements OnInit {
   get attributeValues(): FormArray {
     return this.attributeForm.get("value") as FormArray;
   }
-  FORM_ERRORS = [
-    {
-      message: "Name is required",
-      key: "name",
-    },
-    {
-      message: "Slug is required",
-      key: "slug",
-    },
-    {
-      message: "Status is required",
-      key: "status",
-    },
-  ];
 
   ngOnInit(): void {
     // this.getAllMasterData();
@@ -126,7 +114,7 @@ export class AttibuteFormComponent implements OnInit {
         for (const item of success?.value) {
           this.addValue(item.value);
         }
-      }else{
+      } else {
         this.addValue();
       }
       this.attributeForm.patchValue(success);
@@ -134,18 +122,9 @@ export class AttibuteFormComponent implements OnInit {
     });
   }
 
-  // getByParentId() {
-  //   this.spinner.show();
-  //   this.categoryService.getParentId().subscribe((success: any) => {
-  //     this.spinner.hide();
-  //     this.options = success.map((category) => ({
-  //       id: category.id,
-  //       name: category.name,
-  //     }));
-  //     let def = { id: "", name: "Parent" };
-  //     this.options.unshift(def);
-  //   });
-  // }
+  handleTypeChange(ev: any) {
+    this.type = ev.target.value
+  }
 
   back() {
     this.router.navigate(["default/attribute/attribute-list"]);

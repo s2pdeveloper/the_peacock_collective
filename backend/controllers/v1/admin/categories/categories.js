@@ -86,8 +86,10 @@ const modelObj = {
       //   as: 'shop',
       //   attributes: ['id', 'name', 'mobile'],
       // },
-      offset: +offset,
-      limit: +pageSize,
+      ...(req.query.page && req.query.pageSize && {
+        offset: +offset,
+        limit: +pageSize,
+      })
     };
     let response = await Model.findAndCountAll(query);
 

@@ -11,7 +11,7 @@ export class CustomerService {
 
     register(payload: any) {
         return this.http
-            .post(this.BASE_URL + '/signup', payload)
+            .post(this.BASE_URL, payload)
             .pipe(map((res: any) => res));
     }
     login(payload: any) {

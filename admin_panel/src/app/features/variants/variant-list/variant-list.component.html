@@ -34,6 +34,13 @@
 
               <td scope="row" class="text-center">
                 <button
+                  class="btn action-btn btn-sm mx-2"
+                  (click)="navigateTo('/default/variant/variant-images',c.id)"
+                  ngbTooltip="Images"
+                >
+                  <i class="fa-solid fa-image"></i>
+                </button>
+                <button
                   class="btn btn-sm action-btn mx-2"
                   (click)="update(c)"
                   ngbTooltip="Edit"

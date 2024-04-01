@@ -274,6 +274,21 @@ li {
     }
   }
 }
+.form-control:focus,.input-number:focus {
+  box-shadow: none;
+  outline: none;
+  border-bottom: 1px solid #000;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+}
+.form-control:focus-visible,.input-number:focus-visible {
+  border-bottom: 1px solid #000;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  outline: none;
+}
 .info-part {
   max-height: 52vh;
   min-height: 52vh;

@@ -12,7 +12,7 @@ import { ProductBulkUploadComponent } from "../product-bulk-upload/product-bulk-
 })
 export class ProductListComponent {
   page: number = 1;
-  pageSize: number = 25;
+  pageSize: number = 10;
   collection: number = 0;
   column: string = "createdAt";
   direction: number = -1;

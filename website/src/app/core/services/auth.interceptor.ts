@@ -11,7 +11,6 @@ import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ToastService } from '../services/toast.service';
 import { environment } from 'src/environments/environment';
-import { StorageService } from './local-storage.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -19,8 +18,6 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(
     private router: Router,
     private toast: ToastService,
-    // private storageService: StorageService
-
 
   ) { }
 

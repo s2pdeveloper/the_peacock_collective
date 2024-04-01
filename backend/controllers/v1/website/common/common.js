@@ -5,9 +5,10 @@ const {
   Attribute,
   Categories,
   Variant,
+  Images,
   Tag,
   AttrVariantMap,
-  ProdTagMap
+  ProdTagMap,
 } = require("../../../../models");
 const {
   OPTIONS,
@@ -52,19 +53,29 @@ module.exports.getAllCategory = asyncHandler(async (req, res) => {
       {
         model: Variant,
         as: "productWithVariants",
-        include: {
-          model: AttrVariantMap,
-          as: "variantWithAttrVariantMap",
-          include: {
-            model: Attribute,
-            as: "AttrVariantMapWithAttributes",
-          },
+        where: {
+          qty: { [Op.gt]: 0 },
         },
+        include: [
+          {
+            model: AttrVariantMap,
+            as: "variantWithAttrVariantMap",
+            include: {
+              model: Attribute,
+              as: "AttrVariantMapWithAttributes",
+            },
+          },
+          {
+            model: Images,
+            as: "variantImages",
+          },
+        ],
       },
       {
         model: ProdTagMap,
         as: "productWithTagMap",
       },
+
       {
         model: Categories,
         as: "productWithCategory",
@@ -76,6 +87,7 @@ module.exports.getAllCategory = asyncHandler(async (req, res) => {
     Categories.findAll(categoryQuery),
     Product.findAll(productQuery),
     Tag.findAll({}),
+    Attribute.findAll({}),
   ];
   Promise.all(promissArr)
     .then((values) => {
@@ -83,6 +95,7 @@ module.exports.getAllCategory = asyncHandler(async (req, res) => {
         categories: values[0],
         products: values[1],
         tags: values[2],
+        attributes: values[3],
       };
       return res
         .status(resCode.HTTP_OK)
