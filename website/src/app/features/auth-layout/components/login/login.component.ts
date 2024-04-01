@@ -11,14 +11,18 @@ import { CustomerService } from 'src/app/services/customer.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  private storageService = inject(StorageService);
+  showEye: boolean = true;
+  user: any;
+  
   constructor(
     private router: Router,
     private customerService: CustomerService,
     private toasterService: ToastrService
-  ) {}
-  private storageService = inject(StorageService);
-  showEye: boolean = true;
-  user: any;
+  ) {
+    this.user = this.storageService.get('Customer');
+  }
+
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
@@ -31,12 +35,17 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
-    this.customerService
-      .login(this.loginForm.value)
-      .subscribe((success: any) => {
-        this.user = success.result;
-        this.storageService.set('User', success.result);
-        this.toasterService.success('Login done Successfully!!!');
-      });
+    if (this.loginForm.value) {
+      this.customerService
+        .login(this.loginForm.value)
+        .subscribe((success: any) => {
+          this.storageService.set('Customer', success.result);
+          console.log('Login done Successfully!!!');
+          // this.toasterService.success('Login done Successfully!!!');
+        });
+    } else {
+      console.log('Something went wrong!!');
+      // this.toasterService.success('Something went wrong!!');
+    }
   }
 }
