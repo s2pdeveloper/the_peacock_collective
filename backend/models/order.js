@@ -10,6 +10,8 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },
+
+      
     },
     {
       timestamps: true,
@@ -18,15 +20,24 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Order.associate = (models) => {
+
     Order.belongsTo(models.Address, {
       foreignKey: 'addressId',
-      as: 'address',
-      onDelete: 'CASCADE',
+      as: 'orderWithAddress',
+      // onDelete: 'CASCADE',
     });
+
+    Order.belongsTo(models.Customer, {
+      foreignKey: 'customerId',
+      as: 'orderWithCustomer',
+      // onDelete: 'CASCADE',
+    });
+
+
     Order.hasMany(models.OrderVariantMap, {
       foreignKey: 'orderId',
       as: 'orderWithOrderVariantMap',
-      onDelete: 'CASCADE',
+      // onDelete: 'CASCADE',
     });
   };
   return Order;

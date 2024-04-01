@@ -10,11 +10,6 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },
-      customerId:{
-        type: DataTypes.STRING,
-        allowNull:false,
-
-      },
       country: {
         type: DataTypes.STRING,
         allowNull: false,

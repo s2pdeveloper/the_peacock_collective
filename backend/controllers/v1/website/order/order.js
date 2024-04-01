@@ -1,5 +1,5 @@
 const sequelize = require('sequelize');
-const { Order,Cart ,Variant,OrderVariantMap} = require('../../../../models');
+const { Order,Cart ,Variant,OrderVariantMap,Address} = require('../../../../models');
 const fs = require('fs');
 const {
   OPTIONS,
@@ -16,49 +16,34 @@ const cloudinary = require('../../../../shared/service/cloudinary.service');
 
 const modelObj = {
   create: asyncHandler(async (req, res) => {
+    console.log("req.body",req.body);
 
-    let newOrder = await generateCreateData(new Model(), req.body); 
-    await newOrder.save();
+    let createData = await generateCreateData(new Model(),req.body); 
+    console.log("createData",createData);
+   let newOrder= await createData.save();
     
-    const {
-      page = 1,
-      pageSize = 10,
-      column = 'createdAt',
-      direction = 'DESC',
-      search = null,
-      catagory = false
-    } = req.query;
-    let offset = (page - 1) * pageSize || 0;
+
     let query = {
       where: {    
-           userId:req.body.userId  
-      },
-      order: [[column, direction]],
-      include: {
-        model: Variant,
-        as: 'cartWithVariants',
-        // paranoid: true, required: false,
-         attributes: ['price','qty'],
-      },
-      offset: +offset,
-      limit: +pageSize,
+           customerId:req.body.customerId
+      }
     };
     // console.log("your query in the query",query);
-    let response = await Cart.findAndCountAll(query);
-//  console.log("you al cart",response);
-
-    response.rows.map(async(cart)=>{
-      console.log("your data",cart.dataValues.cartWithVariants.dataValues)
-      const newVariantMapOrder=await generateCreateData(new OrderVariantMap(),{
-        variantId:cart.dataValues.variantId,
+    let carts = await Cart.findAll(query);
+    console.log("++++++++++find all the cart++++++++++++",response)
+   let arr=carts.map(x=>{
+      return{
+        variantId:x.variantId,
         orderId:newOrder.id,
-        price:cart.dataValues.cartWithVariants.dataValues.price,
-        qty:cart.dataValues.qty
-      })
-      newVariantMapOrder.save();
+        price:x.price,
+        qty:x.qty
+      }
     })
+    await OrderVariantMap.bulkCreate(arr);
+    await Cart.destroy(query); 
 
- console.log("your all cart by this user",response);
+
+            console.log("your all cart by this user",response);
     // await createObj.save();
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
@@ -79,38 +64,43 @@ const modelObj = {
     } = req.query;
     let offset = (page - 1) * pageSize || 0;
     let query = {
-      where: {
-        ...(![undefined, null,''].includes(search) && {
-          [Op.or]: {
-            name: { [Op.like]: search },
-            description: { [Op.like]: search },
-          },
-        }),
-        ...(catagory && {
-          parentId: {
-            [Op.ne]: null
-          }
-        })
+      // where: {
+      //   ...(![undefined, null,''].includes(search) && {
+      //     [Op.or]: {
+      //       name: { [Op.like]: search },
+      //       description: { [Op.like]: search },
+      //     },
+      //   }),
+      //   ...(catagory && {
+      //     parentId: {
+      //       [Op.ne]: null
+      //     }
+      //   })
 
-      },
+      // },
       order: [[column, direction]],
       // attributes: {
       //   exclude: ['userId'],
       // },
-      // include: {
-      //   model: User,
-      //   as: 'shop',
-      //   attributes: ['id', 'name', 'mobile'],
-      // },
+     
+      include: {
+        model: Address,
+        as: 'address',
+        attributes: ['city', 'country','pinCode','type','name'],
+      },
+
+      include: {
+        model: OrderVariantMap,
+        as: 'orderWithOrderVariantMap',
+        attributes: ['price', 'qty'],
+      },
       offset: +offset,
       limit: +pageSize,
     };
     let response = await Model.findAndCountAll(query);
-
     return res
       .status(resCode.HTTP_OK)
       .json(generateResponse(resCode.HTTP_OK, response));
-
   }),
   getById: asyncHandler(async (req, res) => {
     let existing = await Model.findOne({
@@ -135,7 +125,6 @@ const modelObj = {
       },
     });
 
-    // console.log("itemDetails============", itemDetails);
     if (!itemDetails) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS('Categories');
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST)
@@ -150,9 +139,7 @@ const modelObj = {
       }
 
       itemDetails = await generateCreateData(itemDetails, req.body);
-
       await itemDetails.save();
-
       return res.json(
         generateResponse(resCode.HTTP_OK, {
           message: MESSAGES.apiSuccessStrings.UPDATE('Categories'),
@@ -183,9 +170,7 @@ const modelObj = {
     } else {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS('Categories');
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST)
-
     }
-
   }),
 };
 
