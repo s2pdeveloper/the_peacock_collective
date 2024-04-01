@@ -142,11 +142,11 @@ const modelObj = {
       search = null,
       catagory = false,
     } = req.query;
-    let userId = req.params.id;
+    // let userId = req.params.id;
     let offset = (page - 1) * pageSize || 0;
     let query = {
       where: {
-        userId: req.params.id,
+        customerId: req.params.id,
       },
       order: [[column, direction]],
       offset: +offset,
@@ -162,16 +162,13 @@ const modelObj = {
   makeDefault: asyncHandler(async (req, res, next) => {
     const updated = await Model.update(
       { isDefault: false },
-      { where: { userId: req.body.userId } }
+      { where: { customerId: req.body.customerId } }
     );
-
     const address = await Model.findOne({ where: { id: req.body.addressId } });
-
     if (!address) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Address");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
-
     await Model.update(
       { isDefault: true },
       { where: { id: req.body.addressId } }
