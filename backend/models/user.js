@@ -95,13 +95,6 @@ module.exports = (sequelize, DataTypes) => {
       ],
     }
   );
-  // User.associate = (models) => {
-  //   User.hasMany(models.Customer, {
-  //     foreignKey: 'userId',
-  //     as: 'customers',
-  //     onDelete: 'CASCADE',
-  //   });
-  // };
   User.prototype.generateHash = function (password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8));
   };
