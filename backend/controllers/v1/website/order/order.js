@@ -1,66 +1,92 @@
-const sequelize = require('sequelize');
-const { Order,Cart ,Variant,OrderVariantMap,Address} = require('../../../../models');
-const fs = require('fs');
+const sequelize = require("sequelize");
+const {
+  Order,
+  Cart,
+  Customer,
+  Variant,
+  OrderVariantMap,
+  Address,
+} = require("../../../../models");
+const fs = require("fs");
 const {
   OPTIONS,
   generateResponse,
   generateCreateData,
-} = require('../../../../config/options/global.options');
-const MESSAGES = require('../../../../config/options/messages.options');
+} = require("../../../../config/options/global.options");
+const MESSAGES = require("../../../../config/options/messages.options");
 const resCode = MESSAGES.resCode;
 const Op = sequelize.Op;
 const Model = Order;
-const ApiError = require('../../../../config/middlewares/api.error');
-const { asyncHandler } = require('../../../../config/middlewares/async.handler');
-const cloudinary = require('../../../../shared/service/cloudinary.service');
+const ApiError = require("../../../../config/middlewares/api.error");
+const {
+  asyncHandler,
+} = require("../../../../config/middlewares/async.handler");
+const cloudinary = require("../../../../shared/service/cloudinary.service");
 
 const modelObj = {
   create: asyncHandler(async (req, res) => {
-    console.log("req.body",req.body);
-
-    let createData = await generateCreateData(new Model(),req.body); 
-    console.log("createData",createData);
-   let newOrder= await createData.save();
-    
+    console.log("req.body", req.body);
+    let createData = await generateCreateData(new Model(), req.body);
+    console.log("createData", createData);
+    let newOrder = await createData.save();
 
     let query = {
-      where: {    
-           customerId:req.body.customerId
-      }
+      where: {
+        customerId: req.body.customerId,
+      },
     };
-    // console.log("your query in the query",query);
     let carts = await Cart.findAll(query);
-    console.log("++++++++++find all the cart++++++++++++",response)
-   let arr=carts.map(x=>{
-      return{
-        variantId:x.variantId,
-        orderId:newOrder.id,
-        price:x.price,
-        qty:x.qty
-      }
-    })
-    await OrderVariantMap.bulkCreate(arr);
-    await Cart.destroy(query); 
+    if (carts.length) {
+      let arr = carts.map((x) => {
+        return {
+          variantId: x.variantId,
+          orderId: newOrder.id,
+          price: x.price,
+          qty: x.qty,
+        };
+      });
+      await OrderVariantMap.bulkCreate(arr);
+      await Cart.destroy(query);
+    }
 
 
-            console.log("your all cart by this user",response);
-    // await createObj.save();
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
-        message: MESSAGES.apiSuccessStrings.ADDED('Address'),
-        response
+        message: MESSAGES.apiSuccessStrings.ADDED("Order"),
       })
     );
   }),
+
+  buyNow: asyncHandler(async (req, res) => {
+
+    let createData = await generateCreateData(new Model(), req.body);
+    let newOrder = await createData.save();
+
+
+      await OrderVariantMap.create({
+        variantId:req.body.variantId,
+          orderId: newOrder.id,
+          price:req.body.price,
+          qty:req.body.qty,
+      });
+
+
+
+    return res.status(resCode.HTTP_OK).json(
+      generateResponse(resCode.HTTP_OK, {
+        message: MESSAGES.apiSuccessStrings.ADDED("Order"),
+      })
+    );
+  }),
+
   
+
   getAll: asyncHandler(async (req, res) => {
     const {
       page = 1,
       pageSize = 10,
-      column = 'createdAt',
-      direction = 'DESC',
-      search = null,
-      catagory = false
+      column = "createdAt",
+      direction = "DESC",
     } = req.query;
     let offset = (page - 1) * pageSize || 0;
     let query = {
@@ -82,18 +108,25 @@ const modelObj = {
       // attributes: {
       //   exclude: ['userId'],
       // },
-     
-      include: {
-        model: Address,
-        as: 'address',
-        attributes: ['city', 'country','pinCode','type','name'],
-      },
 
-      include: {
-        model: OrderVariantMap,
-        as: 'orderWithOrderVariantMap',
-        attributes: ['price', 'qty'],
-      },
+      include: [
+        {
+          model: Address,
+          as: "address",
+          attributes: ["city", "country", "pinCode", "type", "name"],
+        },
+        {
+          model: Customer,
+          as: "customer",
+          attributes: ["firstName", "lastName", "phone"],
+        },
+        {
+          model: OrderVariantMap,
+          as: "orderWithOrderVariantMap",
+          attributes: ["price", "qty"],
+        },
+      ],
+
       offset: +offset,
       limit: +pageSize,
     };
@@ -109,16 +142,14 @@ const modelObj = {
       },
     });
     if (!existing) {
-      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS('Categories');
-      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST)
+      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Order");
+      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
     return res
       .status(resCode.HTTP_OK)
       .json(generateResponse(resCode.HTTP_OK, existing));
-
   }),
   update: asyncHandler(async (req, res) => {
-
     let itemDetails = await Model.findOne({
       where: {
         id: req.params.id,
@@ -126,9 +157,8 @@ const modelObj = {
     });
 
     if (!itemDetails) {
-      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS('Categories');
-      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST)
-
+      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Order");
+      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     } else {
       if (req.file) {
         if (itemDetails.image) {
@@ -142,11 +172,10 @@ const modelObj = {
       await itemDetails.save();
       return res.json(
         generateResponse(resCode.HTTP_OK, {
-          message: MESSAGES.apiSuccessStrings.UPDATE('Categories'),
+          message: MESSAGES.apiSuccessStrings.UPDATE("Order"),
         })
       );
     }
-
   }),
   delete: asyncHandler(async (req, res) => {
     let query = {
@@ -155,21 +184,18 @@ const modelObj = {
       },
     };
     let item = await Model.findOne(query);
-    if (item && item?.image) {
-      await cloudinary.deleteFile(item.image);
-    }
 
-    let deletedItem = await Model.destroy(query);
-    console.log("deletedItemdeletedItem", deletedItem);
-    if (deletedItem) {
+    if (item) {
+      item.status = OPTIONS.defaultStatus.DELETED;
+      await item.save();
       return res.json(
         generateResponse(resCode.HTTP_OK, {
-          message: MESSAGES.apiSuccessStrings.DELETED('Categories'),
+          message: MESSAGES.apiSuccessStrings.DELETED("Order"),
         })
       );
     } else {
-      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS('Categories');
-      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST)
+      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Order");
+      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
   }),
 };

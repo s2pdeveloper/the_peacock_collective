@@ -10,7 +10,11 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },
-
+      status: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: OPTIONS.defaultStatus.ACTIVE,
+      },
       
     },
     {
@@ -23,13 +27,13 @@ module.exports = (sequelize, DataTypes) => {
 
     Order.belongsTo(models.Address, {
       foreignKey: 'addressId',
-      as: 'orderWithAddress',
+      as: 'address',
       // onDelete: 'CASCADE',
     });
 
     Order.belongsTo(models.Customer, {
       foreignKey: 'customerId',
-      as: 'orderWithCustomer',
+      as: 'customer',
       // onDelete: 'CASCADE',
     });
 

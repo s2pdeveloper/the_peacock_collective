@@ -26,6 +26,15 @@ app.post(
   // validate("createCustomer"),
   controller.create
 );
+app.post(
+  "/buy-now",
+  // authHandler.authenticateJWT(),
+  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  // upload.single("image"),
+  // validate("createCustomer"),
+  controller.buyNow
+);
+
 
 // app.get(
 //   "product-attribute/:id",
