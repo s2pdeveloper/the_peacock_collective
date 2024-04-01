@@ -23,6 +23,11 @@ module.exports = (sequelize, DataTypes) => {
       as: 'address',
       onDelete: 'CASCADE',
     });
+    Order.hasMany(models.OrderVariantMap, {
+      foreignKey: 'orderId',
+      as: 'orderWithOrderVariantMap',
+      onDelete: 'CASCADE',
+    });
   };
   return Order;
 };

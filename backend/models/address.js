@@ -26,6 +26,15 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      type:{
+        type: DataTypes.STRING,
+       enum:["HOME","WORK","OTHER"]
+      },
+
       pinCode: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -34,20 +43,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-
     },
+
     {
       timestamps: true,
       tableName: "Address",
     }
   );
 
-  Address.associate = (models) => {
-    Address.belongsTo(models.Customer, {
-      foreignKey: 'userId',
-      as: 'user',
-      onDelete: 'CASCADE',
-    });
-  };
+
   return Address;
 };

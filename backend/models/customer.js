@@ -98,5 +98,13 @@ module.exports = (sequelize, DataTypes) => {
     const payload = { id: this.id, role: this.role };
     return jwt.sign(payload, process.env.JWT_SECRET_KEY);
   };
+
+  Customer.associate = (models) => {
+    Customer.hasMany(models.Address, {
+      foreignKey: 'customerId',
+      as: 'customerWithAddress',
+      onDelete: 'CASCADE',
+    });
+  };
   return Customer;
 };
