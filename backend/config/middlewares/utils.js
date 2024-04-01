@@ -5,7 +5,7 @@ const Op = sequelize.Op;
 const { OPTIONS, generateResponse } = require('../options/global.options');
 const User = require('../../models').User;
 const MESSAGES = require('../options/messages.options');
-const { times } = require('lodash');
+
 
 const resCode = MESSAGES.resCode;
 let utilsObj = {

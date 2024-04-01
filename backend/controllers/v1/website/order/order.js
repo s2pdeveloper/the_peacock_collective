@@ -1,5 +1,5 @@
 const sequelize = require('sequelize');
-const { Order,Cart ,Variant,VariantMapOrder} = require('../../../../models');
+const { Order,Cart ,Variant,OrderVariantMap} = require('../../../../models');
 const fs = require('fs');
 const {
   OPTIONS,
@@ -20,8 +20,6 @@ const modelObj = {
     let newOrder = await generateCreateData(new Model(), req.body); 
     await newOrder.save();
     
- 
-
     const {
       page = 1,
       pageSize = 10,
@@ -45,13 +43,13 @@ const modelObj = {
       offset: +offset,
       limit: +pageSize,
     };
-    console.log("your query in the query",query);
+    // console.log("your query in the query",query);
     let response = await Cart.findAndCountAll(query);
 //  console.log("you al cart",response);
 
     response.rows.map(async(cart)=>{
       console.log("your data",cart.dataValues.cartWithVariants.dataValues)
-      const newVariantMapOrder=await generateCreateData(new Model(),{
+      const newVariantMapOrder=await generateCreateData(new OrderVariantMap(),{
         variantId:cart.dataValues.variantId,
         orderId:newOrder.id,
         price:cart.dataValues.cartWithVariants.dataValues.price,

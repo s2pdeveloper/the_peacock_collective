@@ -18,7 +18,7 @@ const cloudinary = require("../../../../shared/service/cloudinary.service");
 
 const modelObj = {
   create: asyncHandler(async (req, res) => {
-    const address = await Model.findOne({ where: { userId: req.body.userId } });
+    const address = await Model.findOne({ where: { customerId: req.body.customerId } });
     if (!address) {
       req.body.isDefault = true;
     }
