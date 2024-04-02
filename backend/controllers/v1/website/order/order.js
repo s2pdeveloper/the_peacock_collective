@@ -5,6 +5,7 @@ const {
   Customer,
   Variant,
   OrderVariantMap,
+  
   Address,
 } = require("../../../../models");
 const fs = require("fs");
@@ -37,7 +38,7 @@ const modelObj = {
     };
     let carts = await Cart.findAll(query);
 
-    console.log("you got your cats",carts)
+    console.log("you got your cats", carts);
     if (carts.length) {
       let arr = carts.map((x) => {
         return {
@@ -47,8 +48,8 @@ const modelObj = {
           qty: x.qty,
         };
       });
-      console.log("++++++++your cart data++++++++",carts);
-      console.log("Your array of cart to create orderVariantMap",arr);
+      console.log("++++++++your cart data++++++++", carts);
+      console.log("Your array of cart to create orderVariantMap", arr);
       await OrderVariantMap.bulkCreate(arr);
       await Cart.destroy(query);
     }
@@ -64,14 +65,12 @@ const modelObj = {
     let createData = await generateCreateData(new Model(), req.body);
     let newOrder = await createData.save();
 
-      await OrderVariantMap.create({
-        variantId:req.body.variantId,
-          orderId: newOrder.id,
-          price:req.body.price,
-          qty:req.body.qty,
-      });
-
-
+    await OrderVariantMap.create({
+      variantId: req.body.variantId,
+      orderId: newOrder.id,
+      price: req.body.price,
+      qty: req.body.qty,
+    });
 
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
@@ -79,8 +78,6 @@ const modelObj = {
       })
     );
   }),
-
-  
 
   getAll: asyncHandler(async (req, res) => {
     const {
@@ -198,6 +195,41 @@ const modelObj = {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Order");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
+  }),
+
+  cancelItem: asyncHandler(async (req, res) => {
+   
+
+   
+      const orderId = req.body.orderId; // Assuming you're passing orderId in the request params
+      const orderVariantId = req.body.orderVariantId; // Assuming you're passing orderVariantId in the request params
+
+      try {
+        // Find the order
+        const order = await Model.findByPk(orderId);
+        if (!order) {
+          let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Order");
+          throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
+        }
+        const orderItem= await OrderVariantMap.findOne({
+          where: { id: orderVariantId, orderId: orderId },
+        });
+        if (!orderItem || ['dispatched', 'delivered'].includes(order.status)) {
+          let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Item");
+          throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
+        }
+        // Remove the orderVariant
+        await orderItem.destroy();
+        return res.json(
+          generateResponse(resCode.HTTP_OK, {
+            message: MESSAGES.apiSuccessStrings.DELETED("Item"),
+          })
+        );
+      } catch (error) {
+        console.error("Error removing orderVariant:", error);
+        res.status(500).json({ message: "Internal server error" });
+      }
+    
   }),
 };
 

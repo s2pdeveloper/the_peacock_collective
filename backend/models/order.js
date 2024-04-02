@@ -1,4 +1,5 @@
 const { OPTIONS, generateURl } = require("../config/options/global.options");
+const { options } = require("../controllers/v1");
 
 module.exports = (sequelize, DataTypes) => {
   const Order = sequelize.define(
@@ -11,7 +12,13 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       status: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM(
+          OPTIONS.defaultStatus.ACTIVE,
+          OPTIONS.defaultStatus.INACTIVE,
+          OPTIONS.defaultStatus.APPROVED,
+          OPTIONS.defaultStatus.DISPATACHED,
+          
+        ),
         allowNull: false,
         defaultValue: OPTIONS.defaultStatus.ACTIVE,
       },
@@ -39,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
     Order.hasMany(models.OrderVariantMap, {
       foreignKey: 'orderId',
       as: 'orderWithOrderVariantMap',
-      // onDelete: 'CASCADE',
+      // onDelete:'CASCADE',
     });
   };
   return Order;
