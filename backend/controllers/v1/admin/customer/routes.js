@@ -11,20 +11,20 @@ const controller = require('./customer');
 app.get(
   '/getAll',
   authHandler.authenticateJWT(),
-  rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  rolePermit(roles.usersRoles.SUPER_ADMIN),
   controller.getAll
 );
 app.get(
   '/getAllCustomerDashBoard',
   authHandler.authenticateJWT(),
-  rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  rolePermit(roles.usersRoles.SUPER_ADMIN),
   controller.getAllCustomerDashBoard
 );
 
 app.post(
   '/create',
   authHandler.authenticateJWT(),
-  rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  rolePermit(roles.usersRoles.SUPER_ADMIN),
   upload.single('image'),
   validate('createCustomer'),
   controller.create
@@ -33,14 +33,14 @@ app.post(
 app.get(
   '/getById/:id',
   authHandler.authenticateJWT(),
-  rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  rolePermit(roles.usersRoles.SUPER_ADMIN),
   validate('checkParamId'),
   controller.getById
 );
 app.delete(
   '/delete/:id',
   authHandler.authenticateJWT(),
-  rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  rolePermit(roles.usersRoles.SUPER_ADMIN),
   validate('checkParamId'),
   controller.delete
 );
@@ -48,7 +48,7 @@ app.delete(
 app.put(
   '/update/:id',
   authHandler.authenticateJWT(),
-  rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  rolePermit(roles.usersRoles.SUPER_ADMIN),
   upload.single('image'),
   validate('updateCustomer'),
   controller.update

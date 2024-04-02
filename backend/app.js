@@ -4,12 +4,14 @@ const compression = require('compression');
 const logger = require('morgan');
 const path = require('path');
 const { errorHandler } = require('./config/middlewares/error.handler');
+const { authenticateJWT } = require('./config/middlewares/auth.middleware');
+
 const lusca = require('lusca');
 const cors = require('cors');
 const lodash = require('lodash');
 const _ = require('lodash');
 let fs = require('fs');
-const utils = require('./config/middlewares/utils');
+require('./config/middlewares/utils');
 const indexRouter = require('./controllers/index');
 global._ = lodash;
 const app = express();
@@ -62,6 +64,8 @@ process.on('unhandledRejection', (reason, p) => {
 app.use('/', indexRouter);
 
 app.use(errorHandler);
+app.use(authenticateJWT);
+
 
 
 app.use('*', (req, res) => {
