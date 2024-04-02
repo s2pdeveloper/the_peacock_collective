@@ -6,6 +6,18 @@ const { OPTIONS, generateResponse } = require('../options/global.options');
 const User = require('../../models').User;
 const MESSAGES = require('../options/messages.options');
 
+(async () => {
+  let userData = await User.findOne({
+    where: { email: 'superadmin@gmail.com' },
+    attributes: ['id'],
+  });
+  if (!userData) {
+    console.log('if superadmin created');
+    await User.create(OPTIONS.superAdminData);
+  }
+  console.log('superadmin created');
+
+})();
 
 const resCode = MESSAGES.resCode;
 let utilsObj = {
@@ -50,21 +62,7 @@ let utilsObj = {
       }
     };
   },
-  onStartServerDataInsert: async () => {
-   await createSuperAdminUser();
-  },
 };
 module.exports = utilsObj;
 
- const createSuperAdminUser = async () => {
-  let userData = await User.findOne({
-    where: { email: 'superadmin@gmail.com' },
-    attributes: ['id'],
-  });
-  if (!userData) {
-    console.log('if superadmin created');
-    await User.create(OPTIONS.superAdminData);
-  }
-  console.log('superadmin created');
-  
-}
+
