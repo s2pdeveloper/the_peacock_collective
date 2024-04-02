@@ -30,11 +30,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      type:{
-        type: DataTypes.STRING,
-       enum:["HOME","WORK","OTHER"]
+      type: {
+        type: DataTypes.ENUM(
+          OPTIONS.addressType.HOME,
+          OPTIONS.addressType.WORK,
+          OPTIONS.addressType.OTHERS
+        ),
+        allowNull: false,
       },
-
       pinCode: {
         type: DataTypes.INTEGER,
         allowNull: false,

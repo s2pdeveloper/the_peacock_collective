@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
     OrderVariantMap.belongsTo(models.Variant, {
       foreignKey: "variantId",
       as: "orderVariantMapWithVariant",
-      onDelete: "CASCADE",
+      // onDelete: "CASCADE",
     });
   };
 

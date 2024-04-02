@@ -19,16 +19,19 @@ const modelObj = {
 
     let checkExisting = await Model.findOne({
         where: {
-          variantId:req.body.variantId ,
+          variantId:req.body.variantId,
         },
       });
       if (checkExisting) {
         let message = MESSAGES.apiErrorStrings.Data_EXISTS("Cart");
         throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
       }
-    //   if (req.file) {
-    //     req.body.bannerImage = await cloudinary.uploadFromBuffer(req.file.buffer);
-    //   }
+    
+      let variant=await Variant.findOne({where:{
+        id:req.body.variantId,
+      }})
+      console.log("+++",variant);
+      req.body.price=variant.price
       let createObj = await generateCreateData(new Model(), req.body);
   
       await createObj.save();

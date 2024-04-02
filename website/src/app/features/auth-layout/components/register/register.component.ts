@@ -23,7 +23,7 @@ export class RegisterComponent {
     {
       name: 'Ayush Amnerkar',
       location: 'ayush ayush',
-      mobile: 9096594971,
+      phone: 9096594971,
       id: 1,
       type: 'Work',
       country: 'India',
@@ -45,7 +45,7 @@ export class RegisterComponent {
       firstName: new FormControl(null),
       lastName: new FormControl(null),
       email: new FormControl(null),
-      mobile: new FormControl(null, [
+      phone: new FormControl(null, [
         Validators.maxLength(10),
         Validators.minLength(10),
       ]),

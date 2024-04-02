@@ -76,6 +76,11 @@ const OPTIONS = {
     CASH: "cash",
     CARD: "card",
   },
+  addressType: {
+    HOME: "home",
+    WORK: "work",
+    OTHERS: "others",
+  },
   devicePlatforms: {
     ANDROID: "android",
     IOS: "ios",
