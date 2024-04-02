@@ -9,9 +9,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
-      },
-
-      
+      },  
     },
     {
       timestamps: true,
@@ -32,7 +30,6 @@ module.exports = (sequelize, DataTypes) => {
       as: 'orderWithCustomer',
       // onDelete: 'CASCADE',
     });
-
 
     Order.hasMany(models.OrderVariantMap, {
       foreignKey: 'orderId',

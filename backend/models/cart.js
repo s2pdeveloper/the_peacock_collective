@@ -16,9 +16,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       price: {
         type: DataTypes.FLOAT,
-        allowNull: false,
+        allowNull: true,
+        defaultValue: 0.0,
       },
-      customerId:{
+      customerId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
@@ -31,9 +32,9 @@ module.exports = (sequelize, DataTypes) => {
 
   Cart.associate = (models) => {
     Cart.belongsTo(models.Variant, {
-      foreignKey: 'variantId',
-      as: 'cartWithVariants',
-      onDelete: 'CASCADE',
+      foreignKey: "variantId",
+      as: "cartWithVariants",
+      onDelete: "CASCADE",
     });
   };
   return Cart;
