@@ -71,10 +71,6 @@ app.post(
   "/gotoCheck",
   // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
-  (req,res,next)=>{
-  console.log("You are comming here")
-  next();
-  },
   controller.gotoCheck
 );
 

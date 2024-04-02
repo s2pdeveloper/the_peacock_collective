@@ -34,6 +34,14 @@ app.post(
   // validate("createCustomer"),
   controller.buyNow
 );
+app.post(
+  "/cancelItem",
+  // authHandler.authenticateJWT(),
+  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  // upload.single("image"),
+  // validate("createCustomer"),
+  controller.cancelItem
+);
 
 
 // app.get(
