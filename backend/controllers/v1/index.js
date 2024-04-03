@@ -1,7 +1,5 @@
 const express = require("express");
-
 const router = express.Router();
-
 const admin = require("./admin/routes");
 const mobile = require("./mobile/routes");
 const shared = require("./shared/routes");

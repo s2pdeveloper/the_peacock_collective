@@ -29,9 +29,9 @@ if (config.use_env_variable) {
 sequelize
   .authenticate()
   .then(async () => {
-    console.log('Database connection has been established successfully.');
+    console.log('Database connection has been established successfully.',process.env[config.use_env_variable], config,);
     if (process.env.ENVIRONMENT !== 'prod') {
-      await sequelize.sync({ alter: true });
+      await sequelize.sync({ alter:true });
     }
   })
   .catch((err) => {

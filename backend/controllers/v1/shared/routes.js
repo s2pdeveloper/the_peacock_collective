@@ -3,7 +3,6 @@ const multer = require('multer');
 const path = require('path');
 const OPTIONS = require('../../../config/options/global.options');
 const roles = require('../../../config/options/global.options').OPTIONS;
-const authHandler = require('../../../config/middlewares/auth.middleware');
 
 const shared = require('./shared');
 //const uploadimage = require('../../../assets/uploadimages');
@@ -29,7 +28,6 @@ app.post(
 
 app.put(
   '/remove',
-  authHandler.authenticateJWT(roles.usersRoles.getAllRolesAsArray()),
   shared.removeUpload
 );
 app.get('/pincode/:pincode', shared.searchByPinCode);

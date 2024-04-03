@@ -10,14 +10,6 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },
-      // userId: {
-      //   type: DataTypes.INTEGER,
-      //   allowNull: false,
-      //   references: {
-      //     model: 'User',
-      //     key: 'id',
-      //   },
-      // },
       receiveNotification: {
         type: DataTypes.BOOLEAN,
         allowNull: true,

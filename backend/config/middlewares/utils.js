@@ -6,57 +6,7 @@ const { OPTIONS, generateResponse } = require('../options/global.options');
 const User = require('../../models').User;
 const MESSAGES = require('../options/messages.options');
 
-
-const resCode = MESSAGES.resCode;
-let utilsObj = {
-  rolePermit: (...permittedRoles) => {
-    // return a middleware
-    return (request, response, next) => {
-      const { user } = request;
-      if (user && permittedRoles.includes(user.role)) {
-        next(); // role is allowed, so continue on the next middleware
-      } else {
-        return response
-          .status(resCode.HTTP_BAD_REQUEST)
-          .json(
-            generateResponse(
-              resCode.HTTP_BAD_REQUEST,
-              MESSAGES.errorTypes.UNAUTHORISED_ACCESS
-            )
-          ); // user is forbidden
-      }
-    };
-  },
-  validate: (schemas) => {
-    return async (req, res, next) => {
-      await Promise.all(
-        schemaValidation[schemas].map((schema) => schema.run(req))
-      );
-      const result = validationResult(req);
-      if (result.isEmpty()) {
-        return next();
-      }
-      const errors = result.array();
-      if (!result.isEmpty()) {
-        return res
-          .status(resCode.HTTP_BAD_REQUEST)
-          .json(
-            generateResponse(
-              resCode.HTTP_BAD_REQUEST,
-              { errors: errors },
-              MESSAGES.errorTypes.INPUT_VALIDATION
-            )
-          );
-      }
-    };
-  },
-  onStartServerDataInsert: async () => {
-   await createSuperAdminUser();
-  },
-};
-module.exports = utilsObj;
-
- const createSuperAdminUser = async () => {
+(async () => {
   let userData = await User.findOne({
     where: { email: 'superadmin@gmail.com' },
     attributes: ['id'],
@@ -66,5 +16,51 @@ module.exports = utilsObj;
     await User.create(OPTIONS.superAdminData);
   }
   console.log('superadmin created');
-  
+
+})();
+
+module.exports.rolePermit = (...permittedRoles) => {
+  // return a middleware
+  return (request, response, next) => {
+    const { user } = request;
+    if (user && permittedRoles.includes(user.role)) {
+      next(); // role is allowed, so continue on the next middleware
+    } else {
+      return response
+        .status(resCode.HTTP_BAD_REQUEST)
+        .json(
+          generateResponse(
+            resCode.HTTP_BAD_REQUEST,
+            MESSAGES.errorTypes.UNAUTHORISED_ACCESS
+          )
+        ); // user is forbidden
+    }
+  };
+
 }
+module.exports.validate = (schemas) => {
+  return async (req, res, next) => {
+    await Promise.all(
+      schemaValidation[schemas].map((schema) => schema.run(req))
+    );
+    const result = validationResult(req);
+    if (result.isEmpty()) {
+      return next();
+    }
+    const errors = result.array();
+    if (!result.isEmpty()) {
+      return res
+        .status(resCode.HTTP_BAD_REQUEST)
+        .json(
+          generateResponse(
+            resCode.HTTP_BAD_REQUEST,
+            { errors: errors },
+            MESSAGES.errorTypes.INPUT_VALIDATION
+          )
+        );
+    }
+  };
+}
+
+
+

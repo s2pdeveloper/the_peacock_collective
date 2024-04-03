@@ -1,5 +1,4 @@
 const app = require("express")();
-const authHandler = require("../../../../config/middlewares/auth.middleware");
 const {
   validate,
   rolePermit,
@@ -10,14 +9,12 @@ const controller = require("./images");
 
 // app.get(
 //   '/getAll',
-//   authHandler.authenticateJWT(),
 //   rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
 //   controller.getAll
 // );
 app.get("/", controller.getAll);
 app.post(
   "/",
-  // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
   // validate("createCustomer"),
   upload.single('image'),
@@ -27,7 +24,6 @@ app.post(
 
 app.get(
   "/getByVariantId/:id",
-  // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
   // validate("checkParamId"),
   controller.getByVariantId
@@ -36,7 +32,6 @@ app.get(
 
 app.get(
   "/:id",
-  // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
   // validate("checkParamId"),
   controller.getById
@@ -44,7 +39,6 @@ app.get(
 
 app.delete(
   "/:id",
-  // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
   // validate("checkParamId"),
   controller.delete
@@ -52,7 +46,6 @@ app.delete(
 
 app.put(
   "/:id",
-  // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
   // validate("updateCustomer"),
   upload.single("productImage"),

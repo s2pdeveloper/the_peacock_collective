@@ -1,0 +1,1192 @@
+{
+	"info": {
+		"_postman_id": "010361c7-7674-4dc6-89cb-0649038b97c5",
+		"name": "Peacock",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33771971",
+		"_collection_link": "https://grey-flare-456251.postman.co/workspace/peacock-shared~3328c67b-51ad-4968-b494-ba60ecb62615/collection/30501372-010361c7-7674-4dc6-89cb-0649038b97c5?action=share&source=collection_link&creator=33771971"
+	},
+	"item": [
+		{
+			"name": "variants",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}variant",
+							"host": [
+								"{{BASE_URL}}variant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"var1\",\n    \"price\":100.00,\n    \"qty\":2,\n    \"productId\":2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}variant",
+							"host": [
+								"{{BASE_URL}}variant"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "product",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "bannerImage",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "description",
+									"value": "short description",
+									"type": "text"
+								},
+								{
+									"key": "hsn",
+									"value": "123abc",
+									"type": "text"
+								},
+								{
+									"key": "gst",
+									"value": "9",
+									"type": "text"
+								},
+								{
+									"key": "inStock",
+									"value": "true",
+									"type": "text"
+								},
+								{
+									"key": "salePrice",
+									"value": "1500",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Silk Saari",
+									"type": "text"
+								},
+								{
+									"key": "attributeArr",
+									"value": "[]",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL}}product",
+							"host": [
+								"{{BASE_URL}}product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "productImages",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1945/api/v1/admin/productImages/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1945",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"productImages",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getBy ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1945/api/v1/admin/productImages/15",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1945",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"productImages",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1945/api/v1/admin/productImages/15",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1945",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"productImages",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create ",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "productId",
+									"value": "15",
+									"type": "text"
+								},
+								{
+									"key": "productImage",
+									"type": "file",
+									"src": "postman-cloud:///1eee76b8-6cfd-4b30-afd3-630247a48a88"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:1945/api/v1/admin/productImages/16",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1945",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"productImages",
+								"16"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1945/api/v1/admin/productImages/15",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1945",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"productImages",
+								"15"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "attributes",
+			"item": []
+		},
+		{
+			"name": "website",
+			"item": [
+				{
+					"name": "cart",
+					"item": [
+						{
+							"name": "get All carts",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL_WEB}}cart/",
+									"host": [
+										"{{BASE_URL_WEB}}cart"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "product add to cart",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"price\":90,\r\n    \"qty\":4,\r\n    \"variantId\":2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL_WEB}}/cart",
+									"host": [
+										"{{BASE_URL_WEB}}"
+									],
+									"path": [
+										"cart"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "customer",
+					"item": [
+						{
+							"name": "add new user",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\":\"shakir\",\r\n    \"lastName\":\"ansari\",\r\n    \"phone\":8956369962,\r\n    \"email\":\"shakir@gmail.com\",\r\n    \"gender\":\"male\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL_WEB}}/customer/1",
+									"host": [
+										"{{BASE_URL_WEB}}"
+									],
+									"path": [
+										"customer",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "{{BASE_URL_WEB}}/customer/1",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL_WEB}}/customer/1",
+									"host": [
+										"{{BASE_URL_WEB}}"
+									],
+									"path": [
+										"customer",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All users",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL_WEB}}/customer",
+									"host": [
+										"{{BASE_URL_WEB}}"
+									],
+									"path": [
+										"customer"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete the user",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL_WEB}}/customer/1",
+									"host": [
+										"{{BASE_URL_WEB}}"
+									],
+									"path": [
+										"customer",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get user by Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL_WEB}}/customer/3",
+									"host": [
+										"{{BASE_URL_WEB}}"
+									],
+									"path": [
+										"customer",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update password",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    // \"email\":\"shakir2@gmail.com\",\r\n    // \"password\":\"shakirOne\"\r\n    // \"lastName\":\"hussain\"\r\n    \"id\":3,\r\n    \"oldPassword\":\"shakirOne\",\r\n    \"newPassword\":\"shakirTwo\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL_WEB}}/customer/updatePassword",
+									"host": [
+										"{{BASE_URL_WEB}}"
+									],
+									"path": [
+										"customer",
+										"updatePassword"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "login user",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"password\":\"shakirTwo\",\r\n    \"email\":\"shakir973019@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:1945/api/v1/website/customer/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1945",
+									"path": [
+										"api",
+										"v1",
+										"website",
+										"customer",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "forget password  \"send OTP request\"",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"shakir973019@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:1945/api/v1/website/customer/forgetPassword",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1945",
+									"path": [
+										"api",
+										"v1",
+										"website",
+										"customer",
+										"forgetPassword"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "address",
+					"item": [
+						{
+							"name": "getAll",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userId\":6,\r\n    \"city\":\"Nagpur\",\r\n    \"country\":\"India\",\r\n    \"location\":\"yearkheda near aasha hospital Nagpur\",\r\n    \"pinCode\":440017,\r\n    \"state\":\"Maharshtra1\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:1945/api/v1/website/address",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1945",
+									"path": [
+										"api",
+										"v1",
+										"website",
+										"address"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userId\":6,\r\n    \"city\":\"Nagpur\",\r\n    \"country\":\"India\",\r\n    \"location\":\"yearkheda near aasha hospital Nagpur\",\r\n    \"pinCode\":440017,\r\n    \"state\":\"Maharshtra1\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:1945/api/v1/website/address/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1945",
+									"path": [
+										"api",
+										"v1",
+										"website",
+										"address",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:1945/api/v1/website/address/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1945",
+									"path": [
+										"api",
+										"v1",
+										"website",
+										"address",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:1945/api/v1/website/address/11",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1945",
+									"path": [
+										"api",
+										"v1",
+										"website",
+										"address",
+										"11"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userId\":6,\r\n    \"city\":\"Nagpur\",\r\n    \"country\":\"India\",\r\n    \"location\":\"yearkheda near aasha hospital Nagpur\",\r\n    \"pinCode\":440017,\r\n    \"state\":\"Maharshtra3\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:1945/api/v1/website/address",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1945",
+									"path": [
+										"api",
+										"v1",
+										"website",
+										"address"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getByCustomerId",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:1945/api/v1/website/address/byUserId/6",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1945",
+									"path": [
+										"api",
+										"v1",
+										"website",
+										"address",
+										"byUserId",
+										"6"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "makeDefault",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userId\":6,\r\n    \"addressId\":4\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:1945/api/v1/website/address/makeDefault/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1945",
+									"path": [
+										"api",
+										"v1",
+										"website",
+										"address",
+										"makeDefault",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "order",
+					"item": [
+						{
+							"name": "create order",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"customerId\":6,\r\n    \"addressId\":12\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:1945/api/v1/website/order/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1945",
+									"path": [
+										"api",
+										"v1",
+										"website",
+										"order",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAll",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "wishList",
+					"item": [
+						{
+							"name": "create WishList",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"customerId\":1,\r\n    \"variantId\":2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:1945/api/v1/website/wishList",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1945",
+									"path": [
+										"api",
+										"v1",
+										"website",
+										"wishList"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all wishlist prodcut of Customer",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:1945/api/v1/website/wishList/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1945",
+									"path": [
+										"api",
+										"v1",
+										"website",
+										"wishList",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "remove product from wishList",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:1945/api/v1/website/wishList/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1945",
+									"path": [
+										"api",
+										"v1",
+										"website",
+										"wishList",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}product",
+							"host": [
+								"{{BASE_URL}}product"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ADMIN",
+			"item": [
+				{
+					"name": "user",
+					"item": [
+						{
+							"name": "register new user",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"userName\": \"example_username\",\r\n  \"name\": \"Example User\",\r\n  \"role\": \"SUPER_ADMIN\",\r\n  \"resetPin\": null,\r\n  \"email\": \"shakir973019@gmail.com\",\r\n  \"mobile\": 1234567890,\r\n  \"pinCode\": null,\r\n  \"city\": \"Example City\",\r\n  \"state\": \"Example State\",\r\n  \"address\": \"123 Example St\",\r\n  \"gender\": \"Male\",\r\n  \"dob\": \"1990-01-01\",\r\n  \"password\": \"shakirOne\",\r\n  \"status\": \"active\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:1945/api/v1/admin/user/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1945",
+									"path": [
+										"api",
+										"v1",
+										"admin",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get All user except super Admins",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:1945/api/v1/admin/user/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1945",
+									"path": [
+										"api",
+										"v1",
+										"admin",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login user",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"shakir2@gmail.com\",\r\n    \"password\":\"shakirTwo\"\r\n\r\n} ",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:1945/api/v1/website/customer/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1945",
+									"path": [
+										"api",
+										"v1",
+										"website",
+										"customer",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "reset password",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\"email\":\"shakir973019@gmail.com\",\r\n\"id\":\"2\",\r\n\"oldPassword\":\"shakirOne\",\r\n\"newPassword\":\"shakirTWo\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:1945/api/v1/admin/user/resetPassword",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1945",
+									"path": [
+										"api",
+										"v1",
+										"admin",
+										"user",
+										"resetPassword"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "forgot password request for otp",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"shakir973019@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:1945/api/v1/admin/user/forgotPassword",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1945",
+									"path": [
+										"api",
+										"v1",
+										"admin",
+										"user",
+										"forgotPassword"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "resetPassowrd by otp ",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":\"2\",\r\n    \"resetPin\":6791,\r\n    \"password\":\"shakirNine\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:1945/api/v1/admin/user/setPassword",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1945",
+									"path": [
+										"api",
+										"v1",
+										"admin",
+										"user",
+										"setPassword"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "tag",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":1,\r\n    \"title\":\"Whats new\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1945/api/v1/website/tag",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1945",
+							"path": [
+								"api",
+								"v1",
+								"website",
+								"tag"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":1,\r\n    \"title\":\"New Whats\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1945/api/v1/website/tag/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1945",
+							"path": [
+								"api",
+								"v1",
+								"website",
+								"tag",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1945/api/v1/website/tag/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1945",
+							"path": [
+								"api",
+								"v1",
+								"website",
+								"tag",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://localhost:1945/api/v1/admin/",
+			"type": "string"
+		},
+		{
+			"key": "BASE_URL_WEB",
+			"value": "http://localhost:1945/api/v1/website/",
+			"type": "string"
+		}
+	]
+}

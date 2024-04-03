@@ -2,15 +2,21 @@ const jwt = require('jsonwebtoken');
 const User = require('../../models').User;
 const { OPTIONS } = require('../options/global.options');
 
-exports.authenticateJWT = (force = true) => {
-  return  (req, res, next) =>{
+module.exports.authenticateJWT = (force = true) => {
+  return (req, res, next) => {
+    const excludePath = [
+      '/signup', '/login', '/resetPassword', '/forgotPassword', '/setPassword'
+    ]
+    if (excludePath.some(x => req.path.includes(x))) {
+      next();
+    }
     let authHeader = req.headers.authorization;
     if (authHeader) {
       const token = authHeader.split(' ')[1];
       jwt.verify(
         token,
         process.env.JWT_SECRET_KEY,
-        async  (err, jwt_payload) =>{
+        async (err, jwt_payload) => {
           if (err) {
             return res.sendStatus(401);
           } else {

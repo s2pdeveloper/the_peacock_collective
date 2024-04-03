@@ -6,7 +6,7 @@ const {
   rolePermit,
 } = require("../../../../config/middlewares/utils");
 const roles = require("../../../../config/options/global.options").OPTIONS;
- const controller = require("./order");
+ const controller = require("./wishList");
 
 // app.get(
 //   '/getAll',
@@ -16,33 +16,16 @@ const roles = require("../../../../config/options/global.options").OPTIONS;
 // );
 
 
-app.get("/", controller.getAll);
+app.get("/:id", controller.getAll);
 
 app.post(
   "/",
   // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
-  // upload.single("image"),
+//   upload.single("image"),
   // validate("createCustomer"),
   controller.create
 );
-app.post(
-  "/buy-now",
-  // authHandler.authenticateJWT(),
-  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
-  // upload.single("image"),
-  // validate("createCustomer"),
-  controller.buyNow
-);
-app.post(
-  "/cancelItem",
-  // authHandler.authenticateJWT(),
-  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
-  // upload.single("image"),
-  // validate("createCustomer"),
-  controller.cancelItem
-);
-
 
 // app.get(
 //   "product-attribute/:id",
@@ -59,13 +42,13 @@ app.post(
 //   controller.getById
 // );
 
-// app.delete(
-//   "/:id",
-//   // authHandler.authenticateJWT(),
-//   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
-//   // validate("checkParamId"),
-//   controller.delete
-// );
+app.delete(
+  "/:id",
+  // authHandler.authenticateJWT(),
+  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  // validate("checkParamId"),
+  controller.delete
+);
 
 // app.put(
 //   "/:id",

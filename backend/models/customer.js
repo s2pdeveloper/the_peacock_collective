@@ -21,10 +21,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      socialTitle: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
+      // socialTitle: {
+      //   type: DataTypes.STRING,
+      //   allowNull: true,
+      // },
       firstName: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -107,6 +107,12 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'customerId',
       as: 'customerWithAddresses',
       // onDelete: 'CASCADE',
+    });
+
+    Customer.hasMany(models.WishList, {
+      foreignKey: 'customerId',
+      as: 'customerWithWishList',
+       onDelete: 'CASCADE',
     });
   };
   

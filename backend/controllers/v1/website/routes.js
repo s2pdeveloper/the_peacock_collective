@@ -1,7 +1,5 @@
 const router = require('express').Router();
 
-
-
 const product=require("./product/routes")
 const category=require("./category/routes")
 const customer=require("./customer/routes")
@@ -9,6 +7,7 @@ const common=require("./common/routes")
 const cart=require("./cart/routes")
 const address=require("./address/routes")
 const order=require("./order/routes")
+const wishList=require("./wishList/routes")
 
 const tag = require("./tag/routes")
 
@@ -23,5 +22,6 @@ router.use('/tag',tag);
 router.use('/common',common);
 router.use('/order',order)
 router.use('/address',address)
+router.use('/wishList',wishList)
 
 module.exports = router;
