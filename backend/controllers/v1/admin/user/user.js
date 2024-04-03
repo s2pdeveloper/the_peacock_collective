@@ -2,8 +2,9 @@ const fs = require("fs");
 const sequelize = require("sequelize");
 const bcrypt = require("bcrypt");
 const User = require("../../../../models").User;
-const userDevice = require("../../../../models").UserDevice;
-const db = require("../../../../models");
+const UserDevice = require("../../../../models").UserDevice;
+
+
 const UserHelper = require("../../../../models/helpers/user.helpers");
 const EmailRepository = require("../../../../shared/repositories/email.repository");
 const customErrorLogger = require("../../../../shared/service/customExceptionHandler");
@@ -28,7 +29,7 @@ const userObj = {
   //** Get all users */
   getAllUsers: asyncHandler(async (req, res) => {
 
-  console.log("you HIT the GET all user ");
+    console.log("you HIT the GET all user ");
     const {
       page = 1,
       pageSize = 10,
@@ -634,17 +635,17 @@ const userObj = {
             )
           );
       } else {
-      //  existingUser.resetPin = Math.floor(Math.random() * 899999 + 100000);
+        //  existingUser.resetPin = Math.floor(Math.random() * 899999 + 100000);
         existingUser.resetPin = Math.floor(Math.random() * 9000) + 1000;
-   
+
         let user = await existingUser.save();
         let data = {
           userName: `${user.userName}`,
           email: user.email,
-          OTP:user.resetPin,
-          subject:`RESET PASSWORD ${user.resetPin} `,
-          companyLogo:'https://peacock-collective.web.app/assets/images/gold-logo.png',
-          template:'resetPassword.html',
+          OTP: user.resetPin,
+          subject: `RESET PASSWORD ${user.resetPin} `,
+          companyLogo: 'https://peacock-collective.web.app/assets/images/gold-logo.png',
+          template: 'resetPassword.html',
           url: `${process.env.REQ_URL}#/change-pwd?sub=${user.id}&pin=${user.resetPin}&role=${user.role}`,
         };
         mail.sendForgetMail(req, data);
@@ -665,7 +666,7 @@ const userObj = {
   //** set the password */
   setPassword: async (req, res) => {
     try {
-     
+
       let user = await User.findOne({
         where: { id: req.body.id },
       });
@@ -676,7 +677,7 @@ const userObj = {
           .json(generateResponse(resCode.HTTP_BAD_REQUEST, error));
       } else {
         if (user.resetPin === req.body.resetPin) {
-          console.log("hit the setPassword",user.resetPin)
+          console.log("hit the setPassword", user.resetPin)
           user.password = await bcrypt.hash(
             req.body.password,
             bcrypt.genSaltSync(8)

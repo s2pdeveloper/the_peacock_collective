@@ -1,5 +1,8 @@
 const Sequelize = require('sequelize');
-const { Product, ProdAttributeMap,Attribute,Categories } = require("../../../../models");
+const Product = require("../../../../models").Product;
+const ProdAttributeMap = require("../../../../models").ProdAttributeMap;
+const Attribute = require("../../../../models").Attribute;
+const Categories = require("../../../../models").Categories;
 const {
   OPTIONS,
   generateResponse,
@@ -20,7 +23,7 @@ const modelObj = {
   create: asyncHandler(async (req, res) => {
     let checkExisting = await Model.findOne({
       where: {
-        name:req.body.name ,
+        name: req.body.name,
       },
     });
     if (checkExisting) {
@@ -64,17 +67,17 @@ const modelObj = {
       search = null,
     } = req.query;
 
-    console.log("your query",search);
+    console.log("your query", search);
     let offset = (page - 1) * pageSize || 0;
     let query = {
       where: {
-          ...(search && {
+        ...(search && {
           [Op.or]: {
             name: { [Op.like]: `%${search}%` },
-            description: { [Op.like]: `%${search}%`},
+            description: { [Op.like]: `%${search}%` },
             // description: { [Op.iLike]: `%${search}%` },
           },
-       }),
+        }),
       },
       order: [[column, direction]],
       // attributes: {
@@ -105,7 +108,7 @@ const modelObj = {
       where: {
         id: req.params.id,
       },
-      include:[ {
+      include: [{
         model: ProdAttributeMap,
         as: 'productWithProdAttributeMap',
         // attributes: ['id', 'title', 'course_id', 'start_date', 'end_date']
@@ -118,14 +121,14 @@ const modelObj = {
           // paranoid: true, required: false
         },
       },
-      { 
-          model: Categories,
-          as: 'productWithCategory',
-          // attributes: ['id', 'title', 'course_id', 'start_date', 'end_date']
-          // paranoid: true, required: false
-        
+      {
+        model: Categories,
+        as: 'productWithCategory',
+        // attributes: ['id', 'title', 'course_id', 'start_date', 'end_date']
+        // paranoid: true, required: false
+
       }
-    ]
+      ]
     });
     if (!existing) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Product");
@@ -146,23 +149,23 @@ const modelObj = {
 
     if (req.body?.attributeArr) {
       req.body.attributeArr = JSON.parse(req.body.attributeArr);
-    
-        let deleteQuery = {
-          where: {
-            productId: req.params.id,
-          },
+
+      let deleteQuery = {
+        where: {
+          productId: req.params.id,
+        },
+      }
+      await ProdAttributeMap.destroy(deleteQuery);
+
+      let payloadMap = req.body.attributeArr.map(x => {
+        return {
+          attributeId: x.id,
+          productId: req.params.id
         }
-        await ProdAttributeMap.destroy(deleteQuery);
-  
-        let payloadMap = req.body.attributeArr.map(x => {
-          return {
-            attributeId: x.id,
-            productId: req.params.id
-          }
-        })
-        await ProdAttributeMap.bulkCreate(payloadMap);
-      
-   
+      })
+      await ProdAttributeMap.bulkCreate(payloadMap);
+
+
     }
 
     if (!itemDetails) {
@@ -221,14 +224,14 @@ const modelObj = {
       where: {
         productId: req.params.id,
       },
-    //   include:[ {
-    //     model: ProdAttributeMap,
-    //     as: 'productWithProdAttributeMap',
-    //     // attributes: ['id', 'title', 'course_id', 'start_date', 'end_date']
-    //     paranoid: true, required: false,
+      //   include:[ {
+      //     model: ProdAttributeMap,
+      //     as: 'productWithProdAttributeMap',
+      //     // attributes: ['id', 'title', 'course_id', 'start_date', 'end_date']
+      //     paranoid: true, required: false,
 
-    // }
-    // ]
+      // }
+      // ]
     });
     if (!existing) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Product");

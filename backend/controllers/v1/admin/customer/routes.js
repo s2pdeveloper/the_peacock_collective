@@ -22,20 +22,20 @@ app.post(
   '/create',
   // rolePermit(roles.usersRoles.SUPER_ADMIN),
   upload.single('image'),
-  validate('createCustomer'),
+  // validate('createCustomer'),
   controller.create
 );
 
 app.get(
   '/getById/:id',
   // rolePermit(roles.usersRoles.SUPER_ADMIN),
-  validate('checkParamId'),
+  // validate('checkParamId'),
   controller.getById
 );
 app.delete(
   '/delete/:id',
   // rolePermit(roles.usersRoles.SUPER_ADMIN),
-  validate('checkParamId'),
+  // validate('checkParamId'),
   controller.delete
 );
 
@@ -43,7 +43,7 @@ app.put(
   '/update/:id',
   // rolePermit(roles.usersRoles.SUPER_ADMIN),
   upload.single('image'),
-  validate('updateCustomer'),
+  // validate('updateCustomer'),
   controller.update
 );
 

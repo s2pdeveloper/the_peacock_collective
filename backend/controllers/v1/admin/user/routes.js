@@ -1,7 +1,7 @@
 const app = require("express")();
 const {
-  // rolePermit,
-  // validate,
+  rolePermit,
+  validate,
 } = require("../../../../config/middlewares/utils");
 
 const roles = require("../../../../config/options/global.options").OPTIONS;
@@ -12,11 +12,11 @@ app.get(
   // rolePermit(roles.usersRoles.SUPER_ADMIN),
   controller.getAllUsers
 );
-app.post("/",controller.create);
+app.post("/", controller.create);
 app.put(
   "/:id",
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.EMPLOYEE),
-  // validate("updateProfile"),
+  validate("updateProfile"),
   controller.updateProfile
 );
 

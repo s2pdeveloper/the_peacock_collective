@@ -1,5 +1,5 @@
 const sequelize = require("sequelize");
-const { Tag } = require("../../../../models");
+const Tag = require("../../../../models").Tag;
 const {
   OPTIONS,
   generateResponse,

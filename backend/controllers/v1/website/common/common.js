@@ -1,15 +1,13 @@
 const Sequelize = require("sequelize");
-const {
-  Product,
-  ProdAttributeMap,
-  Attribute,
-  Categories,
-  Variant,
-  Images,
-  Tag,
-  AttrVariantMap,
-  ProdTagMap,
-} = require("../../../../models");
+
+const Product = require("../../../../models").Product;
+const Attribute = require("../../../../models").Attribute;
+const Categories = require("../../../../models").Categories;
+const Images = require("../../../../models").Images;
+const Tag = require("../../../../models").Tag;
+const AttrVariantMap = require("../../../../models").AttrVariantMap;
+const ProdTagMap = require("../../../../models").ProdTagMap;
+const Variant = require("../../../../models").Variant;
 const {
   OPTIONS,
   generateResponse,
@@ -19,17 +17,16 @@ const MESSAGES = require("../../../../config/options/messages.options");
 const resCode = MESSAGES.resCode;
 const Op = Sequelize.Op;
 
-const Model = Product;
 const ApiError = require("../../../../config/middlewares/api.error");
 const {
   asyncHandler,
 } = require("../../../../config/middlewares/async.handler");
 
-module.exports.getAllCategory = asyncHandler(async (req, res) => {
+const getAllMasterData = asyncHandler(async (req, res) => {
   let column = "createdAt";
   let direction = "ASC";
 
-  let categoryQuery = {
+  const categoryQuery = {
     where: {
       parentId: null,
     },
@@ -296,3 +293,7 @@ module.exports.getAllCategory = asyncHandler(async (req, res) => {
   //       .json(generateResponse(resCode.HTTP_OK, existing));
   //   }),
 });
+module.exports = {
+  getAllMasterData
+
+}

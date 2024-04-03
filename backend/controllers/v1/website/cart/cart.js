@@ -1,6 +1,6 @@
 const sequelize = require('sequelize');
-const { Cart,Variant } = require('../../../../models');
-const fs = require('fs');
+const Cart = require('../../../../models').Cart;
+const Variant = require('../../../../models').Variant;
 const {
   OPTIONS,
   generateResponse,
@@ -18,31 +18,33 @@ const modelObj = {
   create: asyncHandler(async (req, res) => {
 
     let checkExisting = await Model.findOne({
-        where: {
-          variantId:req.body.variantId,
-        },
-      });
-      if (checkExisting) {
-        let message = MESSAGES.apiErrorStrings.Data_EXISTS("Cart");
-        throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
+      where: {
+        variantId: req.body.variantId,
+      },
+    });
+    if (checkExisting) {
+      let message = MESSAGES.apiErrorStrings.Data_EXISTS("Cart");
+      throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
+    }
+
+    let variant = await Variant.findOne({
+      where: {
+        id: req.body.variantId,
       }
-    
-      let variant=await Variant.findOne({where:{
-        id:req.body.variantId,
-      }})
-      console.log("+++",variant);
-      req.body.price=variant.price
-      let createObj = await generateCreateData(new Model(), req.body);
-  
-      await createObj.save();
-  
-      return res.status(resCode.HTTP_OK).json(
-        generateResponse(resCode.HTTP_OK, {
-          message: MESSAGES.apiSuccessStrings.ADDED("Cart"),
-        })
-      );
+    })
+    console.log("+++", variant);
+    req.body.price = variant.price
+    let createObj = await generateCreateData(new Model(), req.body);
+
+    await createObj.save();
+
+    return res.status(resCode.HTTP_OK).json(
+      generateResponse(resCode.HTTP_OK, {
+        message: MESSAGES.apiSuccessStrings.ADDED("Cart"),
+      })
+    );
   }),
-  
+
   getAll: asyncHandler(async (req, res) => {
     const {
       page = 1,
@@ -73,7 +75,7 @@ const modelObj = {
         model: Variant,
         as: 'cartWithVariants',
         // paranoid: true, required: false,
-         attributes: ['price','qty'],
+        attributes: ['price', 'qty'],
       },
       offset: +offset,
       limit: +pageSize,

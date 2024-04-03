@@ -1,5 +1,4 @@
 const app = require("express")();
-const authHandler = require("../../../../config/middlewares/auth.middleware");
 const upload = require("../../shared/upload");
 const {
   validate,

@@ -1,6 +1,6 @@
 const sequelize = require("sequelize");
-const { Cart, Variant, WishList } = require("../../../../models");
-const fs = require("fs");
+const WishList = require("../../../../models").WishList;
+const Variant = require("../../../../models").Variant;
 const {
   OPTIONS,
   generateResponse,

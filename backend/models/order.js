@@ -1,5 +1,4 @@
 const { OPTIONS, generateURl } = require("../config/options/global.options");
-const { options } = require("../controllers/v1");
 
 module.exports = (sequelize, DataTypes) => {
   const Order = sequelize.define(

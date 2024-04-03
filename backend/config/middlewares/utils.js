@@ -6,7 +6,8 @@ const { OPTIONS, generateResponse } = require('../options/global.options');
 const User = require('../../models').User;
 const MESSAGES = require('../options/messages.options');
 
-(async () => {
+
+module.exports.createSuperAdmin = async () => {
   let userData = await User.findOne({
     where: { email: 'superadmin@gmail.com' },
     attributes: ['id'],
@@ -17,7 +18,7 @@ const MESSAGES = require('../options/messages.options');
   }
   console.log('superadmin created');
 
-})();
+}
 
 module.exports.rolePermit = (...permittedRoles) => {
   // return a middleware

@@ -14,7 +14,7 @@ app.get(
   //   authHandler.authenticateJWT(),
   //   rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
   //   validate("checkParamId"),
-  controller.getAllCategory
+  controller.getAllMasterData
 );
 
 module.exports = app;

@@ -5,13 +5,13 @@ const logger = require('morgan');
 const path = require('path');
 const { errorHandler } = require('./config/middlewares/error.handler');
 const { authenticateJWT } = require('./config/middlewares/auth.middleware');
+const { createSuperAdmin } = require('./config/middlewares/utils');
 
 const lusca = require('lusca');
 const cors = require('cors');
 const lodash = require('lodash');
 const _ = require('lodash');
 let fs = require('fs');
-require('./config/middlewares/utils');
 const indexRouter = require('./controllers/index');
 global._ = lodash;
 const app = express();
@@ -25,6 +25,9 @@ app.use(express.json({ limit: '50mb' }));
 /**
  * Start Express server.
  */
+setTimeout(() => {
+  createSuperAdmin();
+}, 2000);
 app.set('port', process.env.PORT || 1945);
 
 const server = app.listen(app.get('port'), () => {

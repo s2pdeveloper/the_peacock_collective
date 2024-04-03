@@ -1,14 +1,10 @@
 const sequelize = require("sequelize");
-const {
-  Order,
-  Cart,
-  Customer,
-  Variant,
-  OrderVariantMap,
-  
-  Address,
-} = require("../../../../models");
-const fs = require("fs");
+
+const Order = require("../../../../models").Order;
+const Cart = require("../../../../models").Cart;
+const Customer = require("../../../../models").Customer;
+const OrderVariantMap = require("../../../../models").OrderVariantMap;
+const Address = require("../../../../models").Address;
 const {
   OPTIONS,
   generateResponse,
@@ -198,38 +194,38 @@ const modelObj = {
   }),
 
   cancelItem: asyncHandler(async (req, res) => {
-   
 
-   
-      const orderId = req.body.orderId; // Assuming you're passing orderId in the request params
-      const orderVariantId = req.body.orderVariantId; // Assuming you're passing orderVariantId in the request params
 
-      try {
-        // Find the order
-        const order = await Model.findByPk(orderId);
-        if (!order) {
-          let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Order");
-          throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
-        }
-        const orderItem= await OrderVariantMap.findOne({
-          where: { id: orderVariantId, orderId: orderId },
-        });
-        if (!orderItem || ['dispatched', 'delivered'].includes(order.status)) {
-          let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Item");
-          throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
-        }
-        // Remove the orderVariant
-        await orderItem.destroy();
-        return res.json(
-          generateResponse(resCode.HTTP_OK, {
-            message: MESSAGES.apiSuccessStrings.DELETED("Item"),
-          })
-        );
-      } catch (error) {
-        console.error("Error removing orderVariant:", error);
-        res.status(500).json({ message: "Internal server error" });
+
+    const orderId = req.body.orderId; // Assuming you're passing orderId in the request params
+    const orderVariantId = req.body.orderVariantId; // Assuming you're passing orderVariantId in the request params
+
+    try {
+      // Find the order
+      const order = await Model.findByPk(orderId);
+      if (!order) {
+        let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Order");
+        throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
       }
-    
+      const orderItem = await OrderVariantMap.findOne({
+        where: { id: orderVariantId, orderId: orderId },
+      });
+      if (!orderItem || ['dispatched', 'delivered'].includes(order.status)) {
+        let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Item");
+        throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
+      }
+      // Remove the orderVariant
+      await orderItem.destroy();
+      return res.json(
+        generateResponse(resCode.HTTP_OK, {
+          message: MESSAGES.apiSuccessStrings.DELETED("Item"),
+        })
+      );
+    } catch (error) {
+      console.error("Error removing orderVariant:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+
   }),
 };
 

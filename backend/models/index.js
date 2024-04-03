@@ -4,7 +4,7 @@ const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const env = process.env.ENVIRONMENT || 'development';
 let config = require('../config/json/config.json')[env];
-const db = {};
+let db = {};
 config.dialectOptions = {};
 config.dialectOptions.typeCast = (field, next) => {
   if (field.type === 'DATETIME') {
@@ -29,7 +29,7 @@ if (config.use_env_variable) {
 sequelize
   .authenticate()
   .then(async () => {
-    console.log('Database connection has been established successfully.',process.env[config.use_env_variable], config,);
+    console.log('Database connection has been established successfully.');
     if (process.env.ENVIRONMENT !== 'prod') {
       await sequelize.sync({ alter:true });
     }
@@ -45,12 +45,11 @@ fs.readdirSync(__dirname)
   )
   .forEach((file) => {
     // const model = sequelize.import(path.join(__dirname, file));
-    console.log("file",file);
     const model = require(path.join(__dirname, file))(
       sequelize,
       Sequelize.DataTypes
     );
-    // console.log("model==================>",model?.name);
+    console.log("model==================>",model?.name);
     if (model?.name) {
     db[model.name] = model;
     }
