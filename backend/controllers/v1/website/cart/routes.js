@@ -16,13 +16,13 @@ const roles = require("../../../../config/options/global.options").OPTIONS;
 // );
 
 
-app.get("/", controller.getAll);
+app.get("/:id", controller.getAllByCustomerId);
 
 app.post(
   "/",
   // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
-  upload.single("image"),
+  // upload.single("image"),
   // validate("createCustomer"),
   controller.create
 );

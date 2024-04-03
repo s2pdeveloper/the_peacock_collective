@@ -49,7 +49,6 @@ const modelObj = {
       await Cart.destroy(query);
     }
 
-
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
         message: MESSAGES.apiSuccessStrings.ADDED("Order"),
@@ -58,19 +57,15 @@ const modelObj = {
   }),
 
   buyNow: asyncHandler(async (req, res) => {
-
     let createData = await generateCreateData(new Model(), req.body);
     let newOrder = await createData.save();
 
-
-      await OrderVariantMap.create({
-        variantId:req.body.variantId,
-          orderId: newOrder.id,
-          price:req.body.price,
-          qty:req.body.qty,
-      });
-
-
+    await OrderVariantMap.create({
+      variantId: req.body.variantId,
+      orderId: newOrder.id,
+      price: req.body.price,
+      qty: req.body.qty,
+    });
 
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
@@ -78,8 +73,6 @@ const modelObj = {
       })
     );
   }),
-
-  
 
   getAll: asyncHandler(async (req, res) => {
     const {

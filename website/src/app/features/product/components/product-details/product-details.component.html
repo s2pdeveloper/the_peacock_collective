@@ -51,7 +51,7 @@
               <div class="row">
                 <div
                   *ngFor="let item of variants"
-                  [class.img-border]="currentVariant"
+                  [class.img-border]="currentVariant.variantImages[0]?.image == item?.variantImages[0]?.image"
                   class="col-3 m-2 prod-cart"
                 >
                   <img
@@ -132,10 +132,15 @@
                     [(ngModel)]="qty"
                   />
                 </div>
-                <div class="col-12 col-lg-3 m-2">
-                  <button type="button" class="btn btn-dark h-100 py-2">
-                    <i class="fa-solid fa-bag-shopping text-light me-1"></i>Add
+                <div class="col-12 col-lg-4 m-2">
+                  <button type="button" class="btn btn-dark h-100 py-2" (click)="createCart()">
+                    <i class="fa-solid fa-cart-shopping text-light me-2"></i>Add
                     to cart
+                  </button>
+                </div>
+                <div class="col-12 col-lg-4 m-2">
+                  <button type="button" class="btn btn-dark h-100 py-2">
+                    <i class="fa-solid fa-bag-shopping text-light me-2"></i>Buy Now
                   </button>
                 </div>
                 <div

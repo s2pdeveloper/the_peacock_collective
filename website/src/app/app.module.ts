@@ -12,11 +12,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './core/services';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
-  declarations: [
-    AppComponent,
-    SafePipe
-  ],
+  declarations: [AppComponent, SafePipe],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -26,17 +24,16 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
     NgxSpinnerModule,
     ToastrModule.forRoot({
-      timeOut: 3000, // Time to close the toaster (in milliseconds)
-      positionClass: "toast-top-right", // Toast position
-      closeButton: true, // Show close button
-      progressBar: true, // Show progress bar
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      closeButton: true,
+      progressBar: true,
     }),
   ],
-  exports: [
-    SafePipe
-  ],
+  exports: [SafePipe],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
@@ -44,6 +41,6 @@ import { NgxSpinnerModule } from 'ngx-spinner';
       multi: true,
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
