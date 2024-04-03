@@ -17,13 +17,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let p of product">
+              <tr *ngFor="let p of commonService.cartData">
                 <th scope="row" class="d-flex">
-                  <img width="100" height="90" [src]="p.img" alt="" />
+                  <img width="100" height="90" [src]="p.variantImages.img" alt="" />
                   <div class="p-3">
-                    <p class="light-dark regular-font">{{ p.name }}</p>
-                    <p class="text-muted small-text">Size: {{ p.size }}</p>
-                    <p class="text-muted small-text">Color: {{ p.color }}</p>
+                    <p class="light-dark regular-font">{{ p.cartWithVariants.variantWithProduct.variantImages?.[0]?.image }}</p>
+                    <p class="text-muted small-text" *ngFor="let item of p.cartWithVariants.variantWithAttrVariantMap">{{ item.AttrVariantMapWithAttributes.name}}: {{  item.value }}</p>
                   </div>
                 </th>
                 <td class="py-auto light-dark small-text">
@@ -40,7 +39,7 @@
                 <td class="light-dark small-text">
                   <p class="py-auto">{{ p.price * qty | currency }}</p>
                 </td>
-                <td><i class="fa-regular fa-trash-can"></i></td>
+                <td><i class="fa-regular fa-trash-can" (click)="deleteVariant(p)"></i></td>
               </tr>
             </tbody>
           </table>

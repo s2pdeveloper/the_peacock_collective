@@ -22,7 +22,7 @@ app.post(
   "/",
   // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
-  upload.single("image"),
+  // upload.single("image"),
   // validate("createCustomer"),
   controller.create
 );
@@ -62,11 +62,11 @@ app.put(
   "/:id",
   // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
-  upload.single("image"),
+  // upload.single("image"),
   // validate("updateCustomer"),
   controller.update
 );
 
 
-app.get('/byUserId/:id',controller.getAllByUserId)
+app.get('/byCustomerId/:id',controller.getAllByCustomerId)
 module.exports = app;
