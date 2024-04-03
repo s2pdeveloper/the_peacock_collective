@@ -33,6 +33,6 @@ module.exports.create = async (data) => {
     return await Customer.create(data);
 };
 
-module.exports.update = async (query) => {
-    return await Customer.update(query);
+module.exports.update = async (data, query) => {
+    return await Customer.update(data, query);
 };

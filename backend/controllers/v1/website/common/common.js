@@ -8,6 +8,7 @@ const Tag = require("../../../../models").Tag;
 const AttrVariantMap = require("../../../../models").AttrVariantMap;
 const ProdTagMap = require("../../../../models").ProdTagMap;
 const Variant = require("../../../../models").Variant;
+const Cart = require("../../../../models").Cart;
 const {
   OPTIONS,
   generateResponse,
@@ -79,12 +80,18 @@ const getAllMasterData = asyncHandler(async (req, res) => {
       },
     ],
   };
+  // const cartQuery = {
+  //   where: {
+  //     userId: req?.user?.id,
+  //   },
+  // }
 
   const promissArr = [
     Categories.findAll(categoryQuery),
     Product.findAll(productQuery),
     Tag.findAll({}),
     Attribute.findAll({}),
+    Variant.findAll(variantQuery)
   ];
   Promise.all(promissArr)
     .then((values) => {
@@ -93,6 +100,7 @@ const getAllMasterData = asyncHandler(async (req, res) => {
         products: values[1],
         tags: values[2],
         attributes: values[3],
+        variants: values[4],
       };
       return res
         .status(resCode.HTTP_OK)

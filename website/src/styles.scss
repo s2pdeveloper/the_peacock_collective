@@ -26,3 +26,7 @@
 .light-blue-backdrop{
   background: #5cb3fd;
 }
+.disabled{
+  pointer-events: none;
+  opacity: 0.5;
+}

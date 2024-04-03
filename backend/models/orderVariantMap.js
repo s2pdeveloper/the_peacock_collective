@@ -10,16 +10,6 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },
-
-      //   variantId: {
-      //     type: DataTypes.INTEGER,
-      //     allowNull: false,
-      //   },
-      // orderId: {
-      //   type: DataTypes.INTEGER,
-      //   allowNull: false,
-      // },
-
       price: {
         type: DataTypes.INTEGER,
         allowNull: true,

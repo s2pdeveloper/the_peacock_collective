@@ -17,37 +17,32 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let p of commonService.cartData">
+              <tr *ngFor="let p of commonService.cartData;let i =index">
                 <th scope="row" class="d-flex">
                   <img width="100" height="90" [src]="p.variantImages.img" alt="" />
                   <div class="p-3">
-                    <p class="light-dark regular-font">{{ p.cartWithVariants.variantWithProduct.variantImages?.[0]?.image }}</p>
-                    <p class="text-muted small-text" *ngFor="let item of p.cartWithVariants.variantWithAttrVariantMap">{{ item.AttrVariantMapWithAttributes.name}}: {{  item.value }}</p>
+                    <p class="light-dark regular-font">{{
+                      p.cartWithVariants.variantWithProduct.variantImages?.[0]?.image }}</p>
+                    <p class="text-muted small-text" *ngFor="let item of p.cartWithVariants.variantWithAttrVariantMap">
+                      {{ item.AttrVariantMapWithAttributes.name}}: {{ item.value }}</p>
                   </div>
                 </th>
                 <td class="py-auto light-dark small-text">
                   {{ p.price | currency }}
                 </td>
                 <td>
-                  <input
-                    type="number "
-                    class="w-25 input-number background-primary"
-                    [(ngModel)]="qty"
-                    [value]="qty"
-                  />
+                  <input type="number " class="w-25 input-number background-primary" [(ngModel)]="qty" [value]="qty" />
                 </td>
                 <td class="light-dark small-text">
                   <p class="py-auto">{{ p.price * qty | currency }}</p>
                 </td>
-                <td><i class="fa-regular fa-trash-can" (click)="deleteVariant(p)"></i></td>
+                <td><i class="fa-regular fa-trash-can" (click)="deleteVariant(p,i)"></i></td>
               </tr>
             </tbody>
           </table>
           <div class="row py-5">
-            <div
-              class="w-auto py-2 px-3 pointer background-primary d-flex align-items-center"
-              (click)="navigateTo('/home')"
-            >
+            <div class="w-auto py-2 px-3 pointer background-primary d-flex align-items-center"
+              (click)="navigateTo('/home')">
               <i class="fa-solid fa-chevron-left me-1"></i>
               Continue Shopping
             </div>
@@ -104,10 +99,7 @@
             </div>
             <div class="row p-3">
               <div class="col-12">
-                <button
-                  class="btn btn-dark py-3 regular-weight"
-                  (click)="navigateTo('/order/checkout')"
-                >
+                <button class="btn btn-dark py-3 regular-weight" (click)="checkout()">
                   Proceed to checkout
                 </button>
               </div>
