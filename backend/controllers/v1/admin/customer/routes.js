@@ -4,12 +4,12 @@ const {
   validate,
   rolePermit,
 } = require('../../../../config/middlewares/utils');
-const roles = require('../../../../config/options/global.options').OPTIONS;
+const OPTIONS = require('../../../../config/options/global.options').OPTIONS;
 const controller = require('./customer');
 
 app.get(
   '/getAll',
-  // rolePermit(roles.usersRoles.SUPER_ADMIN),
+  // rolePermit(OPTIONS.usersRoles.SUPER_ADMIN),
   controller.getAll
 );
 app.get(

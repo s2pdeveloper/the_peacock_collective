@@ -1,5 +1,4 @@
 const sequelize = require('sequelize');
-const { Customer, User } = require('../../../../models');
 const fs = require('fs');
 const {
   OPTIONS,
@@ -7,14 +6,18 @@ const {
   generateCreateData,
 } = require('../../../../config/options/global.options');
 const MESSAGES = require('../../../../config/options/messages.options');
+const CustomerRepository = require('../../../../models/repository/CustomerRepository');
+const User = require('../../../../models').User;
+const Customer = require('../../../../models').Customer;
+// const CustomerRepository = require('../../../../models/repository/CustomerRepository');
 const resCode = MESSAGES.resCode;
 const Op = sequelize.Op;
-const Model = Customer;
+
 
 const modelObj = {
   create: async (req, res) => {
     try {
-      let checkExisting = await Model.findOne({
+      let checkExisting = await CustomerRepository.findOneByCondition({
         where: {
           name: req.body.name,
           mobile: req.body.mobile,
@@ -39,11 +42,11 @@ const modelObj = {
           );
       }
       req.body.userId = req.user.id;
-      let createObj = await generateCreateData(new Model(), req.body);
+
       if (![undefined, null, ''].includes(req.file)) {
-        createObj.image = req.file.filename;
+        req.body.image = req.file.filename;
       }
-      await createObj.save();
+      await CustomerRepository.create(req.body);
       return res.status(resCode.HTTP_OK).json(
         generateResponse(resCode.HTTP_OK, {
           message: MESSAGES.apiSuccessStrings.ADDED(`Customer`),
@@ -71,15 +74,10 @@ const modelObj = {
       let offset = (page - 1) * pageSize || 0;
       let query = {
         where: {
-          ...(req.user.role == OPTIONS.usersRoles.SHOP_KEEPER && {
-            userId: { [Op.substring]: req.user.id },
-          }),
-          // ...(![undefined, null, 0].includes(startPrice) && {
-          //   balance: { [Op.gte]: startPrice },
+          // ...(req.user.role == OPTIONS.usersRoles.SHOP_KEEPER && {
+          //   userId: { [Op.substring]: req.user.id },
           // }),
-          // ...(![undefined, null, 0].includes(endPrice) && {
-          //   balance: { [Op.lte]: endPrice },
-          // }),
+
           ...(![undefined, null, ''].includes(search) && {
             [Op.or]: {
               name: { [Op.substring]: search },
@@ -102,7 +100,7 @@ const modelObj = {
         offset: +offset,
         limit: +pageSize,
       };
-      let response = await Model.findAndCountAll(query);
+      let response = await CustomerRepository.findAndCountAll(query);
       [response.range] = await Model.findAll({
         attributes: [
           [sequelize.fn('min', sequelize.col('balance')), 'startPrice'],
@@ -135,7 +133,7 @@ const modelObj = {
         column = 'balance',
         direction = 'DESC',
       } = req.query;
-      console.log("req.user.id",req.user.id);
+      console.log("req.user.id", req.user.id);
       let query = {
         where: {
           ...(![undefined, null, ''].includes(req.user.id) && {
@@ -176,11 +174,7 @@ const modelObj = {
   },
   getById: async (req, res) => {
     try {
-      let existing = await Model.findOne({
-        where: {
-          id: req.params.id,
-        },
-      });
+      let existing = await CustomerRepository.findByPk(req.params.id);
       if (!existing) {
         let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS('Customer');
         return res
@@ -206,11 +200,7 @@ const modelObj = {
   },
   update: async (req, res) => {
     try {
-      let itemDetails = await Model.findOne({
-        where: {
-          id: req.params.id,
-        },
-      });
+      let itemDetails = await CustomerRepository.findByPk(req.params.id);
       if (!itemDetails) {
         if (
           ![undefined, null, ''].includes(req.file) &&
@@ -239,7 +229,8 @@ const modelObj = {
           }
           itemDetails.image = req.file.filename;
         }
-        await itemDetails.save();
+        await CustomerRepository.save(itemDetails)
+
         return res.json(
           generateResponse(resCode.HTTP_OK, {
             message: MESSAGES.apiSuccessStrings.UPDATE('Customer'),
