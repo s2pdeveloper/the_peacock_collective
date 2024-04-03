@@ -1,5 +1,4 @@
 const app = require("express")();
-const authHandler = require("../../../../config/middlewares/auth.middleware");
 const upload = require("../../shared/upload");
 const {
   validate,
@@ -12,7 +11,6 @@ app.get("/", controller.getAll);
 
 app.post(
   "/",
-  // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
   // validate("createCustomer"),
   controller.create
@@ -20,14 +18,12 @@ app.post(
 
 // app.get(
 //   "product-attribute/:id",
-//   // authHandler.authenticateJWT(),
 //   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
 //   // validate("checkParamId"),
 //   controller.getProductAttribute
 // );
 app.get(
   "/:id",
-  // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
   // validate("checkParamId"),
   controller.getById
@@ -35,7 +31,6 @@ app.get(
 
 app.delete(
   "/:id",
-  // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
   // validate("checkParamId"),
   controller.delete
@@ -43,7 +38,6 @@ app.delete(
 
 app.put(
   "/:id",
-  // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
   // validate("updateCustomer"),
   controller.update

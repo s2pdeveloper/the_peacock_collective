@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../../models').User;
 const { OPTIONS } = require('../options/global.options');
 
-exports.authenticateJWT = (force = true) => {
+module.exports.authenticateJWT = (force = true) => {
   return (req, res, next) => {
     const excludePath = [
       '/signup', '/login', '/resetPassword', '/forgotPassword', '/setPassword'
