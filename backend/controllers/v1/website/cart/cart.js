@@ -1,5 +1,14 @@
 const sequelize = require('sequelize');
-const { Cart, Variant, Product, AttrVariantMap, Attribute, Images } = require("../../../../models");
+// const { Cart, Variant, Product, AttrVariantMap, Attribute, Images } = require("../../../../models");
+
+const Cart=require("../../../../models").Cart
+const Product=require("../../../../models").Product
+const AttrVariantMap=require("../../../../models").AttrVariantMap
+const Attribute=require("../../../../models").Attribute
+const Images=require("../../../../models").Images
+
+console.log("your all model imported")
+
 const {
   OPTIONS,
   generateResponse,
