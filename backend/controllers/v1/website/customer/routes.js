@@ -68,10 +68,10 @@ app.put(
 
 
 app.post(
-  "/gotoCheck",
+  "/resetPassword",
   // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
-  controller.gotoCheck
+  controller.resetPassword
 );
 
 

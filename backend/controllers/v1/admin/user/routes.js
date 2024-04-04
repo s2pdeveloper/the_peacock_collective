@@ -9,13 +9,13 @@ const controller = require("./user");
 
 app.get(
   "/",
-  // rolePermit(roles.usersRoles.SUPER_ADMIN),
+   rolePermit(roles.usersRoles.SUPER_ADMIN),
   controller.getAllUsers
 );
 app.post("/", controller.create);
 app.put(
   "/:id",
-  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.EMPLOYEE),
+   rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.EMPLOYEE),
   validate("updateProfile"),
   controller.updateProfile
 );
@@ -25,7 +25,7 @@ app.post("/login", controller.login);
 
 app.get(
   "/profile",
-  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.EMPLOYEE),
+   rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.EMPLOYEE),
   controller.getProfile
 );
 app.post("/resetPassword", controller.resetPassword);
@@ -38,13 +38,13 @@ app.put("/change-status", controller.changeStatus);
 
 app.delete(
   "/:id",
-  // rolePermit(roles.usersRoles.SUPER_ADMIN),
-  // validate("checkParamId"),
+   rolePermit(roles.usersRoles.SUPER_ADMIN),
+   validate("checkParamId"),
   controller.delete
 );
 app.post(
   "/createAndUpdateUserDevice",
-  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.EMPLOYEE),
+   rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.EMPLOYEE),
   controller.createAndUpdateUserDevice
 );
 

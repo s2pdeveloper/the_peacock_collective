@@ -41,7 +41,6 @@ exports.sendForgetMail = (req, data) => {
     html: null,
     attachments:null,
   };
-  console.log("you hit the sendforgetMail",data);
   readHTMLFile(`${__dirname}/../../models/helpers/templates/${data.template}`, async (err, html) => {
     let template = handlebars.compile(html);
     let replacements = data;
@@ -53,12 +52,13 @@ exports.sendForgetMail = (req, data) => {
 };
 
 const triggerMail = (mailOptions) => {
-  console.log("last point of sending email",mailOptions);
+  // console.log("last point of sending email",mailOptions);
   transporter.sendMail(mailOptions, (err, info) => {
     if (err) {
       console.log(err);
     } else {
-      console.log('A assign to email has been sent.', info);
+      // console.log('A assign to email has been sent.', info);
+      console.log("email sent")
     }
   });
 };

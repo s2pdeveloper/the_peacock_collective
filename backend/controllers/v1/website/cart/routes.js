@@ -7,15 +7,7 @@ const {
 const roles = require("../../../../config/options/global.options").OPTIONS;
 const controller = require("./cart");
 
-// app.get(
-//   '/getAll',
-//   authHandler.authenticateJWT(),
-//   rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
-//   controller.getAll
-// );
 
-
-app.get("/:id", controller.getAll);
 
 app.post(
   "/",
@@ -26,35 +18,30 @@ app.post(
   controller.create
 );
 
-// app.get(
-//   "product-attribute/:id",
-//   // authHandler.authenticateJWT(),
-//   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
-//   // validate("checkParamId"),
-//   controller.getProductAttribute
-// );
-// app.get(
-//   "/:id",
-//   // authHandler.authenticateJWT(),
-//   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
-//   // validate("checkParamId"),
-//   controller.getById
-// );
+app.get("/customerAllCart/:id", controller.getAll);
 
-// app.delete(
-//   "/:id",
-//   // authHandler.authenticateJWT(),
-//   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
-//   // validate("checkParamId"),
-//   controller.delete
-// );
+app.delete(
+  "/:id",
+  // authHandler.authenticateJWT(),
+  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  // validate("checkParamId"),
+  controller.remove 
+);
 
+app.get("/:id",controller.getById);
 app.put(
   "/:id",
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
   // validate("updateCustomer"),
   controller.updateAll
 );
+
+// app.put(
+//   "/:id",
+//   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+//   // validate("updateCustomer"),
+//   controller.update
+// );
 
 
 module.exports = app;

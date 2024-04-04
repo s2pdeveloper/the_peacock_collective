@@ -20,7 +20,7 @@ const cloudinary = require("../../../../shared/service/cloudinary.service");
 
 const modelObj = {
   create: asyncHandler(async (req, res) => {
-    console.log("your hit the create customer with", req.body);
+    
     let checkExisting = await CustomerRepository.findOneByCondition({
       where: {
         email: req.body.email,
@@ -37,7 +37,8 @@ const modelObj = {
       bcrypt.genSaltSync(8)
     );
 
-    let user = req.body;
+    const user=await CustomerRepository.create(userData);
+
     let data = {
       userName: `${user.firstName} ${user.lastName}`,
       email: user.email,
@@ -50,7 +51,7 @@ const modelObj = {
       url: `${process.env.REQ_URL}#/change-pwd?sub=${user.id}&pin=${user.resetPin}&role=${user.role}`,
     };
     mail.sendForgetMail(req, data);
-    await CustomerRepository.create(user);
+    
 
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
@@ -102,7 +103,7 @@ const modelObj = {
   update: asyncHandler(async (req, res) => {
     let query = {
       where: {
-        id: req.params.id,
+        id: req.user.id,
         status: [OPTIONS.defaultStatus.ACTIVE, OPTIONS.defaultStatus.INACTIVE],
         //  role: roles.getAllRolesAsArray(),
       },
@@ -132,13 +133,21 @@ const modelObj = {
 
   delete: asyncHandler(async (req, res) => {
 
-    let item = await CustomerRepository.findByPk(req.params.id);
-    if (!item) {
+    let user = await CustomerRepository.findByPk(req.params.id);
+
+    if (!user) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("User");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
-    if (item && item?.profileImage) {
+
+    if (user && user?.profileImage) {
       await cloudinary.deleteFile(item.profileImage);
+    }
+
+    let query={
+      where:{
+        id:req.params.id
+      }
     }
     await CustomerRepository.delete(query);
     return res.json(
@@ -148,7 +157,7 @@ const modelObj = {
     );
   }),
 
-  gotoCheck: asyncHandler(async (req, res) => {
+  resetPassword: asyncHandler(async (req, res) => {
 
     let user = await CustomerRepository.findOneByCondition({
       where: { email: req.body.email },
@@ -179,7 +188,7 @@ const modelObj = {
 
   updatePassword: asyncHandler(async (req, res) => {
 
-    let user = await CustomerRepository.findByPk(req.body.id);
+    let user = await CustomerRepository.findByPk(req.user.id);  // here user should be find by id using req.user
     console.log("your got the user", user);
     if (!user) {
       let errors = MESSAGES.apiErrorStrings.OTP_EXPIRED;
@@ -195,10 +204,13 @@ const modelObj = {
           throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
         }
 
+        console.log("your password match",isMatch);
+
         user.password = await bcrypt.hash(
           req.body.newPassword,
-          bcrypt.genSaltSync(8)
+         bcrypt.genSaltSync(8)
         );
+
         user.verificationToken = null;
         user.verificationTokenExpireAt = null;
 
@@ -273,23 +285,24 @@ const modelObj = {
     let existingUser = await CustomerRepository.findOneByCondition({
       where: { email: req.body.email.toLowerCase() },
     });
+
+    console.log("got the user",existingUser);
     if (!existingUser) {
       let errors = MESSAGES.apiErrorStrings.USER_DOES_NOT_EXIST;
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     } else {
       //  existingUser.resetPin = Math.floor(Math.random() * 899999 + 100000);
       existingUser.resetPin = Math.floor(Math.random() * 9000) + 1000;
-
-      let user = await CustomerRepository.save(existingUser);
+      existingUser.save();
       let data = {
-        userName: `${user.firstName} ${user.lastName}`,
-        email: user.email,
-        OTP: user.resetPin,
-        subject: `RESET PASSWORD ${user.resetPin} `,
+        userName: `${existingUser.firstName} ${existingUser.lastName}`,
+        email: existingUser.email,
+        OTP: existingUser.resetPin,
+        subject: `RESET PASSWORD ${existingUser.resetPin} `,
         companyLogo:
           "https://peacock-collective.web.app/assets/images/gold-logo.png",
         template: "resetPassword.html",
-        url: `${process.env.REQ_URL}#/change-pwd?sub=${user.id}&pin=${user.resetPin}&role=${user.role}`,
+        url: `${process.env.REQ_URL}#/change-pwd?sub=${existingUser.id}&pin=${existingUser.resetPin}&role=${existingUser.role}`,
       };
       mail.sendForgetMail(req, data);
       return res.status(resCode.HTTP_OK).json(
@@ -301,10 +314,6 @@ const modelObj = {
   }),
 
   verifyEmail: asyncHandler(async (req, res, next) => {
-    // let user = await Model.findOne({
-    //   where: { id: req.params.id },
-    // });
-    // console.log("user", user);
 
     const user = await CustomerRepository.findByPk(req.params.id);
     if (!user) {

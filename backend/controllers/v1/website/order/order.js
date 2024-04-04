@@ -23,7 +23,7 @@ const cloudinary = require("../../../../shared/service/cloudinary.service");
 const modelObj = {
   create: asyncHandler(async (req, res) => {
     console.log("++++++req.body++++++", req.body);
-    req.body.customerId = req.user.id;
+    req.body.customerId =req.user.id;                              //   ====================change req.user 
     let createData = await generateCreateData(new Model(), req.body);
     // console.log("createData", createData);
     let newOrder = await createData.save();
@@ -37,7 +37,6 @@ const modelObj = {
           qty: x.qty,
         };
       });
-
       await OrderVariantMap.bulkCreate(arr);
       const query = {
         where: {
@@ -48,7 +47,6 @@ const modelObj = {
         await Cart.destroy(query);
       }
     }
-
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
         message: MESSAGES.apiSuccessStrings.ADDED("Order"),
@@ -78,6 +76,7 @@ const modelObj = {
     const {
       page = 1,
       pageSize = 10,
+      search,
       column = "createdAt",
       direction = "DESC",
     } = req.query;
@@ -90,9 +89,9 @@ const modelObj = {
             description: { [Op.like]: search },
           },
         }),
-        ...(req.user.role == OPTIONS.usersRoles.CUSTOMER && {
-          customerId: req.user.id
-        })
+        // ...(req.user.role == OPTIONS.usersRoles.CUSTOMER && {
+        //   customerId: req.user.id
+        // })
 
       },
       order: [[column, direction]],
@@ -123,6 +122,7 @@ const modelObj = {
       .status(resCode.HTTP_OK)
       .json(generateResponse(resCode.HTTP_OK, response));
   }),
+
   getById: asyncHandler(async (req, res) => {
     let existing = await Model.findOne({
       where: {
@@ -137,12 +137,14 @@ const modelObj = {
       .status(resCode.HTTP_OK)
       .json(generateResponse(resCode.HTTP_OK, existing));
   }),
+
   update: asyncHandler(async (req, res) => {
     let itemDetails = await Model.findOne({
       where: {
         id: req.params.id,
       },
     });
+
 
     if (!itemDetails) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Order");

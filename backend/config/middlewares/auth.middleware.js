@@ -5,7 +5,7 @@ const { OPTIONS } = require('../options/global.options');
 module.exports.authenticateJWT = (force = true) => {
   return (req, res, next) => {
     const excludePath = [
-      '/signup', '/login', '/resetPassword', '/forgotPassword', '/setPassword'
+      '/signup', '/login', '/resetPassword', '/forgotPassword', '/setPassword','/common','verifyEmail'
     ]
     if (excludePath.some(x => req.path.includes(x))) {
       next();

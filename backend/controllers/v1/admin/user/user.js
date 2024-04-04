@@ -668,7 +668,7 @@ const userObj = {
     try {
 
       let user = await User.findOne({
-        where: { id: req.body.id },
+        where: { email: req.body.email },
       });
       if (!user) {
         const error = MESSAGES.apiErrorStrings.INVALID_REQUEST;

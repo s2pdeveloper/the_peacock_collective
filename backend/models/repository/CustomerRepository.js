@@ -5,7 +5,8 @@ module.exports.findByPk = async (id) => {
 };
 
 module.exports.findOneByCondition = async (condition) => {
-    await Customer.findOne(condition);
+  
+   return await Customer.findOne(condition);
 };
 
 module.exports.findAndCountAll = async (query) => {
@@ -18,11 +19,11 @@ module.exports.findAll = async (query) => {
 
 
 module.exports.save = async (data) => {
-    return await Customer.save(data);
+    return await data.save();
 };
 
 module.exports.delete = async (query) => {
-    await Customer.destroy(query);
+   return await Customer.destroy(query);
 };
 
 module.exports.bulkCreate = async (data) => {
