@@ -5,7 +5,7 @@ const {
   rolePermit,
 } = require("../../../../config/middlewares/utils");
 const roles = require("../../../../config/options/global.options").OPTIONS;
- const controller = require("./cart");
+const controller = require("./cart");
 
 // app.get(
 //   '/getAll',
@@ -15,7 +15,7 @@ const roles = require("../../../../config/options/global.options").OPTIONS;
 // );
 
 
-app.get("/:id", controller.getAllByCustomerId);
+app.get("/:id", controller.getAll);
 
 app.post(
   "/",
@@ -49,14 +49,12 @@ app.post(
 //   controller.delete
 // );
 
-// app.put(
-//   "/:id",
-//   // authHandler.authenticateJWT(),
-//   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
-//   upload.single("image"),
-//   // validate("updateCustomer"),
-//   controller.update
-// );
+app.put(
+  "/:id",
+  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  // validate("updateCustomer"),
+  controller.updateAll
+);
 
 
 module.exports = app;

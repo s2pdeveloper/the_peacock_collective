@@ -8,12 +8,12 @@ import { map } from 'rxjs';
 export class WishlistService {
   readonly BASE_URL = 'wishlist';
 
-  constructor(private http: ApiService) {}
+  constructor(private http: ApiService) { }
 
   getAll(payload: any) {
     return this.http.get(this.BASE_URL, payload);
   }
-  create(payload: any) {
+  add(payload: any) {
     return this.http.post(this.BASE_URL, payload).pipe(map((res: any) => res));
   }
 

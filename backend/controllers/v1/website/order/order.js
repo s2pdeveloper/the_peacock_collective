@@ -23,20 +23,13 @@ const cloudinary = require("../../../../shared/service/cloudinary.service");
 const modelObj = {
   create: asyncHandler(async (req, res) => {
     console.log("++++++req.body++++++", req.body);
+    req.body.customerId = req.user.id;
     let createData = await generateCreateData(new Model(), req.body);
     // console.log("createData", createData);
     let newOrder = await createData.save();
 
-    let query = {
-      where: {
-        customerId: req.body.customerId,
-      },
-    };
-    let carts = await Cart.findAll(query);
-
-    console.log("you got your cats", carts);
-    if (carts.length) {
-      let arr = carts.map((x) => {
+    if (req.body.products.length) {
+      let arr = req.body.products.map((x) => {
         return {
           variantId: x.variantId,
           orderId: newOrder.id,
@@ -44,10 +37,16 @@ const modelObj = {
           qty: x.qty,
         };
       });
-      console.log("++++++++your cart data++++++++", carts);
-      console.log("Your array of cart to create orderVariantMap", arr);
+
       await OrderVariantMap.bulkCreate(arr);
-      await Cart.destroy(query);
+      const query = {
+        where: {
+          customerId: req.user.id,
+        },
+      };
+      if (req.body.type == 'CART') {
+        await Cart.destroy(query);
+      }
     }
 
     return res.status(resCode.HTTP_OK).json(
@@ -84,24 +83,19 @@ const modelObj = {
     } = req.query;
     let offset = (page - 1) * pageSize || 0;
     let query = {
-      // where: {
-      //   ...(![undefined, null,''].includes(search) && {
-      //     [Op.or]: {
-      //       name: { [Op.like]: search },
-      //       description: { [Op.like]: search },
-      //     },
-      //   }),
-      //   ...(catagory && {
-      //     parentId: {
-      //       [Op.ne]: null
-      //     }
-      //   })
+      where: {
+        ...(![undefined, null, ''].includes(search) && {
+          [Op.or]: {
+            name: { [Op.like]: search },
+            description: { [Op.like]: search },
+          },
+        }),
+        ...(req.user.role == OPTIONS.usersRoles.CUSTOMER && {
+          customerId: req.user.id
+        })
 
-      // },
+      },
       order: [[column, direction]],
-      // attributes: {
-      //   exclude: ['userId'],
-      // },
 
       include: [
         {

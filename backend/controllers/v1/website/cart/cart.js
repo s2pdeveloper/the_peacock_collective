@@ -49,7 +49,7 @@ const modelObj = {
     );
   }),
 
-  getAllByCustomerId: asyncHandler(async (req, res) => {
+  getAll: asyncHandler(async (req, res) => {
     const {
       page = 1,
       pageSize = 10,
@@ -59,7 +59,7 @@ const modelObj = {
     let offset = (page - 1) * pageSize || 0;
     let query = {
       where: {
-        customerId: req.params.id,
+        customerId: req.user.id,
       },
       order: [[column, direction]],
       include: [
@@ -114,7 +114,7 @@ const modelObj = {
       },
     });
     if (!existing) {
-      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Categories");
+      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Cart");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
     return res
@@ -130,7 +130,7 @@ const modelObj = {
 
     // console.log("itemDetails============", itemDetails);
     if (!itemDetails) {
-      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Categories");
+      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Cart");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     } else {
       itemDetails = await generateCreateData(itemDetails, req.body);
@@ -139,10 +139,44 @@ const modelObj = {
 
       return res.json(
         generateResponse(resCode.HTTP_OK, {
-          message: MESSAGES.apiSuccessStrings.UPDATE("Categories"),
+          message: MESSAGES.apiSuccessStrings.UPDATE("Cart"),
         })
       );
     }
+  }),
+  updateAll: asyncHandler(async (req, res) => {
+
+    if (req.body.delete.length > 0) {
+      let query = {
+        where: {
+          id: req.body.delete,
+        },
+      };
+      await Model.destroy(query);
+    }
+    if (req.body.edit.length > 0) {
+      let promissArr = req.body.edit.map(x => {
+        return Model.update({ qty: x.qty }, {
+          where: {
+            id: x.id,
+          },
+        })
+      })
+      Promise.all(promissArr).then((values) => {
+        console.log(values);
+      });
+    }
+
+
+
+
+
+    return res.json(
+      generateResponse(resCode.HTTP_OK, {
+        message: MESSAGES.apiSuccessStrings.UPDATE("Cart"),
+      })
+    );
+
   }),
   delete: asyncHandler(async (req, res) => {
     let query = {
@@ -160,11 +194,11 @@ const modelObj = {
     if (deletedItem) {
       return res.json(
         generateResponse(resCode.HTTP_OK, {
-          message: MESSAGES.apiSuccessStrings.DELETED("Categories"),
+          message: MESSAGES.apiSuccessStrings.DELETED("Cart"),
         })
       );
     } else {
-      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Categories");
+      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Cart");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
   }),

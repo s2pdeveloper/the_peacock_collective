@@ -8,11 +8,11 @@ import { map } from 'rxjs';
 export class CartService {
   readonly BASE_URL = 'cart';
 
-  constructor(private http: ApiService) {}
+  constructor(private http: ApiService) { }
 
-  getAllByCustomerId(id: any) {
+  getAll() {
     return this.http
-      .get(this.BASE_URL + '/' + id)
+      .get(this.BASE_URL)
       .pipe(map((res: any) => res));
   }
   create(payload: any) {
@@ -22,6 +22,11 @@ export class CartService {
   update(id: any, payload: any) {
     return this.http
       .put(this.BASE_URL + '/' + id, payload)
+      .pipe(map((res: any) => res));
+  }
+  updateAll(payload: any) {
+    return this.http
+      .post(this.BASE_URL + '/updateAll', payload)
       .pipe(map((res: any) => res));
   }
 

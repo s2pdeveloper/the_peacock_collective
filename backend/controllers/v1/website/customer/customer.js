@@ -2,12 +2,7 @@ const Sequelize = require("sequelize");
 const bcrypt = require("bcrypt");
 const mail = require("../../../../config/middlewares/triggerMail");
 
-const {
-  Customer,
-  ProdAttributeMap,
-  Attribute,
-  Categories,
-} = require("../../../../models");
+const CustomerRepository = require("../../../../models/repository/CustomerRepository");
 const {
   OPTIONS,
   generateResponse,
@@ -17,7 +12,6 @@ const MESSAGES = require("../../../../config/options/messages.options");
 const resCode = MESSAGES.resCode;
 const Op = Sequelize.Op;
 
-const Model = Customer;
 const ApiError = require("../../../../config/middlewares/api.error");
 const {
   asyncHandler,
@@ -27,7 +21,7 @@ const cloudinary = require("../../../../shared/service/cloudinary.service");
 const modelObj = {
   create: asyncHandler(async (req, res) => {
     console.log("your hit the create customer with", req.body);
-    let checkExisting = await Model.findOne({
+    let checkExisting = await CustomerRepository.findOneByCondition({
       where: {
         email: req.body.email,
       },
@@ -43,7 +37,7 @@ const modelObj = {
       bcrypt.genSaltSync(8)
     );
 
-    let user = await generateCreateData(new Model(), req.body);
+    let user = req.body;
     let data = {
       userName: `${user.firstName} ${user.lastName}`,
       email: user.email,
@@ -56,7 +50,8 @@ const modelObj = {
       url: `${process.env.REQ_URL}#/change-pwd?sub=${user.id}&pin=${user.resetPin}&role=${user.role}`,
     };
     mail.sendForgetMail(req, data);
-    await user.save();
+    await CustomerRepository.create(user);
+
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
         message: MESSAGES.apiSuccessStrings.ADDED("User"),
@@ -73,15 +68,12 @@ const modelObj = {
       search = null,
     } = req.query;
 
-    console.log("your query", search);
-    let offset = (page - 1) * pageSize || 0;
-    let query = {
+    const offset = (page - 1) * pageSize || 0;
+    const query = {
       where: {
         ...(search && {
           [Op.or]: {
             email: { [Op.like]: `%${search}%` },
-            // description: { [Op.like]: `%${search}%`},
-            // description: { [Op.iLike]: `%${search}%` },
           },
         }),
       },
@@ -89,18 +81,14 @@ const modelObj = {
       offset: +offset,
       limit: +pageSize,
     };
-    let response = await Model.findAndCountAll(query);
+    const response = await CustomerRepository.findAndCountAll(query);
 
     return res
       .status(resCode.HTTP_OK)
       .json(generateResponse(resCode.HTTP_OK, response));
   }),
   getById: asyncHandler(async (req, res) => {
-    let existing = await Model.findOne({
-      where: {
-        id: req.params.id,
-      },
-    });
+    let existing = await CustomerRepository.findByPk(req.params.id);
 
     if (!existing) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("User");
@@ -119,18 +107,10 @@ const modelObj = {
         //  role: roles.getAllRolesAsArray(),
       },
     };
-    let user = await Model.findOne(query);
+    let user = await CustomerRepository.findOneByCondition(query);
     if (!user) {
       const errors = MESSAGES.apiErrorStrings.INVALID_REQUEST;
-      return res
-        .status(resCode.HTTP_BAD_REQUEST)
-        .json(
-          generateResponse(
-            resCode.HTTP_BAD_REQUEST,
-            errors,
-            MESSAGES.errorTypes.ENTITY_NOT_FOUND
-          )
-        );
+      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
     user.firstName = req.body.firstName || user.firstName;
     user.lastName = req.body.lastName || user.lastName;
@@ -138,11 +118,11 @@ const modelObj = {
     user.email = req.body.email || user.email;
     user.gender = req.body.gender || user.gender;
 
-    if (req.body.profileImage) {
+    if (req.body?.profileImage) {
       // user.profilePicture = req.body.profilePicture;
       //HANDLE THE PROFILE IMAGE ON CLOUDINARY IN FUTURE
     }
-    await user.save();
+    await CustomerRepository.save(user);
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
         message: MESSAGES.apiSuccessStrings.UPDATE("User profile has been"),
@@ -151,12 +131,8 @@ const modelObj = {
   }),
 
   delete: asyncHandler(async (req, res) => {
-    let query = {
-      where: {
-        id: req.params.id,
-      },
-    };
-    let item = await Model.findOne(query);
+
+    let item = await CustomerRepository.findByPk(req.params.id);
     if (!item) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("User");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
@@ -164,7 +140,7 @@ const modelObj = {
     if (item && item?.profileImage) {
       await cloudinary.deleteFile(item.profileImage);
     }
-    let deletedItem = await Model.destroy(query);
+    await CustomerRepository.delete(query);
     return res.json(
       generateResponse(resCode.HTTP_OK, {
         message: MESSAGES.apiSuccessStrings.DELETED("User"),
@@ -172,122 +148,72 @@ const modelObj = {
     );
   }),
 
-  gotoCheck: async (req, res) => {
-    try {
-      console.log("you hit the resetPassword", req.body);
-      let user = await Model.findOne({
-        where: { email: req.body.email },
-      });
-      if (!user) {
-        const error = MESSAGES.apiErrorStrings.INVALID_REQUEST;
-        return res
-          .status(resCode.HTTP_BAD_REQUEST)
-          .json(generateResponse(resCode.HTTP_BAD_REQUEST, error));
-      }
+  gotoCheck: asyncHandler(async (req, res) => {
 
-      if (user.resetPin === req.body.resetPin) {
-        console.log("hit the setPassword", user.resetPin);
+    let user = await CustomerRepository.findOneByCondition({
+      where: { email: req.body.email },
+    });
+    if (!user) {
+      const error = MESSAGES.apiErrorStrings.INVALID_REQUEST;
+      throw new ApiError(error, resCode.HTTP_BAD_REQUEST);
+    }
+    if (user.resetPin === req.body.resetPin) {
+      console.log("hit the setPassword", user.resetPin);
+      user.password = await bcrypt.hash(
+        req.body.password,
+        bcrypt.genSaltSync(8)
+      );
+      user.resetPin = null;
+      await CustomerRepository.save(user);
+      return res.status(resCode.HTTP_OK).json(
+        generateResponse(resCode.HTTP_OK, {
+          message: MESSAGES.apiSuccessStrings.PASSWORD("set"),
+        })
+      );
+    } else {
+      let errors = MESSAGES.apiErrorStrings.INVALID_TOKEN;
+      throw new ApiError(errors, resCode.HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+  }),
+
+  updatePassword: asyncHandler(async (req, res) => {
+
+    let user = await CustomerRepository.findByPk(req.body.id);
+    console.log("your got the user", user);
+    if (!user) {
+      let errors = MESSAGES.apiErrorStrings.OTP_EXPIRED;
+      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
+    } else {
+      let isMatch = await bcrypt.compare(req.body.oldPassword, user.password);
+      if (isMatch) {
+        if (
+          user.status === OPTIONS.defaultStatus.BLOCKED ||
+          user.status === OPTIONS.defaultStatus.INACTIVE
+        ) {
+          let errors = MESSAGES.apiErrorStrings.USER_BLOCKED;
+          throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
+        }
+
         user.password = await bcrypt.hash(
-          req.body.password,
+          req.body.newPassword,
           bcrypt.genSaltSync(8)
         );
-        user.resetPin = null;
-        await user.save();
-        return res.status(resCode.HTTP_OK).json(
-          generateResponse(resCode.HTTP_OK, {
-            message: MESSAGES.apiSuccessStrings.PASSWORD("set"),
-          })
-        );
-      } else {
-        let errors = MESSAGES.apiErrorStrings.INVALID_TOKEN;
-        res
-          .status(resCode.HTTP_INTERNAL_SERVER_ERROR)
-          .json(generateResponse(resCode.HTTP_INTERNAL_SERVER_ERROR, errors));
-      }
-    } catch (e) {
-      const errors = MESSAGES.apiErrorStrings.SERVER_ERROR;
-      res
-        .status(resCode.HTTP_INTERNAL_SERVER_ERROR)
-        .json(generateResponse(resCode.HTTP_INTERNAL_SERVER_ERROR, errors));
-      throw new Error(e);
-    }
-  },
+        user.verificationToken = null;
+        user.verificationTokenExpireAt = null;
 
-  updatePassword: async (req, res) => {
-    // console.log("++++++++++++++HIT The resetPassword++++++++",req.body);
-    try {
-      let query = {
-        where: {
-          id: req.body.id,
-        },
-      };
-
-      let user = await Model.findOne(query);
-      console.log("your got the user", user);
-      if (!user) {
-        let error = MESSAGES.apiErrorStrings.OTP_EXPIRED;
+        await CustomerRepository.save(user);
+        const message = MESSAGES.apiSuccessStrings.PASSWORD_RESET;
         return res
-          .status(resCode.HTTP_BAD_REQUEST)
-          .json(
-            generateResponse(
-              resCode.HTTP_BAD_REQUEST,
-              error,
-              MESSAGES.errorTypes.ENTITY_NOT_FOUND
-            )
-          );
+          .status(resCode.HTTP_OK)
+          .json(generateResponse(resCode.HTTP_OK, { message }));
       } else {
-        let isMatch = await bcrypt.compare(req.body.oldPassword, user.password);
-        if (isMatch) {
-          if (
-            user.status === OPTIONS.defaultStatus.BLOCKED ||
-            user.status === OPTIONS.defaultStatus.INACTIVE
-          ) {
-            let errors = MESSAGES.apiErrorStrings.USER_BLOCKED;
-            return res
-              .status(resCode.HTTP_BAD_REQUEST)
-              .json(
-                generateResponse(
-                  resCode.HTTP_BAD_REQUEST,
-                  errors,
-                  MESSAGES.errorTypes.ACCOUNT_BLOCKED
-                )
-              );
-          }
-
-          console.log("here at hasing");
-          user.password = await bcrypt.hash(
-            req.body.newPassword,
-            bcrypt.genSaltSync(8)
-          );
-          user.verificationToken = null;
-          user.verificationTokenExpireAt = null;
-
-          await user.save();
-          const message = MESSAGES.apiSuccessStrings.PASSWORD_RESET;
-          return res
-            .status(resCode.HTTP_OK)
-            .json(generateResponse(resCode.HTTP_OK, { message }));
-        } else {
-          let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
-          return res
-            .status(resCode.HTTP_BAD_REQUEST)
-            .json(
-              generateResponse(
-                resCode.HTTP_BAD_REQUEST,
-                errors,
-                MESSAGES.errorTypes.OAUTH_EXCEPTION
-              )
-            );
-        }
+        let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
+        throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
       }
-    } catch (e) {
-      const errors = MESSAGES.apiErrorStrings.SERVER_ERROR;
-      res
-        .status(resCode.HTTP_INTERNAL_SERVER_ERROR)
-        .json(generateResponse(resCode.HTTP_INTERNAL_SERVER_ERROR, errors));
-      throw new Error(e);
     }
-  },
+
+  }),
 
   login: asyncHandler(async (req, res) => {
     let query = {
@@ -303,7 +229,7 @@ const modelObj = {
       },
     };
 
-    let existingUser = await Model.findOne(query);
+    let existingUser = await CustomerRepository.findOneByCondition(query);
     if (existingUser) {
       let isMatch = existingUser.validPassword(req.body.password);
       if (isMatch) {
@@ -312,18 +238,11 @@ const modelObj = {
           existingUser.status === OPTIONS.defaultStatus.INACTIVE
         ) {
           let errors = MESSAGES.apiErrorStrings.USER_BLOCKED;
-          return res
-            .status(resCode.HTTP_BAD_REQUEST)
-            .json(
-              generateResponse(
-                resCode.HTTP_BAD_REQUEST,
-                errors,
-                MESSAGES.errorTypes.ACCOUNT_BLOCKED
-              )
-            );
+          throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
+
         }
         existingUser.lastLoginAt = new Date();
-        await existingUser.save();
+        await CustomerRepository.save(existingUser);
         let userObj = {
           id: existingUser.id,
           token: existingUser.genToken(),
@@ -344,60 +263,42 @@ const modelObj = {
     }
   }),
 
-  forgetPassword: async (req, res) => {
-    try {
-      console.log("Hit the forgot Password", req.body);
-      if (!req.body.email) {
-        const error = MESSAGES.apiErrorStrings.INVALID_REQUEST;
-        return res
-          .status(resCode.HTTP_BAD_REQUEST)
-          .json(generateResponse(resCode.HTTP_BAD_REQUEST, error));
-      }
+  forgetPassword: asyncHandler(async (req, res) => {
 
-      let existingUser = await Model.findOne({
-        where: { email: req.body.email.toLowerCase() },
-      });
-      if (!existingUser) {
-        let errors = MESSAGES.apiErrorStrings.USER_DOES_NOT_EXIST;
-        return res
-          .status(resCode.HTTP_BAD_REQUEST)
-          .json(
-            generateResponse(
-              resCode.HTTP_BAD_REQUEST,
-              errors,
-              MESSAGES.errorTypes.OAUTH_EXCEPTION
-            )
-          );
-      } else {
-        //  existingUser.resetPin = Math.floor(Math.random() * 899999 + 100000);
-        existingUser.resetPin = Math.floor(Math.random() * 9000) + 1000;
-
-        let user = await existingUser.save();
-        let data = {
-          userName: `${user.firstName} ${user.lastName}`,
-          email: user.email,
-          OTP: user.resetPin,
-          subject: `RESET PASSWORD ${user.resetPin} `,
-          companyLogo:
-            "https://peacock-collective.web.app/assets/images/gold-logo.png",
-          template: "resetPassword.html",
-          url: `${process.env.REQ_URL}#/change-pwd?sub=${user.id}&pin=${user.resetPin}&role=${user.role}`,
-        };
-        mail.sendForgetMail(req, data);
-        return res.status(resCode.HTTP_OK).json(
-          generateResponse(resCode.HTTP_OK, {
-            message: MESSAGES.apiSuccessStrings.EMAIL_FORGOT,
-          })
-        );
-      }
-    } catch (e) {
-      const errors = MESSAGES.apiErrorStrings.SERVER_ERROR;
-      res
-        .status(resCode.HTTP_INTERNAL_SERVER_ERROR)
-        .json(generateResponse(resCode.HTTP_INTERNAL_SERVER_ERROR, errors));
-      throw new Error(e);
+    if (!req.body.email) {
+      const errors = MESSAGES.apiErrorStrings.INVALID_REQUEST;
+      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
-  },
+
+    let existingUser = await CustomerRepository.findOneByCondition({
+      where: { email: req.body.email.toLowerCase() },
+    });
+    if (!existingUser) {
+      let errors = MESSAGES.apiErrorStrings.USER_DOES_NOT_EXIST;
+      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
+    } else {
+      //  existingUser.resetPin = Math.floor(Math.random() * 899999 + 100000);
+      existingUser.resetPin = Math.floor(Math.random() * 9000) + 1000;
+
+      let user = await CustomerRepository.save(existingUser);
+      let data = {
+        userName: `${user.firstName} ${user.lastName}`,
+        email: user.email,
+        OTP: user.resetPin,
+        subject: `RESET PASSWORD ${user.resetPin} `,
+        companyLogo:
+          "https://peacock-collective.web.app/assets/images/gold-logo.png",
+        template: "resetPassword.html",
+        url: `${process.env.REQ_URL}#/change-pwd?sub=${user.id}&pin=${user.resetPin}&role=${user.role}`,
+      };
+      mail.sendForgetMail(req, data);
+      return res.status(resCode.HTTP_OK).json(
+        generateResponse(resCode.HTTP_OK, {
+          message: MESSAGES.apiSuccessStrings.EMAIL_FORGOT,
+        })
+      );
+    }
+  }),
 
   verifyEmail: asyncHandler(async (req, res, next) => {
     // let user = await Model.findOne({
@@ -405,19 +306,18 @@ const modelObj = {
     // });
     // console.log("user", user);
 
-    try {
-      const user = await Model.findOne({ _id: req.params.id });
-      if (!user) {
-        return res.send(`
+    const user = await CustomerRepository.findByPk(req.params.id);
+    if (!user) {
+      return res.send(`
     <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
         <h3 style="color: red; font-family: Arial;">Invalid User</h3>
       </div>
     </div>
   `);
-      }
+    }
 
-      if (user.emailVerified) {
-        return res.send(`
+    if (user.emailVerified) {
+      return res.send(`
     <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
       <div style="text-align: center;">   
         <h3 style="color: blue; font-family: Arial;">     
@@ -426,10 +326,10 @@ const modelObj = {
       </div>
     </div>
   `);
-      } else {
-        user.emailVerified = true;
-        await user.save();
-        return res.send(`
+    } else {
+      user.emailVerified = true;
+      await CustomerRepository.save(user);
+      return res.send(`
     <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
       <div style="text-align: center;">   
         <h3 style="color: green; font-family: Arial;">     
@@ -438,12 +338,6 @@ const modelObj = {
       </div>
     </div>
   `);
-      }
-    } catch (error) {
-      res
-        .status(resCode.HTTP_INTERNAL_SERVER_ERROR)
-        .json(generateResponse(resCode.HTTP_INTERNAL_SERVER_ERROR, error));
-      throw new Error(e);
     }
   }),
 };

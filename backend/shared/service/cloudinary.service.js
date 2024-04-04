@@ -2,6 +2,8 @@ const cloud = require('cloudinary').v2;
 const streamifier = require('streamifier');
 const fs = require('fs');
 const ApiError = require('../../config/middlewares/api.error');
+const MESSAGES = require('../../config/options/messages.options');
+const resCode = MESSAGES.resCode;
 
 cloud.config({
   cloud_name: process.env.CLOUDINARY_NAME,

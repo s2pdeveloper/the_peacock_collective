@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { SpinnerService, StorageService } from 'src/app/core/services';
 import { CartService } from 'src/app/services/cart.service';
 import { CommonService } from 'src/app/services/common.service';
+import { WishlistService } from 'src/app/services/wishlist.service';
 
 @Component({
   selector: 'app-product-details',
@@ -25,7 +26,9 @@ export class ProductDetailsComponent implements OnInit {
     private spinnerService: SpinnerService,
     private cartService: CartService,
     private storageService: StorageService,
-    private toasterService: ToastrService
+    private toasterService: ToastrService,
+    private wishlistService: WishlistService
+
   ) {
     this.user = this.storageService.get('Customer');
   }
@@ -41,6 +44,8 @@ export class ProductDetailsComponent implements OnInit {
         this.products = this.commonService.allData.products.find(
           (x) => x.id == params.id
         );
+        console.log("this.products", this.products);
+
         this.variants = this.products.productWithVariants;
         this.currentVariant = this.products.productWithVariants[0];
         for (const item of this.currentVariant.variantWithAttrVariantMap) {
@@ -90,6 +95,36 @@ export class ProductDetailsComponent implements OnInit {
     }
   }
   createCart() {
+    try {
+      if (!this.user) {
+        this.toasterService.warning('Please login to add cart');
+        return;
+      }
+
+      if (this.qty > this.currentVariant.qty) {
+        this.qty = this.currentVariant.qty;
+      }
+      let payload = {
+        price: this.qty * this.currentVariant.price,
+        qty: this.qty,
+        variantId: this.currentVariant.id,
+        customerId: this.user.id,
+      };
+
+      this.cartService.create(payload).subscribe((success) => {
+        this.toasterService.success("Product added to cart!!")
+      });
+    } catch (error) {
+      console.log("error", error);
+
+    }
+  }
+
+  buyNow() {
+    // if (!this.user) {
+    //   this.toasterService.warning('Please login to buy product');
+    //   return;
+    // }
     if (this.qty > this.currentVariant.qty) {
       this.qty = this.currentVariant.qty;
     }
@@ -97,21 +132,32 @@ export class ProductDetailsComponent implements OnInit {
       price: this.qty * this.currentVariant.price,
       qty: this.qty,
       variantId: this.currentVariant.id,
-      customerId: this.user.id,
     };
-    this.cartService.create(payload).subscribe((success) => {
-      this.toasterService.success("Product added to cart!!")
+    sessionStorage.setItem("products", JSON.stringify([payload]));
+    this.router.navigate(['/order/checkout'], {
+      queryParams: {
+        type: 'BUY'
+      }
     });
   }
-  buyNow(){
-    if (this.qty > this.currentVariant.qty) {
-      this.qty = this.currentVariant.qty;
+  addToWishlist() {
+    if (!this.user) {
+      this.toasterService.warning('Please login to add product to wishlist');
+      return;
     }
     let payload = {
-      price: this.qty * this.currentVariant.price,
-      qty: this.qty,
       variantId: this.currentVariant.id,
       customerId: this.user.id,
     };
+    this.wishlistService.add(payload).subscribe({
+      next: (success) => {
+        this.toasterService.success("Product added to wishlist!!")
+      },
+      error: (err) => {
+        console.log('err', err);
+
+      },
+    });
+
   }
 }

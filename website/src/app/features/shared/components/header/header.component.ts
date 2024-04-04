@@ -1,7 +1,9 @@
 import { Component, ElementRef, HostListener, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastService } from 'src/app/core/services';
 import { TagCategoryPipe } from 'src/app/pipes/tag-category.pipe';
+import { CartService } from 'src/app/services/cart.service';
 import { CommonService } from 'src/app/services/common.service';
 
 @Component({
@@ -28,8 +30,11 @@ export class HeaderComponent {
     private router: Router,
     private el: ElementRef,
     public commonService: CommonService,
-    private tagCatPipe: TagCategoryPipe
-  ) {}
+    private tagCatPipe: TagCategoryPipe,
+    private cartService: CartService,
+    private toast: ToastService,
+
+  ) { }
   private modalService = inject(NgbModal);
   openSearch(content: any) {
     this.modalService.open(content, { size: 'xl', centered: true });
@@ -139,6 +144,8 @@ export class HeaderComponent {
     window.addEventListener('wheel', (event) => {
       this.scrollValue = Math.sign(event.deltaY);
     });
+    console.log("Your Cart");
+    
   }
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -149,7 +156,7 @@ export class HeaderComponent {
       0;
     this.scrollPosition = scrollPositionValue;
   }
-  navigateTo(path: any,id:any) {
+  navigateTo(path: any, id: any) {
     this.router.navigate([path], { queryParams: { id: id } });
     let ele: any = document.getElementById('topbar');
     ele.scrollIntoView({
@@ -193,5 +200,17 @@ export class HeaderComponent {
     this.isMenuOpen = !this.isMenuOpen;
     this.category.title = '';
     this.category.categories = [];
+  }
+  getAllCart() {
+
+  }
+ 
+  showCart() {
+    let user = localStorage.getItem('userData') ? true : false
+    if (user) {
+      this.isCartOpen = !this.isCartOpen;
+    } else {
+      this.toast.warning('Please login for show your cart')
+    }
   }
 }
