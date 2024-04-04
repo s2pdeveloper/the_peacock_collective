@@ -9,6 +9,8 @@ const controller = require("./cart");
 
 
 
+app.get("/", controller.getAll);
+
 app.post(
   "/",
   // authHandler.authenticateJWT(),
@@ -28,9 +30,8 @@ app.delete(
   controller.remove 
 );
 
-app.get("/:id",controller.getById);
-app.put(
-  "/:id",
+app.post(
+  "/updateAll",
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
   // validate("updateCustomer"),
   controller.updateAll

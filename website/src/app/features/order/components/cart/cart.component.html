@@ -7,7 +7,7 @@
       <div class="row">
         <div class="col-12 col-md-12 col-lg-8 table-responsive px-3">
           <table class="table table-sm">
-            <thead>
+            <thead >
               <tr>
                 <th class="text-center regular-weight">Product</th>
                 <th>Price</th>
@@ -17,34 +17,75 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let p of commonService.cartData;let i =index">
+              <tr *ngFor="let p of carts; let i = index">
                 <th scope="row" class="d-flex">
-                  <img width="100" height="90" [src]="p.variantImages.img" alt="" />
+                  <img
+                    width="100"
+                    height="90"
+                    [src]="p?.cartWithVariants?.variantImages[0].image"
+                    alt=""
+                  />
                   <div class="p-3">
-                    <p class="light-dark regular-font">{{
-                      p.cartWithVariants.variantWithProduct.variantImages?.[0]?.image }}</p>
-                    <p class="text-muted small-text" *ngFor="let item of p.cartWithVariants.variantWithAttrVariantMap">
-                      {{ item.AttrVariantMapWithAttributes.name}}: {{ item.value }}</p>
+                    <p class="light-dark regular-font">
+                      {{
+                      p.cartWithVariants.variantWithProduct.variantImages?.[0]?.image }}
+                    </p>
+                    <p
+                      class="text-muted small-text"
+                      *ngFor="
+                        let item of p.cartWithVariants.variantWithAttrVariantMap
+                      "
+                    >
+                      {{ item.AttrVariantMapWithAttributes.name }}:
+                      {{ item.value }}
+                    </p>
                   </div>
                 </th>
-                <td class="py-auto light-dark small-text">
-                  {{ p.price | currency }}
+                <td scope="row"  class="py-auto light-dark small-text">
+                  {{ p.price | currency : "INR" }}
                 </td>
-                <td>
-                  <input type="number " class="w-25 input-number background-primary" [(ngModel)]="qty" [value]="qty" />
+                <td  scope="row" > 
+                  <input
+                    type="number "
+                    [class.borderDanger]="p.error"
+                    class="w-25 input-number background-primary"
+                    [(ngModel)]="p.qty"
+                    (change)="showUpdate = !showUpdate"
+                  />
                 </td>
-                <td class="light-dark small-text">
-                  <p class="py-auto">{{ p.price * qty | currency }}</p>
+                <td  scope="row"  class="light-dark small-text">
+                  <p class="py-auto">{{ p.price * p.qty | currency : "INR" }}</p>
                 </td>
-                <td><i class="fa-regular fa-trash-can" (click)="deleteVariant(p,i)"></i></td>
+                <td  scope="row" >
+                  <i
+                    class="fa-regular fa-trash-can"
+                    (click)="deleteVariant(p, i)"
+                  ></i>
+                </td>
               </tr>
             </tbody>
           </table>
           <div class="row py-5">
-            <div class="w-auto py-2 px-3 pointer background-primary d-flex align-items-center"
-              (click)="navigateTo('/home')">
-              <i class="fa-solid fa-chevron-left me-1"></i>
-              Continue Shopping
+            <div class="col-3 mb-3" *ngIf="showUpdate">
+              <button class="btn btn-dark" (click)="updateAllCart()">Update</button>
+              <!-- <div
+                class="py-2 px-3 pointer background-primary d-flex align-items-center"
+                (click)="updateAllCart()"
+              >
+                Update
+              </div> -->
+            </div>
+            <div class="col-12">
+              <div class="w-50">
+                <button class="btn btn-dark" (click)="navigateTo('/home')">Continue Shopping</button>
+                <!-- <div
+                  class="w-25 py-2 px-3 pointer background-primary d-flex align-items-center"
+                  (click)="navigateTo('/home')"
+                >
+                  <i class="fa-solid fa-chevron-left me-1"></i>
+                  Continue Shopping
+                </div> -->
+              </div>
             </div>
           </div>
         </div>
@@ -53,19 +94,19 @@
             <div class="p-3">
               <div class="row justify-content-between">
                 <div class="col-4 regular-weight">
-                  {{ product.length }}
-                  {{ product.length > 2 ? "item" : "items" }}
+                  {{ carts.length }}
+                  {{ carts.length > 2 ? "item" : "items" }}
                 </div>
                 <div class="col-4 d-flex justify-content-end regular-weight">
-                  {{ 10.5 | currency }}
+                  {{ totalItemPrice | currency : "INR" }}
                 </div>
               </div>
-              <div class="row justify-content-between">
+              <!-- <div class="row justify-content-between">
                 <div class="col-4 regular-weight">Shipping</div>
                 <div class="col-4 d-flex justify-content-end regular-weight">
                   {{ 7 | currency }}
                 </div>
-              </div>
+              </div> -->
             </div>
             <div class="card-body p-3">
               <div class="row justify-content-between">
@@ -73,7 +114,9 @@
                   <h5 class="regular-weight">Total (tax incl.)</h5>
                 </div>
                 <div class="col-4 d-flex justify-content-end">
-                  <h5 class="regular-weight">{{ 17.5 | currency }}</h5>
+                  <h5 class="regular-weight">
+                    {{ totalItemPrice | currency : "INR" }}
+                  </h5>
                 </div>
               </div>
               <div class="row">
@@ -99,7 +142,10 @@
             </div>
             <div class="row p-3">
               <div class="col-12">
-                <button class="btn btn-dark py-3 regular-weight" (click)="checkout()">
+                <button
+                  class="btn btn-dark py-3 regular-weight"
+                  (click)="checkout()"
+                >
                   Proceed to checkout
                 </button>
               </div>

@@ -310,6 +310,11 @@ input {
     background-color: #e3e3e3;
   }
 }
+.cart-img{
+  min-height: 100px;
+  max-height: 100px;
+  object-fit: cover;
+}
 @media (max-width: 992px) {
   .header-web {
     display: none;

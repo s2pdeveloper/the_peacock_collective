@@ -1,7 +1,7 @@
 import { Component, ElementRef, HostListener, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastService } from 'src/app/core/services';
+import { StorageService, ToastService } from 'src/app/core/services';
 import { TagCategoryPipe } from 'src/app/pipes/tag-category.pipe';
 import { CartService } from 'src/app/services/cart.service';
 import { CommonService } from 'src/app/services/common.service';
@@ -21,20 +21,22 @@ export class HeaderComponent {
   isMenuOpen: boolean = false;
   isCatOpen: boolean = false;
   isCartOpen: boolean = false;
+  cartData: any[] = [];
   category: any = {
     title: '',
     categories: [],
   };
   activeTagId = null;
+  user:any;
+  currentVariant = null;
   constructor(
     private router: Router,
-    private el: ElementRef,
+    private storageService: StorageService,
     public commonService: CommonService,
     private tagCatPipe: TagCategoryPipe,
     private cartService: CartService,
-    private toast: ToastService,
-
-  ) { }
+    private toast: ToastService
+  ) {    this.user = this.storageService.get('Customer');}
   private modalService = inject(NgbModal);
   openSearch(content: any) {
     this.modalService.open(content, { size: 'xl', centered: true });
@@ -124,16 +126,12 @@ export class HeaderComponent {
     },
   ];
   get totalItemPrice() {
-    let totalPriceArray = this.product.map((items) => {
-      return {
-        ...items,
-        totalPrice: items.qty * items.price,
-      };
-    });
-    return totalPriceArray.reduce(
-      (acc, currValue) => acc + currValue.totalPrice,
-      0
-    );
+    let totalPriceArray = this.cartData.reduce((acc, currValue) =>acc + (currValue.cartWithVariants.price * currValue.qty),0);
+    // return totalPriceArray.reduce(
+    //   (acc, currValue) => acc + currValue.totalPrice,
+    //   0
+    // );
+    return totalPriceArray;
   }
   totalShipCharge = this.product.reduce(
     (acc, currValue) => acc + currValue.shipCharge,
@@ -144,8 +142,7 @@ export class HeaderComponent {
     window.addEventListener('wheel', (event) => {
       this.scrollValue = Math.sign(event.deltaY);
     });
-    console.log("Your Cart");
-    
+    console.log('Your Cart');
   }
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -201,16 +198,36 @@ export class HeaderComponent {
     this.category.title = '';
     this.category.categories = [];
   }
-  getAllCart() {
+  checkout() {
+    let checkoutProduts = this.cartData.map((x) => {
+      return {
+        price: x.price,
+        qty: x.qty,
+        variantId: x.variantId,
+      };
+    });
 
+    sessionStorage.setItem('products', JSON.stringify(checkoutProduts));
+    this.router.navigate(['/order/checkout'], {
+      queryParams: {
+        type: 'CART',
+      },
+    });
   }
- 
+
   showCart() {
-    let user = localStorage.getItem('userData') ? true : false
+    let user = localStorage.getItem('Customer') ? true : false;
     if (user) {
       this.isCartOpen = !this.isCartOpen;
+      this.getAllCartData();
     } else {
-      this.toast.warning('Please login for show your cart')
+      this.toast.warning('Please login for show your cart');
     }
+  }
+  getAllCartData() {
+    this.cartService.getAll().subscribe((success) => {
+      this.cartData = success.result.rows;
+      console.log('this.cartService.cartData', this.cartData);
+    });
   }
 }

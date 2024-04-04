@@ -30,6 +30,7 @@ setTimeout(() => {
 }, 2000);
 app.set('port', process.env.PORT || 1945);
 
+
 const server = app.listen(app.get('port'), () => {
   console.log(
     'App is running at http://localhost:%d in %s mode',
@@ -51,23 +52,22 @@ app.use(
 app.use('/image', express.static(path.join(__dirname, 'assets')));
 app.use('/apk', express.static(path.join(__dirname, 'app-apk')));
 // development console log
-app.use((req, res, next) => {
-  if (process.env.ENVIRONMENT === 'development') {
-    // console.log('req body', req.body);
-    // console.log('req query', req.query);
-    // console.log('authorization', req.headers.authorization);
-  }
-  next();
-});
+// app.use((req, res, next) => {
+//   if (process.env.ENVIRONMENT === 'development') {
+//     // console.log('req body', req.body);
+//     // console.log('req query', req.query);
+//     // console.log('authorization', req.headers.authorization);
+//   }
+//   next();
+// });
 process.on('unhandledRejection', (reason, p) => {
   console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
 });
 // Routes
 // app.use(expressValidator());
-app.use('/', indexRouter);
-
-app.use(errorHandler);
 app.use(authenticateJWT);
+app.use('/', indexRouter);
+app.use(errorHandler);
 
 
 

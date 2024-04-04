@@ -121,10 +121,10 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   buyNow() {
-    // if (!this.user) {
-    //   this.toasterService.warning('Please login to buy product');
-    //   return;
-    // }
+    if (!this.user) {
+      this.toasterService.warning('Please login to buy product');
+      return;
+    }
     if (this.qty > this.currentVariant.qty) {
       this.qty = this.currentVariant.qty;
     }
