@@ -8,404 +8,54 @@
         <div class="col-12 col-md-12 col-lg-8">
           <div
             [ngClass]="collapsed ? 'info-collapsed' : 'info'"
-            class="row px-3 personal-info"
-          >
-            <div class="col-12 border">
-              <div class="p-4 border-bottom">
-                <p class="fw-bold">1 Personal Information</p>
-              </div>
-              <div [ngClass]="collapsed ? 'd-none' : 'd-block'" class="p-4">
-                <span class="pb-2 pointer" (click)="navigateTo('/auth/login')">
-                  <i class="fa-regular fa-circle-question"></i>
-                  Already have an account? Log in instead!
-                </span>
-                <form>
-                  <div class="row my-3">
-                    <div class="col-12 col-lg-2 d-flex align-items-center my-1">
-                      <label for="inputPassword6" class="col-form-label"
-                        >Social title</label
-                      >
-                    </div>
-                    <div class="col-12 col-lg-2 d-flex me-3 my-1">
-                      <div class="d-flex px-2 align-items-center">
-                        <input
-                          class="form-check-input me-2 background-primary"
-                          type="radio"
-                          name="inlineRadioOptions"
-                          id="inlineRadio1"
-                          value="option1"
-                        />
-                        <label class="form-check-label" for="inlineRadio1"
-                          >Mr.</label
-                        >
-                      </div>
-                      <div class="d-flex px-2 align-items-center">
-                        <input
-                          class="form-check-input me-2 background-primary"
-                          type="radio"
-                          name="inlineRadioOptions"
-                          id="inlineRadio2"
-                          value="option2"
-                        />
-                        <label class="form-check-label" for="inlineRadio2"
-                          >Mrs.</label
-                        >
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row my-3">
-                    <div class="col-12 col-lg-2 d-flex align-items-center my-1">
-                      <label for="inputPassword6" class="col-form-label"
-                        >First name</label
-                      >
-                    </div>
-                    <div class="col-12 col-lg-8 me-3 my-1">
-                      <input
-                        type="text"
-                        class="form-control background-primary"
-                      />
-                      <p class="small-text text-muted mt-1">
-                        Only letters and the dot (.) character, followed by a
-                        space, are allowed.
-                      </p>
-                    </div>
-                  </div>
-                  <div class="row my-3">
-                    <div class="col-12 col-lg-2 d-flex align-items-center my-1">
-                      <label for="inputPassword6" class="col-form-label"
-                        >Last name</label
-                      >
-                    </div>
-                    <div class="col-12 col-lg-8 me-3 my-1">
-                      <input
-                        type="text"
-                        class="form-control background-primary"
-                      />
-                      <p class="small-text text-muted mt-1">
-                        Only letters and the dot (.) character, followed by a
-                        space, are allowed.
-                      </p>
-                    </div>
-                  </div>
-                  <div class="row my-3">
-                    <div class="col-12 col-lg-2 d-flex align-items-center my-1">
-                      <label for="inputPassword6" class="col-form-label"
-                        >Email</label
-                      >
-                    </div>
-                    <div class="col-12 col-lg-8 me-3 my-1">
-                      <input
-                        type="email"
-                        class="form-control background-primary"
-                      />
-                    </div>
-                  </div>
-                  <div class="row my-3">
-                    <div class="col-12 my-1">
-                      <p class="my-1">Create an account <i>(optional)</i></p>
-                      <p class="small-text text-muted mt-1">
-                        And save time on your next order!
-                      </p>
-                    </div>
-                  </div>
-                  <div class="row my-3">
-                    <div class="col-12 col-lg-2 d-flex align-items-center my-1">
-                      <label for="inputPassword6" class="col-form-label"
-                        >Password</label
-                      >
-                    </div>
-                    <div class="col-12 col-lg-8 my-1 me-2 password-input">
-                      <input
-                        [type]="showEye ? 'password' : 'text'"
-                        class="form-control background-primary"
-                      />
-                      <div
-                        *ngIf="!showEye"
-                        class="icon-box"
-                        (click)="showEye = !showEye"
-                      >
-                        <i class="fa-solid fa-eye"></i>
-                      </div>
-                      <div
-                        *ngIf="showEye"
-                        class="icon-box"
-                        (click)="showEye = !showEye"
-                      >
-                        <i class="fa-solid fa-eye-slash"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row my-3">
-                    <div class="col-12 col-lg-2 d-flex align-items-center my-1">
-                      <label for="inputPassword6" class="col-form-label"
-                        >BirthDate</label
-                      >
-                    </div>
-                    <div class="col-12 col-lg-8 me-3 my-1">
-                      <div
-                        class="d-flex w-100 background-primary justify-content-between"
-                      >
-                        <input
-                          type="text"
-                          class="form-control w-75 background-primary"
-                          placeholder="MM/DD/YYYY"
-                        />
-                        <div class="opt-box">Optional</div>
-                      </div>
-                      <p>(E.g.: 05/31/1970)</p>
-                    </div>
-                  </div>
-                  <div class="row my-3">
-                    <div class="col-12 col-lg-2 my-1"></div>
-                    <div class="col-12 col-lg-8 me-3 my-1">
-                      <div class="d-flex align-items-center my-2">
-                        <input
-                          class="form-check-input me-2"
-                          type="checkbox"
-                          id="inlineCheckbox1"
-                          value="option1"
-                        />
-                        <p>Receive offers from our partners</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row my-3">
-                    <div class="col-12 col-lg-2 my-1"></div>
-                    <div class="col-12 col-lg-8 me-3 my-1">
-                      <div class="d-flex align-items-center my-2">
-                        <input
-                          class="form-check-input me-2"
-                          type="checkbox"
-                          id="inlineCheckbox1"
-                          value="option1"
-                        />
-                        <p>Sign up for our newsletter</p>
-                      </div>
-                      <i class="text-muted regular-font"
-                        >You may unsubscribe at any moment. For that purpose,
-                        please find our contact info in the legal notice.</i
-                      >
-                    </div>
-                  </div>
-                  <div class="row mt-3 justify-content-center">
-                    <div class="col-12">
-                      <button
-                        class="btn btn-dark py-3"
-                        (click)="
-                          collapsedAddress = !collapsedAddress;
-                          collapsed = !collapsed
-                        "
-                      >
-                        Continue
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-          <div
-            [ngClass]="collapsedAddress ? 'info-collapsed' : 'info'"
             class="row px-3 address-info"
           >
             <div class="col-12 border">
               <div class="p-4 border-bottom">
-                <p class="fw-bold">2 Addresses</p>
+                <p class="fw-bold">1 Addresses</p>
               </div>
-              <div
-                [ngClass]="collapsedAddress ? 'd-none' : 'd-block'"
-                class="p-4"
-              >
-                <span class="pb-2">
-                  The selected address will be used both as your personal
-                  address (for invoice) and as your delivery address.
-                </span>
-                <form>
-                  <div class="row my-3">
-                    <div class="col-12 col-lg-2 d-flex align-items-center my-1">
-                      <label for="inputPassword6" class="col-form-label"
-                        >First name</label
-                      >
-                    </div>
-                    <div class="col-12 col-lg-8 me-3 my-1">
-                      <input
-                        type="text"
-                        class="form-control background-primary"
-                      />
-                    </div>
-                  </div>
-                  <div class="row my-3">
-                    <div class="col-12 col-lg-2 d-flex align-items-center my-1">
-                      <label for="inputPassword6" class="col-form-label"
-                        >Last name</label
-                      >
-                    </div>
-                    <div class="col-12 col-lg-8 me-3 my-1">
-                      <input
-                        type="text"
-                        class="form-control background-primary"
-                      />
-                    </div>
-                  </div>
-                  <div class="row my-3">
-                    <div class="col-12 col-lg-2 d-flex align-items-center my-1">
-                      <label for="inputPassword6" class="col-form-label"
-                        >Company</label
-                      >
-                    </div>
-                    <div class="col-12 col-lg-8 my-1">
-                      <input
-                        type="text"
-                        class="form-control background-primary"
-                      />
-                    </div>
-                    <div
-                      class="col-12 col-lg-2 d-flex justify-content-lg-center align-items-center my-1"
-                    >
-                      <label class="text-muted small-text">Optional</label>
-                    </div>
-                  </div>
-                  <div class="row my-3">
-                    <div class="col-12 col-lg-2 d-flex align-items-center my-1">
-                      <label>Address</label>
-                    </div>
-                    <div class="col-12 col-lg-8 me-3 my-1">
-                      <input
-                        type="text"
-                        class="form-control background-primary"
-                      />
-                    </div>
-                  </div>
-                  <div class="row my-3">
-                    <div class="col-12 col-lg-2 d-flex align-items-center my-1">
-                      <label>Address Compliment</label>
-                    </div>
-                    <div class="col-12 col-lg-8 my-1">
-                      <input
-                        type="text"
-                        class="form-control background-primary"
-                      />
-                    </div>
-                    <div
-                      class="col-12 col-lg-2 d-flex justify-content-lg-center align-items-center my-1"
-                    >
-                      <label class="text-muted small-text">Optional</label>
-                    </div>
-                  </div>
-                  <div class="row my-3">
-                    <div class="col-12 col-lg-2 d-flex align-items-center my-1">
-                      <label>City</label>
-                    </div>
-                    <div class="col-12 col-lg-8 me-3 my-1">
-                      <input
-                        type="text"
-                        class="form-control background-primary"
-                      />
-                    </div>
-                  </div>
-                  <div class="row my-3">
-                    <div class="col-12 col-lg-8 me-3 my-1">
-                      <div class="d-flex align-items-center my-2">
-                        <input
-                          class="form-check-input me-2"
-                          type="checkbox"
-                          id="inlineCheckbox1"
-                          value="option1"
-                          checked
-                        />
-                        <p>Use this address for invoice too</p>
+              <div [ngClass]="collapsed ? 'd-none' : 'd-block'" class="p-3">
+                <div class="row justify-content-around">
+                  <div
+                    *ngFor="let add of allAddresses; let i = index"
+                    class="col-10 col-md-4 col-lg-5 card position-relative p-4"
+                  >
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="d-flex mb-3 align-items-center">
+                          <p>{{ add?.name }}</p>
+                          <span
+                            class="bg-light small-text text-muted p-1 ms-2"
+                            >{{ add.type }}</span
+                          >
+                        </div>
+                        <p class="mb-3">
+                          {{ add?.location }}
+                        </p>
+                        <p>{{ add?.phone }}</p>
+                      </div>
+                      <div class="badge pointer">
+                        <span
+                          ><input
+                            type="radio"
+                            (click)="this.selectedAddressId = add.id"
+                            name="address"
+                        /></span>
                       </div>
                     </div>
-                  </div>
-                  <div class="row mt-3 justify-content-center">
-                    <div class="col-12">
-                      <button
-                        class="btn bg-dark p-3 w-100 text-light rounded-0"
-                        (click)="
-                          collapsedAddress = !collapsedAddress;
-                          collapsedShipping = !collapsedShipping
-                        "
-                      >
-                        Continue
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-          <div
-            [ngClass]="collapsedShipping ? 'info-collapsed' : 'info'"
-            class="row px-3 shipping-info"
-          >
-            <div class="col-12 border">
-              <div class="p-4 border-bottom">
-                <p class="fw-bold">3 Shipping Method</p>
-              </div>
-              <div
-                [ngClass]="collapsedShipping ? 'd-none' : 'd-block'"
-                class="px-4 py-3"
-              >
-                <div
-                  class="row align-items-center background-primary px-4 py-3"
-                >
-                  <div class="col-2 col-md-1 col-lg-1">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      checked
-                      name="radioNoLabel"
-                      value=""
-                    />
-                  </div>
-                  <div class="col-8 col-md-8 col-lg-4">
-                    <img
-                      width="35"
-                      height="40"
-                      class="img-fluid"
-                      src="../../../../../assets/products/bag-1.jpg"
-                      alt=""
-                    />
-                    <span> My carrier</span>
-                  </div>
-                  <div class="col-6 col-md-4 col-lg-4">
-                    <p class="text-muted small-text">Delivery next day!</p>
-                  </div>
-                  <div class="col-6 col-md-4 col-lg-3">
-                    <p class="small-text text-center">$7.00 tax incl.</p>
                   </div>
                 </div>
               </div>
               <div
-                [ngClass]="collapsedShipping ? 'd-none' : 'd-block'"
-                class="px-4 pb-2"
-              >
-                <p>
-                  If you would like to add a comment about your order, please
-                  write it in the field below.
-                </p>
-              </div>
-              <div
-                [ngClass]="collapsedShipping ? 'd-none' : 'd-block'"
-                class="px-4"
-              >
-                <textarea
-                  class="background-primary form-control"
-                  rows="3"
-                ></textarea>
-              </div>
-              <div
-                [ngClass]="collapsedShipping ? 'd-none' : 'd-block'"
-                class="p-4"
+                [ngClass]="collapsed ? 'd-none' : 'd-block'"
+                class="p-4 pt-1"
               >
                 <div class="row justify-content-center">
                   <div class="col-12">
                     <button
                       class="btn btn-dark py-3"
-                      (click)="
-                        collapsedPayment = !collapsedPayment;
-                        collapsedShipping = !collapsedShipping
-                      "
+                      [disabled]="!cartData.length"
+                      (click)="continue()"
                     >
                       Continue
                     </button>
@@ -420,35 +70,18 @@
           >
             <div class="col-12 border">
               <div class="p-4 border-bottom">
-                <p class="fw-bold">4 Payment</p>
+                <p class="fw-bold">2 Payment</p>
               </div>
               <div
                 [ngClass]="collapsedPayment ? 'd-none' : 'd-block'"
                 class="px-4 py-3"
               >
-                <div class="row align-items-center background-danger px-4 py-3">
-                  <p>Unfortunately, there is no payment method available.</p>
-                </div>
-              </div>
-              <div
-                [ngClass]="collapsedPayment ? 'd-none' : 'd-block'"
-                class="row px-4 pb-2"
-              >
-                <div class="col-12 col-lg-8 me-3">
-                  <div class="d-flex align-items-center my-2">
-                    <input
-                      class="form-check-input me-2"
-                      type="checkbox"
-                      id="inlineCheckbox1"
-                      value="option1"
-                    />
-                    <p>
-                      I agree to the
-                      <span class="text-decoration-underline"
-                        >terms of service</span
-                      >
-                      and will adhere to them unconditionally.
-                    </p>
+                <div class="row align-items-center px-4 py-3">
+                  <div class="col-1">
+                    <input type="radio" name="" id="cod" />
+                  </div>
+                  <div class="col-11">
+                    <label for="cod">COD</label>
                   </div>
                 </div>
               </div>
@@ -458,7 +91,9 @@
               >
                 <div class="row justify-content-center">
                   <div class="col-12">
-                    <button class="btn btn-dark py-3">Place Order</button>
+                    <button class="btn btn-dark py-3" (click)="createOrder()">
+                      Place Order
+                    </button>
                   </div>
                 </div>
               </div>
@@ -471,8 +106,8 @@
               <div class="row py-3 justify-content-between">
                 <div class="col-4">
                   <h5 class="regular-font">
-                    {{ product.length }}
-                    {{ product.length > 2 ? "item" : "items" }}
+                    {{ cartData.length }}
+                    {{ cartData.length > 2 ? "item" : "items" }}
                   </h5>
                 </div>
                 <div class="col-4 d-flex justify-content-end">
@@ -487,38 +122,48 @@
               </div>
               <div *ngIf="!collapsedDetails">
                 <div
-                 *ngFor="let d of product"
+                  *ngFor="let d of product"
                   class="row justify-content-between"
                 >
-                  <div class="col-2 p-3 pb-0">
+                  <div class="col-3 p-3 pb-0">
                     <img
                       (click)="navigateTo('/product/product-details')"
                       class="img-fluid"
-                      [src]="d.img"
+                      [src]="d?.product.variant?.variantImages[0].image"
                       alt=""
                     />
                   </div>
-                  <div class="col-10">
+                  <div class="col-9">
                     <p class="regular-font">
                       <span
                         class="pointer"
                         (click)="navigateTo('/product/product-details')"
-                        >{{d.name}}</span
+                        >{{ d?.product.hsn }}</span
                       >
                     </p>
-                    <p class="small-text">Size : {{d.size}}</p>
-                    <p class="small-text">Color : {{d.color}}</p>
-                  </div>
-                  <div class="col-12 d-flex justify-content-end">
-                    <p class="small-text">x1 {{ d.price | currency }}</p>
-                  </div>
-                  <div class="col-12 d-flex justify-content-end">
                     <p
+                      class="text-color-secondary small-text"
+                      *ngFor="
+                        let attr of d?.product.variant
+                          ?.variantWithAttrVariantMap
+                      "
+                    >
+                      {{ attr.AttrVariantMapWithAttributes.name }} :
+                      {{ attr?.value }}
+                    </p>
+                  </div>
+                  <div class="col-12 d-flex justify-content-end">
+                    <p class="small-text">
+                      x{{ d?.qty}} {{ d?.product?.variant.price | currency : "INR" }}
+                    </p>
+                  </div>
+                  <div class="col-12 d-flex justify-content-end">
+                    <span
                       class="small-text pointer"
                       (click)="navigateTo('/order/cart')"
                     >
                       <i class="fa-solid fa-pencil me-2"></i>edit
-                    </p>
+                    </span>
                   </div>
                 </div>
               </div>
@@ -527,13 +172,7 @@
               <div class="row justify-content-between">
                 <div class="col-4 regular-font">Subtotal</div>
                 <div class="col-4 d-flex justify-content-end regular-font">
-                  {{ 10.5 | currency }}
-                </div>
-              </div>
-              <div class="row justify-content-between">
-                <div class="col-4 regular-font">Shipping</div>
-                <div class="col-4 d-flex justify-content-end regular-font">
-                  {{ 7 | currency }}
+                  {{ totalItemPrice | currency : "INR" }}
                 </div>
               </div>
             </div>
@@ -543,7 +182,9 @@
                   <h5 class="regular-weight">Total (tax incl.)</h5>
                 </div>
                 <div class="col-4 d-flex justify-content-end">
-                  <h5 class="regular-weight">{{ 17.5 | currency }}</h5>
+                  <h5 class="regular-weight">
+                    {{ totalItemPrice | currency : "INR" }}
+                  </h5>
                 </div>
               </div>
               <div class="row">
@@ -561,7 +202,11 @@
                 <i class="fa-solid fa-tag"></i>
               </div>
               <div class="col-7">
-                <input type="text" class="form-control promo-input w-100" placeholder="Promo code">
+                <input
+                  type="text"
+                  class="form-control promo-input w-100"
+                  placeholder="Promo code"
+                />
               </div>
               <div class="col-3 d-flex justify-content-end">
                 <p class="regular-weight pointer">Add</p>

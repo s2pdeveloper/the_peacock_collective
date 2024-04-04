@@ -15,7 +15,7 @@ const controller = require("./cart");
 // );
 
 
-app.get("/:id", controller.getAll);
+app.get("/", controller.getAll);
 
 app.post(
   "/",
@@ -49,8 +49,8 @@ app.post(
 //   controller.delete
 // );
 
-app.put(
-  "/:id",
+app.post(
+  "/updateAll",
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
   // validate("updateCustomer"),
   controller.updateAll

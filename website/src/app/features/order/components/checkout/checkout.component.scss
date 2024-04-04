@@ -84,6 +84,19 @@ input:focus{
   font-size: 0.75rem;
   font-weight: 400;
 }
+.badge{
+  background-color: #ededed;
+  border-radius: 1rem;
+  position: absolute;
+  left: -3%;
+  top: -10%;
+  padding: 0.5rem;
+  width: 10%;
+}
+.card{
+  margin: 1rem;
+    // width: 45%;
+}
 @media (max-width: 992px) {
   .personal-info,
   .address-info,

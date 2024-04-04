@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { StorageService } from 'src/app/core/services';
 import { CartService } from 'src/app/services/cart.service';
 import { CommonService } from 'src/app/services/common.service';
@@ -14,30 +15,16 @@ export class CartComponent implements OnInit {
   user: any = null;
   originalCart = [];
   carts = [];
+  showUpdate : boolean = false;
   constructor(
     private router: Router,
     public commonService: CommonService,
     private cartService: CartService,
     private storageService: StorageService,
+    private toasterService: ToastrService
   ) {
-    this.user = this.storageService.get('userData');
+    this.user = this.storageService.get('Customer');
   }
-  product: any[] = [
-    {
-      name: 'Printed Chiffon Dress',
-      img: '../../../../../assets/products/chair.jpg',
-      size: 'S',
-      color: 'Yellow',
-      price: 10.5,
-    },
-    {
-      name: 'Printed Chiffon Dress',
-      img: '../../../../../assets/products/printer.jpg',
-      size: 'S',
-      color: 'Yellow',
-      price: 10.5,
-    },
-  ];
   payloadData = {
     edit: [],
     delete: [],
@@ -46,28 +33,38 @@ export class CartComponent implements OnInit {
     this.router.navigate([path]);
   }
   ngOnInit(): void {
-    // console.log('this.commonService.cartData', this.commonService.cartData);
-    // this.getAllCart()
+    this.getAllCart();
   }
   deleteVariant(item, i) {
-    this.payloadData.delete.push(item);
+    this.payloadData.delete.push(item.id);
     this.carts.splice(i, 1);
   }
   updateAllCart() {
     this.payloadData.edit = [];
-    for (const item of this.carts) {
-      let orgCart = this.originalCart.find(y => y.id == item.id);
+
+    for (let item of this.carts) {
+      item.qty = Number(item.qty);
+      let orgCart = this.originalCart.find((y) => y.id == item.id);
+      console.log('orgCart', orgCart);
+
       if (this.checkForVariantQtyExceeds(item)) {
+        item.error = true;
+        console.log('this.carts',this.carts);
         return;
+      }else{
+        item.error = false;
       }
       if (orgCart && orgCart.qty != item.qty) {
         this.payloadData.edit.push(item);
       }
     }
+    
+    console.log('this.payloadData)', this.payloadData);
 
     this.cartService.updateAll(this.payloadData).subscribe({
       next: (success) => {
         // this.carts = success;
+        this.toasterService.success('Cart updated successfully')
       },
       error: (err) => {
         console.log('err', err);
@@ -78,41 +75,60 @@ export class CartComponent implements OnInit {
     let qtyExceed = false;
     for (const item of this.commonService.allData.variants) {
       if (item.id == cart.variantId) {
-        if (item.qty > cart.qty) {
+        if (typeof +cart.qty == 'number') {
+          if (item.qty < cart.qty) {
+            this.toasterService.error(
+              'Quantity not available in stock!!'
+            );
+            qtyExceed = true;
+          }
+          break;
+        } else {
+          this.toasterService.error('Invalid Quantity');
           qtyExceed = true;
-
         }
-        break
       }
-
     }
     return qtyExceed;
   }
   getAllCart() {
     this.cartService.getAll().subscribe({
       next: (success) => {
-        this.originalCart = success;
-        this.carts = success;
+        console.log('success', success);
+        this.originalCart = JSON.parse(JSON.stringify(success.result.rows));
+        this.carts = JSON.parse(JSON.stringify(success.result.rows));
       },
       error: (err) => {
         console.log('err', err);
       },
     });
   }
+  get totalItemPrice() {
+    let totalPriceArray = this.carts.reduce(
+      (acc, currValue) =>
+        acc + currValue.cartWithVariants.price * currValue.qty,
+      0
+    );
+    // return totalPriceArray.reduce(
+    //   (acc, currValue) => acc + currValue.totalPrice,
+    //   0
+    // );
+    return totalPriceArray;
+  }
   checkout() {
-    let checkoutProduts = this.carts.map(x => {
+    let checkoutProduts = this.carts.map((x) => {
       return {
-        price: x.price,
+        price: x.cartWithVariants.price * x.qty,
         qty: x.qty,
         variantId: x.variantId,
-      }
-    })
+      };
+    });
 
-    sessionStorage.setItem("products", JSON.stringify(checkoutProduts));
+    sessionStorage.setItem('products', JSON.stringify(checkoutProduts));
     this.router.navigate(['/order/checkout'], {
       queryParams: {
-        type: 'CART'
-      }
+        type: 'CART',
+      },
     });
   }
 }

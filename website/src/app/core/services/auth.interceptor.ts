@@ -27,7 +27,7 @@ export class AuthInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
 
     // const user = this.storageService.get('userData');
-    const user = JSON.parse(localStorage.getItem('userData'));
+    const user = JSON.parse(localStorage.getItem('Customer'));
     const excludePath = [
 
     ]

@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getAllMasterData();
-    this.getAllCartData()
+    // this.getAllCartData()
   }
 
   getAllMasterData() {
@@ -28,11 +28,11 @@ export class AppComponent implements OnInit {
       this.loader = false;
     });
   }
-  getAllCartData(){
-    this.commonService.getAllCart(this.user.id).subscribe((success) => {
-      this.commonService.cartData = success.result.rows;
-      console.log('this.commonService.cartData',this.commonService.cartData);
-      this.loader = false;
-    });
-  }
+  // getAllCartData(){
+  //   this.commonService.getAllCart(this.user.id).subscribe((success) => {
+  //     this.commonService.cartData = success.result.rows;
+  //     console.log('this.commonService.cartData',this.commonService.cartData);
+  //     this.loader = false;
+  //   });
+  // }
 }

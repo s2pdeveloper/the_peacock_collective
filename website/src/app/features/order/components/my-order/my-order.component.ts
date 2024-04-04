@@ -1,23 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { OrderService } from 'src/app/services/order.service';
 
 @Component({
   selector: 'app-my-order',
-  standalone: true,
-  imports: [],
   templateUrl: './my-order.component.html',
-  styleUrl: './my-order.component.scss'
+  styleUrl: './my-order.component.scss',
 })
 export class MyOrderComponent implements OnInit {
-  orders = []
-  constructor(
-    private orderService: OrderService,
+  orders = [];
+  constructor(private orderService: OrderService, private router: Router) {}
 
-  ) { }
-
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
   getAllOrder() {
     this.orderService.getAll({}).subscribe({
       next: (success) => {
@@ -28,5 +22,7 @@ export class MyOrderComponent implements OnInit {
       },
     });
   }
-
+  navigateTo(path: any) {
+    this.router.navigate([path]);
+  }
 }

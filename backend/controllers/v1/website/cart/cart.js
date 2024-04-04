@@ -41,6 +41,8 @@ const modelObj = {
   }),
 
   getAll: asyncHandler(async (req, res) => {
+    console.log(' req.use', req.user);
+    
     const {
       page = 1,
       pageSize = 10,
@@ -157,10 +159,6 @@ const modelObj = {
         console.log(values);
       });
     }
-
-
-
-
 
     return res.json(
       generateResponse(resCode.HTTP_OK, {
