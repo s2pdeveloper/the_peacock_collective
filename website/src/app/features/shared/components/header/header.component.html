@@ -37,8 +37,12 @@
                 ></i>
 
                 <i
-                  class="fa-solid fa-bag-shopping pointer"
+                  class="fa-solid fa-cart-plus pointer"
                   (click)="showCart()"
+                ></i>
+                <i
+                  class="fa-solid fa-shopping-bag pointer"
+                  (click)="navigateTo('/order/my-orders',null)"
                 ></i>
               </div>
             </div>
@@ -118,8 +122,8 @@
             </div>
             <div class="d-flex align-items-center">
               <i
-                class="fa-solid fa-bag-shopping nav-items"
-                (click)="isCartOpen = !isCartOpen"
+                class="fa-solid fa-cart-plus nav-items"
+                (click)="showCart()"
               ></i>
             </div>
           </div>

@@ -34,6 +34,8 @@ export class CartComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getAllCart();
+    console.log('carts',this.carts);
+    
   }
   deleteVariant(item, i) {
     this.payloadData.delete.push(item.id);

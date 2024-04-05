@@ -1,10 +1,12 @@
 const sequelize = require("sequelize");
-
+const OrderRepository = require("../../../../models/repository/orderRepository");
 const Order = require("../../../../models").Order;
-const Cart = require("../../../../models").Cart;
-const Customer = require("../../../../models").Customer;
+const Variant = require("../../../../models").Variant;
+const AttrVariantMap = require("../../../../models").AttrVariantMap;
 const OrderVariantMap = require("../../../../models").OrderVariantMap;
-const Address = require("../../../../models").Address;
+const Attribute = require("../../../../models").Attribute;
+const Product = require("../../../../models").Product;
+const Images = require("../../../../models").Images;
 const {
   OPTIONS,
   generateResponse,
@@ -22,29 +24,26 @@ const cloudinary = require("../../../../shared/service/cloudinary.service");
 
 const modelObj = {
   create: asyncHandler(async (req, res) => {
-    console.log("++++++req.body++++++", req.body);
-    req.body.customerId =req.user.id;                              //   ====================change req.user 
-    let createData = await generateCreateData(new Model(), req.body);
-    // console.log("createData", createData);
-    let newOrder = await createData.save();
+    req.body.customerId = req.user.id;
+    let createData = await OrderRepository.create(req.body);
 
     if (req.body.products.length) {
       let arr = req.body.products.map((x) => {
         return {
           variantId: x.variantId,
-          orderId: newOrder.id,
+          orderId: createData.id,
           price: x.price,
           qty: x.qty,
         };
       });
-      await OrderVariantMap.bulkCreate(arr);
+      await OrderRepository.bulkCreate(arr);
       const query = {
         where: {
           customerId: req.user.id,
         },
       };
-      if (req.body.type == 'CART') {
-        await Cart.destroy(query);
+      if (req.body.type == "CART") {
+        await OrderRepository.delete(query);
       }
     }
     return res.status(resCode.HTTP_OK).json(
@@ -55,12 +54,11 @@ const modelObj = {
   }),
 
   buyNow: asyncHandler(async (req, res) => {
-    let createData = await generateCreateData(new Model(), req.body);
-    let newOrder = await createData.save();
+    let createData = await OrderRepository.create(req.body);
 
     await OrderVariantMap.create({
       variantId: req.body.variantId,
-      orderId: newOrder.id,
+      orderId: createData.id,
       price: req.body.price,
       qty: req.body.qty,
     });
@@ -76,48 +74,54 @@ const modelObj = {
     const {
       page = 1,
       pageSize = 10,
-      search,
       column = "createdAt",
       direction = "DESC",
     } = req.query;
     let offset = (page - 1) * pageSize || 0;
     let query = {
       where: {
-        ...(![undefined, null, ''].includes(search) && {
-          [Op.or]: {
-            name: { [Op.like]: search },
-            description: { [Op.like]: search },
-          },
-        }),
-        // ...(req.user.role == OPTIONS.usersRoles.CUSTOMER && {
-        //   customerId: req.user.id
-        // })
-
+        customerId: req.user.id,
       },
       order: [[column, direction]],
 
       include: [
         {
-          model: Address,
-          as: "address",
-          attributes: ["city", "country", "pinCode", "type", "name"],
-        },
-        {
-          model: Customer,
-          as: "customer",
-          attributes: ["firstName", "lastName", "phone"],
-        },
-        {
           model: OrderVariantMap,
           as: "orderWithOrderVariantMap",
-          attributes: ["price", "qty"],
+          attributes: ["variantId", "qty", "price"],
+          include: [
+            {
+              model: Variant,
+              as: "orderVariantMapWithVariant",
+              include: [
+                {
+                  model: AttrVariantMap,
+                  as: "variantWithAttrVariantMap",
+                  include: {
+                    model: Attribute,
+                    as: "AttrVariantMapWithAttributes",
+                    // attributes: ["name", "hsn"],
+                  },
+                },
+                {
+                  model: Product,
+                  as: "variantWithProduct",
+                  attributes: ["name", "hsn"],
+                },
+                {
+                  model: Images,
+                  as: "variantImages",
+                },
+              ],
+            },
+          ],
         },
       ],
 
       offset: +offset,
       limit: +pageSize,
     };
-    let response = await Model.findAndCountAll(query);
+    let response = await OrderRepository.findAll(query);
     return res
       .status(resCode.HTTP_OK)
       .json(generateResponse(resCode.HTTP_OK, response));
@@ -144,7 +148,6 @@ const modelObj = {
         id: req.params.id,
       },
     });
-
 
     if (!itemDetails) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Order");
@@ -190,9 +193,6 @@ const modelObj = {
   }),
 
   cancelItem: asyncHandler(async (req, res) => {
-
-
-
     const orderId = req.body.orderId; // Assuming you're passing orderId in the request params
     const orderVariantId = req.body.orderVariantId; // Assuming you're passing orderVariantId in the request params
 
@@ -206,7 +206,7 @@ const modelObj = {
       const orderItem = await OrderVariantMap.findOne({
         where: { id: orderVariantId, orderId: orderId },
       });
-      if (!orderItem || ['dispatched', 'delivered'].includes(order.status)) {
+      if (!orderItem || ["dispatched", "delivered"].includes(order.status)) {
         let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Item");
         throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
       }
@@ -221,7 +221,6 @@ const modelObj = {
       console.error("Error removing orderVariant:", error);
       res.status(500).json({ message: "Internal server error" });
     }
-
   }),
 };
 

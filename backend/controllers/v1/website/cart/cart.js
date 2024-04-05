@@ -38,19 +38,16 @@ const modelObj = {
   }),
 
   getAll: asyncHandler(async (req, res) => {
-    console.log(' req.use', req.user);
-    
     const {
       page = 1,
       pageSize = 10,
       column = "createdAt",
       direction = "DESC",
     } = req.query;
-    console.log("you hit the GetAll", req.query);
     let offset = (page - 1) * pageSize || 0;
     let query = {
       where: {
-        customerId: req.params.id,
+        customerId: req.user.id,
       },
       order: [[column, direction]],
       include: [
@@ -139,7 +136,6 @@ const modelObj = {
         id: req.params.id,
       },
     };
-    console.log("your req.body",req.body)
     let cart = await CartRespository.update(req.body, query);
     if (cart[0] == 0) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Cart");
@@ -162,7 +158,6 @@ const modelObj = {
       },
     };
     let deleted = await CartRespository.delete(query);
-    console.log("deleteItem", deleted);
     if (deleted != 0) {
       return res.json(
         generateResponse(resCode.HTTP_OK, {
@@ -181,11 +176,11 @@ const modelObj = {
           id: req.body.delete,
         },
       };
-      await Model.destroy(query);
+      await CartRespository.delete(query);
     }
     if (req.body.edit.length > 0) {
       let promissArr = req.body.edit.map((x) => {
-        return Model.update(
+        return CartRespository.update(
           { qty: x.qty },
           {
             where: {

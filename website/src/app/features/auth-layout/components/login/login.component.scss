@@ -56,13 +56,21 @@
   top: -10%;
   padding: 0.5rem;
 }
-.card{
-  margin: 2rem;
-    // width: 45%;
-}
+
 @media (max-width:992px){
   .address-column{
     padding-top: 2rem;
+  }
+  .card{
+    margin-bottom: 2rem;
+      // width: 45%;
+  }
+}
+
+@media (min-width:992px){
+  .card{
+    margin: 2rem;
+      // width: 45%;
   }
 }
 @media (max-width: 992px) and (min-width: 475px) {
