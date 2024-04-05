@@ -16,7 +16,7 @@ const roles = require("../../../../config/options/global.options").OPTIONS;
 // );
 
 
-app.get("/:id", controller.getAll);
+app.get("/", controller.getAll);
 
 app.post(
   "/",

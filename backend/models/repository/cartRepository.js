@@ -18,7 +18,7 @@ module.exports.findAll = async (query) => {
 
 
 module.exports.save = async (data) => {
-    return await Cart.save(data);
+    return await data.save()
 };
 
 module.exports.delete = async (query) => {

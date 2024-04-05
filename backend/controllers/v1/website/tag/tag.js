@@ -14,19 +14,35 @@ const {
   asyncHandler,
 } = require("../../../../config/middlewares/async.handler");
 
+const TagRepository=require("../.../../../../../models/repository/tagRepository");
+const { query } = require("express");
+
 const modelObj = {
   create: asyncHandler(async (req, res) => {
-    let checkExisting = await Model.findOne({
+
+
+    // let checkExisting = await Model.findOne({
+    //   where: {
+    //     title: req.body.title,
+    //   },
+    // });
+
+    let query={
       where: {
         title: req.body.title,
       },
-    });
+    }
+
+    let checkExisting=await TagRepository.findOneByCondition(query);
+
     if (checkExisting) {
       let message = MESSAGES.apiErrorStrings.Data_EXISTS("Tag");
       throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
     }
-    let createObj = await generateCreateData(new Model(), req.body);
-    await createObj.save();
+    // let createObj = await generateCreateData(new Model(), req.body);
+    // await createObj.save();
+     await TagRepository.create(req.body);
+
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
         message: MESSAGES.apiSuccessStrings.ADDED("Tag"),
@@ -64,18 +80,32 @@ const modelObj = {
       offset: +offset,
       limit: +pageSize,
     };
-    let response = await Model.findAndCountAll(query);
+
+    // let response = await Model.findAndCountAll(query);
+    let response=await TagRepository.findAndCountAll(query);
 
     return res
       .status(resCode.HTTP_OK)
       .json(generateResponse(resCode.HTTP_OK, response));
   }),
+
+
+
   getById: asyncHandler(async (req, res) => {
-    let existing = await Model.findOne({
-      where: {
-        id: req.params.id,
-      },
-    });
+    // let existing = await Model.findOne({
+    //   where: {
+    //     id: req.params.id,
+    //   },
+    // });
+
+let query={
+  where: {
+    id: req.params.id,
+  },
+}
+
+let existing=await TagRepository.findOneByCondition(query);
+
     if (!existing) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Tag");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
@@ -84,42 +114,54 @@ const modelObj = {
       .status(resCode.HTTP_OK)
       .json(generateResponse(resCode.HTTP_OK, existing));
   }),
+
+
+
   update: asyncHandler(async (req, res) => {
-    let itemDetails = await Model.findOne({
-      where: {
-        id: req.params.id,
-      },
-    });
-    if (!itemDetails) {
+    // let itemDetails = await Model.findOne({
+    //   where: {
+    //     id: req.params.id,
+    //   },
+    // });\
+
+    let query={
+        where: {
+          id: req.params.id,
+        },
+      }
+
+    let itemDetails=await TagRepository.update(req.body,query);
+
+  if (itemDetails[0]===0) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Tag");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
-    } else {
-      itemDetails = await generateCreateData(itemDetails, req.body);
-      await itemDetails.save();
+    } 
+      // itemDetails = await generateCreateData(itemDetails, req.body);
+      // await itemDetails.save();
       return res.json(
         generateResponse(resCode.HTTP_OK, {
           message: MESSAGES.apiSuccessStrings.UPDATE("Tag"),
         })
       );
-    }
   }),
+
   delete: asyncHandler(async (req, res) => {
     let query = {
       where: {
         id: req.params.id,
       },
     };
-    let deletedItem = await Model.destroy(query);
-    if (deletedItem) {
+    // let deletedItem = await Model.destroy(query);
+    let deletedItem=await TagRepository.delete(query);
+    if (deletedItem!=0) {
       return res.json(
         generateResponse(resCode.HTTP_OK, {
           message: MESSAGES.apiSuccessStrings.DELETED("Tag"),
         })
       );
-    } else {
+    } 
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Tag");
-      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
-    }
+      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST); 
   }),
 };
 

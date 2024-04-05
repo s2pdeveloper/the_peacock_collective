@@ -1,5 +1,5 @@
 const sequelize = require("sequelize");
-const WishList = require("../../../../models").WishList;
+// const WishList = require("../../../../models").WishList;
 const Variant = require("../../../../models").Variant;
 const {
   OPTIONS,
@@ -9,26 +9,41 @@ const {
 const MESSAGES = require("../../../../config/options/messages.options");
 const resCode = MESSAGES.resCode;
 const Op = sequelize.Op;
-const Model = WishList;
+// const Model = WishList;
 const ApiError = require("../../../../config/middlewares/api.error");
 const {
   asyncHandler,
 } = require("../../../../config/middlewares/async.handler");
-const cloudinary = require("../../../../shared/service/cloudinary.service");
+const wishlistRepository=require("../../../../models/repository/wishListRepository")
 
 const modelObj = {
   create: asyncHandler(async (req, res) => {
-    let checkExisting = await Model.findOne({
-      where: {
-        variantId: req.body.variantId,
-      },
-    });
+
+console.log("your body",req.body);
+
+    // let checkExisting = await Model.findOne({
+    //   where: {
+    //     variantId: req.body.variantId,
+    //   },
+    // });
+
+   
+
+
+    let checkExisting = await wishlistRepository.findOneByCondition({ where: {
+      variantId: req.body.variantId,
+    }})
+    
     if (checkExisting) {
       let message = MESSAGES.apiErrorStrings.Data_EXISTS("Already in WishList");
       throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
     }
-    let createObj = await generateCreateData(new Model(), req.body);
-    await createObj.save();
+
+    const newData={
+      customerId:req.user.id,
+      variantId:req.body.variantId
+    }
+  await wishlistRepository.create(newData);
 
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
@@ -36,6 +51,8 @@ const modelObj = {
       })
     );
   }),
+
+
 
   getAll: asyncHandler(async (req, res) => {
     const {
@@ -49,38 +66,42 @@ const modelObj = {
     let offset = (page - 1) * pageSize || 0;
     let query = {
       where: {
-        customerId: req.params.id,
+        customerId: req.user.id,
       },
       order: [[column, direction]],
       include: {
         model: Variant,
         as: "variantWithWishList",
-        // paranoid: true, required: false,
         attributes: ["price", "qty"],
       },
       offset: +offset,
       limit: +pageSize,
     };
-    let response = await Model.findAndCountAll(query);
 
+    let response=await wishlistRepository.findAndCountAll(query);
+    // let response = await Model.findAndCountAll(query);
     return res
       .status(resCode.HTTP_OK)
       .json(generateResponse(resCode.HTTP_OK, response));
   }),
-  getById: asyncHandler(async (req, res) => {
-    let existing = await Model.findOne({
-      where: {
-        id: req.params.id,
-      },
-    });
-    if (!existing) {
-      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Categories");
-      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
-    }
-    return res
-      .status(resCode.HTTP_OK)
-      .json(generateResponse(resCode.HTTP_OK, existing));
-  }),
+
+
+
+
+  // getById: asyncHandler(async (req, res) => {
+  //   let existing = await Model.findOne({
+  //     where: {
+  //       id: req.params.id,
+  //     },
+  //   });
+  //   if (!existing) {
+  //     let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Categories");
+  //     throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
+  //   }
+  //   return res
+  //     .status(resCode.HTTP_OK)
+  //     .json(generateResponse(resCode.HTTP_OK, existing));
+  // }),
 
 
 
@@ -124,25 +145,16 @@ const modelObj = {
         id: req.params.id,
       },
     };
-    let item = await Model.findOne(query);
-
-    if (!item) {
+    let deleted=await wishlistRepository.delete(query);
+    if (deleted==0) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("WishList");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
-
-    let deletedItem = await Model.destroy(query);
-    console.log("deletedItemdeletedItem", deletedItem);
-    if (deletedItem) {
       return res.json(
         generateResponse(resCode.HTTP_OK, {
-          message: MESSAGES.apiSuccessStrings.DELETED("Categories"),
+          message: MESSAGES.apiSuccessStrings.DELETED("Wish_List"),
         })
       );
-    } else {
-      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Categories");
-      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
-    }
   }),
 };
 
