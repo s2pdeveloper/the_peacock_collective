@@ -52,7 +52,7 @@ app.delete(
 );
 
 app.put(
-  "/makeDefault",
+  "/makeDefault/:id",
   // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
   // validate("updateCustomer"),
@@ -68,5 +68,5 @@ app.put(
 );
 
 
-app.get('/byCustomerId/:id',controller.getAllByCustomerId)
+// app.get('/byCustomerId/:id',controller.getAllByCustomerId)
 module.exports = app;
