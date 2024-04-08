@@ -17,6 +17,17 @@ const OPTIONS = {
   elasticSearchIndexModalNames: {
     PRODUCT: "Product",
   },
+
+  messageStatus:{
+    ACTIVE:'active',
+    INACTIVE:'inactive',
+    VIEWED:'viewed',
+
+    getAllMessageStatus:()=>{
+      return [OPTIONS.messageStatus.ACTIVE,OPTIONS.messageStatus.INACTIVE,OPTIONS.messageStatus.VIEWED]
+    }
+
+  },
   usersRoles: {
     SUPER_ADMIN: "SUPER_ADMIN",
     EMPLOYEE: "EMPLOYEE",
@@ -37,6 +48,7 @@ const OPTIONS = {
     FEMALE: "Female",
     TRANSGENDER: "Transgender",
   },
+
   planTypes: {
     BASIC: "Basic",
     STANDARD: "Standard",
@@ -111,6 +123,8 @@ const OPTIONS = {
     ADVANCE: "ADVANCE",
     DEPOSIT: "DEPOSIT",
   },
+
+
 
   userPreferences: {
     mobileNumber: {

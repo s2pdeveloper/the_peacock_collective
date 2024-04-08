@@ -2,12 +2,9 @@ const fs = require("fs");
 const sequelize = require("sequelize");
 const bcrypt = require("bcrypt");
 const User = require("../../../../models").User;
-const UserDevice = require("../../../../models").UserDevice;
-
-
+const userRepository = require("../../../../models/repository/UserRepository");
 const UserHelper = require("../../../../models/helpers/user.helpers");
 const EmailRepository = require("../../../../shared/repositories/email.repository");
-const customErrorLogger = require("../../../../shared/service/customExceptionHandler");
 const mail = require("../../../../config/middlewares/triggerMail");
 const {
   OPTIONS,
@@ -28,7 +25,6 @@ const roles = OPTIONS.usersRoles;
 const userObj = {
   //** Get all users */
   getAllUsers: asyncHandler(async (req, res) => {
-
     console.log("you HIT the GET all user ");
     const {
       page = 1,
@@ -63,7 +59,8 @@ const userObj = {
       limit: +pageSize,
     };
 
-    let response = await User.findAndCountAll(query);
+    // let response = await User.findAndCountAll(query);
+    let response = await userRepository.findAndCountAll(query);
     return res
       .status(resCode.HTTP_OK)
       .json(generateResponse(resCode.HTTP_OK, response));
@@ -72,31 +69,29 @@ const userObj = {
   create: asyncHandler(async (req, res) => {
     /** check if user exist or not */
     let userData = req.body;
-    let existingUser = await User.findOne({
-      where: { mobile: userData.mobile },
-    });
+    // let existingUser = await User.findOne({
+    //   where: { email: userData.email },
+    // });
+    let query = {
+      where: { email: userData.email },
+    };
+
+    let existingUser = await userRepository.findOneByCondition(query);
     if (existingUser) {
-      let errors = MESSAGES.apiErrorStrings.USER_EXISTS(
-        "email address or mobile number"
-      );
-      return res
-        .status(resCode.HTTP_BAD_REQUEST)
-        .json(
-          generateResponse(
-            resCode.HTTP_BAD_REQUEST,
-            errors,
-            MESSAGES.errorTypes.OAUTH_EXCEPTION
-          )
-        );
+      let errors = MESSAGES.apiErrorStrings.USER_EXISTS("email address");
+      // let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
+      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
     userData.password = await bcrypt.hash(
       userData.password,
       bcrypt.genSaltSync(8)
     );
-    let master = await User.create({
-      ...new User(),
-      ...userData,
-    });
+    // let master = await User.create({
+    //   ...new User(),
+    //   ...userData,
+    // });
+
+    await userRepository.create(userData);
     // userData.deviceInfo.userId = master.id;
     // userData.deviceInfo.geoLocation = JSON.stringify(
     //   userData.deviceInfo.geoLocation
@@ -136,7 +131,8 @@ const userObj = {
         role: [OPTIONS.usersRoles.SUPER_ADMIN, OPTIONS.usersRoles.CUSTOMER],
       },
     };
-    let existingUser = await User.findOne(query);
+    // let existingUser = await User.findOne(query);
+    let existingUser = await userRepository.findOneByCondition(query);
     if (existingUser) {
       let isMatch = existingUser.validPassword(req.body.password);
       if (isMatch) {
@@ -145,18 +141,12 @@ const userObj = {
           existingUser.status === OPTIONS.defaultStatus.INACTIVE
         ) {
           let errors = MESSAGES.apiErrorStrings.USER_BLOCKED;
-          return res
-            .status(resCode.HTTP_BAD_REQUEST)
-            .json(
-              generateResponse(
-                resCode.HTTP_BAD_REQUEST,
-                errors,
-                MESSAGES.errorTypes.ACCOUNT_BLOCKED
-              )
-            );
+          // let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
+          throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
         }
         existingUser.lastLoginAt = new Date();
-        await existingUser.save();
+        // await existingUser.save();
+        await userRepository.save(existingUser);
         let userObj = {
           id: existingUser.id,
           token: existingUser.genToken(),
@@ -202,7 +192,10 @@ const userObj = {
         ],
       },
     };
-    let user = await User.findOne(query);
+
+    // let user = await User.findOne(query);
+    let user = await userRepository.findOneByCondition(query);
+
     if (user) {
       let existingUser = user.toJSON();
       existingUser["token"] = user.genToken();
@@ -221,19 +214,15 @@ const userObj = {
         role: roles.getAllRolesAsArray(),
       },
     };
-    let user = await User.findOne(query);
+    // let user = await User.findOne(query);
+    let user = await userRepository.findOneByCondition(query);
+
     if (!user) {
       const errors = MESSAGES.apiErrorStrings.INVALID_REQUEST;
-      return res
-        .status(resCode.HTTP_BAD_REQUEST)
-        .json(
-          generateResponse(
-            resCode.HTTP_BAD_REQUEST,
-            errors,
-            MESSAGES.errorTypes.ENTITY_NOT_FOUND
-          )
-        );
+      // let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
+      throw new ApiError(errors, resCode.HTTP_NOT_FOUND);
     }
+
     user.userName = req.body.userName || user.userName;
     user.firstName = req.body.firstName || user.firstName;
     user.lastName = req.body.lastName || user.lastName;
@@ -246,15 +235,8 @@ const userObj = {
 
       if (existingUserWithEmail) {
         const errors = MESSAGES.apiErrorStrings.USER_EXISTS("email address");
-        return res
-          .status(resCode.HTTP_BAD_REQUEST)
-          .json(
-            generateResponse(
-              resCode.HTTP_BAD_REQUEST,
-              errors,
-              MESSAGES.errorTypes.INPUT_VALIDATION
-            )
-          );
+     //   let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
+        throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
       }
       emailChange = true;
       user.email = req.body.email.toLowerCase();
@@ -283,14 +265,14 @@ const userObj = {
     if (req.body.coverPicture) {
       user.coverPicture = req.body.coverPicture;
     }
-    await user.save();
+    await userRepository.save(user);
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
         message: MESSAGES.apiSuccessStrings.UPDATE("User profile has been"),
       })
     );
   }),
-  // delete the user profile 
+  // delete the user profile
   delete: asyncHandler(async (req, res) => {
     let query = {
       where: {
@@ -298,12 +280,13 @@ const userObj = {
         id: req.params.id,
       },
     };
-    let existingUser = await User.findOne(query);
+    // let existingUser = await User.findOne(query);
+    let existingUser = await userRepository.findOneByCondition(query);
     if (existingUser) {
       existingUser.status = OPTIONS.defaultStatus.DELETED;
       existingUser.userName =
         existingUser.userName + Date.now() + OPTIONS.defaultStatus.DELETED;
-      await existingUser.save();
+      await userRepository.save(existingUser);
       return res.json(
         generateResponse(resCode.HTTP_OK, {
           message: MESSAGES.apiSuccessStrings.DELETED(" User"),
@@ -318,16 +301,9 @@ const userObj = {
   emailVerify: async (req, res) => {
     try {
       if (!req.params.token) {
-        let error = MESSAGES.apiErrorStrings.INVALID_REQUEST;
-        return res
-          .status(resCode.HTTP_BAD_REQUEST)
-          .json(
-            generateResponse(
-              resCode.HTTP_BAD_REQUEST,
-              error,
-              MESSAGES.errorTypes.INPUT_VALIDATION
-            )
-          );
+        // let error = MESSAGES.apiErrorStrings.INVALID_REQUEST;
+        let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
+        throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
       }
 
       let query = {
@@ -338,175 +314,168 @@ const userObj = {
         },
       };
 
-      let existingUser = await User.findOne(query);
+      // let existingUser = await User.findOne(query);
+      let existingUser = await userRepository.findOneByCondition(query);
 
       if (!existingUser) {
-        const message = MESSAGES.apiErrorStrings.INVALID_TOKEN;
-        return res
-          .status(resCode.HTTP_BAD_REQUEST)
-          .json(
-            generateResponse(
-              resCode.HTTP_BAD_REQUEST,
-              message,
-              MESSAGES.errorTypes.INPUT_VALIDATION
-            )
-          );
-      } else {
-        let emailChange = false;
-        if (existingUser.isEmailVerified && existingUser.changeEmail) {
-          existingUser.email = existingUser.changeEmail;
-          existingUser.changeEmail = null;
-          emailChange = true;
-        }
-
-        existingUser.isEmailVerified = true;
-        existingUser.verificationTokenExpireAt = null;
-
-        await existingUser.save();
-
-        let message = MESSAGES.apiSuccessStrings.EMAIL_UPDATE;
-        if (!emailChange) {
-          message = MESSAGES.apiSuccessStrings.UPDATE("User profile");
-          await EmailRepository.sendWelcomeEmail(existingUser);
-        }
-
-        return res
-          .status(resCode.HTTP_OK)
-          .json(generateResponse(resCode.HTTP_OK, { message }));
+        const errors = MESSAGES.apiErrorStrings.INVALID_TOKEN;
+        // let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
+        throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
       }
-    } catch (e) {
-      const errors = MESSAGES.apiErrorStrings.SERVER_ERROR;
-      res
-        .status(resCode.HTTP_INTERNAL_SERVER_ERROR)
-        .json(generateResponse(resCode.HTTP_INTERNAL_SERVER_ERROR, errors));
-      throw new Error(e);
-    }
-  },
-  //** send token for  */
-  sendToken: async (req, res) => {
-    try {
-      req.assert("email", "Email cannot be blank").notEmpty();
-      let errors = req.validationErrors();
-      if (errors) {
-        return res
-          .status(resCode.HTTP_BAD_REQUEST)
-          .json(
-            generateResponse(
-              resCode.HTTP_BAD_REQUEST,
-              errors,
-              MESSAGES.errorTypes.INPUT_VALIDATION
-            )
-          );
-      }
-      let existingUser = await User.findOne({
-        where: {
-          status: OPTIONS.defaultStatus.ACTIVE,
-          email: req.body.email,
-        },
-      });
 
-      if (!existingUser) {
-        const message = MESSAGES.apiErrorStrings.USER_EXISTS("email address");
-        return res
-          .status(resCode.HTTP_BAD_REQUEST)
-          .json(
-            generateResponse(
-              resCode.HTTP_BAD_REQUEST,
-              message,
-              MESSAGES.errorTypes.INPUT_VALIDATION
-            )
-          );
-      } else {
-        let today = time.getDateTime();
-        today.setDate(today.getDate() + OPTIONS.otpExpireInDays);
-        existingUser.verificationToken = generateOTP(5);
-        existingUser.verificationTokenExpireAt = today;
-        let token = existingUser.genToken();
-        await existingUser.save();
-        return res.status(resCode.HTTP_OK).json(
-          generateResponse(resCode.HTTP_OK, {
-            token: token,
-          })
-        );
+      let emailChange = false;
+      if (existingUser.isEmailVerified && existingUser.changeEmail) {
+        existingUser.email = existingUser.changeEmail;
+        existingUser.changeEmail = null;
+        emailChange = true;
       }
-    } catch (e) {
-      const errors = MESSAGES.apiErrorStrings.SERVER_ERROR;
-      res
-        .status(resCode.HTTP_INTERNAL_SERVER_ERROR)
-        .json(generateResponse(resCode.HTTP_INTERNAL_SERVER_ERROR, errors));
-      throw new Error(e);
-    }
-  },
-  //** verify the token */
-  verifyToken: async (req, res) => {
-    try {
-      req.assert("otp", "Please enter a valid otp.").notEmpty();
-      req.assert("email", "Email cannot be blank").notEmpty();
 
-      let errors = req.validationErrors();
-      if (errors) {
-        return res
-          .status(resCode.HTTP_BAD_REQUEST)
-          .json(
-            generateResponse(
-              resCode.HTTP_BAD_REQUEST,
-              errors,
-              MESSAGES.errorTypes.INPUT_VALIDATION
-            )
-          );
-      }
-      let query = {
-        where: {
-          status: OPTIONS.defaultStatus.ACTIVE,
-          role: [roles.SUPER_ADMIN, roles.ADMIN],
-          verificationToken: req.body.otp,
-          email: req.body.email,
-          verificationTokenExpireAt: { [Op.gte]: time.getDateTime() },
-        },
-      };
-
-      let existingUser = await User.findOne(query);
-      if (!existingUser) {
-        let error = MESSAGES.apiErrorStrings.OTP_EXPIRED;
-        return res
-          .status(resCode.HTTP_BAD_REQUEST)
-          .json(
-            generateResponse(
-              resCode.HTTP_BAD_REQUEST,
-              error,
-              MESSAGES.errorTypes.INPUT_VALIDATION
-            )
-          );
-      }
       existingUser.isEmailVerified = true;
-      existingUser.verificationToken = null;
       existingUser.verificationTokenExpireAt = null;
 
-      await existingUser.save();
-      const message = MESSAGES.apiSuccessStrings.OTP_VERIFIED;
+      // await existingUser.save();
+
+      await userRepository.save(existingUser);
+
+      let message = MESSAGES.apiSuccessStrings.EMAIL_UPDATE;
+      if (!emailChange) {
+        message = MESSAGES.apiSuccessStrings.UPDATE("User profile");
+        await EmailRepository.sendWelcomeEmail(existingUser);
+      }
 
       return res
         .status(resCode.HTTP_OK)
         .json(generateResponse(resCode.HTTP_OK, { message }));
     } catch (e) {
       const errors = MESSAGES.apiErrorStrings.SERVER_ERROR;
-      res
-        .status(resCode.HTTP_INTERNAL_SERVER_ERROR)
-        .json(generateResponse(resCode.HTTP_INTERNAL_SERVER_ERROR, errors));
-      throw new Error(e);
+      // let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
+      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
+  },
+  //** send token for  */
+  sendToken: async (req, res) => {
+    req.assert("email", "Email cannot be blank").notEmpty();
+    let errors = req.validationErrors();
+    if (errors) {
+      return res
+        .status(resCode.HTTP_BAD_REQUEST)
+        .json(
+          generateResponse(
+            resCode.HTTP_BAD_REQUEST,
+            errors,
+            MESSAGES.errorTypes.INPUT_VALIDATION
+          )
+        );
+    }
+
+    // let existingUser = await User.findOne({
+    //   where: {
+    //     status: OPTIONS.defaultStatus.ACTIVE,
+    //     email: req.body.email,
+    //   },
+    // });
+
+    let query = {
+      where: {
+        status: OPTIONS.defaultStatus.ACTIVE,
+        email: req.body.email,
+      },
+    };
+
+    let existingUser = await userRepository.findOneByCondition(query);
+
+    if (!existingUser) {
+      const message = MESSAGES.apiErrorStrings.USER_EXISTS("email address");
+      return res
+        .status(resCode.HTTP_BAD_REQUEST)
+        .json(
+          generateResponse(
+            resCode.HTTP_BAD_REQUEST,
+            message,
+            MESSAGES.errorTypes.INPUT_VALIDATION
+          )
+        );
+    } else {
+      let today = time.getDateTime();
+      today.setDate(today.getDate() + OPTIONS.otpExpireInDays);
+      existingUser.verificationToken = generateOTP(5);
+      existingUser.verificationTokenExpireAt = today;
+      let token = existingUser.genToken();
+      // await existingUser.save();
+      await userRepository.save(existingUser);
+      return res.status(resCode.HTTP_OK).json(
+        generateResponse(resCode.HTTP_OK, {
+          token: token,
+        })
+      );
+    }
+  },
+  //** verify the token */
+  verifyToken: async (req, res) => {
+    req.assert("otp", "Please enter a valid otp.").notEmpty();
+    req.assert("email", "Email cannot be blank").notEmpty();
+
+    let errors = req.validationErrors();
+    if (errors) {
+      return res
+        .status(resCode.HTTP_BAD_REQUEST)
+        .json(
+          generateResponse(
+            resCode.HTTP_BAD_REQUEST,
+            errors,
+            MESSAGES.errorTypes.INPUT_VALIDATION
+          )
+        );
+    }
+    let query = {
+      where: {
+        status: OPTIONS.defaultStatus.ACTIVE,
+        role: [roles.SUPER_ADMIN, roles.ADMIN],
+        verificationToken: req.body.otp,
+        email: req.body.email,
+        verificationTokenExpireAt: { [Op.gte]: time.getDateTime() },
+      },
+    };
+
+    // let existingUser = await User.findOne(query);
+    let existingUser = await userRepository.findOneByCondition(query);
+    if (!existingUser) {
+      let error = MESSAGES.apiErrorStrings.OTP_EXPIRED;
+      return res
+        .status(resCode.HTTP_BAD_REQUEST)
+        .json(
+          generateResponse(
+            resCode.HTTP_BAD_REQUEST,
+            error,
+            MESSAGES.errorTypes.INPUT_VALIDATION
+          )
+        );
+    }
+    existingUser.isEmailVerified = true;
+    existingUser.verificationToken = null;
+    existingUser.verificationTokenExpireAt = null;
+
+    // await existingUser.save();
+    await userRepository.save(existingUser);
+    const message = MESSAGES.apiSuccessStrings.OTP_VERIFIED;
+
+    return res
+      .status(resCode.HTTP_OK)
+      .json(generateResponse(resCode.HTTP_OK, { message }));
   },
   //** reset the password */
   resetPassword: async (req, res) => {
     console.log("++++++++++++++HIT The resetPassword++++++++");
-    try {
+    
       let query = {
         where: {
           id: req.body.id,
         },
       };
 
-      let user = await User.findOne(query);
+      // let user = await User.findOne(query);
+      let user= await userRepository.findOneByCondition(query);
+
       if (!user) {
         let error = MESSAGES.apiErrorStrings.OTP_EXPIRED;
         return res
@@ -544,7 +513,8 @@ const userObj = {
           user.verificationToken = null;
           user.verificationTokenExpireAt = null;
 
-          await user.save();
+          // await user.save();
+          await userRepository.save(user);
 
           const message = MESSAGES.apiSuccessStrings.PASSWORD_RESET;
           return res
@@ -592,37 +562,27 @@ const userObj = {
           // 	.json(generateResponse(resCode.HTTP_OK, userObj));
         } else {
           let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
-          return res
-            .status(resCode.HTTP_BAD_REQUEST)
-            .json(
-              generateResponse(
-                resCode.HTTP_BAD_REQUEST,
-                errors,
-                MESSAGES.errorTypes.OAUTH_EXCEPTION
-              )
-            );
+          // let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
+          throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
         }
       }
-    } catch (e) {
-      const errors = MESSAGES.apiErrorStrings.SERVER_ERROR;
-      res
-        .status(resCode.HTTP_INTERNAL_SERVER_ERROR)
-        .json(generateResponse(resCode.HTTP_INTERNAL_SERVER_ERROR, errors));
-      throw new Error(e);
-    }
+    
   },
   //** forget password **/
   forgetPassword: async (req, res) => {
-    try {
+   
       if (!req.body.email) {
-        const error = MESSAGES.apiErrorStrings.INVALID_REQUEST;
-        return res
-          .status(resCode.HTTP_BAD_REQUEST)
-          .json(generateResponse(resCode.HTTP_BAD_REQUEST, error));
+        const errors = MESSAGES.apiErrorStrings.INVALID_REQUEST;
+        // let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
+        throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
       }
-      let existingUser = await User.findOne({
-        where: { email: req.body.email.toLowerCase() },
-      });
+      // let existingUser = await User.findOne({
+      //   where: { email: req.body.email.toLowerCase() },
+      // });
+     let query={
+      where: { email: req.body.email.toLowerCase() },
+    }
+      let existingUser=await userRepository.findOneByCondition(query);
       if (!existingUser) {
         let errors = MESSAGES.apiErrorStrings.USER_DOES_NOT_EXIST;
         return res
@@ -638,14 +598,16 @@ const userObj = {
         //  existingUser.resetPin = Math.floor(Math.random() * 899999 + 100000);
         existingUser.resetPin = Math.floor(Math.random() * 9000) + 1000;
 
-        let user = await existingUser.save();
+        // let user = await existingUser.save();
+     let user = await userRepository.save(user);
         let data = {
           userName: `${user.userName}`,
           email: user.email,
           OTP: user.resetPin,
           subject: `RESET PASSWORD ${user.resetPin} `,
-          companyLogo: 'https://peacock-collective.web.app/assets/images/gold-logo.png',
-          template: 'resetPassword.html',
+          companyLogo:
+            "https://peacock-collective.web.app/assets/images/gold-logo.png",
+          template: "resetPassword.html",
           url: `${process.env.REQ_URL}#/change-pwd?sub=${user.id}&pin=${user.resetPin}&role=${user.role}`,
         };
         mail.sendForgetMail(req, data);
@@ -655,21 +617,20 @@ const userObj = {
           })
         );
       }
-    } catch (e) {
-      const errors = MESSAGES.apiErrorStrings.SERVER_ERROR;
-      res
-        .status(resCode.HTTP_INTERNAL_SERVER_ERROR)
-        .json(generateResponse(resCode.HTTP_INTERNAL_SERVER_ERROR, errors));
-      throw new Error(e);
-    }
+    
   },
   //** set the password */
   setPassword: async (req, res) => {
-    try {
+   
+      // let user = await User.findOne({
+      //   where: { email: req.body.email },
+      // });
 
-      let user = await User.findOne({
+      let query={
         where: { email: req.body.email },
-      });
+      }
+
+      let user= await userRepository.findOneByCondition(query);
       if (!user) {
         const error = MESSAGES.apiErrorStrings.INVALID_REQUEST;
         return res
@@ -677,13 +638,14 @@ const userObj = {
           .json(generateResponse(resCode.HTTP_BAD_REQUEST, error));
       } else {
         if (user.resetPin === req.body.resetPin) {
-          console.log("hit the setPassword", user.resetPin)
+          console.log("hit the setPassword", user.resetPin);
           user.password = await bcrypt.hash(
             req.body.password,
             bcrypt.genSaltSync(8)
           );
           user.resetPin = null;
-          await user.save();
+          // await user.save();
+          await userRepository.save(user);
           return res.status(resCode.HTTP_OK).json(
             generateResponse(resCode.HTTP_OK, {
               message: MESSAGES.apiSuccessStrings.PASSWORD("set"),
@@ -691,22 +653,15 @@ const userObj = {
           );
         } else {
           let errors = MESSAGES.apiErrorStrings.INVALID_TOKEN;
-          res
-            .status(resCode.HTTP_INTERNAL_SERVER_ERROR)
-            .json(generateResponse(resCode.HTTP_INTERNAL_SERVER_ERROR, errors));
+          // let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
+          throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
         }
       }
-    } catch (e) {
-      const errors = MESSAGES.apiErrorStrings.SERVER_ERROR;
-      res
-        .status(resCode.HTTP_INTERNAL_SERVER_ERROR)
-        .json(generateResponse(resCode.HTTP_INTERNAL_SERVER_ERROR, errors));
-      throw new Error(e);
-    }
+ 
   },
   //** change the status of user */
   changeStatus: async (req, res) => {
-    try {
+   
       let id = req.query.id;
       if (!id) {
         const error = MESSAGES.apiErrorStrings.INVALID_REQUEST;
@@ -725,24 +680,19 @@ const userObj = {
         },
       };
 
-      let existingUser = await User.findOne(query);
+      // let existingUser = await User.findOne(query);
+      let existingUser=await userRepository.findOneByCondition(query);
       if (!existingUser) {
-        const error = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("User");
-        return res
-          .status(resCode.HTTP_BAD_REQUEST)
-          .json(
-            generateResponse(
-              resCode.HTTP_BAD_REQUEST,
-              error,
-              MESSAGES.errorTypes.ENTITY_NOT_FOUND
-            )
-          );
+        const errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("User");
+        // let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
+        throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
       }
       existingUser.status =
         existingUser.status === OPTIONS.defaultStatus.ACTIVE
           ? OPTIONS.defaultStatus.INACTIVE
           : OPTIONS.defaultStatus.ACTIVE;
-      await existingUser.save();
+      // await existingUser.save();
+      await userRepository.save(existingUser);
 
       res.status(resCode.HTTP_OK).json(
         generateResponse(resCode.HTTP_OK, {
@@ -752,13 +702,7 @@ const userObj = {
           ),
         })
       );
-    } catch (e) {
-      const errors = MESSAGES.apiErrorStrings.SERVER_ERROR;
-      res
-        .status(resCode.HTTP_INTERNAL_SERVER_ERROR)
-        .json(generateResponse(resCode.HTTP_INTERNAL_SERVER_ERROR, errors));
-      throw new Error(e);
-    }
+  
   },
   createAndUpdateUserDevice: async (req, res) => {
     try {
@@ -769,6 +713,7 @@ const userObj = {
           userId: req.body.userId,
         },
       });
+   
       if (!foundItem) {
         await userDevice.create(createObj);
         return res.status(resCode.HTTP_OK).json(

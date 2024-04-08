@@ -1,38 +1,38 @@
-const User = require("../../models").User;
+const Variant = require("../../../models/variant");
 
 module.exports.findByPk = async (id) => {
-    return await User.findByPk(id);
+    return await Variant.findByPk(id);
 };
 
 module.exports.findOneByCondition = async (condition) => {
-    return User.findOne(condition);
+   return await Variant.findOne(condition);
 };
 
 module.exports.findAndCountAll = async (query) => {
-    return await User.findAndCountAll(query);
+    return await Variant.findAndCountAll(query);
 };
 
 module.exports.findAll = async (query) => {
-    return await User.findAll(query);
+    return await Variant.findAll(query);
 };
 
 
 module.exports.save = async (data) => {
-   return  await data.save();
+    return await data.save();
 };
 
 module.exports.delete = async (query) => {
-  return  await User.destroy(query);
+   return await Variant.destroy(query);
 };
 
 module.exports.bulkCreate = async (data) => {
-    return await User.bulkCreate(data);
+    return await Variant.bulkCreate(data);
 };
 
 module.exports.create = async (data) => {
-    return await User.create(data);
+    return await Variant.create(data);
 };
 
 module.exports.update = async (data, query) => {
-    return await User.update(data, query);
+    return await Variant.update(data, query);
 };

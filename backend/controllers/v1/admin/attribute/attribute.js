@@ -1,6 +1,5 @@
 const sequelize = require("sequelize");
-const { Attribute } = require("../../../../models");
-const fs = require("fs");
+const AttributeRepository=require("../../.../../../../models/repository/adminRepo/attributeRepository")
 const {
   OPTIONS,
   generateResponse,
@@ -9,7 +8,6 @@ const {
 const MESSAGES = require("../../../../config/options/messages.options");
 const resCode = MESSAGES.resCode;
 const Op = sequelize.Op;
-const Model = Attribute;
 const ApiError = require("../../../../config/middlewares/api.error");
 const {
   asyncHandler,
@@ -18,23 +16,27 @@ const {
 
 const modelObj = {
   create: asyncHandler(async (req, res) => {
-    let checkExisting = await Model.findOne({
+    let query={
       where: {
         name: req.body.name,
-      },
-    });
+      }
+    }
+    
+    let checkExisting=await AttributeRepository.findOneByCondition(query);
     if (checkExisting) {
       let message = MESSAGES.apiErrorStrings.Data_EXISTS("Attribute");
       throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
     }
-    let createObj = await generateCreateData(new Model(), req.body);
-    await createObj.save();
+
+    await AttributeRepository.create(req.body);
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
         message: MESSAGES.apiSuccessStrings.ADDED("Attribute"),
       })
     );
   }),
+
+
   getAll: asyncHandler(async (req, res) => {
     const {
       page = 1,
@@ -56,17 +58,23 @@ const modelObj = {
       offset: +offset,
       limit: +pageSize,
     };
-    let response = await Model.findAndCountAll(query);
+  
+    let response =await AttributeRepository.findAndCountAll(query);
     return res
       .status(resCode.HTTP_OK)
       .json(generateResponse(resCode.HTTP_OK, response));
   }),
+
   getById: asyncHandler(async (req, res) => {
-    let existing = await Model.findOne({
-      where: {
-        id: req.params.id,
-      },
-    });
+   
+    
+   let query={
+    where: {
+      id: req.params.id,
+    },
+  } 
+  let existing=await AttributeRepository.findOneByCondition(query);
+
     if (!existing) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Attribute");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
@@ -75,18 +83,23 @@ const modelObj = {
       .status(resCode.HTTP_OK)
       .json(generateResponse(resCode.HTTP_OK, existing));
   }),
+
+
   update: asyncHandler(async (req, res) => {
-    let itemDetails = await Model.findOne({
+  
+
+    let query={
       where: {
         id: req.params.id,
       },
-    });
-    if (!itemDetails) {
+    }
+
+    let itemDetails=await AttributeRepository.update(req.body,query);
+    if (itemDetails[0]==0) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Attribute");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     } else {
-      itemDetails = await generateCreateData(itemDetails, req.body);
-      await itemDetails.save();
+     
       return res.json(
         generateResponse(resCode.HTTP_OK, {
           message: MESSAGES.apiSuccessStrings.UPDATE("Attribute"),
@@ -94,14 +107,15 @@ const modelObj = {
       );
     }
   }),
+
   delete: asyncHandler(async (req, res) => {
     let query = {
       where: {
         id: req.params.id,
       },
     };
-    let deletedItem = await Model.destroy(query);
-    if (deletedItem) {
+    let deletedItem=await AttributeRepository.delete(query);
+    if (deletedItem!==0) {
       return res.json(
         generateResponse(resCode.HTTP_OK, {
           message: MESSAGES.apiSuccessStrings.DELETED("Attribute"),

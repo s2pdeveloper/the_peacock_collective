@@ -31,6 +31,7 @@ exports.getPlans = async (req, res) => {
         throw new Error(e);
     }
 };
+
 exports.currentSubscription = async (req, res) => {
     try {
         let query = {

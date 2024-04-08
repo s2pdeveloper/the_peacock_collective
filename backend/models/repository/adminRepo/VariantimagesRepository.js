@@ -1,38 +1,38 @@
-const User = require("../../models").User;
+const Customer = require("../../models").Customer;
 
 module.exports.findByPk = async (id) => {
-    return await User.findByPk(id);
+    return await Customer.findByPk(id);
 };
 
 module.exports.findOneByCondition = async (condition) => {
-    return User.findOne(condition);
+   return await Customer.findOne(condition);
 };
 
 module.exports.findAndCountAll = async (query) => {
-    return await User.findAndCountAll(query);
+    return await Customer.findAndCountAll(query);
 };
 
 module.exports.findAll = async (query) => {
-    return await User.findAll(query);
+    return await Customer.findAll(query);
 };
 
 
 module.exports.save = async (data) => {
-   return  await data.save();
+    return await data.save();
 };
 
 module.exports.delete = async (query) => {
-  return  await User.destroy(query);
+   return await Customer.destroy(query);
 };
 
 module.exports.bulkCreate = async (data) => {
-    return await User.bulkCreate(data);
+    return await Customer.bulkCreate(data);
 };
 
 module.exports.create = async (data) => {
-    return await User.create(data);
+    return await Customer.create(data);
 };
 
 module.exports.update = async (data, query) => {
-    return await User.update(data, query);
+    return await Customer.update(data, query);
 };

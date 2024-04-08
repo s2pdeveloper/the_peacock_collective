@@ -6,6 +6,8 @@ const {
   Product,
   sequelize,
 } = require("../../../../models");
+
+const variantRespository=require("../../../../models/repository/adminRepo/variantRepository")
 const {
   OPTIONS,
   generateResponse,
@@ -22,22 +24,34 @@ const {
 const {
   generateCsv,
 } = require("../../../../shared/repositories/generate-excel.repository");
+const { query } = require("express");
 
 const modelObj = {
   create: asyncHandler(async (req, res) => {
-    let checkExisting = await Model.findOne({
+    // let checkExisting = await Model.findOne({
+    //   where: {
+    //     sku: req.body.sku,
+    //   },
+    // });
+
+    let query={
       where: {
         sku: req.body.sku,
       },
-    });
-    console.log("request in variant", req.body);
+    }
+
+    let checkExisting=await variantRespository.findOneByCondition(query);
+    // console.log("request in variant", req.body);
     if (checkExisting) {
       let message = MESSAGES.apiErrorStrings.Data_EXISTS("Variant");
       throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
     }
 
-    let createObj = await generateCreateData(new Model(), req.body);
-    let variant = await createObj.save();
+    // let createObj = await generateCreateData(new Model(), req.body);
+    // let variant = await createObj.save();
+     
+    let variant=await variantRespository.create(req.body)
+
     console.log("your variant in after created", variant);
 
     if (req.body?.attributeArr && req.body?.attributeArr.length) {
@@ -71,10 +85,10 @@ const modelObj = {
         ...(search && {
           [Op.or]: {
             name: { [Op.like]: search },
-      
           },
         }),
       },
+
       include: {
         model: AttrVariantMap,
         as: "variantWithAttrVariantMap",
@@ -84,20 +98,32 @@ const modelObj = {
       offset: +offset,
       limit: +pageSize,
     };
-    let response = await Model.findAndCountAll(query);
+    // let response = await Model.findAndCountAll(query);
+    let response=await variantRespository.findAndCountAll(query);
     return res
       .status(resCode.HTTP_OK)
       .json(generateResponse(resCode.HTTP_OK, response));
   }),
   getById: asyncHandler(async (req, res) => {
-    let existing = await Model.findOne({
+    // let existing = await Model.findOne({
+    //   where: {
+    //     id: req.params.id,
+    //   },
+    //   include: {
+    //     model: AttrVariantMap,
+    //   },
+    // });
+
+    let query={
       where: {
         id: req.params.id,
       },
       include: {
         model: AttrVariantMap,
       },
-    });
+    }
+
+    let existing=await variantRespository.findOneByCondition(query);
     if (!existing) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Variant");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
@@ -107,7 +133,22 @@ const modelObj = {
       .json(generateResponse(resCode.HTTP_OK, existing));
   }),
   getByProductId: asyncHandler(async (req, res) => {
-    let existing = await Model.findAll({
+    // let existing = await Model.findAll({
+    //   where: {
+    //     productId: req.params.id,
+    //   },
+    //   include: {
+    //     model: AttrVariantMap,
+    //     as: "variantWithAttrVariantMap",
+    //     // paranoid: true, required: false,
+    //     include: {
+    //       model: Attribute,
+    //       as: "AttrVariantMapWithAttributes",
+    //     },
+    //   },
+    // });
+
+    let query={
       where: {
         productId: req.params.id,
       },
@@ -120,17 +161,28 @@ const modelObj = {
           as: "AttrVariantMapWithAttributes",
         },
       },
-    });
+    }
+
+    let existing=await variantRespository.findAll(query)
     return res
       .status(resCode.HTTP_OK)
       .json(generateResponse(resCode.HTTP_OK, existing));
   }),
   update: asyncHandler(async (req, res) => {
-    let itemDetails = await Model.findOne({
+
+    // let itemDetails = await Model.findOne({
+    //   where: {
+    //     id: req.params.id,
+    //   },
+    // });
+
+    let query={
       where: {
         id: req.params.id,
       },
-    });
+    }
+
+    let itemDetails=await variantRespository.findOneByCondition(query);
 
     if (!itemDetails) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Variant");
@@ -168,8 +220,9 @@ const modelObj = {
         id: req.params.id,
       },
     };
-    let deletedItem = await Model.destroy(query);
-    if (deletedItem) {
+    // let deletedItem = await Model.destroy(query);
+    let deletedItem=await variantRespository.delete(query)
+    if (deletedItem !=0) {
       let deleteQuery = {
         where: {
           variantId: req.params.id,

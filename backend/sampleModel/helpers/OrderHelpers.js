@@ -19,6 +19,7 @@ exports.sendCreateNotification = async (payload, senderUser) => {
   };
   await createNotification(notificationData);
 };
+
 //** send request booking status update notification from shop to customer */
 // exports.sendStatusUpdateNotification = async payload => {
 //     let senderUser = await UserHelper.userData("shop", payload.shopId);
@@ -42,6 +43,7 @@ exports.sendCreateNotification = async (payload, senderUser) => {
 //     };
 //     await createNotification(notificationData);
 // };
+
 //** send request booking delivery status update notification from shop to customer */
 // exports.sendDeliveryStatusUpdateNotification = async payload => {
 //     let senderUser = await UserHelper.userData("shop", payload.shopId);
