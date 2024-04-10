@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit {
   getAddresses() {
     if (this.user) {
       this.addressService
-        .getByCustomerId(this.user.id)
+        .getByCustomerId()
         .subscribe((success: any) => {
           this.allAddresses = success.result.rows;
         });

@@ -31,7 +31,9 @@ export class AddressService {
       .delete(this.BASE_URL + '/' + id)
       .pipe(map((res: any) => res));
   }
-  getByCustomerId(id: any) {
-    return this.http.get(this.BASE_URL + '/byCustomerId/' + id).pipe(map((res: any) => res));
+  getByCustomerId() {
+    return this.http
+      .get(this.BASE_URL)
+      .pipe(map((res: any) => res));
   }
 }

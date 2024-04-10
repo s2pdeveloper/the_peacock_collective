@@ -87,7 +87,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       next: (success) => {
         this.toasterService.success('Order placed successfully!!');
         sessionStorage.removeItem('products');
-        this.router.navigate(['/order/my-orders'])
+        this.router.navigate(['/order/my-orders']);
         // this.carts = success;
       },
       error: (err) => {
@@ -118,11 +118,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
   getAddresses() {
     if (this.user) {
-      this.addressService
-        .getByCustomerId(this.user.id)
-        .subscribe((success: any) => {
-          this.allAddresses = success.result.rows;
-        });
+      this.addressService.getByCustomerId().subscribe((success: any) => {
+        this.allAddresses = success.result.rows;
+      });
     }
   }
   continue() {
