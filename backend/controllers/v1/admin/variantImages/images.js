@@ -15,6 +15,7 @@ const {
   asyncHandler,
 } = require("../../../../config/middlewares/async.handler");
 const cloudinary = require("../../../../shared/service/cloudinary.service");
+const imagesRepository=require("../../../../models/repository/adminRepo/imageRepository")
 
 const modelObj = {
   create: asyncHandler(async (req, res) => {
@@ -37,8 +38,9 @@ const modelObj = {
       return;
     }
 
-    let createObj = await generateCreateData(new Model(), req.body);
-    await createObj.save();
+    // let createObj = await generateCreateData(new Model(), req.body);
+    // await createObj.save();
+     await imagesRepository.create(req.body);
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
         message: MESSAGES.apiSuccessStrings.ADDED("Image"),
@@ -68,18 +70,28 @@ const modelObj = {
       offset: +offset,
       limit: +pageSize,
     };
-    let response = await Model.findAndCountAll(query);
+    // let response = await Model.findAndCountAll(query);
+    let response=await imagesRepository.findAndCountAll(query);
     return res
       .status(resCode.HTTP_OK)
       .json(generateResponse(resCode.HTTP_OK, response));
   }),
 
   getById: asyncHandler(async (req, res) => {
-    let existing = await Model.findOne({
+    // let existing = await Model.findOne({
+    //   where: {
+    //     id: req.params.id,
+    //   },
+    // });
+
+
+    let query={
       where: {
         id: req.params.id,
       },
-    });
+    }
+
+    let existing=await imagesRepository.findOneByCondition(query);
 
     if (!existing) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("ProductImage");
@@ -91,11 +103,18 @@ const modelObj = {
   }),
 
   getByVariantId: asyncHandler(async (req, res) => {
-    let existing = await Model.findAll({
+    // let existing = await Model.findAll({
+    //   where: {
+    //     variantId: req.params.id,
+    //   },
+    // });
+
+    let query={
       where: {
         variantId: req.params.id,
       },
-    });
+    }
+    let existing =await imagesRepository.findAll(query);
 
     // if (!existing) {
     //   let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("ProductImage");
@@ -107,11 +126,19 @@ const modelObj = {
   }),
 
   update: asyncHandler(async (req, res) => {
-    let itemDetails = await Model.findOne({
-      where: {
-        id: req.params.id,
-      },
-    });
+    // let itemDetails = await Model.findOne({
+    //   where: {
+    //     id: req.params.id,
+    //   },
+    // });
+
+  let query={
+    where: {
+      id: req.params.id,
+    },
+  }
+
+  let itemDetails=await imagesRepository.findOneByCondition(query);
     if (!itemDetails) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("ProductImage");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
@@ -123,14 +150,18 @@ const modelObj = {
       console.log(req.body);
     }
 
-    itemDetails = await generateCreateData(itemDetails, req.body);
-    await itemDetails.save();
+    // itemDetails = await generateCreateData(itemDetails, req.body);
+    // await itemDetails.save();
+    await imagesRepository.create(req.body);
+
     return res.json(
       generateResponse(resCode.HTTP_OK, {
         message: MESSAGES.apiSuccessStrings.UPDATE("ProductImage"),
       })
     );
   }),
+
+
   delete: asyncHandler(async (req, res) => {
     let query = {
       where: {
@@ -138,9 +169,10 @@ const modelObj = {
       },
     };
 
-    let existing = await Model.findOne(query);
+    // let existing = await Model.findOne(query);
+    let deleted=await imagesRepository.delete(query);
     // let deletedItem = await Model.destroy(query);
-    if (existing) {
+    if (deleted!=0) {
       await cloudinary.deleteFile(existing.image);
       await Model.destroy(query);
       return res.json(

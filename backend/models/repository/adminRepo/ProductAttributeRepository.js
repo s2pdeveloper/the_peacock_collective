@@ -1,19 +1,19 @@
-const Customer = require("../../models").Customer;
+const prodAttributeMap = require("../../../models/prodAttributeMap");
 
 module.exports.findByPk = async (id) => {
-    return await Customer.findByPk(id);
+    return await prodAttributeMap.findByPk(id);
 };
 
 module.exports.findOneByCondition = async (condition) => {
-   return await Customer.findOne(condition);
+   return await prodAttributeMap.findOne(condition);
 };
 
 module.exports.findAndCountAll = async (query) => {
-    return await Customer.findAndCountAll(query);
+    return await prodAttributeMap.findAndCountAll(query);
 };
 
 module.exports.findAll = async (query) => {
-    return await Customer.findAll(query);
+    return await prodAttributeMap.findAll(query);
 };
 
 
@@ -22,17 +22,17 @@ module.exports.save = async (data) => {
 };
 
 module.exports.delete = async (query) => {
-   return await Customer.destroy(query);
+   return await prodAttributeMap.destroy(query);
 };
 
 module.exports.bulkCreate = async (data) => {
-    return await Customer.bulkCreate(data);
+    return await prodAttributeMap.bulkCreate(data);
 };
 
 module.exports.create = async (data) => {
-    return await Customer.create(data);
+    return await prodAttributeMap.create(data);
 };
 
 module.exports.update = async (data, query) => {
-    return await Customer.update(data, query);
+    return await prodAttributeMap.update(data, query);
 };

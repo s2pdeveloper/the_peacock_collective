@@ -1,4 +1,4 @@
-const ProdTagMap = require("../../models").ProdTagMap;
+const ProdTagMap = require("../../models/prodTagMap");
 
 module.exports.findByPk = async (id) => {
     return await ProdTagMap.findByPk(id);

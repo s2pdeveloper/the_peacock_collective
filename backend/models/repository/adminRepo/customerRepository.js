@@ -1,4 +1,4 @@
-const Customer = require("../../models").Customer;
+const Customer = require("../../../models/Customer");
 
 module.exports.findByPk = async (id) => {
     return await Customer.findByPk(id);

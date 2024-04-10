@@ -1,4 +1,4 @@
-const Attribute = require("../../../models").Attribute;
+const Attribute = require("../../../models/Attribute");
 
 module.exports.findByPk = async (id) => {
     return await Attribute.findByPk(id);

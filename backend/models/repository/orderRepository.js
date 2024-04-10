@@ -1,4 +1,4 @@
-const Order = require("../../models").Order;
+const Order = require("../../models/order");
 
 module.exports.findByPk = async (id) => {
     return await Order.findByPk(id);

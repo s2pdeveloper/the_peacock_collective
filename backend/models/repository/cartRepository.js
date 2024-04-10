@@ -1,4 +1,4 @@
-const Cart = require("../../models").Cart;
+const Cart = require("../../models/cart");
 
 module.exports.findByPk = async (id) => {
     return await Cart.findByPk(id);

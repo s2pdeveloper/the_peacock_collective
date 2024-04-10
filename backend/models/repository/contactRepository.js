@@ -1,4 +1,4 @@
-const Contact = require("../../models").Contact;
+const Contact = require("../../models/contact");
 
 module.exports.findByPk = async (id) => {
     return await Contact.findByPk(id);

@@ -13,17 +13,27 @@ const Model = Categories;
 const ApiError = require('../../../../config/middlewares/api.error');
 const { asyncHandler } = require('../../../../config/middlewares/async.handler');
 const cloudinary = require('../../../../shared/service/cloudinary.service');
+const categoryRepository=require("../../../../models/repository/cartRepository");
 
 const modelObj = {
   create: asyncHandler(async (req, res) => {
+    // let checkExisting = await Model.findOne({
+    //   where: {
+    //     name: req.body.name,
+    //     ...(req.body.parentId && { parentId: req.body.parentId }),
+    //   },
+    // });
 
-
-    let checkExisting = await Model.findOne({
+    let query={
       where: {
         name: req.body.name,
         ...(req.body.parentId && { parentId: req.body.parentId }),
       },
-    });
+    }
+
+
+
+    let checkExisting=await categoryRepository.findOneByCondition(query);
     if (checkExisting) {
       let message = MESSAGES.apiErrorStrings.Data_EXISTS('Categories');
       throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
@@ -32,8 +42,9 @@ const modelObj = {
       req.body.image = await cloudinary.uploadFromBuffer(req.file.buffer);
     }
 
-    let createObj = await generateCreateData(new Model(), req.body);
-    await createObj.save();
+    // let createObj = await generateCreateData(new Model(), req.body);
+    // await createObj.save();
+    await categoryRepository.create(req.body);
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
         message: MESSAGES.apiSuccessStrings.ADDED('Categories'),
@@ -91,7 +102,9 @@ const modelObj = {
         limit: +pageSize,
       })
     };
-    let response = await Model.findAndCountAll(query);
+    // let response = await Model.findAndCountAll(query);
+
+    let response=await categoryRepository.findAndCountAll(query)
 
     return res
       .status(resCode.HTTP_OK)
@@ -99,11 +112,19 @@ const modelObj = {
 
   }),
   getById: asyncHandler(async (req, res) => {
-    let existing = await Model.findOne({
+    // let existing = await Model.findOne({
+    //   where: {
+    //     id: req.params.id,
+    //   },
+    // });
+
+    let query={
       where: {
         id: req.params.id,
       },
-    });
+    }
+
+    let existing=await categoryRepository.findOneByCondition(query);
     if (!existing) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS('Categories');
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST)
@@ -115,11 +136,19 @@ const modelObj = {
   }),
   update: asyncHandler(async (req, res) => {
 
-    let itemDetails = await Model.findOne({
+    // let itemDetails = await Model.findOne({
+    //   where: {
+    //     id: req.params.id,
+    //   },
+    // });
+
+    let query={
       where: {
         id: req.params.id,
       },
-    });
+    }
+
+let itemDetails=await categoryRepository.findOneByCondition(query);
 
     // console.log("itemDetails============", itemDetails);
     if (!itemDetails) {
@@ -131,13 +160,14 @@ const modelObj = {
         if (itemDetails.image) {
           await cloudinary.deleteFile(itemDetails.image);
         }
-        console.log("req.file.path", req.file);
+       
         req.body.image = await cloudinary.uploadFromBuffer(req.file.buffer);
       }
 
-      itemDetails = await generateCreateData(itemDetails, req.body);
+      // let itemDetails = await generateCreateData(itemDetails, req.body);
+      // await itemDetails.save();
 
-      await itemDetails.save();
+      let itemDetails=await categoryRepository.update(req.body,query);
 
       return res.json(
         generateResponse(resCode.HTTP_OK, {
@@ -153,14 +183,16 @@ const modelObj = {
         id: req.params.id,
       },
     };
-    let item = await Model.findOne(query);
+    // let item = await Model.findOne(query);
+    let item=await categoryRepository.findOneByCondition(query);
     if (item && item?.image) {
       await cloudinary.deleteFile(item.image);
     }
 
-    let deletedItem = await Model.destroy(query);
-    console.log("deletedItemdeletedItem", deletedItem);
-    if (deletedItem) {
+    // let deletedItem = await Model.destroy(query);
+    // console.log("deletedItemdeletedItem", deletedItem);
+    let deletedItem=await categoryRepository.delete(query);
+    if (deletedItem==0) {
       return res.json(
         generateResponse(resCode.HTTP_OK, {
           message: MESSAGES.apiSuccessStrings.DELETED('Categories'),

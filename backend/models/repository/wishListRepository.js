@@ -1,4 +1,4 @@
-const WishList = require("../../models").WishList;
+const WishList = require("../../models/wishList");
 
 module.exports.findByPk = async (id) => {
     return await WishList.findByPk(id);

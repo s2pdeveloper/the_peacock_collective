@@ -1,4 +1,4 @@
-const Tag = require("../../models").Tag;
+const Tag = require("../../models/tag");
 
 module.exports.findByPk = async (id) => {
     return await Tag.findByPk(id);

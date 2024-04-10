@@ -195,6 +195,7 @@ const modelObj = {
           },
         };
         await AttrVariantMap.destroy(deleteQuery);
+        
 
         let payloadMap = req.body.attributeArr.map((x) => {
           return {
