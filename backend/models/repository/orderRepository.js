@@ -1,20 +1,20 @@
-const Order = require("../../models/order");
+const Model = require("../../models").Order;
 
 module.exports.findByPk = async (id) => {
-    return await Order.findByPk(id);
+    return await Model.findByPk(id);
 };
 
 module.exports.findOneByCondition = async (condition) => {
   
-   return await Order.findOne(condition);
+   return await Model.findOne(condition);
 };
 
 module.exports.findAndCountAll = async (query) => {
-    return await Order.findAndCountAll(query);
+    return await Model.findAndCountAll(query);
 };
 
 module.exports.findAll = async (query) => {
-    return await Order.findAll(query);
+    return await Model.findAll(query);
 };
 
 
@@ -23,17 +23,17 @@ module.exports.save = async (data) => {
 };
 
 module.exports.delete = async (query) => {
-   return await Order.destroy(query);
+   return await Model.destroy(query);
 };
 
 module.exports.bulkCreate = async (data) => {
-    return await Order.bulkCreate(data);
+    return await Model.bulkCreate(data);
 };
 
 module.exports.create = async (data) => {
-    return await Order.create(data);
+    return await Model.create(data);
 };
 
 module.exports.update = async (data, query) => {
-    return await Order.update(data, query);
+    return await Model.update(data, query);
 };

@@ -1,5 +1,7 @@
 const sequelize = require("sequelize");
 const OrderRepository = require("../../../../models/repository/orderRepository");
+const CartRepository = require("../../../../models/repository/cartRepository");
+const OrderVariantMapRepository = require("../../../../models/repository/orderVariantMapRepository");
 const Order = require("../../../../models").Order;
 const Variant = require("../../../../models").Variant;
 const AttrVariantMap = require("../../../../models").AttrVariantMap;
@@ -36,14 +38,14 @@ const modelObj = {
           qty: x.qty,
         };
       });
-      await OrderRepository.bulkCreate(arr);
+      await OrderVariantMapRepository.bulkCreate(arr);
       const query = {
         where: {
           customerId: req.user.id,
         },
       };
       if (req.body.type == "CART") {
-        await OrderRepository.delete(query);
+        await CartRepository.delete(query);
       }
     }
     return res.status(resCode.HTTP_OK).json(
@@ -106,7 +108,7 @@ const modelObj = {
                 {
                   model: Product,
                   as: "variantWithProduct",
-                  attributes: ["name", "hsn"],
+                  attributes: ["name", "hsn", "id"],
                 },
                 {
                   model: Images,
@@ -122,6 +124,7 @@ const modelObj = {
       limit: +pageSize,
     };
     let response = await OrderRepository.findAll(query);
+
     return res
       .status(resCode.HTTP_OK)
       .json(generateResponse(resCode.HTTP_OK, response));

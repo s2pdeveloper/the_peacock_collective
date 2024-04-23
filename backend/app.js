@@ -66,7 +66,7 @@ process.on('unhandledRejection', (reason, p) => {
 // Routes
 // app.use(expressValidator());
 app.use(authenticateJWT);
-app.use('/', indexRouter);6
+app.use('/', indexRouter);
 app.use(errorHandler);
 
 

@@ -1,8 +1,10 @@
 const fs = require("fs");
 const sequelize = require("sequelize");
 const bcrypt = require("bcrypt");
-const User = require("../../../../models").User;
+const Customer = require("../../../../models").Customer;
+const BespokeImageMap = require("../../../../models").BespokeImageMap;
 const userRepository = require("../../../../models/repository/UserRepository");
+const BespokeRepository = require("../../../../models/repository/bespokeRepository");
 const UserHelper = require("../../../../models/helpers/user.helpers");
 const EmailRepository = require("../../../../shared/repositories/email.repository");
 const mail = require("../../../../config/middlewares/triggerMail");
@@ -235,7 +237,7 @@ const userObj = {
 
       if (existingUserWithEmail) {
         const errors = MESSAGES.apiErrorStrings.USER_EXISTS("email address");
-     //   let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
+        //   let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
         throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
       }
       emailChange = true;
@@ -466,243 +468,233 @@ const userObj = {
   //** reset the password */
   resetPassword: async (req, res) => {
     console.log("++++++++++++++HIT The resetPassword++++++++");
-    
-      let query = {
-        where: {
-          id: req.body.id,
-        },
-      };
 
-      // let user = await User.findOne(query);
-      let user= await userRepository.findOneByCondition(query);
+    let query = {
+      where: {
+        id: req.body.id,
+      },
+    };
 
-      if (!user) {
-        let error = MESSAGES.apiErrorStrings.OTP_EXPIRED;
-        return res
-          .status(resCode.HTTP_BAD_REQUEST)
-          .json(
-            generateResponse(
-              resCode.HTTP_BAD_REQUEST,
-              error,
-              MESSAGES.errorTypes.ENTITY_NOT_FOUND
-            )
-          );
-      } else {
-        let isMatch = await bcrypt.compare(req.body.oldPassword, user.password);
-        if (isMatch) {
-          if (
-            user.status === OPTIONS.defaultStatus.BLOCKED ||
-            user.status === OPTIONS.defaultStatus.INACTIVE
-          ) {
-            let errors = MESSAGES.apiErrorStrings.USER_BLOCKED;
-            return res
-              .status(resCode.HTTP_BAD_REQUEST)
-              .json(
-                generateResponse(
-                  resCode.HTTP_BAD_REQUEST,
-                  errors,
-                  MESSAGES.errorTypes.ACCOUNT_BLOCKED
-                )
-              );
-          }
+    // let user = await User.findOne(query);
+    let user = await userRepository.findOneByCondition(query);
 
-          user.password = await bcrypt.hash(
-            req.body.newPassword,
-            bcrypt.genSaltSync(8)
-          );
-          user.verificationToken = null;
-          user.verificationTokenExpireAt = null;
-
-          // await user.save();
-          await userRepository.save(user);
-
-          const message = MESSAGES.apiSuccessStrings.PASSWORD_RESET;
+    if (!user) {
+      let error = MESSAGES.apiErrorStrings.OTP_EXPIRED;
+      return res
+        .status(resCode.HTTP_BAD_REQUEST)
+        .json(
+          generateResponse(
+            resCode.HTTP_BAD_REQUEST,
+            error,
+            MESSAGES.errorTypes.ENTITY_NOT_FOUND
+          )
+        );
+    } else {
+      let isMatch = await bcrypt.compare(req.body.oldPassword, user.password);
+      if (isMatch) {
+        if (
+          user.status === OPTIONS.defaultStatus.BLOCKED ||
+          user.status === OPTIONS.defaultStatus.INACTIVE
+        ) {
+          let errors = MESSAGES.apiErrorStrings.USER_BLOCKED;
           return res
-            .status(resCode.HTTP_OK)
-            .json(generateResponse(resCode.HTTP_OK, { message }));
-          // if (req.body.email && !user.isEmailVerified) {
-          // 	let todayDate = new Date();
-          // 	todayDate.setDate(
-          // 		todayDate.getDate() + OPTIONS.emailVerificationExpireInDays
-          // 	);
-          // 	let token = generateOTP();
-          // 	existingUser
-          // 		.update({
-          // 			verificationTokenExpireAt: todayDate,
-          // 			verificationToken: token,
-          // 		})
-          // 		.then();
-          // 	// await EmailRepository.sendOTPEmail(existingUser);
-          // 	let errors = MESSAGES.apiErrorStrings.ACTIVATE_ACCOUNT;
-          // 	return res
-          // 		.status(resCode.HTTP_BAD_REQUEST)
-          // 		.json(
-          // 			generateResponse(
-          // 				resCode.HTTP_BAD_REQUEST,
-          // 				errors,
-          // 				MESSAGES.errorTypes.EMAIL_NOT_VERIFIED
-          // 			)
-          // 		);
-          // }
-
-          // existingUser.lastLoginAt = new Date();
-          // await existingUser.save();
-
-          // let userObj = {
-          // 	id: existingUser.id,
-          // 	token: existingUser.genToken(),
-          // 	role: existingUser.role,
-          // 	email: existingUser.email,
-          // 	firstName: existingUser.firstName,
-          // 	lastName: existingUser.lastName,
-          // };
-
-          // return res
-          // 	.status(resCode.HTTP_OK)
-          // 	.json(generateResponse(resCode.HTTP_OK, userObj));
-        } else {
-          let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
-          // let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
-          throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
+            .status(resCode.HTTP_BAD_REQUEST)
+            .json(
+              generateResponse(
+                resCode.HTTP_BAD_REQUEST,
+                errors,
+                MESSAGES.errorTypes.ACCOUNT_BLOCKED
+              )
+            );
         }
+
+        user.password = await bcrypt.hash(
+          req.body.newPassword,
+          bcrypt.genSaltSync(8)
+        );
+        user.verificationToken = null;
+        user.verificationTokenExpireAt = null;
+
+        // await user.save();
+        await userRepository.save(user);
+
+        const message = MESSAGES.apiSuccessStrings.PASSWORD_RESET;
+        return res
+          .status(resCode.HTTP_OK)
+          .json(generateResponse(resCode.HTTP_OK, { message }));
+        // if (req.body.email && !user.isEmailVerified) {
+        // 	let todayDate = new Date();
+        // 	todayDate.setDate(
+        // 		todayDate.getDate() + OPTIONS.emailVerificationExpireInDays
+        // 	);
+        // 	let token = generateOTP();
+        // 	existingUser
+        // 		.update({
+        // 			verificationTokenExpireAt: todayDate,
+        // 			verificationToken: token,
+        // 		})
+        // 		.then();
+        // 	// await EmailRepository.sendOTPEmail(existingUser);
+        // 	let errors = MESSAGES.apiErrorStrings.ACTIVATE_ACCOUNT;
+        // 	return res
+        // 		.status(resCode.HTTP_BAD_REQUEST)
+        // 		.json(
+        // 			generateResponse(
+        // 				resCode.HTTP_BAD_REQUEST,
+        // 				errors,
+        // 				MESSAGES.errorTypes.EMAIL_NOT_VERIFIED
+        // 			)
+        // 		);
+        // }
+
+        // existingUser.lastLoginAt = new Date();
+        // await existingUser.save();
+
+        // let userObj = {
+        // 	id: existingUser.id,
+        // 	token: existingUser.genToken(),
+        // 	role: existingUser.role,
+        // 	email: existingUser.email,
+        // 	firstName: existingUser.firstName,
+        // 	lastName: existingUser.lastName,
+        // };
+
+        // return res
+        // 	.status(resCode.HTTP_OK)
+        // 	.json(generateResponse(resCode.HTTP_OK, userObj));
+      } else {
+        let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
+        // let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
+        throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
       }
-    
+    }
   },
   //** forget password **/
   forgetPassword: async (req, res) => {
-   
-      if (!req.body.email) {
-        const errors = MESSAGES.apiErrorStrings.INVALID_REQUEST;
-        // let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
-        throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
-      }
-      // let existingUser = await User.findOne({
-      //   where: { email: req.body.email.toLowerCase() },
-      // });
-     let query={
-      where: { email: req.body.email.toLowerCase() },
+    if (!req.body.email) {
+      const errors = MESSAGES.apiErrorStrings.INVALID_REQUEST;
+      // let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
+      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
-      let existingUser=await userRepository.findOneByCondition(query);
-      if (!existingUser) {
-        let errors = MESSAGES.apiErrorStrings.USER_DOES_NOT_EXIST;
-        return res
-          .status(resCode.HTTP_BAD_REQUEST)
-          .json(
-            generateResponse(
-              resCode.HTTP_BAD_REQUEST,
-              errors,
-              MESSAGES.errorTypes.OAUTH_EXCEPTION
-            )
-          );
-      } else {
-        //  existingUser.resetPin = Math.floor(Math.random() * 899999 + 100000);
-        existingUser.resetPin = Math.floor(Math.random() * 9000) + 1000;
-
-        // let user = await existingUser.save();
-     let user = await userRepository.save(user);
-        let data = {
-          userName: `${user.userName}`,
-          email: user.email,
-          OTP: user.resetPin,
-          subject: `RESET PASSWORD ${user.resetPin} `,
-          companyLogo:
-            "https://peacock-collective.web.app/assets/images/gold-logo.png",
-          template: "resetPassword.html",
-          url: `${process.env.REQ_URL}#/change-pwd?sub=${user.id}&pin=${user.resetPin}&role=${user.role}`,
-        };
-        mail.sendForgetMail(req, data);
-        return res.status(resCode.HTTP_OK).json(
-          generateResponse(resCode.HTTP_OK, {
-            message: MESSAGES.apiSuccessStrings.EMAIL_FORGOT,
-          })
+    // let existingUser = await User.findOne({
+    //   where: { email: req.body.email.toLowerCase() },
+    // });
+    let query = {
+      where: { email: req.body.email.toLowerCase() },
+    };
+    let existingUser = await userRepository.findOneByCondition(query);
+    if (!existingUser) {
+      let errors = MESSAGES.apiErrorStrings.USER_DOES_NOT_EXIST;
+      return res
+        .status(resCode.HTTP_BAD_REQUEST)
+        .json(
+          generateResponse(
+            resCode.HTTP_BAD_REQUEST,
+            errors,
+            MESSAGES.errorTypes.OAUTH_EXCEPTION
+          )
         );
-      }
-    
+    } else {
+      //  existingUser.resetPin = Math.floor(Math.random() * 899999 + 100000);
+      existingUser.resetPin = Math.floor(Math.random() * 9000) + 1000;
+
+      // let user = await existingUser.save();
+      let user = await userRepository.save(user);
+      let data = {
+        userName: `${user.userName}`,
+        email: user.email,
+        OTP: user.resetPin,
+        subject: `RESET PASSWORD ${user.resetPin} `,
+        companyLogo:
+          "https://peacock-collective.web.app/assets/images/gold-logo.png",
+        template: "resetPassword.html",
+        url: `${process.env.REQ_URL}#/change-pwd?sub=${user.id}&pin=${user.resetPin}&role=${user.role}`,
+      };
+      mail.sendForgetMail(req, data);
+      return res.status(resCode.HTTP_OK).json(
+        generateResponse(resCode.HTTP_OK, {
+          message: MESSAGES.apiSuccessStrings.EMAIL_FORGOT,
+        })
+      );
+    }
   },
   //** set the password */
   setPassword: async (req, res) => {
-   
-      // let user = await User.findOne({
-      //   where: { email: req.body.email },
-      // });
+    // let user = await User.findOne({
+    //   where: { email: req.body.email },
+    // });
 
-      let query={
-        where: { email: req.body.email },
-      }
+    let query = {
+      where: { email: req.body.email },
+    };
 
-      let user= await userRepository.findOneByCondition(query);
-      if (!user) {
-        const error = MESSAGES.apiErrorStrings.INVALID_REQUEST;
-        return res
-          .status(resCode.HTTP_BAD_REQUEST)
-          .json(generateResponse(resCode.HTTP_BAD_REQUEST, error));
+    let user = await userRepository.findOneByCondition(query);
+    if (!user) {
+      const error = MESSAGES.apiErrorStrings.INVALID_REQUEST;
+      return res
+        .status(resCode.HTTP_BAD_REQUEST)
+        .json(generateResponse(resCode.HTTP_BAD_REQUEST, error));
+    } else {
+      if (user.resetPin === req.body.resetPin) {
+        console.log("hit the setPassword", user.resetPin);
+        user.password = await bcrypt.hash(
+          req.body.password,
+          bcrypt.genSaltSync(8)
+        );
+        user.resetPin = null;
+        // await user.save();
+        await userRepository.save(user);
+        return res.status(resCode.HTTP_OK).json(
+          generateResponse(resCode.HTTP_OK, {
+            message: MESSAGES.apiSuccessStrings.PASSWORD("set"),
+          })
+        );
       } else {
-        if (user.resetPin === req.body.resetPin) {
-          console.log("hit the setPassword", user.resetPin);
-          user.password = await bcrypt.hash(
-            req.body.password,
-            bcrypt.genSaltSync(8)
-          );
-          user.resetPin = null;
-          // await user.save();
-          await userRepository.save(user);
-          return res.status(resCode.HTTP_OK).json(
-            generateResponse(resCode.HTTP_OK, {
-              message: MESSAGES.apiSuccessStrings.PASSWORD("set"),
-            })
-          );
-        } else {
-          let errors = MESSAGES.apiErrorStrings.INVALID_TOKEN;
-          // let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
-          throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
-        }
-      }
- 
-  },
-  //** change the status of user */
-  changeStatus: async (req, res) => {
-   
-      let id = req.query.id;
-      if (!id) {
-        const error = MESSAGES.apiErrorStrings.INVALID_REQUEST;
-        return res
-          .status(resCode.HTTP_BAD_REQUEST)
-          .json(generateResponse(resCode.HTTP_BAD_REQUEST, error));
-      }
-
-      let query = {
-        where: {
-          id: id,
-          status: [
-            OPTIONS.defaultStatus.ACTIVE,
-            OPTIONS.defaultStatus.INACTIVE,
-          ],
-        },
-      };
-
-      // let existingUser = await User.findOne(query);
-      let existingUser=await userRepository.findOneByCondition(query);
-      if (!existingUser) {
-        const errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("User");
+        let errors = MESSAGES.apiErrorStrings.INVALID_TOKEN;
         // let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
         throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
       }
-      existingUser.status =
-        existingUser.status === OPTIONS.defaultStatus.ACTIVE
-          ? OPTIONS.defaultStatus.INACTIVE
-          : OPTIONS.defaultStatus.ACTIVE;
-      // await existingUser.save();
-      await userRepository.save(existingUser);
+    }
+  },
+  //** change the status of user */
+  changeStatus: async (req, res) => {
+    let id = req.query.id;
+    if (!id) {
+      const error = MESSAGES.apiErrorStrings.INVALID_REQUEST;
+      return res
+        .status(resCode.HTTP_BAD_REQUEST)
+        .json(generateResponse(resCode.HTTP_BAD_REQUEST, error));
+    }
 
-      res.status(resCode.HTTP_OK).json(
-        generateResponse(resCode.HTTP_OK, {
-          message: MESSAGES.apiSuccessStrings.STATUS_CHANGE(
-            "User",
-            existingUser.status
-          ),
-        })
-      );
-  
+    let query = {
+      where: {
+        id: id,
+        status: [OPTIONS.defaultStatus.ACTIVE, OPTIONS.defaultStatus.INACTIVE],
+      },
+    };
+
+    // let existingUser = await User.findOne(query);
+    let existingUser = await userRepository.findOneByCondition(query);
+    if (!existingUser) {
+      const errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("User");
+      // let errors = MESSAGES.apiErrorStrings.INVALID_CREDENTIALS;
+      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
+    }
+    existingUser.status =
+      existingUser.status === OPTIONS.defaultStatus.ACTIVE
+        ? OPTIONS.defaultStatus.INACTIVE
+        : OPTIONS.defaultStatus.ACTIVE;
+    // await existingUser.save();
+    await userRepository.save(existingUser);
+
+    res.status(resCode.HTTP_OK).json(
+      generateResponse(resCode.HTTP_OK, {
+        message: MESSAGES.apiSuccessStrings.STATUS_CHANGE(
+          "User",
+          existingUser.status
+        ),
+      })
+    );
   },
   createAndUpdateUserDevice: async (req, res) => {
     try {
@@ -713,7 +705,7 @@ const userObj = {
           userId: req.body.userId,
         },
       });
-   
+
       if (!foundItem) {
         await userDevice.create(createObj);
         return res.status(resCode.HTTP_OK).json(
@@ -743,5 +735,59 @@ const userObj = {
       throw new Error(e);
     }
   },
+  getAllBespoke: asyncHandler(async (req, res) => {
+    const {
+      page = 1,
+      pageSize = 10,
+      column = "createdAt",
+      direction = "DESC",
+    } = req.query;
+    let offset = (page - 1) * pageSize || 0;
+    let query = {
+      include: [
+        {
+          model: Customer,
+          as: "bespokeWithCustomer",
+          attributes: ["firstName", "lastName", "email", "phone"],
+        },
+      ],
+      order: [[column, direction]],
+      offset: +offset,
+      limit: +pageSize,
+    };
+
+    let response = await BespokeRepository.findAndCountAll(query);
+    return res
+      .status(resCode.HTTP_OK)
+      .json(generateResponse(resCode.HTTP_OK, response));
+  }),
+
+  getBespokeById: asyncHandler(async (req, res) => {
+    let query = {
+      where: {
+        id: req.params.id,
+      },
+      include: [
+        {
+          model: Customer,
+          as: "bespokeWithCustomer",
+          attributes: ["firstName", "lastName", "email", "phone"],
+        },
+        {
+          model: BespokeImageMap,
+          as: "bespokeImages",
+          attributes:["image"]
+        },
+      ],
+    };
+    let existing = await BespokeRepository.findOneByCondition(query);
+    if (!existing) {
+      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Bespoke");
+      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
+    }
+    return res
+      .status(resCode.HTTP_OK)
+      .json(generateResponse(resCode.HTTP_OK, existing));
+  }),
 };
 module.exports = userObj;

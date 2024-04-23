@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   // standalone: true,
 })
 export class TagCategoryPipe implements PipeTransform {
-  transform(products: any[], tagId: number): any {
+  transform(products: any[]=[], tagId: number=null): any {
     try {
       let categoryArr = [];
       if (products.length && tagId) {

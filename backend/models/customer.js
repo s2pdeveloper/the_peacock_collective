@@ -108,11 +108,16 @@ module.exports = (sequelize, DataTypes) => {
       as: 'customerWithAddresses',
        onDelete: 'CASCADE',
     });
-
+    Customer.hasMany(models.Bespoke, {
+      foreignKey: 'customerId',
+      as: 'customerWithBespoke',
+       onDelete: 'CASCADE',
+    });
+    
     Customer.hasMany(models.WishList, {
       foreignKey: 'customerId',
       as: 'customerWithWishList',
-       onDelete: 'CASCADE',
+      onDelete: 'CASCADE',
     });
   };
   

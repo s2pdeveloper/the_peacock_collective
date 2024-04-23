@@ -70,6 +70,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         });
         prod.variant = variant;
         item.product = prod;
+        item.price = item.qty * variant.price;
       }
     }
     console.log('this.product', this.product);
@@ -77,6 +78,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.getAllCartData();
   }
   createOrder() {
+
     let payload = {
       products: this.product,
       addressId: this.selectedAddressId,

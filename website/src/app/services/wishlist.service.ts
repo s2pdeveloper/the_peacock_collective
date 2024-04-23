@@ -10,10 +10,10 @@ export class WishlistService {
 
   constructor(private http: ApiService) { }
 
-  getAll(payload: any) {
-    return this.http.get(this.BASE_URL, payload);
+  getAll() {
+    return this.http.get(this.BASE_URL);
   }
-  add(payload: any) {
+  create(payload: any) {
     return this.http.post(this.BASE_URL, payload).pipe(map((res: any) => res));
   }
 

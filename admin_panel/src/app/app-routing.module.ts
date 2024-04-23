@@ -92,9 +92,7 @@ const routes: Routes = [
       {
         path: "vendor",
         loadChildren: () =>
-          import("./features/vendor/vendor.module").then(
-            (m) => m.VendorModule
-          ),
+          import("./features/vendor/vendor.module").then((m) => m.VendorModule),
       },
       {
         path: "variant",
@@ -104,11 +102,21 @@ const routes: Routes = [
           ),
       },
       {
+        path: "tag",
+        loadChildren: () =>
+          import("./features/tag/tag.module").then((m) => m.TagModule),
+      },
+      {
+        path: "bespoke",
+        loadChildren: () =>
+          import("./features/bespoke/bespoke.module").then((m) => m.BespokeModule),
+      },
+      {
         path: "all-variants",
         loadChildren: () =>
-          import("./features/all-product-variants/all-product-variants.module").then(
-            (m) => m.AllProductVariantsModule
-          ),
+          import(
+            "./features/all-product-variants/all-product-variants.module"
+          ).then((m) => m.AllProductVariantsModule),
       },
 
       {
@@ -182,8 +190,6 @@ const routes: Routes = [
             (m) => m.NewInvoiceModule
           ),
       },
-
-      
     ],
   },
 ];
@@ -192,4 +198,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

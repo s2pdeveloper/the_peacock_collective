@@ -17,6 +17,10 @@ const OPTIONS = {
   elasticSearchIndexModalNames: {
     PRODUCT: "Product",
   },
+  jewelryOption:{
+    YES: 'Yes',
+    NO:'No, Not sure yet'
+  },
 
   messageStatus:{
     ACTIVE:'active',

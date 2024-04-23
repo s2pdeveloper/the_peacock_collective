@@ -76,7 +76,9 @@
     <div *ngIf="user" class="col-11 p-3 address-column border-top">
       <div *ngIf="showAddressForm" class="row justify-content-center">
         <div class="col-6 mb-4">
-          <h3 class="text-center">{{addressId ? "Update" : "Create"}} Address</h3>
+          <h3 class="text-center">
+            {{ addressId ? "Update" : "Create" }} Address
+          </h3>
         </div>
         <form [formGroup]="addressForm" class="pb-3">
           <div class="row my-3">
@@ -195,18 +197,30 @@
             </div>
           </div>
           <div class="row my-3 justify-content-center">
-            <div class="col-3 col-md-2 col-lg-2">
-              <button *ngIf="!addressId"
+            <div class="col-3 col-md-2 col-lg-2 me-2">
+              <button
+                *ngIf="!addressId"
                 class="btn bg-dark p-2 w-100 text-light rounded-0"
                 (click)="createAddress()"
               >
                 Save
               </button>
-              <button *ngIf="addressId"
+              <button
+                *ngIf="addressId"
                 class="btn bg-dark p-2 w-100 text-light rounded-0"
                 (click)="update()"
               >
                 Update
+              </button>
+              
+            </div>
+            <div class="col-3 col-md-2 col-lg-2">
+              <button
+                *ngIf="addressId"
+                class="btn bg-dark p-2 w-100 text-light rounded-0"
+                (click)="showAddressForm = !showAddressForm"
+              >
+                Cancel
               </button>
             </div>
           </div>
@@ -229,56 +243,58 @@
           </span>
         </div>
         <div class="col-12">
-          <div class="row justify-content-around ">
+          <div class="row justify-content-around">
             <div
-            *ngFor="let add of allAddresses;let i = index"
-            class="col-12 col-sm-12 col-md-5 col-lg-5 card position-relative p-4"
-          >
-            <div class="row">
-              <div class="col-9">
-                <div class="d-flex mb-3 align-items-center">
-                  <p>{{ add?.name }}</p>
-                  <span class="bg-light small-text text-muted p-1 ms-2">{{
-                    add.type
-                  }}</span>
+              *ngFor="let add of allAddresses; let i = index"
+              class="col-12 col-sm-12 col-md-5 col-lg-5 card position-relative p-4"
+            >
+              <div class="row">
+                <div class="col-9">
+                  <div class="d-flex mb-3 align-items-center">
+                    <p>{{ add?.name }}</p>
+                    <span class="bg-light small-text text-muted p-1 ms-2">{{
+                      add.type
+                    }}</span>
+                  </div>
+                  <p class="mb-3">
+                    {{ add?.location }}
+                  </p>
+                  <p>{{ add?.phone }}</p>
                 </div>
-                <p class="mb-3">
-                  {{ add?.location }}
-                </p>
-                <p>{{ add?.phone }}</p>
-              </div>
-              <div class="col-3 d-flex justify-content-end">
-                <span *ngIf="show" (click)="showMenuIndex = i">
-                  <i class="pointer fa-solid fa-ellipsis-vertical"></i>
-                </span>
-                <div *ngIf="showMenuIndex==i" class="row address-action bg-light">
-                  <span
-                    class="col-12 h-50 d-flex align-items-center p-3 pointer"
-                    (click)="edit(add)"
-                  >
-                    Edit
+                <div class="col-3 d-flex justify-content-end">
+                  <span *ngIf="show" (click)="showMenuIndex = i">
+                    <i class="pointer fa-solid fa-ellipsis-vertical"></i>
                   </span>
-                  <span
-                    class="col-12 h-50 d-flex align-items-center p-3 pointer"
-                    (click)="deleteAdd(add?.id)"
+                  <div
+                    *ngIf="showMenuIndex == i"
+                    class="row address-action bg-light"
                   >
-                    Delete
-                  </span>
-                </div>
-                <div [class.bg-success]="add.isDefault" class="badge pointer">
-                  <span
-                    [class.text-light]="add.isDefault"
-                    [class.text-dark]="!add.isDefault"
-                    (click)="setDefault(add.id)"
-                    >Set Default</span
-                  >
+                    <span
+                      class="col-12 h-50 d-flex align-items-center p-3 pointer"
+                      (click)="edit(add)"
+                    >
+                      Edit
+                    </span>
+                    <span
+                      class="col-12 h-50 d-flex align-items-center p-3 pointer"
+                      (click)="deleteAdd(add?.id)"
+                    >
+                      Delete
+                    </span>
+                  </div>
+                  <div [class.bg-success]="add.isDefault" class="badge pointer">
+                    <span
+                      [class.text-light]="add.isDefault"
+                      [class.text-dark]="!add.isDefault"
+                      (click)="setDefault(add.id)"
+                      >Set Default</span
+                    >
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          </div>
         </div>
-        
       </div>
     </div>
   </div>
