@@ -68,7 +68,7 @@ const modelObj = {
             {
               model: Product,
               as: "variantWithProduct",
-              attributes: ["name", "hsn"],
+              attributes: ["name", "hsn", "id"],
             },
             {
               model: Images,
@@ -148,8 +148,6 @@ const modelObj = {
       );
     }
   }),
-
-  
 
   remove: asyncHandler(async (req, res) => {
     let query = {

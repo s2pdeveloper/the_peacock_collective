@@ -66,9 +66,10 @@ export class TagListComponent {
       search: this.search,
     };
     this.tagservice.getAllTag(obj).subscribe((success: any) => {
+      console.log('success',success);
       this.spinner.hide();
-      this.Tag = success.data;
-      this.collection = success.count;
+      this.Tag = success;
+      this.collection = success.length;
     });
   }
 

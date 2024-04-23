@@ -10,8 +10,8 @@ export class AddressService {
 
   constructor(private http: ApiService) {}
 
-  getAll(payload: any) {
-    return this.http.get(this.BASE_URL, payload);
+  getAll() {
+    return this.http.get(this.BASE_URL).pipe(map((res: any) => res));
   }
   create(payload: any) {
     return this.http.post(this.BASE_URL, payload).pipe(map((res: any) => res));
@@ -32,8 +32,6 @@ export class AddressService {
       .pipe(map((res: any) => res));
   }
   getByCustomerId() {
-    return this.http
-      .get(this.BASE_URL)
-      .pipe(map((res: any) => res));
+    return this.http.get(this.BASE_URL).pipe(map((res: any) => res));
   }
 }

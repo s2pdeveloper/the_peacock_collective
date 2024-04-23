@@ -19,6 +19,7 @@ export class HeaderComponent {
   scrollValue: number = 0;
   scrollPosition: any;
   isMenuOpen: boolean = false;
+  isAccountOpen: boolean = false;
   isCatOpen: boolean = false;
   isCartOpen: boolean = false;
   cartData: any[] = [];
@@ -142,7 +143,6 @@ export class HeaderComponent {
     window.addEventListener('wheel', (event) => {
       this.scrollValue = Math.sign(event.deltaY);
     });
-    console.log('Your Cart');
   }
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -201,7 +201,6 @@ export class HeaderComponent {
   checkout() {
     let checkoutProduts = this.cartData.map((x) => {
       return {
-        price: x.price,
         qty: x.qty,
         variantId: x.variantId,
       };
@@ -227,7 +226,6 @@ export class HeaderComponent {
   getAllCartData() {
     this.cartService.getAll().subscribe((success) => {
       this.cartData = success.result.rows;
-      console.log('this.cartService.cartData', this.cartData);
     });
   }
 }

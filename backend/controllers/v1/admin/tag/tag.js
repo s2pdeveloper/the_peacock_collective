@@ -13,6 +13,7 @@ const ApiError = require("../../../../config/middlewares/api.error");
 const {
   asyncHandler,
 } = require("../../../../config/middlewares/async.handler");
+const TagRepository = require("../../../../models/repository/tagRepository");
 
 const modelObj = {
   create: asyncHandler(async (req, res) => {
@@ -53,18 +54,10 @@ const modelObj = {
         }),
       },
       order: [[column, direction]],
-      // attributes: {
-      //   exclude: ['userId'],
-      // },
-      // include: {
-      //   model: User,
-      //   as: 'shop',
-      //   attributes: ['id', 'name', 'mobile'],
-      // },
       offset: +offset,
       limit: +pageSize,
     };
-    let response = await Model.findAndCountAll(query);
+    let response = await TagRepository.findAll(query);
 
     return res
       .status(resCode.HTTP_OK)

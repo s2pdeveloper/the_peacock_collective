@@ -5,39 +5,33 @@ import { map } from "rxjs";
   providedIn: "root",
 })
 export class ProductService {
-  readonly BASE_URL = 'product'
+  readonly BASE_URL = "product";
 
-  constructor(private http: ApiService) { }
+  constructor(private http: ApiService) {}
 
   getAll(payload: any) {
-    return this.http.get(this.BASE_URL, payload)
+    return this.http.get(this.BASE_URL, payload);
   }
   create(payload: any) {
-    return this.http
-      .post(this.BASE_URL, payload)
-      .pipe(map((res: any) => res));
+    return this.http.post(this.BASE_URL, payload).pipe(map((res: any) => res));
   }
 
   update(id: any, payload: any) {
     return this.http
-      .put(this.BASE_URL + '/' + id, payload)
+      .put(this.BASE_URL + "/" + id, payload)
       .pipe(map((res: any) => res));
   }
   delete(id: any) {
     return this.http
-      .delete(this.BASE_URL + '/' + id)
+      .delete(this.BASE_URL + "/" + id)
       .pipe(map((res: any) => res));
   }
   getById(id: any) {
-    return this.http
-      .get(this.BASE_URL + '/' + id)
-      .pipe(map((res: any) => res));
+    return this.http.get(this.BASE_URL + "/" + id).pipe(map((res: any) => res));
   }
   getProductAttributeById(id: any) {
     return this.http
-      .get(this.BASE_URL + '/product-attribute/' + id)
+      .get(this.BASE_URL + "/product-attribute/" + id)
       .pipe(map((res: any) => res));
   }
-  
-
 }

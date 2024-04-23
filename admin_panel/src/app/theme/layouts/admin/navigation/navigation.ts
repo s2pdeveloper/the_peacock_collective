@@ -92,6 +92,14 @@ const NavigationItems = [
         ],
       },
       {
+        id: "tag",
+        title: "Tag",
+        type: "item",
+        classes: "nav-item",
+        url: "/default/tag",
+        icon: "fa-solid fa-list",
+      },
+      {
         id: "category",
         title: "Category",
         type: "item",
@@ -99,6 +107,7 @@ const NavigationItems = [
         url: "/default/category",
         icon: "fa-solid fa-list",
       },
+    
       {
         id: "product",
         title: "Product",
@@ -129,6 +138,14 @@ const NavigationItems = [
         type: "item",
         classes: "nav-item",
         url: "/default/all-variants",
+        icon: "fa-brands fa-vimeo",
+      },
+      {
+        id: "bespoke",
+        title: "Bespoke",
+        type: "item",
+        classes: "nav-item",
+        url: "/default/bespoke",
         icon: "fa-brands fa-vimeo",
       },
       

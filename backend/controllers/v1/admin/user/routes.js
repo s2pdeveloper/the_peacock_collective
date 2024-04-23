@@ -13,6 +13,7 @@ app.get(
   controller.getAllUsers
 );
 app.post("/", controller.create);
+
 app.put(
   "/:id",
    rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.EMPLOYEE),
@@ -22,6 +23,14 @@ app.put(
 
 app.post("/signup", controller.create);
 app.post("/login", controller.login);
+app.get("/getAllBespoke", controller.getAllBespoke);
+app.get(
+  "/getAllBespoke/:id",
+  // authHandler.authenticateJWT(),
+  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  // validate("checkParamId"),
+  controller.getBespokeById
+);
 
 app.get(
   "/profile",

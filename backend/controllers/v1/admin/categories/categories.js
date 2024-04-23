@@ -51,7 +51,6 @@ const modelObj = {
       category = false,
       parentId = null
     } = req.query;
-    console.log("catagorycatagorycatagory", category);
     let offset = (page - 1) * pageSize || 0;
     let query = {
       where: {

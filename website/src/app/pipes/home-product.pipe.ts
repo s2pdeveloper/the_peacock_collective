@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class HomeProductPipe implements PipeTransform {
 
-  transform(products: any[], category: any): any {
+  transform(products: any[]=[], category: any=null): any {
     try {
       if(products.length && category){
         return products.filter(x=>x.categoryId == category.id)

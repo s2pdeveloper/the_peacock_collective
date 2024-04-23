@@ -7,11 +7,11 @@ import { ApiService } from "@core/services";
 })
 export class TagService {
   routes:any={
-    createPath: "tag/addTag",
-    getAllPath: "tag/getAll",
-    updatePath: (id: string) => `tag/updateTag/${id}`,
-    deletePath: (id: string) => `tag/deleteById/${id}`,
-    getByIdPath: (id: string) => `tag/getTagById/${id}`,
+    createPath: "tag",
+    getAllPath: "tag",
+    updatePath: (id: string) => `tag/${id}`,
+    deletePath: (id: string) => `tag/${id}`,
+    getByIdPath: (id: string) => `tag/${id}`,
   }
 
   constructor(private http: ApiService) {}

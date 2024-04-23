@@ -24,7 +24,7 @@ import { ToastrModule } from "ngx-toastr";
 import { CoreModule } from "@core/core.module";
 import { StorageService } from "@core/services";
 import { NgImageSliderModule } from "ng-image-slider";
-import { HashLocationStrategy, LocationStrategy } from "@angular/common"; 
+import { HashLocationStrategy, LocationStrategy } from "@angular/common";
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +37,7 @@ import { HashLocationStrategy, LocationStrategy } from "@angular/common";
     NavContentComponent,
     NavCollapseComponent,
     NavGroupComponent,
-    NavItemComponent, 
+    NavItemComponent,
   ],
   imports: [
     BrowserModule,

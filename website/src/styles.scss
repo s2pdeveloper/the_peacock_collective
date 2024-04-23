@@ -2,11 +2,12 @@
 @import "./themes/variable";
 @import "./themes/custom";
 @import "ngx-toastr/toastr";
+@import '~bs-stepper/dist/css/bs-stepper.min.css';
 @import url('https://fonts.cdnfonts.com/css/geometric-sans-serif-v1');
 
 * {
   // font-family: "Cormorant Garamond", serif;
-  font-family: 'Geometric Sans Serif v1', sans-serif;
+  font-family: "Barlow", sans-serif;
 }
 ::-webkit-scrollbar {
   width: 2px;

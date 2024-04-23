@@ -6,7 +6,7 @@
           <div class="row w-100 justify-content-between">
             <div class="col-12 col-lg-11">
               <p class="py-3 text-color-primary pointer">
-                <span (click)="navigateTo('/')">Home</span> /
+                <span (click)="navigateTo('/',null)">Home</span> /
                 <span>My Orders</span>
               </p>
             </div>
@@ -19,29 +19,37 @@
                 <div class="col-2 text-center">Price</div>
                 <div class="col-2 text-center">Total</div>
               </div>
-              
+
               <div
                 class="row border-bottom p-2"
                 *ngFor="let order of orderVariants; let i = index"
               >
-                <div
-                  class="col-5 text-center d-block d-md-flex d-lg-flex"
-                >
+                <div class="col-5 text-center d-block d-md-flex d-lg-flex">
                   <img
                     width="100"
                     height="90"
-                    [src]="order?.orderVariantMapWithVariant?.variantImages[0].image"
+                    [src]="
+                      order?.orderVariantMapWithVariant?.variantImages[0].image
+                    "
+                    (click)="
+                      navigateTo(
+                        '/product/product-details',
+                        order?.orderVariantMapWithVariant?.variantWithProduct?.id
+                      )
+                    "
                     alt=""
                   />
                   <div class="p-3">
                     <p class="light-dark regular-font">
                       {{
-                    order.orderVariantMapWithVariant.variantWithProduct.hsn }}
+                        order.orderVariantMapWithVariant.variantWithProduct.hsn
+                      }}
                     </p>
                     <p
                       class="text-muted small-text"
                       *ngFor="
-                        let item of order.orderVariantMapWithVariant.variantWithAttrVariantMap
+                        let item of order.orderVariantMapWithVariant
+                          .variantWithAttrVariantMap
                       "
                     >
                       {{ item.AttrVariantMapWithAttributes.name }}:
@@ -49,19 +57,13 @@
                     </p>
                   </div>
                 </div>
-                <div
-                  class="col-3 text-center light-dark small-text my-auto"
-                >
+                <div class="col-3 text-center light-dark small-text my-auto">
                   {{ order.qty }}
                 </div>
-                <div
-                  class="col-2 text-center light-dark small-text my-auto"
-                >
+                <div class="col-2 text-center light-dark small-text my-auto">
                   {{ order.price | currency : "INR" }}
                 </div>
-                <div
-                  class="col-2 text-center light-dark small-text my-auto"
-                >
+                <div class="col-2 text-center light-dark small-text my-auto">
                   <p class="py-auto">
                     {{ order.price * order.qty | currency : "INR" }}
                   </p>
@@ -69,7 +71,10 @@
               </div>
               <div class="row py-5">
                 <div class="col-6 col-md-4 col-lg-2">
-                  <button class="btn btn-dark" (click)="navigateTo('/home')">
+                  <button
+                    class="btn btn-dark"
+                    (click)="navigateTo('/home', null)"
+                  >
                     Continue Shopping
                   </button>
                 </div>

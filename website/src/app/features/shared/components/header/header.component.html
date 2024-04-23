@@ -31,19 +31,39 @@
                   class="fa-solid fa-magnifying-glass pointer"
                   (click)="openSearch(search)"
                 ></i>
+                <div ngbDropdown>
+                  <button
+                    type="button"
+                    class="btn"
+                    id="dropdownBasic1"
+                    ngbDropdownToggle
+                  >
+                    <i class="fa-solid fa-user pointer"></i>
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <button class="p-3"
+                      ngbDropdownItem (click)="navigateTo('/auth/login', null)"
+                    >
+                      MY ACCOUNT
+                    </button>
+                    <button class="p-3"
+                      ngbDropdownItem
+                      (click)="navigateTo('/order/wishlist', null)"
+                    >
+                      WISHLIST
+                    </button>
+                    <button class="p-3"
+                      ngbDropdownItem
+                      (click)="navigateTo('/order/my-orders', null)"
+                    >
+                      MY ORDERS
+                    </button>
+                  </div>
+                </div>
                 <i
-                  class="fa-solid fa-user pointer"
-                  (click)="navigateTo('/auth/login', null)"
-                ></i>
-
-                <i
-                  class="fa-solid fa-cart-plus pointer"
-                  (click)="showCart()"
-                ></i>
-                <i
-                  class="fa-solid fa-shopping-bag pointer"
-                  (click)="navigateTo('/order/my-orders',null)"
-                ></i>
+                class="fa-solid fa-cart-plus nav-items"
+                (click)="showCart()"
+              ></i>
               </div>
             </div>
           </div>
@@ -63,7 +83,7 @@
                   <a class="nav_link text-uppercase">
                     <span class="nav-items">{{ item.title }}</span>
                   </a>
-                  <div class="dropdown">
+                  <div class="dropDown">
                     <div class="dropdown-inner row">
                       <div class="col-2 dropdownItem border-end">
                         <div class="py-2">
@@ -111,6 +131,16 @@
                 </div>
               </div>
               }
+              <div class="nav_menu d-flex">
+                <div class="nav_list nav_list_menu">
+                  <a
+                    class="nav_link text-uppercase"
+                    (click)="navigateTo('bespoke', null)"
+                  >
+                    <span class="nav-items">Bespoke, by you</span>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
           <div class="col-2 d-flex justify-content-end">
@@ -179,10 +209,10 @@
       </div>
       <div
         class="col-3 d-flex flex-column align-items-center p-3 menu-items"
-        (click)="navigateTo('/auth/login', null)"
+        (click)="isAccountOpen = !isAccountOpen"
       >
         <i class="fa-solid fa-user"></i>
-        <p>Sign In</p>
+        <p>Profile</p>
       </div>
       <div
         (click)="isCartOpen = !isCartOpen"
@@ -229,6 +259,50 @@
     </div>
   </div>
 </div>
+<div
+  [ngClass]="
+    isAccountOpen ? 'modal-open toggle-modal' : 'modal-open toggle-close'
+  "
+>
+  <div *ngIf="isAccountOpen" class="offcanvas-header m-0 px-4 py-2">
+    <img
+      src="../../../../../assets/images/gold-logo.png"
+      class="img-fluid-m me-3 logo-img"
+    />
+    <button type="button" class="btn" (click)="isAccountOpen = !isAccountOpen">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+
+  <div *ngIf="isAccountOpen" class="offcanvas-body m-0">
+    <div class="option p-4">
+      <div
+        class="option-item border-bottom d-flex justify-content-between py-3"
+        (click)="
+          navigateTo('/auth/login', null); isAccountOpen = !isAccountOpen
+        "
+      >
+        <p class="w-75 text-uppercase">My Account</p>
+      </div>
+      <div
+        class="option-item border-bottom d-flex justify-content-between py-3"
+        (click)="
+          navigateTo('/order/wishlist', null); isAccountOpen = !isAccountOpen
+        "
+      >
+        <p class="w-75 text-uppercase">Wishlist</p>
+      </div>
+      <div
+        class="option-item border-bottom d-flex justify-content-between py-3"
+        (click)="
+          navigateTo('/order/my-orders', null); isAccountOpen = !isAccountOpen
+        "
+      >
+        <p class="w-75 text-uppercase">My Orders</p>
+      </div>
+    </div>
+  </div>
+</div>
 <div [ngClass]="isCartOpen ? 'modal-open cart-modal' : 'modal-open cart-close'">
   <div class="cart-header m-0 px-4 py-3 border-bottom bg-light">
     <h4>Your Cart</h4>
@@ -247,11 +321,14 @@
     <div class="product-part">
       <ng-container *ngIf="!cartData.length; else elseBlock">
         <div class="w-100 d-flex align-items-center">
-          <img class="img-fluid" src="../../../../../assets/images/no-product.png" alt="">
+          <img
+            class="img-fluid"
+            src="../../../../../assets/images/no-product.png"
+            alt=""
+          />
         </div>
       </ng-container>
       <ng-template #elseBlock>
-    
         <div class="row border-bottom d-flex" *ngFor="let p of cartData">
           <div class="col-3">
             <img
@@ -259,6 +336,7 @@
               (click)="isCartOpen = !isCartOpen"
               class="img-fluid cart-img pointer"
               [src]="p?.cartWithVariants?.variantImages[0].image"
+              (click)="navigateTo('/product/product-details',p?.cartWithVariants?.variantWithProduct?.id)"
               alt=""
             />
           </div>
@@ -270,7 +348,9 @@
             </p>
             <p
               class="text-color-secondary small-text"
-              *ngFor="let attr of p?.cartWithVariants?.variantWithAttrVariantMap"
+              *ngFor="
+                let attr of p?.cartWithVariants?.variantWithAttrVariantMap
+              "
             >
               {{ attr.AttrVariantMapWithAttributes.name }} : {{ attr?.value }}
             </p>
@@ -282,18 +362,19 @@
                 [(ngModel)]="p.qty"
                 [value]="p.qty"
               />
-              <label>x {{ p?.cartWithVariants?.price | currency : "INR" }}</label>
+              <label
+                >x {{ p?.cartWithVariants?.price | currency : "INR" }}</label
+              >
             </div>
           </div>
           <div class="col-1 d-flex align-items-center bg-white">
             <i
               class="fa-solid fa-trash"
-              (click)="navigateTo('/product/product-details', null)"
+              (click)="navigateTo('/product/product-details', p?.cartWithVariants?.variantWithProduct?.id)"
             ></i>
           </div>
         </div>
       </ng-template>
-  
     </div>
     <div class="info-part">
       <div class="container-fluid">
@@ -312,7 +393,7 @@
         <div class="row py-3">
           <div class="col-12 d-flex justify-content-between">
             <p>Total (tax incl.)</p>
-            <p>{{ totalItemPrice  | currency : "INR" }}</p>
+            <p>{{ totalItemPrice | currency : "INR" }}</p>
           </div>
         </div>
         <div class="row">
@@ -330,16 +411,14 @@
               [disabled]="!cartData.length"
               type="button"
               class="btn btn-dark py-2"
-              (click)="
-                checkout(); isCartOpen = !isCartOpen
-              "
+              (click)="checkout(); isCartOpen = !isCartOpen"
             >
               Checkout
             </button>
           </div>
           <div class="col-12">
             <button
-            [disabled]="!cartData.length"
+              [disabled]="!cartData.length"
               type="button"
               class="btn btn-light py-2"
               (click)="
@@ -389,6 +468,21 @@
         <div class="d-flex justify-content-end align-items-center w-25">
           <i class="fa-solid fa-chevron-right"></i>
         </div>
+      </div>
+      <div class="dropdownItem p-3">
+        <swiper-container class="img-box" slides-per-view="1">
+          <swiper-slide
+            class="px-2 prod-cart"
+            (click)="navigateTo('/product/product-details', p?.id)"
+            *ngFor="
+              let p of commonService.allData.products | tagProduct : activeTagId
+            "
+            ><img class="prod-img w-100" [src]="p?.bannerImage" />
+            <div class="text-box p-3">
+              <p class="prod-name">{{ p?.name }}</p>
+            </div>
+          </swiper-slide>
+        </swiper-container>
       </div>
     </div>
   </div>

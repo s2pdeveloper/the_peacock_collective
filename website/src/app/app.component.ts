@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from './services/common.service';
-import { StorageService } from './core/services';
+import { SpinnerService, StorageService } from './core/services';
 
 @Component({
   selector: 'app-root',
@@ -13,17 +13,19 @@ export class AppComponent implements OnInit {
   user: any;
   constructor(
     private commonService: CommonService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private spinner : SpinnerService
   ) {
     this.user = this.storageService.get('Customer');
   }
   ngOnInit(): void {
     this.getAllMasterData();
-    // this.getAllCartData()
   }
 
   getAllMasterData() {
+    this.spinner.show();
     this.commonService.getAllMasterData({}).subscribe((success) => {
+      this.spinner.hide();
       this.commonService.allData = success.result;
       this.loader = false;
     });

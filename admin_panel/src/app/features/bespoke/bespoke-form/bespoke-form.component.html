@@ -1,0 +1,78 @@
+<div class="card form-card">
+  <div class="card-header">
+    <div class="card-header-items">
+      <div>Bespoke of Name</div>
+      <div>
+        <a
+          class="back-btn btn btn-primary"
+          (click)="navigateTo('default/bespoke/bespoke-list')"
+        >
+          <i class="ti ti-arrow-left me-1"></i> Back</a
+        >
+      </div>
+    </div>
+  </div>
+  <div class="card-body justify-content-center">
+    <div class="row px-3">
+      <div class="col-12 border-bottom pb-3">
+        <h3 class="text-primary mb-0">Customer Details</h3>
+        <p>
+          Name :
+          {{
+            data?.bespokeWithCustomer?.firstName +
+              data?.bespokeWithCustomer?.lastName
+          }}
+        </p>
+        <p>Email : {{ data?.bespokeWithCustomer?.email }}</p>
+        <p>
+          Phone :
+          {{
+            data?.bespokeWithCustomer?.phone
+              ? data?.bespokeWithCustomer?.phone
+              : "Null"
+          }}
+        </p>
+      </div>
+      <div class="col-12 border-bottom py-3">
+        <h3 class="text-primary">Bespoke Details</h3>
+        <p>Name : {{ data?.name }}</p>
+        <p>City : {{ data?.city }}</p>
+        <p>Country : {{ data?.country }}</p>
+        <p>Phone : {{ data?.phone ? data?.phone : "Null" }}</p>
+        <p>Email : {{ data?.email ? data?.email : "Null" }}</p>
+      </div>
+      <div class="col-12 border-bottom py-3">
+        <h4 class="text-primary">Questionnaire(s)</h4>
+        <div class="row">
+          <div class="col-6 mb-3">
+            <p>Q1 : What outfit category are you looking for?</p>
+            <p>Ans : {{ data?.category }}</p>
+          </div>
+          <div class="col-6 mb-3">
+            <p>Q2 : Event Timeline</p>
+            <p>
+              Ans : {{ data?.fromDate | date }} &nbsp; - &nbsp;
+              {{ data?.toDate | date }}
+            </p>
+          </div>
+          <div class="col-6 mb-3">
+            <p>Q3 : What outfit are you envisioning for your event(s)?</p>
+            <p>Ans : {{ data?.eventOutfit }}</p>
+          </div>
+          <div class="col-6 mb-3">
+            <p>Q4 : Are you also looking to explore jewelry options?</p>
+            <p>Ans : {{ data?.jewelryOption }}</p>
+          </div>
+          <div class="col-12 mb-3">
+            <p class="mb-3">Q5 : Can you share some images with us?</p>
+            <div class="row">
+              <div class="col-lg-3 col-md-4 col-4" *ngFor="let img of data?.bespokeImages">
+                <img class="img-fluid" [src]="img.image" alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

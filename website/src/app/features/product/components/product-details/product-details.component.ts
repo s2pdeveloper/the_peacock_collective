@@ -105,7 +105,6 @@ export class ProductDetailsComponent implements OnInit {
         this.qty = this.currentVariant.qty;
       }
       let payload = {
-        price: this.qty * this.currentVariant.price,
         qty: this.qty,
         variantId: this.currentVariant.id,
         customerId: this.user.id,
@@ -149,7 +148,7 @@ export class ProductDetailsComponent implements OnInit {
       variantId: this.currentVariant.id,
       customerId: this.user.id,
     };
-    this.wishlistService.add(payload).subscribe({
+    this.wishlistService.create(payload).subscribe({
       next: (success) => {
         this.toasterService.success("Product added to wishlist!!")
       },

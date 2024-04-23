@@ -4,6 +4,9 @@
   text-decoration: none;
   list-style: none;
 }
+.show:focus-visible {
+  outline: none !important;
+}
 .head:hover #topbar {
   background-color: #fff;
   z-index: 100;
@@ -12,7 +15,6 @@
 }
 .head:hover .header-web {
   background-color: #fff;
-  z-index: 100;
   position: relative;
   transition: all 0.5s ease-in-out;
 }
@@ -37,7 +39,7 @@
 .header-web {
   display: block;
   background: transparent;
-  z-index: 1000;
+  z-index: 2;
   position: relative;
   .navbar-brand {
     color: #000;
@@ -105,7 +107,7 @@
   font-weight: 500;
   color: #282626ac;
 }
-.dropdown {
+.dropDown {
   position: absolute;
   top: 3.8rem;
   left: 0;
@@ -126,7 +128,7 @@
   padding: 2rem 3.5rem;
   border-top: 1px solid #ededed;
 }
-.nav_list_menu:hover .dropdown {
+.nav_list_menu:hover .dropDown {
   clip-path: polygon(0 0, 100% 0, 100% 102%, 0 102%);
 }
 li {
@@ -247,6 +249,7 @@ li {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        position: relative;
         i {
           color: #000;
           cursor: pointer;

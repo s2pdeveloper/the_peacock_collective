@@ -15,11 +15,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         defaultValue:1
       },
-      price: {
-        type: DataTypes.FLOAT,
-        allowNull: true,
-        defaultValue: 0.0,
-      },
       customerId: {
         type: DataTypes.INTEGER,
         allowNull: false,

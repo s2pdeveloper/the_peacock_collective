@@ -21,7 +21,6 @@ const modelObj = {
     const address = await addressRepository.findOneByCondition({
       where: { customerId: req.user.id },
     });
-    console.log("your findby condition0", address);
     if (!address) {
       req.body.isDefault = true;
     }
@@ -35,8 +34,6 @@ const modelObj = {
   }),
 
   getAll: asyncHandler(async (req, res) => {
-    console.log('req.user',req.user);
-    
     const {
       page = 1,
       pageSize = 10,
@@ -52,8 +49,6 @@ const modelObj = {
     };
 
     let response = await addressRepository.findAndCountAll(query);
-    // let response = await Model.findAndCountAll(query);
-
     return res
       .status(resCode.HTTP_OK)
       .json(generateResponse(resCode.HTTP_OK, response));
@@ -111,9 +106,9 @@ const modelObj = {
       },
     };
     // let item = await Model.findOne(query);
-    let item = await addressRepository.delete(query);
+    // let item = await addressRepository.delete(query);
     let deletedItem = await Model.destroy(query);
-    if (deletedItem != 0) {
+    if (deletedItem) {
       return res.json(
         generateResponse(resCode.HTTP_OK, {
           message: MESSAGES.apiSuccessStrings.DELETED("Address"),
