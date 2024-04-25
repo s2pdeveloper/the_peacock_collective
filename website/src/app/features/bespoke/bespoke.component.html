@@ -19,68 +19,7 @@
         <div class="col-12 d-flex justify-content-center align-items-center">
           <form [formGroup]="bespokeForm" class="w-100">
             <div class="row justify-content-between">
-              <!-- <div class="col-12 px-4">
-                <p class="header-text">
-                  To get to know you better, we’d love to get some of your
-                  details first.
-                </p>
-              </div>
-              <div class="col-12 col-md-12 col-lg-6 d-flex align-items-center px-4 py-3">
-                <label class="form-label d-flex me-3"
-                  >Name <span class="text-danger">*</span></label
-                >
-                <input
-                  formControlName="name"
-                  placeholder="Name"
-                  type="text"
-                  class="form-control"
-                />
-              </div>
-              <div class="col-12 col-md-12 col-lg-6 d-flex align-items-center px-4 py-3">
-                <label class="form-label d-flex me-3"
-                  >City <span class="text-danger">*</span></label
-                >
-                <input
-                  formControlName="city"
-                  placeholder="City"
-                  type="text"
-                  class="form-control"
-                />
-              </div>
-              <div class="col-12 col-md-12 col-lg-6 d-flex align-items-center px-4 py-3">
-                <label class="form-label d-flex me-3"
-                  >Country <span class="text-danger">*</span></label
-                >
-                <input
-                  formControlName="country"
-                  placeholder="Country"
-                  type="text"
-                  class="form-control"
-                />
-              </div>
-              <div class="col-12 col-md-12 col-lg-6 d-flex align-items-center px-4 py-3">
-                <label class="form-label d-flex me-3"
-                  >Phone <span class="text-danger">*</span></label
-                >
-                <input
-                  formControlName="mobile"
-                  placeholder="Phone"
-                  type="number"
-                  class="form-control"
-                />
-              </div>
-              <div class="col-12 col-md-12 col-lg-6 d-flex align-items-center px-4 py-3 mb-4">
-                <label class="form-label d-flex me-3"
-                  >Email <span class="text-danger">*</span></label
-                >
-                <input
-                  formControlName="email"
-                  placeholder="Email"
-                  type="email"
-                  class="form-control"
-                />
-              </div>
-              <div class="col-12 mt-3 px-4">
+              <!-- <div class="col-12 mt-3 px-4">
                 <p class="header-text">
                   We’d love to hear about your event and your ideas -
                 </p>
@@ -264,6 +203,62 @@
                                 class="form-control"
                               />
                             </div>
+                            <div
+                              class="col-12 col-md-12 col-lg-6 d-flex align-items-center px-4 py-3"
+                            >
+                              <label class="form-label d-flex me-3"
+                                >City <span class="text-danger">*</span></label
+                              >
+                              <input
+                                formControlName="city"
+                                placeholder="City"
+                                type="text"
+                                class="form-control"
+                              />
+                            </div>
+                            <div
+                              class="col-12 col-md-12 col-lg-6 d-flex align-items-center px-4 py-3"
+                            >
+                              <label class="form-label d-flex me-3"
+                                >Country
+                                <span class="text-danger">*</span></label
+                              >
+                              <input
+                                formControlName="country"
+                                placeholder="Country"
+                                type="text"
+                                class="form-control"
+                              />
+                            </div>
+                            <div
+                              class="col-12 col-md-12 col-lg-6 d-flex align-items-center px-4 py-3"
+                            >
+                              <label class="form-label d-flex me-3"
+                                >Phone <span class="text-danger">*</span></label
+                              >
+                              <input
+                                formControlName="mobile"
+                                placeholder="Phone"
+                                type="number"
+                                class="form-control"
+                              />
+                            </div>
+                            <div
+                              class="col-12 col-md-12 col-lg-6 d-flex align-items-center px-4 py-3 mb-4"
+                            >
+                              <label class="form-label d-flex me-3"
+                                >Email <span class="text-danger">*</span></label
+                              >
+                              <input
+                                formControlName="email"
+                                placeholder="Email"
+                                type="email"
+                                class="form-control"
+                              />
+                            </div>
+                            <div
+                              class="col-12 col-md-12 col-lg-6 d-flex align-items-center px-4 py-3 mb-4"
+                            ></div>
                             <div class="col-12">
                               <div class="row">
                                 <div class="col-2">
@@ -287,13 +282,127 @@
                     class="bs-stepper-pane"
                     aria-labelledby="stepper1trigger2"
                   >
-                    step 2
-                    <button class="btn btn-primary mt-5" (click)="previous(1)">
-                      Previous
-                    </button>
-                    <button class="btn btn-primary" (click)="next(3)">
-                      Next
-                    </button>
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="row justify-content-center">
+                            <div class="col-12">
+                              <div class="row">
+                                <div class="col-12 mt-3 px-4">
+                                  <p class="header-text">
+                                    We’d love to hear about your event and your
+                                    ideas -
+                                  </p>
+                                </div>
+                                <div
+                                  class="col-12 col-md-12 col-lg-6 mb-2 px-4 pt-2"
+                                >
+                                  <label class="form-label mb-2"
+                                    >What outfit category are you looking for?
+                                  </label>
+                                  <select
+                                    formControlName="category"
+                                    class="form-control"
+                                    (change)="onCategoryChange($event)"
+                                  >
+                                    <option value="bridal">Bridal</option>
+                                    <option value="bridalParty">
+                                      Bridal Party (order of >3)
+                                    </option>
+                                    <option value="ofTheBride">
+                                      Mother/Sister of the Bride
+                                    </option>
+                                    <option value="familyEventAttire">
+                                      Family event attire
+                                    </option>
+                                    <option value="nonBridal">
+                                      Non-Bridal
+                                    </option>
+                                    <option value="weddingGuest">
+                                      Wedding Guest
+                                    </option>
+                                    <option value="other">Other</option>
+                                  </select>
+                                </div>
+                                <div
+                                  *ngIf="isOther"
+                                  class="col-12 col-md-12 col-lg-6 mb-2 px-4 pt-2"
+                                >
+                                  <label class="form-label mb-2">Other </label>
+                                  <input
+                                    [(ngModel)]="otherCategory"
+                                    [ngModelOptions]="{ standalone: true }"
+                                    placeholder="Other"
+                                    type="text"
+                                    class="form-control"
+                                  />
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-12 mt-3 px-4">
+                                  <p class="header-text">Event Timeline</p>
+                                </div>
+                                <div
+                                  class="col-12 col-md-12 col-lg-6 d-flex align-items-center px-4 pt-2 pb-3 mb-4"
+                                >
+                                  <label class="form-label flex-nowrap me-3"
+                                    >From Date</label
+                                  >
+                                  <input
+                                    formControlName="fromDate"
+                                    type="date"
+                                    class="form-control"
+                                  />
+                                </div>
+                                <div
+                                  class="col-12 col-md-12 col-lg-6 d-flex align-items-center px-4 pt-2 pb-3 mb-4"
+                                >
+                                  <label
+                                    class="form-label d-flex flex-nowrap me-3"
+                                    >To Date</label
+                                  >
+                                  <input
+                                    formControlName="toDate"
+                                    type="date"
+                                    class="form-control"
+                                  />
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-12 mt-3 px-4">
+                                  <p class="header-text">
+                                    What outfit are you envisioning for your event(s)?
+                                  </p>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-6 d-flex align-items-center px-4 py-2 mb-4">
+                                  <input
+                                    formControlName="eventOutfit"
+                                    type="text"
+                                    class="form-control"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-2 me-2">
+                              <button
+                                class="btn btn-dark py-2"
+                                (click)="previous(1)"
+                              >
+                                Previous
+                              </button>
+                            </div>
+                            <div class="col-2">
+                              <button
+                                class="btn btn-dark py-2"
+                                (click)="next(3)"
+                              >
+                                Next
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div
                     id="test-l-3"

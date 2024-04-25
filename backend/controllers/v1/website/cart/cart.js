@@ -1,5 +1,5 @@
 const sequelize = require("sequelize");
-const CartRespository = require("../../../../models/repository/cartRepository");
+const CartRepository = require("../../../../models/repository/cartRepository");
 const Product = require("../../../../models").Product;
 const AttrVariantMap = require("../../../../models").AttrVariantMap;
 const Attribute = require("../../../../models").Attribute;
@@ -20,7 +20,7 @@ const {
 
 const modelObj = {
   create: asyncHandler(async (req, res) => {
-    const checkExisting = await CartRespository.findOneByCondition({
+    const checkExisting = await CartRepository.findOneByCondition({
       where: {
         variantId: req.body.variantId,
       },
@@ -28,7 +28,7 @@ const modelObj = {
     if (checkExisting) {
       (checkExisting.qty += 1), await checkExisting.save();
     } else {
-      await CartRespository.create(req.body);
+      await CartRepository.create(req.body);
     }
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
@@ -80,7 +80,7 @@ const modelObj = {
       offset: +offset,
       limit: +pageSize,
     };
-    let carts = await CartRespository.findAndCountAll(query);
+    let carts = await CartRepository.findAndCountAll(query);
     return res
       .status(resCode.HTTP_OK)
       .json(generateResponse(resCode.HTTP_OK, carts));
@@ -120,7 +120,7 @@ const modelObj = {
         },
       ],
     };
-    let existing = await CartRespository.findOneByCondition(query);
+    let existing = await CartRepository.findOneByCondition(query);
     if (!existing) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Cart");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
@@ -136,7 +136,7 @@ const modelObj = {
         id: req.params.id,
       },
     };
-    let cart = await CartRespository.update(req.body, query);
+    let cart = await CartRepository.update(req.body, query);
     if (cart[0] == 0) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Cart");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
@@ -155,7 +155,7 @@ const modelObj = {
         id: req.params.id,
       },
     };
-    let deleted = await CartRespository.delete(query);
+    let deleted = await CartRepository.delete(query);
     if (deleted != 0) {
       return res.json(
         generateResponse(resCode.HTTP_OK, {
@@ -174,11 +174,11 @@ const modelObj = {
           id: req.body.delete,
         },
       };
-      await CartRespository.delete(query);
+      await CartRepository.delete(query);
     }
     if (req.body.edit.length > 0) {
       let promissArr = req.body.edit.map((x) => {
-        return CartRespository.update(
+        return CartRepository.update(
           { qty: x.qty },
           {
             where: {
