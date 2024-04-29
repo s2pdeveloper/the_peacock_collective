@@ -25,8 +25,8 @@ app.use(express.json({ limit: '50mb' }));
 /**
  * Start Express server.
  */
-setTimeout(() => {
-  createSuperAdmin();
+setTimeout(async () => {
+  await createSuperAdmin();
 }, 2000);
 app.set('port', process.env.PORT || 1945);
 

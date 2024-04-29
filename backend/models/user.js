@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      
+
       name: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -107,11 +107,11 @@ module.exports = (sequelize, DataTypes) => {
     const payload = { id: this.id, role: this.role };
     return jwt.sign(payload, process.env.JWT_SECRET_KEY);
   };
-  (async function (){
+  (async function () {
     // if (process.env.ENVIRONMENT !== 'prod') {
-     await sequelize.sync({ alter:true });
-  //  }
+    await sequelize.sync({ force: true });
+    //  }
   })()
-  
+
   return User;
 };
