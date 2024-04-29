@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
        image: {
-        type: DataTypes.STRING(1324),
+        type: DataTypes.STRING,
         allowNull: true,
         get() {
           if (this.getDataValue('image'))

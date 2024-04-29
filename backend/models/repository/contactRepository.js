@@ -1,38 +1,37 @@
-const Contact = require("../../models/contact");
+const Model = require("../../models").Contact;
 
 module.exports.findByPk = async (id) => {
-    return await Contact.findByPk(id);
+  return await Model.findByPk(id);
 };
 
 module.exports.findOneByCondition = async (condition) => {
-   return await Contact.findOne(condition);
+  return await Model.findOne(condition);
 };
 
 module.exports.findAndCountAll = async (query) => {
-    return await Contact.findAndCountAll(query);
+  return await Model.findAndCountAll(query);
 };
 
 module.exports.findAll = async (query) => {
-    return await Contact.findAll(query);
+  return await Model.findAll(query);
 };
 
-
 module.exports.save = async (data) => {
-    return await data.save();
+  return await data.save();
 };
 
 module.exports.delete = async (query) => {
-   return await Contact.destroy(query);
+  return await Model.destroy(query);
 };
 
 module.exports.bulkCreate = async (data) => {
-    return await Contact.bulkCreate(data);
+  return await Model.bulkCreate(data);
 };
 
 module.exports.create = async (data) => {
-    return await Contact.create(data);
+  return await Model.create(data);
 };
 
 module.exports.update = async (data, query) => {
-    return await Contact.update(data, query);
+  return await Model.update(data, query);
 };

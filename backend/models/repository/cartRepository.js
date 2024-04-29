@@ -1,39 +1,37 @@
-const Cart = require("../../models/cart");
+const Model = require("../../models").Cart;
 
 module.exports.findByPk = async (id) => {
-    return await Cart.findByPk(id);
+  return await Model.findByPk(id);
 };
 
 module.exports.findOneByCondition = async (condition) => {
-  return   await Cart.findOne(condition);
+  return await Model.findOne(condition);
 };
 
 module.exports.findAndCountAll = async (query) => {
-    return await Cart.findAndCountAll(query);
+  return await Model.findAndCountAll(query);
 };
 
 module.exports.findAll = async (query) => {
-    return await Cart.findAll(query);
+  return await Model.findAll(query);
 };
 
-
 module.exports.save = async (data) => {
-    return await data.save()
+  return await data.save();
 };
 
 module.exports.delete = async (query) => {
-   return  await Cart.destroy(query);
+  return await Model.destroy(query);
 };
 
 module.exports.bulkCreate = async (data) => {
-    return await Cart.bulkCreate(data);
+  return await Model.bulkCreate(data);
 };
 
 module.exports.create = async (data) => {
-    return await Cart.create(data);
+  return await Model.create(data);
 };
 
 module.exports.update = async (data, query) => {
-    //console.log('your update===',await Cart.update(data, query))
-    return await Cart.update(data, query);
+  return await Model.update(data, query);
 };

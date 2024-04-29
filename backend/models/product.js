@@ -61,7 +61,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     bannerImage: {
-      type: DataTypes.STRING(1324),
+      type: DataTypes.STRING,
       allowNull: true,
       get() {
         if (this.getDataValue("bannerImage"))
