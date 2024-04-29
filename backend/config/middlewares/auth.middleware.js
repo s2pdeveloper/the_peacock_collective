@@ -12,7 +12,8 @@ module.exports.authenticateJWT = (req, res, next) => {
     "/forgotPassword",
     "/setPassword",
     "/common",
-    "/contact"
+    "/contact",
+    "/customer"
   ];
   if (excludePath.some((x) => req.path.includes(x))) {
     next();

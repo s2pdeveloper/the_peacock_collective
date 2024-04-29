@@ -1,39 +1,37 @@
-const WishList = require("../../models/wishList");
+const Model = require("../../models").WishList;
 
 module.exports.findByPk = async (id) => {
-    return await WishList.findByPk(id);
+  return await Model.findByPk(id);
 };
 
 module.exports.findOneByCondition = async (condition) => {
-  return   await WishList.findOne(condition);
+  return await Model.findOne(condition);
 };
 
 module.exports.findAndCountAll = async (query) => {
-    return await WishList.findAndCountAll(query);
+  return await Model.findAndCountAll(query);
 };
 
 module.exports.findAll = async (query) => {
-    return await WishList.findAll(query);
+  return await Model.findAll(query);
 };
 
-
 module.exports.save = async (data) => {
-    return await WishList.save(data);
+  return await Model.save(data);
 };
 
 module.exports.delete = async (query) => {
-   return  await WishList.destroy(query);
+  return await Model.destroy(query);
 };
 
 module.exports.bulkCreate = async (data) => {
-    return await WishList.bulkCreate(data);
+  return await Model.bulkCreate(data);
 };
 
 module.exports.create = async (data) => {
-    return await WishList.create(data);
+  return await Model.create(data);
 };
 
 module.exports.update = async (data, query) => {
-    //console.log('your update===',await WishList.update(data, query))
-    return await WishList.update(data, query);
+  return await Model.update(data, query);
 };

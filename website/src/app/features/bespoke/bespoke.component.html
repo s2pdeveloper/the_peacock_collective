@@ -44,7 +44,10 @@
                   <option value="other">Other</option>
                 </select>
               </div>
-              <div *ngIf="isOther" class="col-12 col-md-12 col-lg-6 mb-2 px-4 pt-2">
+              <div
+                *ngIf="isOther"
+                class="col-12 col-md-12 col-lg-6 mb-2 px-4 pt-2"
+              >
                 <label class="form-label mb-2">Other </label>
                 <input
                   [(ngModel)]="otherCategory"
@@ -57,7 +60,9 @@
               <div class="col-12 mt-3 px-4">
                 <p class="header-text">Event Timeline</p>
               </div>
-              <div class="col-12 col-md-12 col-lg-6 d-flex align-items-center px-4 pt-2 pb-3 mb-4">
+              <div
+                class="col-12 col-md-12 col-lg-6 d-flex align-items-center px-4 pt-2 pb-3 mb-4"
+              >
                 <label class="form-label flex-nowrap me-3">From Date</label>
                 <input
                   formControlName="fromDate"
@@ -65,7 +70,9 @@
                   class="form-control"
                 />
               </div>
-              <div class="col-12 col-md-12 col-lg-6 d-flex align-items-center px-4 pt-2 pb-3 mb-4">
+              <div
+                class="col-12 col-md-12 col-lg-6 d-flex align-items-center px-4 pt-2 pb-3 mb-4"
+              >
                 <label class="form-label d-flex flex-nowrap me-3"
                   >To Date</label
                 >
@@ -80,7 +87,9 @@
                   What outfit are you envisioning for your event(s)?
                 </p>
               </div>
-              <div class="col-12 col-md-12 col-lg-6 d-flex align-items-center px-4 py-2 mb-4">
+              <div
+                class="col-12 col-md-12 col-lg-6 d-flex align-items-center px-4 py-2 mb-4"
+              >
                 <input
                   formControlName="eventOutfit"
                   type="text"
@@ -92,9 +101,13 @@
                   Are you also looking to explore jewelry options?
                 </p>
               </div>
-              <div class="col-12 col-md-12 col-lg-6 d-flex align-items-center px-4 py-2 mb-4">
+              <div
+                class="col-12 col-md-12 col-lg-6 d-flex align-items-center px-4 py-2 mb-4"
+              >
                 <select formControlName="jewelryOption" class="form-control">
-                  <option *ngFor="let opt of jewelryOption" [value]="opt.value">{{opt.label}}</option>
+                  <option *ngFor="let opt of jewelryOption" [value]="opt.value">
+                    {{ opt.label }}
+                  </option>
                 </select>
               </div>
               <div class="col-12 mt-3 px-4">
@@ -114,7 +127,10 @@
               </div>
               <div class="col-12">
                 <div class="row mt-3" *ngIf="files.length">
-                  <div class="col-6 col-sm-4 col-md-4 col-lg-3 ps-0 mb-3 image-col" *ngFor="let file of files">
+                  <div
+                    class="col-6 col-sm-4 col-md-4 col-lg-3 ps-0 mb-3 image-col"
+                    *ngFor="let file of files"
+                  >
                     <img
                       height="300"
                       class="w-100 new-img p-2"
@@ -122,7 +138,7 @@
                       alt="image"
                     />
                     <div class="delete-badge" (click)="imageDelete()">
-                      <i class="fa-solid fa-xmark" ></i>
+                      <i class="fa-solid fa-xmark"></i>
                     </div>
                   </div>
                 </div>
@@ -183,7 +199,7 @@
                     <div class="container">
                       <div class="row justify-content-center">
                         <div class="col-11">
-                          <div class="row justify-content-center">
+                          <div class="row">
                             <div class="col-12">
                               <p class="header-text">
                                 To get to know you better, we’d love to get some
@@ -256,12 +272,9 @@
                                 class="form-control"
                               />
                             </div>
-                            <div
-                              class="col-12 col-md-12 col-lg-6 d-flex align-items-center px-4 py-3 mb-4"
-                            ></div>
                             <div class="col-12">
-                              <div class="row">
-                                <div class="col-2">
+                              <div class="row justify-content-center">
+                                <div class="col-4 col-md-2 col-lg-2">
                                   <button
                                     class="btn btn-dark py-2"
                                     (click)="next(2)"
@@ -369,21 +382,53 @@
                                 </div>
                               </div>
                               <div class="row">
-                                <div class="col-12 mt-3 px-4">
-                                  <p class="header-text">
-                                    What outfit are you envisioning for your event(s)?
-                                  </p>
+                                <div class="col-12 col-md-12 col-lg-6">
+                                  <div class="row">
+                                    <div class="col-12 mt-3 px-4">
+                                      <p class="header-text">
+                                        What outfit are you envisioning for your
+                                        event(s)?
+                                      </p>
+                                    </div>
+                                    <div
+                                      class="col-12 d-flex align-items-center px-4 py-2 mb-4"
+                                    >
+                                      <input
+                                        formControlName="eventOutfit"
+                                        type="text"
+                                        class="form-control"
+                                      />
+                                    </div>
+                                  </div>
                                 </div>
-                                <div class="col-12 col-md-12 col-lg-6 d-flex align-items-center px-4 py-2 mb-4">
-                                  <input
-                                    formControlName="eventOutfit"
-                                    type="text"
-                                    class="form-control"
-                                  />
+                                <div class="col-12 col-md-12 col-lg-6">
+                                  <div class="row">
+                                    <div class="col-12 mt-3 px-4">
+                                      <p class="header-text">
+                                        Are you also looking to explore jewelry
+                                        options?
+                                      </p>
+                                    </div>
+                                    <div
+                                      class="col-12 d-flex align-items-center px-4 py-2 mb-4"
+                                    >
+                                      <select
+                                        formControlName="jewelryOption"
+                                        class="form-control"
+                                      >
+                                        <option
+                                          *ngFor="let opt of jewelryOption"
+                                          [value]="opt.value"
+                                        >
+                                          {{ opt.label }}
+                                        </option>
+                                      </select>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                            <div class="col-2 me-2">
+                            <div class="col-4 col-md-2 col-lg-2 me-2">
                               <button
                                 class="btn btn-dark py-2"
                                 (click)="previous(1)"
@@ -391,7 +436,7 @@
                                 Previous
                               </button>
                             </div>
-                            <div class="col-2">
+                            <div class="col-4 col-md-2 col-lg-2">
                               <button
                                 class="btn btn-dark py-2"
                                 (click)="next(3)"
@@ -410,11 +455,68 @@
                     class="bs-stepper-pane text-center"
                     aria-labelledby="stepper1trigger3"
                   >
-                    step 3
-                    <button class="btn btn-primary mt-5" (click)="previous(2)">
-                      Previous
-                    </button>
-                    <button class="btn btn-primary">Next</button>
+                    <div class="container">
+                      <div class="row  justify-content-center">
+                        <div class="col-12">
+                          <div class="row">
+                            <div class="col-12 mt-3 px-4">
+                              <p class="header-text text-start">
+                                Can you share some images with us?
+                              </p>
+                            </div>
+                            <div
+                              class="col-12 col-md-12 col-lg-6 d-flex flex-column justify-content-center px-4 py-2 mb-4"
+                            >
+                              <input
+                                placeholder="image"
+                                type="file"
+                                class="form-control"
+                                [multiple]="true"
+                                accept=".png,.jpeg,.jpg,.pdf,.svg,.gif"
+                                (change)="fileChosen($event)"
+                              />
+                            </div>
+                            <div class="col-12">
+                              <div class="row mt-3" *ngIf="files.length">
+                                <div
+                                  class="col-6 col-sm-4 col-md-4 col-lg-3 ps-0 mb-3 image-col"
+                                  *ngFor="let file of files"
+                                >
+                                  <img
+                                    height="300"
+                                    class="w-100 new-img p-2"
+                                    [src]="file.url"
+                                    alt="image"
+                                  />
+                                  <div
+                                    class="delete-badge"
+                                    (click)="imageDelete()"
+                                  >
+                                    <i class="fa-solid fa-xmark"></i>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-4 col-md-2 col-lg-2 me-2">
+                          <button
+                            class="btn btn-dark py-2"
+                            (click)="previous(2)"
+                          >
+                            Previous
+                          </button>
+                        </div>
+                        <div class="col-4 col-md-2 col-lg-2">
+                          <button
+                            class="btn btn-dark py-2"
+                            (click)="submit()"
+                          >
+                            Submit
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

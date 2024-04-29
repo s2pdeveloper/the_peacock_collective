@@ -1,20 +1,19 @@
-const AttrVariantMap = require("../../../models/AttrVariantMap");
-// const Attribute = require("../../../models/Attribute");
+const Model = require("../../../models").AttrVariantMap;
 
 module.exports.findByPk = async (id) => {
-    return await AttrVariantMap.findByPk(id);
+    return await Model.findByPk(id);
 };
 
 module.exports.findOneByCondition = async (condition) => {
-   return await AttrVariantMap.findOne(condition);
+   return await Model.findOne(condition);
 };
 
 module.exports.findAndCountAll = async (query) => {
-    return await AttrVariantMap.findAndCountAll(query);
+    return await Model.findAndCountAll(query);
 };
 
 module.exports.findAll = async (query) => {
-    return await AttrVariantMap.findAll(query);
+    return await Model.findAll(query);
 };
 
 
@@ -23,17 +22,17 @@ module.exports.save = async (data) => {
 };
 
 module.exports.delete = async (query) => {
-   return await AttrVariantMap.destroy(query);
+   return await Model.destroy(query);
 };
 
 module.exports.bulkCreate = async (data) => {
-    return await AttrVariantMap.bulkCreate(data);
+    return await Model.bulkCreate(data);
 };
 
 module.exports.create = async (data) => {
-    return await AttrVariantMap.create(data);
+    return await Model.create(data);
 };
 
 module.exports.update = async (data, query) => {
-    return await AttrVariantMap.update(data, query);
+    return await Model.update(data, query);
 };

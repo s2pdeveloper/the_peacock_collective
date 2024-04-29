@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       parentId: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false,
       },
       name: {
         type: DataTypes.STRING,
@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: OPTIONS.defaultStatus.ACTIVE,
       },
       image: {
-        type: DataTypes.STRING(1324),
+        type: DataTypes.STRING,
         allowNull: true,
         get() {
           if (this.getDataValue("image"))

@@ -1,5 +1,5 @@
 const sequelize = require("sequelize");
-const { Tag } = require("../../../../models");
+const Tag = require("../../../../models").Tag;
 const {
   OPTIONS,
   generateResponse,
@@ -17,17 +17,17 @@ const TagRepository = require("../../../../models/repository/tagRepository");
 
 const modelObj = {
   create: asyncHandler(async (req, res) => {
-    let checkExisting = await Model.findOne({
+    let query = {
       where: {
         title: req.body.title,
       },
-    });
+    };
+    let checkExisting = await TagRepository.findOneByCondition(query);
     if (checkExisting) {
       let message = MESSAGES.apiErrorStrings.Data_EXISTS("Tag");
       throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
     }
-    let createObj = await generateCreateData(new Model(), req.body);
-    await createObj.save();
+    await TagRepository.create(req.body);
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
         message: MESSAGES.apiSuccessStrings.ADDED("Tag"),

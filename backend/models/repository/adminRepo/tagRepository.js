@@ -1,19 +1,19 @@
-const tag = require("../../../models/tag");
+const Model = require("../../../models").Tag;
 
 module.exports.findByPk = async (id) => {
-    return await tag.findByPk(id);
+    return await Model.findByPk(id);
 };
 
 module.exports.findOneByCondition = async (condition) => {
-   return await tag.findOne(condition);
+   return await Model.findOne(condition);
 };
 
 module.exports.findAndCountAll = async (query) => {
-    return await tag.findAndCountAll(query);
+    return await Model.findAndCountAll(query);
 };
 
 module.exports.findAll = async (query) => {
-    return await tag.findAll(query);
+    return await Model.findAll(query);
 };
 
 
@@ -22,17 +22,17 @@ module.exports.save = async (data) => {
 };
 
 module.exports.delete = async (query) => {
-   return await tag.destroy(query);
+   return await Model.destroy(query);
 };
 
 module.exports.bulkCreate = async (data) => {
-    return await tag.bulkCreate(data);
+    return await Model.bulkCreate(data);
 };
 
 module.exports.create = async (data) => {
-    return await tag.create(data);
+    return await Model.create(data);
 };
 
 module.exports.update = async (data, query) => {
-    return await tag.update(data, query);
+    return await Model.update(data, query);
 };

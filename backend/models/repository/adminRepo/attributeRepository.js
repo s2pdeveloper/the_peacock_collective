@@ -1,19 +1,19 @@
-const Attribute = require("../../../models/Attribute");
+const Model = require("../../../models").Attribute;
 
 module.exports.findByPk = async (id) => {
-    return await Attribute.findByPk(id);
+    return await Model.findByPk(id);
 };
 
 module.exports.findOneByCondition = async (condition) => {
-   return await Attribute.findOne(condition);
+   return await Model.findOne(condition);
 };
 
 module.exports.findAndCountAll = async (query) => {
-    return await Attribute.findAndCountAll(query);
+    return await Model.findAndCountAll(query);
 };
 
 module.exports.findAll = async (query) => {
-    return await Attribute.findAll(query);
+    return await Model.findAll(query);
 };
 
 
@@ -22,17 +22,17 @@ module.exports.save = async (data) => {
 };
 
 module.exports.delete = async (query) => {
-   return await Attribute.destroy(query);
+   return await Model.destroy(query);
 };
 
 module.exports.bulkCreate = async (data) => {
-    return await Attribute.bulkCreate(data);
+    return await Model.bulkCreate(data);
 };
 
 module.exports.create = async (data) => {
-    return await Attribute.create(data);
+    return await Model.create(data);
 };
 
 module.exports.update = async (data, query) => {
-    return await Attribute.update(data, query);
+    return await Model.update(data, query);
 };

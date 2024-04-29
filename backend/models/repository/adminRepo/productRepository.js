@@ -1,19 +1,19 @@
-const product = require("../../../models/product");
+const Model = require("../../../models").Product;
 
 module.exports.findByPk = async (id) => {
-    return await product.findByPk(id);
+    return await Model.findByPk(id);
 };
 
 module.exports.findOneByCondition = async (condition) => {
-   return await product.findOne(condition);
+   return await Model.findOne(condition);
 };
 
 module.exports.findAndCountAll = async (query) => {
-    return await product.findAndCountAll(query);
+    return await Model.findAndCountAll(query);
 };
 
 module.exports.findAll = async (query) => {
-    return await product.findAll(query);
+    return await Model.findAll(query);
 };
 
 
@@ -22,17 +22,17 @@ module.exports.save = async (data) => {
 };
 
 module.exports.delete = async (query) => {
-   return await product.destroy(query);
+   return await Model.destroy(query);
 };
 
 module.exports.bulkCreate = async (data) => {
-    return await product.bulkCreate(data);
+    return await Model.bulkCreate(data);
 };
 
 module.exports.create = async (data) => {
-    return await product.create(data);
+    return await Model.create(data);
 };
 
 module.exports.update = async (data, query) => {
-    return await product.update(data, query);
+    return await Model.update(data, query);
 };

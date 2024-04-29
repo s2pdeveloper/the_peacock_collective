@@ -1,40 +1,38 @@
-const Bespoke = require("../../models").Bespoke;
-const BespokeImageMap = require("../../models").BespokeImageMap;
+const Model = require("../../models").Bespoke;
+const ModelImageMap = require("../../models").BespokeImageMap;
 
 module.exports.findByPk = async (id) => {
-    return await Bespoke.findByPk(id);
+  return await Model.findByPk(id);
 };
 
 module.exports.findOneByCondition = async (condition) => {
-  return   await Bespoke.findOne(condition);
+  return await Model.findOne(condition);
 };
 
 module.exports.findAndCountAll = async (query) => {
-    return await Bespoke.findAndCountAll(query);
+  return await Model.findAndCountAll(query);
 };
 
 module.exports.findAll = async (query) => {
-    return await Bespoke.findAll(query);
+  return await Model.findAll(query);
 };
 
-
 module.exports.save = async (data) => {
-    return await data.save()
+  return await data.save();
 };
 
 module.exports.delete = async (query) => {
-   return  await Bespoke.destroy(query);
+  return await Model.destroy(query);
 };
 
 module.exports.bulkCreate = async (data) => {
-    return await BespokeImageMap.bulkCreate(data);
+  return await ModelImageMap.bulkCreate(data);
 };
 
 module.exports.create = async (data) => {
-    return await Bespoke.create(data);
+  return await Model.create(data);
 };
 
 module.exports.update = async (data, query) => {
-    //console.log('your update===',await Bespoke.update(data, query))
-    return await Bespoke.update(data, query);
+  return await Model.update(data, query);
 };
