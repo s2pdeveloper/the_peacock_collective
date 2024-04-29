@@ -4,17 +4,18 @@ const { schemaValidation } = require('../options/schemaValidate');
 const Op = sequelize.Op;
 const { OPTIONS, generateResponse } = require('../options/global.options');
 const User = require('../../models').User;
+const UserRepository = require('../../models/repository/UserRepository');
 const MESSAGES = require('../options/messages.options');
 
 
 module.exports.createSuperAdmin = async () => {
-  let userData = await User.findOne({
+  let userData = await UserRepository.findOneByCondition({
     where: { email: 'superadmin@gmail.com' },
     attributes: ['id'],
   });
   if (!userData) {
     console.log('if superadmin created');
-    await User.create(OPTIONS.superAdminData);
+    await UserRepository.create(OPTIONS.superAdminData);
   }
   console.log('superadmin created');
 

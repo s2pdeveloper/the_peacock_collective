@@ -13,6 +13,7 @@ app.post(
   "/",
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
   // validate("createCustomer"),
+  upload.single('image'),
   controller.create
 );
 

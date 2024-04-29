@@ -1,10 +1,9 @@
 const jwt = require("jsonwebtoken");
-const User = require("../../models").User;
-const Customer = require("../../models").Customer;
+const UserRepository = require("../../models/repository/UserRepository")
 const { OPTIONS } = require("../options/global.options");
 
 module.exports.authenticateJWT = (req, res, next) => {
-  let force=true;
+  let force = true;
   const excludePath = [
     "/signup",
     "/login",
@@ -27,23 +26,25 @@ module.exports.authenticateJWT = (req, res, next) => {
         return res.sendStatus(401);
       } else {
         if (jwt_payload && jwt_payload.id) {
-          let existingUser=null
-          if(req.path.includes('/website')){
-            existingUser = await Customer.findOne({
+          let existingUser = null
+          if (req.path.includes('/website')) {
+            existingUser = await UserRepository.findOneByCondition({
               where: {
                 id: jwt_payload.id,
                 status: OPTIONS.defaultStatus.ACTIVE,
               },
             });
-          }else{
-            existingUser = await User.findOne({
+          } else {
+            console.log("jwt_payload", jwt_payload);
+            existingUser = await UserRepository.findOneByCondition({
               where: {
                 id: jwt_payload.id,
                 status: OPTIONS.defaultStatus.ACTIVE,
               },
             });
+            console.log("existingUser", existingUser);
           }
-        
+
           if (existingUser) {
             req.authenticated = true;
             req.user = existingUser;
