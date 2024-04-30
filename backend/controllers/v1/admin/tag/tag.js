@@ -17,6 +17,8 @@ const TagRepository = require("../../../../models/repository/tagRepository");
 
 const modelObj = {
   create: asyncHandler(async (req, res) => {
+    console.log("req.body---------",req.body);
+
     let query = {
       where: {
         title: req.body.title,
@@ -27,6 +29,7 @@ const modelObj = {
       let message = MESSAGES.apiErrorStrings.Data_EXISTS("Tag");
       throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
     }
+    console.log("req.body",req.body);
     await TagRepository.create(req.body);
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {

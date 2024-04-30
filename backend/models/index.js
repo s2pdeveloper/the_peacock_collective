@@ -30,9 +30,9 @@ sequelize
   .authenticate()
   .then(async () => {
     console.log('Database connection has been established successfully.');
-    if (process.env.ENVIRONMENT !== 'prod') {
-      await sequelize.sync({ alter:true });
-    }
+    // if (process.env.ENVIRONMENT !== 'prod') {
+    //   await sequelize.sync({ force: true });
+    // }
   })
   .catch((err) => {
     console.error('Unable to connect to the database:', err);
@@ -50,7 +50,8 @@ fs.readdirSync(__dirname)
       Sequelize.DataTypes
     );
     if (model?.name) {
-    db[model.name] = model;
+      console.log("model?.name", model?.name);
+      db[model.name] = model;
     }
   });
 

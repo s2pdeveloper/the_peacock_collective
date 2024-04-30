@@ -25,9 +25,7 @@ app.use(express.json({ limit: '50mb' }));
 /**
  * Start Express server.
  */
-setTimeout(() => {
-  createSuperAdmin();
-}, 2000);
+
 app.set('port', process.env.PORT || 1945);
 
 
@@ -69,7 +67,9 @@ app.use(authenticateJWT);
 app.use('/', indexRouter);
 app.use(errorHandler);
 
-
+setTimeout(() => {
+  createSuperAdmin();
+}, 10000);
 
 app.use('*', (req, res) => {
   res.status(404).json({
