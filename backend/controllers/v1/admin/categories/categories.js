@@ -71,19 +71,19 @@ const modelObj = {
             description: { [Op.like]: search },
           },
         }),
-        ...(!category && {
-          parentId: {
-            [Op.ne]: null
-          }
-        }),
-        ...(category && {
-          parentId: {
-            [Op.eq]: null
-          }
-        }),
-        ...(parentId && {
-          parentId: parentId
-        })
+        // ...(!category && {
+        //   parentId: {
+        //     [Op.ne]: null
+        //   }
+        // }),
+        // ...(category && {
+        //   parentId: {
+        //     [Op.eq]: null
+        //   }
+        // }),
+        // ...(parentId && {
+        //   parentId: parentId
+        // })
 
 
       },

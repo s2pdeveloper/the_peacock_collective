@@ -1,5 +1,5 @@
 const sequelize = require("sequelize");
-const AttributeRepository=require("../../.../../../../models/repository/adminRepo/attributeRepository")
+const AttributeRepository = require("../../.../../../../models/repository/adminRepo/attributeRepository");
 const {
   OPTIONS,
   generateResponse,
@@ -13,16 +13,15 @@ const {
   asyncHandler,
 } = require("../../../../config/middlewares/async.handler");
 
-
 const modelObj = {
   create: asyncHandler(async (req, res) => {
-    let query={
+    let query = {
       where: {
         name: req.body.name,
-      }
-    }
-    
-    let checkExisting=await AttributeRepository.findOneByCondition(query);
+      },
+    };
+
+    let checkExisting = await AttributeRepository.findOneByCondition(query);
     if (checkExisting) {
       let message = MESSAGES.apiErrorStrings.Data_EXISTS("Attribute");
       throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
@@ -35,7 +34,6 @@ const modelObj = {
       })
     );
   }),
-
 
   getAll: asyncHandler(async (req, res) => {
     const {
@@ -58,22 +56,20 @@ const modelObj = {
       offset: +offset,
       limit: +pageSize,
     };
-  
-    let response =await AttributeRepository.findAndCountAll(query);
+
+    let response = await AttributeRepository.findAndCountAll(query);
     return res
       .status(resCode.HTTP_OK)
       .json(generateResponse(resCode.HTTP_OK, response));
   }),
 
   getById: asyncHandler(async (req, res) => {
-   
-    
-   let query={
-    where: {
-      id: req.params.id,
-    },
-  } 
-  let existing=await AttributeRepository.findOneByCondition(query);
+    let query = {
+      where: {
+        id: req.params.id,
+      },
+    };
+    let existing = await AttributeRepository.findOneByCondition(query);
 
     if (!existing) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Attribute");
@@ -84,22 +80,18 @@ const modelObj = {
       .json(generateResponse(resCode.HTTP_OK, existing));
   }),
 
-
   update: asyncHandler(async (req, res) => {
-  
-
-    let query={
+    let query = {
       where: {
         id: req.params.id,
       },
-    }
+    };
 
-    let itemDetails=await AttributeRepository.update(req.body,query);
-    if (itemDetails[0]==0) {
+    let itemDetails = await AttributeRepository.update(req.body, query);
+    if (itemDetails[0] == 0) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Attribute");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     } else {
-     
       return res.json(
         generateResponse(resCode.HTTP_OK, {
           message: MESSAGES.apiSuccessStrings.UPDATE("Attribute"),
@@ -114,8 +106,8 @@ const modelObj = {
         id: req.params.id,
       },
     };
-    let deletedItem=await AttributeRepository.delete(query);
-    if (deletedItem!==0) {
+    let deletedItem = await AttributeRepository.delete(query);
+    if (deletedItem !== 0) {
       return res.json(
         generateResponse(resCode.HTTP_OK, {
           message: MESSAGES.apiSuccessStrings.DELETED("Attribute"),

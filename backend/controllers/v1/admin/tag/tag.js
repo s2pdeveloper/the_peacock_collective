@@ -64,11 +64,12 @@ const modelObj = {
       .json(generateResponse(resCode.HTTP_OK, response));
   }),
   getById: asyncHandler(async (req, res) => {
-    let existing = await Model.findOne({
+    let query = {
       where: {
-        id: req.params.id,
+        id:  Number(req.params.id),
       },
-    });
+    };
+    let existing = await TagRepository.findOneByCondition(query);
     if (!existing) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Tag");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
@@ -78,17 +79,19 @@ const modelObj = {
       .json(generateResponse(resCode.HTTP_OK, existing));
   }),
   update: asyncHandler(async (req, res) => {
-    let itemDetails = await Model.findOne({
+    let query = {
       where: {
-        id: req.params.id,
+        id: Number(req.params.id),
       },
-    });
-    if (!itemDetails) {
+    };
+    let existing = await TagRepository.findOneByCondition(query);
+    if (!existing) {
+      console.log('!existing');
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Tag");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     } else {
-      itemDetails = await generateCreateData(itemDetails, req.body);
-      await itemDetails.save();
+      console.log('existing');
+     await TagRepository.update(req.body, query);
       return res.json(
         generateResponse(resCode.HTTP_OK, {
           message: MESSAGES.apiSuccessStrings.UPDATE("Tag"),
@@ -99,10 +102,10 @@ const modelObj = {
   delete: asyncHandler(async (req, res) => {
     let query = {
       where: {
-        id: req.params.id,
+        id:  Number(req.params.id),
       },
     };
-    let deletedItem = await Model.destroy(query);
+    let deletedItem = await TagRepository.delete(query);
     if (deletedItem) {
       return res.json(
         generateResponse(resCode.HTTP_OK, {
