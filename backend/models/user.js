@@ -109,6 +109,7 @@ module.exports = (sequelize, DataTypes) => {
   };
   (async function () {
     if (process.env.ENVIRONMENT !== 'prod') {
+      console.log('in alter---');
       await sequelize.sync({ alter: true });
     }
   })()

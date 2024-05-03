@@ -17,8 +17,6 @@ const TagRepository = require("../../../../models/repository/tagRepository");
 
 const modelObj = {
   create: asyncHandler(async (req, res) => {
-    console.log("req.body---------",req.body);
-
     let query = {
       where: {
         title: req.body.title,
@@ -29,7 +27,7 @@ const modelObj = {
       let message = MESSAGES.apiErrorStrings.Data_EXISTS("Tag");
       throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
     }
-    console.log("req.body",req.body);
+    console.log("req.body", req.body);
     await TagRepository.create(req.body);
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
@@ -69,7 +67,7 @@ const modelObj = {
   getById: asyncHandler(async (req, res) => {
     let query = {
       where: {
-        id:  Number(req.params.id),
+        id: Number(req.params.id),
       },
     };
     let existing = await TagRepository.findOneByCondition(query);
@@ -82,6 +80,10 @@ const modelObj = {
       .json(generateResponse(resCode.HTTP_OK, existing));
   }),
   update: asyncHandler(async (req, res) => {
+    console.log('id--------------------',req.params.id);
+    
+    console.log('body',req.body);
+    
     let query = {
       where: {
         id: Number(req.params.id),
@@ -89,12 +91,12 @@ const modelObj = {
     };
     let existing = await TagRepository.findOneByCondition(query);
     if (!existing) {
-      console.log('!existing');
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Tag");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     } else {
-      console.log('existing');
-     await TagRepository.update(req.body, query);
+     let tag = await TagRepository.update(req.body, query);
+     console.log('tag',tag);
+     
       return res.json(
         generateResponse(resCode.HTTP_OK, {
           message: MESSAGES.apiSuccessStrings.UPDATE("Tag"),
@@ -105,7 +107,7 @@ const modelObj = {
   delete: asyncHandler(async (req, res) => {
     let query = {
       where: {
-        id:  Number(req.params.id),
+        id: Number(req.params.id),
       },
     };
     let deletedItem = await TagRepository.delete(query);

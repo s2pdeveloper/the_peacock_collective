@@ -28,7 +28,7 @@ export class TagFormComponent {
   constructor(
     private router: Router,
     private activated: ActivatedRoute,
-    private tagservice: TagService,
+    private tagService: TagService,
     private toastService: ToastService,
     private spinner: SpinnerService,
     private validationService: ValidationService,
@@ -49,11 +49,11 @@ export class TagFormComponent {
     },
     {
       message: "Status is required",
-      key: "status",
+      key: "status", 
     },
   ];
   tagForm = new FormGroup({
-    _id: new FormControl(null),
+    id: new FormControl(null),
     title: new FormControl("", [Validators.required]),
     tag: new FormControl(""),
     status: new FormControl("active", [Validators.required]),
@@ -82,15 +82,18 @@ export class TagFormComponent {
     if (this.file) {
       formData.append("file", this.file);
     }
-    if (tagData._id) {
-      this.update(tagData._id, formData);
+    if (tagData.id) {
+      this.update(tagData.id, formData);
     } else {
       this.create(formData);
     }
   }
-  update(_id, formData) {
+  update(id, formData) {
+    console.log('id',id);
+    console.log('formData',formData);
+    
     this.spinner.show();
-    this.tagservice.updateTagById(_id, formData).subscribe((success: any) => {
+    this.tagService.updateTagById(id, formData).subscribe((success: any) => {
       this.spinner.hide();
       this.toastService.success(success.message);
       this.router.navigate(["default/tag/tag-list"]);
@@ -99,7 +102,7 @@ export class TagFormComponent {
 
   getdataById(id: any) {
     this.spinner.show();
-    this.tagservice.getbyId(id).subscribe((success: any) => {
+    this.tagService.getbyId(id).subscribe((success: any) => {
       this.url = success.image;
       this.tagForm.patchValue(success);
       this.spinner.hide();
@@ -108,7 +111,7 @@ export class TagFormComponent {
 
   create(formData) {
     this.spinner.show();
-    this.tagservice.createTag(formData).subscribe((success: any) => {
+    this.tagService.createTag(formData).subscribe((success: any) => {
       this.spinner.hide();
       this.toastService.success(success.message);
       this.router.navigate(["default/tag/tag-list"]);

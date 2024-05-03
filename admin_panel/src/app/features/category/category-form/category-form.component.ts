@@ -91,7 +91,7 @@ export class CategoryFormComponent {
     // }
     let formData: FormData = new FormData();
     for (const key in this.categoryForm.value) {
-      if (key != 'image') {
+      if (key != 'image' && this.categoryForm.value[key]) {
 
         formData.append(key, this.categoryForm.value[key]);
       }

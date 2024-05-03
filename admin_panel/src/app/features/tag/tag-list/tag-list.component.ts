@@ -39,7 +39,7 @@ export class TagListComponent {
   }
   updateTag(tag: any) {
     this.router.navigate(["/default/tag/tag-form"], {
-      queryParams: { id: tag._id },
+      queryParams: { id: tag.id },
     });
   }
   onChangePage(pageNo) {

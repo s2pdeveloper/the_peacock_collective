@@ -61,7 +61,7 @@
                   </div>
                 </div>
                 <i
-                class="fa-solid fa-cart-plus nav-items"
+                class="fa-solid fa-cart-plus nav-items pointer"
                 (click)="showCart()"
               ></i>
               </div>
@@ -81,13 +81,13 @@
               <div class="nav_menu d-flex" (mouseover)="activeTagId = item.id">
                 <div class="nav_list nav_list_menu">
                   <a class="nav_link text-uppercase">
-                    <span class="nav-items">{{ item.title }}</span>
+                    <span class="nav-items pointer">{{ item.title }}</span>
                   </a>
                   <div class="dropDown">
                     <div class="dropdown-inner row">
                       <div class="col-2 dropdownItem border-end">
                         <div class="py-2">
-                          <span class="drop-items pointer text-capitalize">{{
+                          <span class="drop-items pointer fw-bold text-capitalize">{{
                             item.title
                           }}</span>
                         </div>
@@ -99,6 +99,7 @@
                           "
                         >
                           <span
+                            [class.textDanger]="item?.name == 'Sale'"
                             class="drop-items pointer"
                             (click)="navigateToDynamic(item?.name)"
                             >{{ item?.name }}</span
@@ -137,7 +138,7 @@
                     class="nav_link text-uppercase"
                     (click)="navigateTo('bespoke', null)"
                   >
-                    <span class="nav-items">Bespoke, by you</span>
+                    <span class="nav-items pointer">Bespoke, by you</span>
                   </a>
                 </div>
               </div>
@@ -145,14 +146,14 @@
           </div>
           <div class="col-2 d-flex justify-content-end">
             <div
-              class="navbar-brand text-uppercase text-color-red nav-items"
+              class="navbar-brand text-uppercase textDanger nav-items pointer"
               (click)="navigateTo('/contact', null)"
             >
               Contact
             </div>
             <div class="d-flex align-items-center">
               <i
-                class="fa-solid fa-cart-plus nav-items"
+                class="fa-solid fa-cart-plus nav-items pointer"
                 (click)="showCart()"
               ></i>
             </div>

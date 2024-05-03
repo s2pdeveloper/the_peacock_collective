@@ -39,6 +39,7 @@ app.delete(
 
 app.put(
   "/:id",
+  upload.single('image'),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
   // validate("updateCustomer"),
   controller.update

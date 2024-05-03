@@ -30,9 +30,6 @@
   padding: 0.5rem 0 !important;
   border-radius: 0 !important;
 }
-.text-color-red {
-  color: #c11a1a;
-}
 .nav_menu:hover {
   border-bottom: 1px solid #000;
 }
@@ -49,22 +46,18 @@
     padding-left: 2.1875rem;
     padding-right: 2.1875rem;
   }
-  .text-color-red {
+  .textDanger {
     color: #ad0700;
   }
   .prod-img {
     height: 300px;
     object-fit: cover;
   }
-  // &:hover{
-  //   background: #fff;
-  // }
 }
 .header-tablet {
   display: none;
 }
 .nav-items {
-  cursor: pointer;
   font-size: 14px;
   color: #000;
 }
@@ -96,10 +89,7 @@
   transition: all 0.5s ease-in;
   clip-path: polygon(0 0, 100% 0, 100% 0, 0 1%);
 }
-//
-.search {
-  background-color: #f8f8f8;
-}
+
 .nav_link {
   display: flex;
   justify-content: center;
@@ -145,25 +135,6 @@ li {
     font-size: 1rem;
   }
 }
-.product-part {
-  max-height: 35vh;
-  min-height: 35vh;
-  overflow-y: scroll;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  .small-text {
-    font-size: 0.75rem;
-  }
-  input {
-    background-color: #f8f8f8;
-    padding: 0.5rem;
-    &:focus {
-      border: 0;
-      outline: 0;
-    }
-  }
-}
 .info-part {
   max-height: 52vh;
   min-height: 52vh;
@@ -175,13 +146,10 @@ li {
     margin-bottom: 1rem;
   }
 }
-.shop-top-span {
-  font-size: 1.25rem;
-}
 .transparent {
   background-color: transparent;
 }
-.modal-open{
+.modal-open {
   position: fixed;
   z-index: 1045;
   height: 100vh;
@@ -271,13 +239,16 @@ li {
   input {
     background-color: #f8f8f8;
     padding: 0.5rem;
+    border: 0;
     &:focus {
+      background-color: #f8f8f8;
       border: 0;
       outline: 0;
     }
   }
 }
-.form-control:focus,.input-number:focus {
+.form-control:focus,
+.input-number:focus {
   box-shadow: none;
   outline: none;
   border-bottom: 1px solid #000;
@@ -285,35 +256,18 @@ li {
   border-left: 0;
   border-right: 0;
 }
-.form-control:focus-visible,.input-number:focus-visible {
+.form-control:focus-visible,
+.input-number:focus-visible {
   border-bottom: 1px solid #000;
   border-top: 0;
   border-left: 0;
   border-right: 0;
   outline: none;
 }
-.info-part {
-  max-height: 52vh;
-  min-height: 52vh;
-  .description {
-    color: #0c5460;
-    background-color: #d1ecf1;
-    border-color: #bee5eb;
-    padding: 0.5rem;
-    margin-bottom: 1rem;
-  }
-}
 .search {
   background-color: #e3e3e3;
 }
-input {
-  background-color: #e3e3e3;
-  border: 0;
-  &:focus {
-    background-color: #e3e3e3;
-  }
-}
-.cart-img{
+.cart-img {
   min-height: 100px;
   max-height: 100px;
   object-fit: cover;

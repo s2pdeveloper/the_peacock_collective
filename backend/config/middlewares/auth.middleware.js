@@ -12,7 +12,7 @@ module.exports.authenticateJWT = (req, res, next) => {
     "/setPassword",
     "/common",
     "/contact",
-    "/customer"
+    "/customer",
   ];
   if (excludePath.some((x) => req.path.includes(x))) {
     next();
@@ -35,14 +35,12 @@ module.exports.authenticateJWT = (req, res, next) => {
               },
             });
           } else {
-            console.log("jwt_payload", jwt_payload);
             existingUser = await UserRepository.findOneByCondition({
               where: {
                 id: jwt_payload.id,
                 status: OPTIONS.defaultStatus.ACTIVE,
               },
             });
-            console.log("existingUser", existingUser);
           }
 
           if (existingUser) {
