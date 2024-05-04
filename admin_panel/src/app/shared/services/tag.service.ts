@@ -27,6 +27,8 @@ export class TagService {
   }
 
   updateTagById(id: any, payload: any) {
+    console.log('payload',payload);
+    
     return this.http
       .put(this.routes.updatePath(id), payload)
       .pipe(map((res: any) => res));

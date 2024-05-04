@@ -111,13 +111,12 @@ export class ProductInfoFormComponent {
   }
   getAllTags() {
     this.tagsService.getAll({}).subscribe((success) => {
-      this.tags = success.rows;
+      this.tags = success;
     });
   }
   getAllAttribute() {
     this.attributeService.getAll({}).subscribe((success) => {
       this.attributes = success.rows;
-      console.log("attributeArr", this.attributes);
     });
   }
 

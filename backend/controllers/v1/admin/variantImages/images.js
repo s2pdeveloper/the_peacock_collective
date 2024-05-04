@@ -31,15 +31,17 @@ const modelObj = {
     // }
     // console.log("your file in req.", req.file);
     // console.log("your file in buffer", req.file.buffer);
+    console.log('req.file',req.file);
+    
     if (req.file) {
       req.body.image = await cloudinary.uploadFromBuffer(req.file.buffer);
-      console.log(req.body);
     } else {
       return;
     }
 
     // let createObj = await generateCreateData(new Model(), req.body);
     // await createObj.save();
+    
      await imagesRepository.create(req.body);
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
