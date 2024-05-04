@@ -13,6 +13,7 @@ module.exports.createSuperAdmin = async () => {
     where: { email: 'superadmin@gmail.com' },
     attributes: ['id'],
   });
+  console.log("userData======", userData);
   if (!userData) {
     console.log('if superadmin created');
     await UserRepository.create(OPTIONS.superAdminData);

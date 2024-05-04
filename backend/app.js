@@ -67,9 +67,9 @@ app.use(authenticateJWT);
 app.use('/', indexRouter);
 app.use(errorHandler);
 
-setTimeout(() => {
-  createSuperAdmin();
-}, 10000);
+// setTimeout(() => {
+createSuperAdmin();
+// }, 10000);
 
 app.use('*', (req, res) => {
   res.status(404).json({
