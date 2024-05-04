@@ -1,19 +1,19 @@
-const Model = require("../../models").User;
+const {User} = require("..");
 
-module.exports.findByPk = async (id) => {
-  return await Model.findByPk(id);
+exports.findByPk = async (id) => {
+  return await User.findByPk(id);
 };
 
-module.exports.findOneByCondition = async (condition) => {
-  return Model.findOne(condition);
+exports.findOneByCondition = async (condition) => {
+  return User.findOne(condition);
 };
 
-module.exports.findAndCountAll = async (query) => {
-  return await Model.findAndCountAll(query);
+exports.findAndCountAll = async (query) => {
+  return await User.findAndCountAll(query);
 };
 
 module.exports.findAll = async (query) => {
-  return await Model.findAll(query);
+  return await User.findAll(query);
 };
 
 module.exports.save = async (data) => {
@@ -21,17 +21,17 @@ module.exports.save = async (data) => {
 };
 
 module.exports.delete = async (query) => {
-  return await Model.destroy(query);
+  return await User.destroy(query);
 };
 
 module.exports.bulkCreate = async (data) => {
-  return await Model.bulkCreate(data);
+  return await User.bulkCreate(data);
 };
 
 module.exports.create = async (data) => {
-  return await Model.create(data);
+  return await User.create(data);
 };
 
 module.exports.update = async (data, query) => {
-  return await Model.update(data, query);
+  return await User.update(data, query);
 };

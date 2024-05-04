@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
   Categories.associate = (models) => {
     Categories.hasMany(models.Categories, {
       foreignKey: "parentId",
-      as: "subcatagories",
+      as: "subCatagories",
       onDelete: 'CASCADE',
     });
     Categories.belongsTo(models.Categories, {
