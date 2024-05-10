@@ -120,3 +120,15 @@ To report a bug, please submit an [issue](https://github.com/codedthemes/mantis-
  - [Dribbble](https://dribbble.com/codedthemes)
  - [Facebook](https://www.facebook.com/codedthemes)
  - [Twitter](https://twitter.com/codedthemes)
+
+
+cd /etc/nginx/sites-available
+
+sudo ln -s /etc/nginx/sites-available/peacockadmin.s2pedutech.com /etc/nginx/sites-enabled/
+sudo certbot --nginx -d peacockadmin.s2pedutech.com 
+
+
+ - Congratulations! Your certificate and chain have been saved at:
+   /etc/letsencrypt/live/peacockadmin.s2pedutech.com/fullchain.pem
+   Your key file has been saved at:
+   /etc/letsencrypt/live/peacockadmin.s2pedutech.com/privkey.pem
