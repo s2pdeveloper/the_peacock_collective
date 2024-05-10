@@ -39,7 +39,7 @@
         "nodemon": "^2.0.22",
         "pug": "^3.0.2",
         "razorpay": "^2.9.2",
-        "sequelize": "^6.37.2",
+        "sequelize": "^6.37.3",
         "streamifier": "^0.1.1"
     }
 }

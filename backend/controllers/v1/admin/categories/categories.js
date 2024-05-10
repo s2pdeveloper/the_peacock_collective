@@ -22,7 +22,7 @@ const modelObj = {
     //     ...(req.body.parentId && { parentId: req.body.parentId }),
     //   },
     // });
-console.log("req.body......................",req.body);
+    console.log("req.body......................", req.body);
     let query = {
       where: {
         name: req.body.name,
@@ -31,7 +31,7 @@ console.log("req.body......................",req.body);
     };
 
     let checkExisting = await categoryRepository.findOneByCondition(query);
-    console.log("checkExisting",checkExisting);
+    console.log("checkExisting", checkExisting);
     if (checkExisting) {
       let message = MESSAGES.apiErrorStrings.Data_EXISTS("Categories");
       throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
@@ -42,6 +42,8 @@ console.log("req.body......................",req.body);
 
     // let createObj = await generateCreateData(new Model(), req.body);
     // await createObj.save();
+    console.log("req.body", req.body);
+
     await categoryRepository.create(req.body);
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
@@ -94,9 +96,9 @@ console.log("req.body......................",req.body);
       // },
       ...(req.query.page &&
         req.query.pageSize && {
-          offset: +offset,
-          limit: +pageSize,
-        }),
+        offset: +offset,
+        limit: +pageSize,
+      }),
     };
     // let response = await Model.findAndCountAll(query);
 
@@ -174,16 +176,13 @@ console.log("req.body......................",req.body);
         id: req.params.id,
       },
     };
-    // let item = await Model.findOne(query);
     let item = await categoryRepository.findOneByCondition(query);
     if (item && item?.image) {
       await cloudinary.deleteFile(item.image);
     }
 
-    // let deletedItem = await Model.destroy(query);
-    // console.log("deletedItemdeletedItem", deletedItem);
     let deletedItem = await categoryRepository.delete(query);
-    if (deletedItem == 0) {
+    if (deletedItem) {
       return res.json(
         generateResponse(resCode.HTTP_OK, {
           message: MESSAGES.apiSuccessStrings.DELETED("Categories"),

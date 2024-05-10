@@ -8,11 +8,12 @@ const UserRepository = require('../../models/repository/UserRepository');
 const MESSAGES = require('../options/messages.options');
 
 
-module.exports.createSuperAdmin = async () => {
+exports.createSuperAdmin = async () => {
   let userData = await UserRepository.findOneByCondition({
     where: { email: 'superadmin@gmail.com' },
     attributes: ['id'],
   });
+  console.log("userData======", userData);
   if (!userData) {
     console.log('if superadmin created');
     await UserRepository.create(OPTIONS.superAdminData);

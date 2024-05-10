@@ -10,10 +10,6 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },
-      parentId: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      },
       name: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -45,14 +41,14 @@ module.exports = (sequelize, DataTypes) => {
   Categories.associate = (models) => {
     Categories.hasMany(models.Categories, {
       foreignKey: "parentId",
-      as: "subcatagories",
+      as: "subCatagories",
       onDelete: 'CASCADE',
     });
-    Categories.belongsTo(models.Categories, {
-      foreignKey: "parentId",
-      as: "categories",
-      onDelete: 'CASCADE',
-    });
+    // Categories.belongsTo(models.Categories, {
+    //   foreignKey: "parentId",
+    //   as: "categories",
+    //   onDelete: 'CASCADE',
+    // });
   };
   return Categories;
 
