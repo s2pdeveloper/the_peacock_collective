@@ -7,3 +7,7 @@ git add .
 git commit -m "changes"
 git pull origin dev
 git push -u origin dev
+
+
+pm2 restart src/aap.js --name peacock
+pm2 restart   --name peacock
