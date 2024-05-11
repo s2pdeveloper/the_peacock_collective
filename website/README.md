@@ -27,3 +27,7 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
 
+cd /etc/nginx/sites-available
+
+sudo ln -s /etc/nginx/sites-available/peacock.s2pedutech.com /etc/nginx/sites-enabled/
+sudo certbot --nginx -d peacock.s2pedutech.com 
