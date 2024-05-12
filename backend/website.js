@@ -22,6 +22,14 @@ app.use(logger('dev'));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.json({ limit: '50mb' }));
 
+// Static Hosting
+app.use(
+  '/',
+  express.static(path.join(__dirname, '../website/dist'), { maxAge: 31557600000 })
+);
+app.use('/image', express.static(path.join(__dirname, 'assets')));
+app.use('/apk', express.static(path.join(__dirname, 'app-apk')));
+
 /**
  * Start Express server.
  */
@@ -42,13 +50,7 @@ app.use(lusca.xframe('SAMEORIGIN'));
 app.use(lusca.xssProtection(true));
 app.disable('x-powered-by');
 
-// Static Hosting
-app.use(
-  '/',
-  express.static(path.join(__dirname, '../website/dist'), { maxAge: 31557600000 })
-);
-app.use('/image', express.static(path.join(__dirname, 'assets')));
-app.use('/apk', express.static(path.join(__dirname, 'app-apk')));
+
 // development console log
 // app.use((req, res, next) => {
 //   if (process.env.ENVIRONMENT === 'development') {
@@ -63,12 +65,12 @@ process.on('unhandledRejection', (reason, p) => {
 });
 // Routes
 // app.use(expressValidator());
-app.use(authenticateJWT);
-app.use('/', indexRouter);
-app.use(errorHandler);
+// app.use(authenticateJWT);
+// app.use('/', indexRouter);
+// app.use(errorHandler);
 
 // setTimeout(() => {
-createSuperAdmin();
+// createSuperAdmin();
 // }, 10000);
 
 app.use('*', (req, res) => {
