@@ -8,9 +8,11 @@ export class CommonService {
   readonly BASE_URL = 'common';
   allData: any = [];
 
-  constructor(private http: ApiService) {}
+  constructor(private http: ApiService) { }
 
   getAllMasterData(payload: any) {
+ 
+
     return this.http.get(this.BASE_URL, payload).pipe(map((res: any) => res));
   }
 

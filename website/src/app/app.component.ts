@@ -3,6 +3,7 @@ import { CommonService } from './services/common.service';
 import { SpinnerService, StorageService } from './core/services';
 import { PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { ALL_DATA, StateService } from './services/state.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -16,6 +17,7 @@ export class AppComponent implements OnInit {
     private commonService: CommonService,
     private storageService: StorageService,
     private spinner: SpinnerService,
+    private stateService: StateService,
     @Inject(PLATFORM_ID) private _platformId: Object,
   ) {
 
@@ -23,16 +25,18 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
       this.user = this.storageService.get('Customer');
-      // this.getAllMasterData();
     }
+    this.getAllMasterData();
+
   }
 
   getAllMasterData() {
-    this.spinner.show();
+    // this.spinner.show();
     this.commonService.getAllMasterData({}).subscribe((success) => {
-      this.spinner.hide();
+      // this.spinner.hide();
       this.commonService.allData = success.result;
-      this.loader = false;
+      this.stateService.checkAndGetData(ALL_DATA, success.result, {})
+      // this.loader = false;
     });
   }
   // getAllCartData(){
