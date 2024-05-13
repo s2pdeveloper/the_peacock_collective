@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { CommonService } from './services/common.service';
 import { SpinnerService, StorageService } from './core/services';
-
+import { PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -14,12 +15,16 @@ export class AppComponent implements OnInit {
   constructor(
     private commonService: CommonService,
     private storageService: StorageService,
-    private spinner : SpinnerService
+    private spinner: SpinnerService,
+    @Inject(PLATFORM_ID) private _platformId: Object,
   ) {
-    this.user = this.storageService.get('Customer');
+
   }
   ngOnInit(): void {
-    this.getAllMasterData();
+    if (isPlatformBrowser(this._platformId)) {
+      this.user = this.storageService.get('Customer');
+      // this.getAllMasterData();
+    }
   }
 
   getAllMasterData() {

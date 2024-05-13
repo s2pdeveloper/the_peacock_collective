@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
@@ -11,13 +11,15 @@ import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ToastService } from '../services/toast.service';
 import { environment } from 'src/environments/environment';
-
+import { PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   currentRoute: any;
   constructor(
     private router: Router,
     private toast: ToastService,
+    @Inject(PLATFORM_ID) private _platformId: Object
 
   ) { }
 
@@ -25,9 +27,11 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-
+    let user=null
     // const user = this.storageService.get('userData');
-    const user = JSON.parse(localStorage.getItem('Customer'));
+    if (isPlatformBrowser(this._platformId)) {
+      user= JSON.parse(localStorage.getItem('Customer'));
+    }
     const excludePath = [
 
     ]

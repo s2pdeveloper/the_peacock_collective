@@ -1,11 +1,12 @@
-import { Component, ElementRef, HostListener, inject } from '@angular/core';
+import { Component, ElementRef, HostListener, Inject, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { StorageService, ToastService } from 'src/app/core/services';
 import { TagCategoryPipe } from 'src/app/pipes/tag-category.pipe';
 import { CartService } from 'src/app/services/cart.service';
 import { CommonService } from 'src/app/services/common.service';
-
+import { PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -28,16 +29,19 @@ export class HeaderComponent {
     categories: [],
   };
   activeTagId = null;
-  user:any;
+  user: any;
   currentVariant = null;
   constructor(
+    @Inject(PLATFORM_ID) private _platformId: Object,
     private router: Router,
     private storageService: StorageService,
     public commonService: CommonService,
     private tagCatPipe: TagCategoryPipe,
     private cartService: CartService,
     private toast: ToastService
-  ) {    this.user = this.storageService.get('Customer');}
+  ) {
+    // this.user = this.storageService.get('Customer'); 
+  }
   private modalService = inject(NgbModal);
   openSearch(content: any) {
     this.modalService.open(content, { size: 'xl', centered: true });
@@ -127,7 +131,7 @@ export class HeaderComponent {
     },
   ];
   get totalItemPrice() {
-    let totalPriceArray = this.cartData.reduce((acc, currValue) =>acc + (currValue.cartWithVariants.price * currValue.qty),0);
+    let totalPriceArray = this.cartData.reduce((acc, currValue) => acc + (currValue.cartWithVariants.price * currValue.qty), 0);
     // return totalPriceArray.reduce(
     //   (acc, currValue) => acc + currValue.totalPrice,
     //   0
@@ -140,9 +144,11 @@ export class HeaderComponent {
   );
 
   ngOnInit(): void {
-    window.addEventListener('wheel', (event) => {
-      this.scrollValue = Math.sign(event.deltaY);
-    });
+    if (isPlatformBrowser(this._platformId)) {
+      window.addEventListener('wheel', (event) => {
+        this.scrollValue = Math.sign(event.deltaY);
+      });
+    }
   }
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -215,7 +221,10 @@ export class HeaderComponent {
   }
 
   showCart() {
-    let user = localStorage.getItem('Customer') ? true : false;
+    let user = null
+    if (isPlatformBrowser(this._platformId)) {
+      user = localStorage.getItem('Customer') ? true : false;
+    }
     if (user) {
       this.isCartOpen = !this.isCartOpen;
       this.getAllCartData();
