@@ -33,7 +33,9 @@ const getAllMasterData = asyncHandler(async (req, res) => {
     },
     include: {
       model: Categories,
-      as: "subcatagories",
+      as: "subCatagories",
+      // required: false,
+      
     },
     order: [[column, direction]],
   };
@@ -95,16 +97,17 @@ const getAllMasterData = asyncHandler(async (req, res) => {
   ];
   Promise.all(promissArr)
     .then((values) => {
+      console.log("values",values);
       const result = {
-        categories: values[0],
-        products: values[1],
-        tags: values[2],
-        attributes: values[3],
-        variants: values[4],
+        // categories: values[0],
+        // products: values[1],
+        // tags: values[2],
+        // attributes: values[3],
+        // variants: values[4],
       };
       return res
         .status(resCode.HTTP_OK)
-        .json(generateResponse(resCode.HTTP_OK, result));
+        .json(generateResponse(resCode.HTTP_OK, values));
     })
     .catch((err) => {
       throw new ApiError(
