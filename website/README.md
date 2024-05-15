@@ -31,3 +31,5 @@ cd /etc/nginx/sites-available
 
 sudo ln -s /etc/nginx/sites-available/peacock.s2pedutech.com /etc/nginx/sites-enabled/
 sudo certbot --nginx -d peacock.s2pedutech.com 
+
+node dist/website/server/main.js

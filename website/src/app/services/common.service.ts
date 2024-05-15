@@ -11,8 +11,6 @@ export class CommonService {
   constructor(private http: ApiService) { }
 
   getAllMasterData(payload: any) {
- 
-
     return this.http.get(this.BASE_URL, payload).pipe(map((res: any) => res));
   }
 
