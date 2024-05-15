@@ -35,8 +35,13 @@ export class AppComponent implements OnInit {
     this.commonService.getAllMasterData({}).subscribe((success) => {
       // this.spinner.hide();
       this.commonService.allData = success.result;
+      this.loader = false;
+
       this.stateService.checkAndGetData(ALL_DATA, success.result, {})
       // this.loader = false;
+    }, error => {
+      console.log("error", error);
+      this.loader = false;
     });
   }
   // getAllCartData(){
