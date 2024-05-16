@@ -45,7 +45,7 @@ app.disable('x-powered-by');
 // Static Hosting
 app.use(
   '/',
-  express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 })
+  express.static(path.join(__dirname, '../admin_panel/dist'), { maxAge: 31557600000 })
 );
 app.use('/image', express.static(path.join(__dirname, 'assets')));
 app.use('/apk', express.static(path.join(__dirname, 'app-apk')));
