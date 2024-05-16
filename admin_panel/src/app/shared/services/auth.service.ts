@@ -14,8 +14,8 @@ export class AuthService {
   constructor(private http: ApiService) {}
 
   getUser() {
-    return localStorage.getItem("Inv_Bill_User")
-      ? JSON.parse(localStorage.getItem("Inv_Bill_User"))
+    return localStorage.getItem("Peacock_User")
+      ? JSON.parse(localStorage.getItem("Peacock_User"))
       : null;
   }
   create(payload: any) {

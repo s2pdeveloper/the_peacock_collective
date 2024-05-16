@@ -24,7 +24,7 @@ export class NavRightComponent {
     this.getData();
   }
   getData() {
-    let user: any = localStorage.getItem("Inv_Bill_User");
+    let user: any = localStorage.getItem("Peacock_User");
     return (this.userData = JSON.parse(user));
   }
 }
