@@ -109,7 +109,9 @@ const routes: Routes = [
       {
         path: "bespoke",
         loadChildren: () =>
-          import("./features/bespoke/bespoke.module").then((m) => m.BespokeModule),
+          import("./features/bespoke/bespoke.module").then(
+            (m) => m.BespokeModule
+          ),
       },
       {
         path: "all-variants",
@@ -189,6 +191,11 @@ const routes: Routes = [
           import("./features/new-invoice/new-invoice.module").then(
             (m) => m.NewInvoiceModule
           ),
+      },
+      {
+        path: "order",
+        loadChildren: () =>
+          import("./features/order/order.module").then((m) => m.OrderModule),
       },
     ],
   },

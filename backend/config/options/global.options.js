@@ -8,6 +8,7 @@ const OPTIONS = {
   emailSenderName: "email sender",
   randomUsernameSize: 4,
   randomShopSize: 4,
+  orderNumber: 10000000,
   resetPasswordExpireInDays: 720,
   defaultTax: 2,
   otpExpireInDays: 1,

@@ -1,0 +1,130 @@
+<div class="table-container">
+  <div class="card table-card">
+    <div class="card-title">
+      <div class="row">
+        <div class="col">
+          <h3>Order List</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-header">
+      <div class="row justify-content-between">
+        <div class="col-4">
+          <div class="input-icons">
+            <div class="input-group input-group-sm">
+              <input
+                type="search"
+                class="form-control"
+                aria-label="Small"
+                placeholder="Search"
+                [(ngModel)]="search"
+                (input)="searchFn()"
+                aria-describedby="inputGroup-sizing-sm"
+              />
+              <div class="input-group-append">
+                <span class="input-group-text h-100" id="inputGroup-sizing-sm">
+                  <i class="ti ti-search"></i
+                ></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body p-3">
+      <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+          <thead class="thead">
+            <tr class="table-secondary">
+              <th scope="col" class="text-start">#</th>
+              <th scope="col">Order ID</th>
+              <th scope="col">Billing Address</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Status</th>
+              <th scope="col">Purchase Date</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody class="tbody mt-3">
+            <tr *ngFor="let p of data; let i = index">
+              <td scope="row">{{ pageSize * (page - 1) + (i + 1) }}</td>
+              <td scope="row" class="text-center">
+                
+              </td>
+              <td scope="row" class="text-start">
+                {{
+                    p?.address.location +
+                      "," +
+                      p?.address.city +
+                      "," +
+                      p?.address.state +
+                      "," +
+                      p?.address.country +
+                      "," +
+                      p?.address.pinCode
+                  }}
+              </td>
+              <td scope="row">
+                {{
+                  p?.orderWithOrderVariantMap[0]?.price *
+                    p?.orderWithOrderVariantMap[0]?.qty | currency: "INR"
+                }}
+              </td>
+              <td scope="row" class="text-center">{{ p?.status }}</td>
+              <td scope="row" class="text-center">
+                {{p?.createdAt | date}}
+              </td>
+
+              <td scope="row" class="text-center">
+                <button
+                  class="btn action-btn btn-sm mx-2"
+                  (click)="navigateTo('/default/bespoke/bespoke-form', p.id)"
+                  ngbTooltip="Summary"
+                >
+                  <i class="ti ti-edit-circle"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <app-custom-pagination
+        [(page)]="page"
+        [(pageSize)]="pageSize"
+        [(collection)]="collection"
+        (myOutput)="onChangePage(page)"
+      ></app-custom-pagination>
+    </div>
+  </div>
+</div>
+<ng-template #deleteModal let-modal>
+  <div class="modal-header border-0">
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body border-0">
+    <h3 class="modal-title text-center text-primary" id="modal-basic-title">
+      {{ selectedRow.code }} -
+      {{ selectedRow.name | uppercase }}
+    </h3>
+    <h4 class="modal-title text-center" id="modal-basic-title">
+      Are you sure you want to Delete ?
+    </h4>
+  </div>
+  <div class="modal-footer justify-content-center border-0">
+    <button class="btn px-4 btn-outline-danger">YES</button>
+    <button
+      type="button"
+      class="btn px-4 btn-outline-primary"
+      (click)="modal.dismiss('Cross click')"
+    >
+      NO
+    </button>
+  </div>
+</ng-template>

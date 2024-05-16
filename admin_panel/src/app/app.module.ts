@@ -25,6 +25,7 @@ import { CoreModule } from "@core/core.module";
 import { StorageService } from "@core/services";
 import { NgImageSliderModule } from "ng-image-slider";
 import { HashLocationStrategy, LocationStrategy } from "@angular/common";
+import { HexToColorNamePipe } from "./shared/pipes/hex-to-color-name.pipe";
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +39,7 @@ import { HashLocationStrategy, LocationStrategy } from "@angular/common";
     NavCollapseComponent,
     NavGroupComponent,
     NavItemComponent,
+    HexToColorNamePipe,
   ],
   imports: [
     BrowserModule,
@@ -55,8 +57,6 @@ import { HashLocationStrategy, LocationStrategy } from "@angular/common";
     }),
     BrowserAnimationsModule,
     HttpClientModule,
-
-
   ],
   providers: [
     NavigationItem,
