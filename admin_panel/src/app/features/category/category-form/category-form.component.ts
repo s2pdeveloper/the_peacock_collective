@@ -40,7 +40,6 @@ export class CategoryFormComponent {
     description: new FormControl(null),
     status: new FormControl("active", [Validators.required]),
     parentId: new FormControl(null),
-
   });
   options = [];
   get f() {

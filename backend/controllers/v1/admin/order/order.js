@@ -91,12 +91,12 @@ const modelObj = {
       include: [
         {
           model: Address,
-          as: "address", 
-          attributes: ["city", "country", "location","pinCode","state"],
+          as: "address",
+          attributes: ["city", "country", "location", "pinCode", "state"],
         },
         {
           model: Customer,
-          as: "customer", 
+          as: "customer",
           attributes: ["firstName", "lastName"],
         },
         {
@@ -147,6 +147,49 @@ const modelObj = {
       where: {
         id: req.params.id,
       },
+      include: [
+        {
+          model: Address,
+          as: "address",
+          attributes: ["city", "country", "location", "pinCode", "state"],
+        },
+        {
+          model: Customer,
+          as: "customer",
+          attributes: ["firstName", "lastName"],
+        },
+        {
+          model: OrderVariantMap,
+          as: "orderWithOrderVariantMap",
+          attributes: ["variantId", "qty", "price"],
+          include: [
+            {
+              model: Variant,
+              as: "orderVariantMapWithVariant",
+              include: [
+                {
+                  model: AttrVariantMap,
+                  as: "variantWithAttrVariantMap",
+                  include: {
+                    model: Attribute,
+                    as: "AttrVariantMapWithAttributes",
+                    // attributes: ["name", "hsn"],
+                  },
+                },
+                {
+                  model: Product,
+                  as: "variantWithProduct",
+                  attributes: ["name", "hsn", "id"],
+                },
+                {
+                  model: Images,
+                  as: "variantImages",
+                },
+              ],
+            },
+          ],
+        },
+      ],
     };
 
     let existing = await OrderRepository.findOneByCondition(query);
@@ -160,26 +203,18 @@ const modelObj = {
   }),
 
   update: asyncHandler(async (req, res) => {
-    let itemDetails = await Model.findOne({
+    const query = {
       where: {
-        id: req.params.id,
+        customerId: req.user.id,
       },
-    });
+    };
+    let itemDetails = await OrderRepository.findOneByCondition(query);
 
     if (!itemDetails) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Order");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     } else {
-      if (req.file) {
-        if (itemDetails.image) {
-          await cloudinary.deleteFile(itemDetails.image);
-        }
-        console.log("req.file.path", req.file);
-        req.body.image = await cloudinary.uploadFromBuffer(req.file.buffer);
-      }
-
-      itemDetails = await generateCreateData(itemDetails, req.body);
-      await itemDetails.save();
+      itemDetails = await OrderRepository.update(req.body, query);
       return res.json(
         generateResponse(resCode.HTTP_OK, {
           message: MESSAGES.apiSuccessStrings.UPDATE("Order"),
@@ -196,7 +231,7 @@ const modelObj = {
     let item = await Model.findOne(query);
 
     if (item) {
-      item.status = OPTIONS.defaultStatus.DELETED;
+      item.status = OPTIONS.defaultStatus.REJECTED;
       await item.save();
       return res.json(
         generateResponse(resCode.HTTP_OK, {

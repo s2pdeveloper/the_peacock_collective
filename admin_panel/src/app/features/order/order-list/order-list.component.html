@@ -51,7 +51,7 @@
             <tr *ngFor="let p of data; let i = index">
               <td scope="row">{{ pageSize * (page - 1) + (i + 1) }}</td>
               <td scope="row" class="text-center">
-                
+                {{p?.orderNumber}}
               </td>
               <td scope="row" class="text-start">
                 {{
@@ -72,7 +72,7 @@
                     p?.orderWithOrderVariantMap[0]?.qty | currency: "INR"
                 }}
               </td>
-              <td scope="row" class="text-center">{{ p?.status }}</td>
+              <td scope="row" class="text-center text-capitalize">{{ p?.status }}</td>
               <td scope="row" class="text-center">
                 {{p?.createdAt | date}}
               </td>
@@ -80,7 +80,7 @@
               <td scope="row" class="text-center">
                 <button
                   class="btn action-btn btn-sm mx-2"
-                  (click)="navigateTo('/default/bespoke/bespoke-form', p.id)"
+                  (click)="navigateTo('/default/order/order-view', p.id)"
                   ngbTooltip="Summary"
                 >
                   <i class="ti ti-edit-circle"></i>

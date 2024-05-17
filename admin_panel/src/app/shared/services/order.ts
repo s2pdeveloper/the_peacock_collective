@@ -9,7 +9,7 @@ export class OrderService {
   routes: any = {
     getAllPath: "order",
     getByIdPath: (id: string) => `order/${id}`,
-    // updatePath: (id: string) => `bespoke/${id}`,
+    updatePath: (id: string) => `order/${id}`,
     // deletePath: (id: string) => `bespoke/${id}`,
   };
 
@@ -23,11 +23,11 @@ export class OrderService {
       .get(this.routes.getByIdPath(id))
       .pipe(map((res: any) => res));
   }
-  // updateById(id: any, payload: any) {
-  //   return this.http
-  //     .put(this.routes.updatePath(id), payload)
-  //     .pipe(map((res: any) => res));
-  // }
+  update(id: any, payload: any) {
+    return this.http
+      .put(this.routes.updatePath(id), payload)
+      .pipe(map((res: any) => res));
+  }
   // delete(id: any) {
   //   return this.http
   //     .delete(this.routes.deletePath(id))

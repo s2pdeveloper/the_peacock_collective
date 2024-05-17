@@ -78,12 +78,14 @@ const OPTIONS = {
       ];
     },
   },
+  
   defaultStatus: {
     ACTIVE: "active",
+    ACCEPT: "accept",
     INACTIVE: "inactive",
     UNAPPROVED: "unapproved",
     APPROVED: "approved",
-    DISPATACHED:"dispatched",
+    DISPATCHED:"dispatched",
     DELIVERED:"delivered",
     CANCEL:"cancel",
     REJECTED: "rejected",

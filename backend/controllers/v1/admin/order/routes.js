@@ -66,14 +66,14 @@ app.get(
 //   controller.delete
 // );
 
-// app.put(
-//   "/:id",
-//   // authHandler.authenticateJWT(),
-//   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
-//   upload.single("image"),
-//   // validate("updateCustomer"),
-//   controller.update
-// );
+app.put(
+  "/:id",
+  // authHandler.authenticateJWT(),
+  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  // upload.single("image"),
+  // validate("updateCustomer"),
+  controller.update
+);
 
 
 module.exports = app;
