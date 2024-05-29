@@ -10,6 +10,7 @@ import { ToastrModule } from "ngx-toastr";
 import { CustomPaginationComponent } from "@core/components/custom-pagination/custom-pagination.component";
 import { NgbTooltipModule } from "@ng-bootstrap/ng-bootstrap";
 import { SubcategoryListComponent } from './subcategory-list/subcategory-list.component';
+import { NgSelectModule } from "@ng-select/ng-select";
 const routes: Routes = [
   {
     path: "",
@@ -30,6 +31,7 @@ const routes: Routes = [
     NgxSpinnerModule,
     CustomPaginationComponent,
     NgbTooltipModule,
+    NgSelectModule,
     RouterModule.forChild(routes),
   ],
 })

@@ -29,6 +29,7 @@ export class HeaderComponent {
     categories: [],
   };
   activeTagId = null;
+  activeCategoryId = null;
   user: any;
   currentVariant = null;
   constructor(
@@ -150,6 +151,7 @@ export class HeaderComponent {
       });
     }
   }
+
   @HostListener('window:scroll', [])
   onWindowScroll() {
     const scrollPositionValue =
@@ -160,6 +162,15 @@ export class HeaderComponent {
     this.scrollPosition = scrollPositionValue;
   }
   navigateTo(path: any, id: any) {
+    if (path == '/order/my-orders' || path == '/order/wishlist') {
+      if (isPlatformBrowser(this._platformId)) {
+        let user = localStorage.getItem('Customer') ? true : false;
+        if (!user) {
+          this.toast.warning('Please login see this section');
+          return;
+        }
+      }
+    }
     this.router.navigate([path], { queryParams: { id: id } });
     let ele: any = document.getElementById('topbar');
     ele.scrollIntoView({
@@ -177,8 +188,12 @@ export class HeaderComponent {
       inline: 'nearest',
     });
   }
-  navigateToDynamic(id: any) {
-    const path: String = `pages/${id}`;
+  navigateToDynamic(item: any) {
+    console.log("item", item);
+    this.activeCategoryId = item.id;
+
+
+    const path: String = `pages/${item.id}`;
     this.router.navigate([path]);
     let ele: any = document.getElementById('topbar');
     ele.scrollIntoView({
@@ -236,5 +251,16 @@ export class HeaderComponent {
     this.cartService.getAll().subscribe((success) => {
       this.cartData = success.result.rows;
     });
+  }
+  changeActiveCategory() {
+    const filterCategory: any[] = this.commonService.allData.categories.filter(x => x.categoryWithtags.some(y => y.tagId == this.activeTagId));
+    if (filterCategory.length) {
+      this.activeCategoryId = filterCategory[0].id;
+      console.log("this.activeCategoryId", this.activeCategoryId);
+
+    } else {
+      this.activeCategoryId = null
+    }
+
   }
 }

@@ -11,6 +11,7 @@ import { SpinnerService, ToastService } from "@core/services";
 import { CategoryService } from "@shared/services/category.service";
 import { ValidationService } from "@core/components";
 import { DomSanitizer } from "@angular/platform-browser";
+import { TagsService } from "@shared/services/tags.service";
 @Component({
   selector: "app-category-form",
   templateUrl: "./category-form.component.html",
@@ -23,6 +24,7 @@ export class CategoryFormComponent {
   fileName: any = "";
   url: any = null;
   file: any = null;
+  tags: any[] = []
   constructor(
     private router: Router,
     private activated: ActivatedRoute,
@@ -30,7 +32,9 @@ export class CategoryFormComponent {
     private toastService: ToastService,
     private spinner: SpinnerService,
     private validationService: ValidationService,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private tagsService: TagsService,
+
   ) { }
 
   categoryForm = new FormGroup({
@@ -40,6 +44,7 @@ export class CategoryFormComponent {
     description: new FormControl(null),
     status: new FormControl("active", [Validators.required]),
     parentId: new FormControl(null),
+    tagId: new FormControl([]),
 
   });
   options = [];
@@ -76,6 +81,13 @@ export class CategoryFormComponent {
         this.categoryId = params.id;
       }
     });
+    this.getAllTags();
+
+  }
+  getAllTags() {
+    this.tagsService.getAll({}).subscribe((success) => {
+      this.tags = success;
+    });
   }
 
   submit() {
@@ -91,10 +103,15 @@ export class CategoryFormComponent {
     // }
     let formData: FormData = new FormData();
     for (const key in this.categoryForm.value) {
-      if (key != 'image' && this.categoryForm.value[key]) {
+      if (key == 'tagId') {
+        formData.append(key, JSON.stringify(this.categoryForm.value[key]));
+
+      } else if (key != 'image' && this.categoryForm.value[key]) {
 
         formData.append(key, this.categoryForm.value[key]);
       }
+
+
     }
     if (this.file) {
       formData.append('image', this.file, this.file.name);
@@ -131,6 +148,10 @@ export class CategoryFormComponent {
     this.spinner.show();
     this.categoryService.getById(id).subscribe((success: any) => {
       this.url = success.image;
+
+      if (success?.categoryWithtags.length) {
+        success.tagId = success?.categoryWithtags.map(x => x.tagId);
+      }
       this.categoryForm.patchValue(success);
       this.spinner.hide();
     });

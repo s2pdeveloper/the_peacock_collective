@@ -13,25 +13,19 @@ const {
 } = require("../../../../config/middlewares/async.handler");
 const cloudinary = require("../../../../shared/service/cloudinary.service");
 const categoryRepository = require("../../../../models/repository/categoryRepository");
-
+const categoryTagMapRepository = require("../../../../models/repository/categoryTagMapRepository");
+const { CategoryTagMap } = require("../../../../models");
 const modelObj = {
   create: asyncHandler(async (req, res) => {
-    // let checkExisting = await Model.findOne({
-    //   where: {
-    //     name: req.body.name,
-    //     ...(req.body.parentId && { parentId: req.body.parentId }),
-    //   },
-    // });
-    console.log("req.body......................", req.body);
+
     let query = {
       where: {
         name: req.body.name,
-        // ...(req.body.parentId && { parentId: req.body.parentId }),
       },
     };
 
     let checkExisting = await categoryRepository.findOneByCondition(query);
-    console.log("checkExisting", checkExisting);
+
     if (checkExisting) {
       let message = MESSAGES.apiErrorStrings.Data_EXISTS("Categories");
       throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
@@ -43,8 +37,20 @@ const modelObj = {
     // let createObj = await generateCreateData(new Model(), req.body);
     // await createObj.save();
     console.log("req.body", req.body);
+    req.body.tagId = JSON.parse(req.body.tagId);
 
-    await categoryRepository.create(req.body);
+
+    let category = await categoryRepository.create(req.body);
+    if (req.body.tagId.length) {
+      let arr = [];
+      for (const tagId of req.body.tagId) {
+        arr.push({
+          tagId: tagId,
+          categoryId: category.id,
+        })
+      }
+      await categoryTagMapRepository.bulkCreate(arr);
+    }
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
         message: MESSAGES.apiSuccessStrings.ADDED("Categories"),
@@ -109,16 +115,18 @@ const modelObj = {
       .json(generateResponse(resCode.HTTP_OK, response));
   }),
   getById: asyncHandler(async (req, res) => {
-    // let existing = await Model.findOne({
-    //   where: {
-    //     id: req.params.id,
-    //   },
-    // });
+
+
 
     let query = {
       where: {
         id: req.params.id,
       },
+      include: [{
+        model: CategoryTagMap,
+        as: 'categoryWithtags',
+        // attributes: ['id', 'title', 'course_id', 'start_date', 'end_date']
+      },]
     };
 
     let existing = await categoryRepository.findOneByCondition(query);
@@ -158,8 +166,22 @@ const modelObj = {
         req.body.image = await cloudinary.uploadFromBuffer(req.file.buffer);
       }
 
-      // let itemDetails = await generateCreateData(itemDetails, req.body);
-      // await itemDetails.save();
+
+      req.body.tagId = JSON.parse(req.body.tagId);
+
+      let deleteQuery = {
+        where: {
+          categoryId: req.params.id,
+        },
+      }
+      await CategoryTagMap.destroy(deleteQuery);
+      let tagArr = req.body.tagId.map(x => {
+        return {
+          tagId: x,
+          categoryId: req.params.id
+        }
+      })
+      await CategoryTagMap.bulkCreate(tagArr)
 
       let itemDetails = await categoryRepository.update(req.body, query);
 

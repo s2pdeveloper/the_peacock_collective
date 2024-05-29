@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const { Product, ProdAttributeMap,Attribute,Categories,ProdTagMap } = require("../../../../models");
+const { Product, ProdAttributeMap, Attribute, Categories, ProdTagMap } = require("../../../../models");
 const {
   OPTIONS,
   generateResponse,
@@ -20,7 +20,7 @@ const modelObj = {
   create: asyncHandler(async (req, res) => {
     let checkExisting = await Model.findOne({
       where: {
-        name:req.body.name ,
+        name: req.body.name,
       },
     });
     if (checkExisting) {
@@ -48,18 +48,18 @@ const modelObj = {
 
       }
     }
-    if(req?.body?.tagId){
+    if (req?.body?.tagId) {
       req.body.tagId = JSON.parse(req.body.tagId);
-      if(req.body.tagId.length){
-        let tagArr=req.body.tagId.map(x=>{
+      if (req.body.tagId.length) {
+        let tagArr = req.body.tagId.map(x => {
           return {
-            tagId:x,
+            tagId: x,
             productId: product.id
           }
         })
         await ProdTagMap.bulkCreate(tagArr)
       }
-    
+
 
     }
 
@@ -78,17 +78,17 @@ const modelObj = {
       search = null,
     } = req.query;
 
-    console.log("your query",search);
+    console.log("your query", search);
     let offset = (page - 1) * pageSize || 0;
     let query = {
       where: {
-          ...(search && {
+        ...(search && {
           [Op.or]: {
             name: { [Op.like]: `%${search}%` },
-            description: { [Op.like]: `%${search}%`},
+            description: { [Op.like]: `%${search}%` },
             // description: { [Op.iLike]: `%${search}%` },
           },
-       }),
+        }),
       },
       order: [[column, direction]],
       // attributes: {
@@ -119,7 +119,7 @@ const modelObj = {
       where: {
         id: req.params.id,
       },
-      include:[ {
+      include: [{
         model: ProdAttributeMap,
         as: 'productWithProdAttributeMap',
         // attributes: ['id', 'title', 'course_id', 'start_date', 'end_date']
@@ -132,21 +132,21 @@ const modelObj = {
           // paranoid: true, required: false
         },
       },
-      { 
-          model: Categories,
-          as: 'productWithCategory',
-          // attributes: ['id', 'title', 'course_id', 'start_date', 'end_date']
-          // paranoid: true, required: false
-        
+      {
+        model: Categories,
+        as: 'productWithCategory',
+        // attributes: ['id', 'title', 'course_id', 'start_date', 'end_date']
+        // paranoid: true, required: false
+
       },
-      { 
+      {
         model: ProdTagMap,
         as: 'productWithTagMap',
         // attributes: ['id', 'title', 'course_id', 'start_date', 'end_date']
         // paranoid: true, required: false
-      
-    }
-    ]
+
+      }
+      ]
     });
     if (!existing) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Product");
@@ -167,39 +167,39 @@ const modelObj = {
 
     if (req.body?.attributeArr) {
       req.body.attributeArr = JSON.parse(req.body.attributeArr);
-    
-        let deleteQuery = {
-          where: {
-            productId: req.params.id,
-          },
-        }
-        await ProdAttributeMap.destroy(deleteQuery);
-  
-        let payloadMap = req.body.attributeArr.map(x => {
-          return {
-            attributeId: x.id,
-            productId: req.params.id
-          }
-        })
-        await ProdAttributeMap.bulkCreate(payloadMap);
-      
-   
-    }
-    if (req.body?.tagId.length) {
+
       let deleteQuery = {
         where: {
           productId: req.params.id,
         },
       }
-      await ProdTagMap.destroy(deleteQuery);
-      let tagArr=req.body.tagId.map(x=>{
+      await ProdAttributeMap.destroy(deleteQuery);
+
+      let payloadMap = req.body.attributeArr.map(x => {
         return {
-          tagId:x,
+          attributeId: x.id,
           productId: req.params.id
         }
       })
-      await ProdTagMap.bulkCreate(tagArr)
+      await ProdAttributeMap.bulkCreate(payloadMap);
+
+
     }
+
+    let deleteQuery = {
+      where: {
+        productId: req.params.id,
+      },
+    }
+    await ProdTagMap.destroy(deleteQuery);
+    let tagArr = req.body.tagId.map(x => {
+      return {
+        tagId: x,
+        productId: req.params.id
+      }
+    })
+    await ProdTagMap.bulkCreate(tagArr)
+
 
     if (!itemDetails) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Product");
@@ -257,14 +257,14 @@ const modelObj = {
       where: {
         productId: req.params.id,
       },
-    //   include:[ {
-    //     model: ProdAttributeMap,
-    //     as: 'productWithProdAttributeMap',
-    //     // attributes: ['id', 'title', 'course_id', 'start_date', 'end_date']
-    //     paranoid: true, required: false,
+      //   include:[ {
+      //     model: ProdAttributeMap,
+      //     as: 'productWithProdAttributeMap',
+      //     // attributes: ['id', 'title', 'course_id', 'start_date', 'end_date']
+      //     paranoid: true, required: false,
 
-    // }
-    // ]
+      // }
+      // ]
     });
     if (!existing) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Product");

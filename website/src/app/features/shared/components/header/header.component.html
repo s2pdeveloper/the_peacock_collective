@@ -1,69 +1,39 @@
-<div
-  class="head"
-  [ngClass]="scrollPosition == 0 ? 'transparent' : ''"
-  [ngClass]="scrollValue < 0 ? 'sticky-top bg-light' : ''"
->
+<div class="head" [ngClass]="scrollPosition == 0 ? 'transparent' : ''"
+  [ngClass]="scrollValue < 0 ? 'sticky-top bg-light' : ''">
   <div class="container-fluid" id="topbar">
     <div class="row upper-row">
       <div class="col-11">
         <div class="row">
           <div class="col-4 d-flex pointer" (click)="navigateTo('/', null)">
-            <img
-              width="55"
-              src="../../../../../assets/images/gold-logo.png"
-              alt="logo"
-            />
+            <img width="55" src="../../../../../assets/images/gold-logo.png" alt="logo" />
           </div>
           <div class="col-8 col-lg-4 ship-text">
             <p>
-              <img
-                (click)="navigateTo('/', null)"
-                class="img-fluid pointer"
-                src="../../../../../assets/images/companyName.png"
-                alt="Company Name"
-              />
+              <img (click)="navigateTo('/', null)" class="img-fluid pointer"
+                src="../../../../../assets/images/companyName.png" alt="Company Name" />
             </p>
           </div>
           <div class="d-none d-md-none d-lg-block col-lg-4">
             <div class="icons-box">
               <div class="icons">
-                <i
-                  class="fa-solid fa-magnifying-glass pointer"
-                  (click)="openSearch(search)"
-                ></i>
+                <i class="fa-solid fa-magnifying-glass pointer" (click)="openSearch(search)"></i>
                 <div ngbDropdown>
-                  <button
-                    type="button"
-                    class="btn"
-                    id="dropdownBasic1"
-                    ngbDropdownToggle
-                  >
+                  <button type="button" class="btn" id="dropdownBasic1" ngbDropdownToggle>
                     <i class="fa-solid fa-user pointer"></i>
                   </button>
                   <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                    <button class="p-3"
-                      ngbDropdownItem (click)="navigateTo('/auth/login', null)"
-                    >
+                    <button class="p-3" ngbDropdownItem (click)="navigateTo('/auth/login', null)">
                       MY ACCOUNT
                     </button>
-                    <button class="p-3"
-                      ngbDropdownItem
-                      (click)="navigateTo('/order/wishlist', null)"
-                    >
+                    <button class="p-3" ngbDropdownItem (click)="navigateTo('/order/wishlist', null)">
                       WISHLIST
                     </button>
-                    <button class="p-3"
-                      ngbDropdownItem
-                      (click)="navigateTo('/order/my-orders', null)"
-                    >
+                    <button class="p-3" ngbDropdownItem (click)="navigateTo('/order/my-orders', null)">
                       MY ORDERS
                     </button>
                   </div>
                 </div>
-                <i
-                class="fa-solid fa-cart-plus nav-items pointer"
-                (click)="showCart()"
-              ></i>
+                <i class="fa-solid fa-cart-plus nav-items pointer" (click)="showCart()"></i>
               </div>
             </div>
           </div>
@@ -78,9 +48,9 @@
           <div class="col-10">
             <div class="d-flex h-100">
               @for (item of commonService.allData.tags; track item.id){
-              <div class="nav_menu d-flex" (mouseover)="activeTagId = item.id">
+              <div class="nav_menu d-flex" >
                 <div class="nav_list nav_list_menu">
-                  <a class="nav_link text-uppercase">
+                  <a class="nav_link text-uppercase" (mouseover)="activeTagId = item.id;changeActiveCategory()">
                     <span class="nav-items pointer">{{ item.title }}</span>
                   </a>
                   <div class="dropDown">
@@ -89,38 +59,23 @@
                         <div class="py-2">
                           <span class="drop-items pointer fw-bold text-capitalize">{{
                             item.title
-                          }}</span>
+                            }}</span>
                         </div>
-                        <div
-                          class="py-2"
-                          *ngFor="
-                            let item of commonService.allData.products
+                        <div class="py-2" *ngFor="
+                            let item of commonService.allData.categories
                               | tagCategory : activeTagId
-                          "
-                        >
-                          <span
-                            [class.textDanger]="item?.name == 'Sale'"
-                            class="drop-items pointer"
-                            (click)="navigateToDynamic(item?.name)"
-                            >{{ item?.name }}</span
-                          >
+                          ">
+                          <span [class.textDanger]="item?.name == 'Sale'" [class.active-category]="activeCategoryId==item.id" class="drop-items pointer"
+                            (click)="navigateToDynamic(item)">{{ item?.name }}</span>
                         </div>
                       </div>
                       <div class="col-10 dropdownItem px-3">
                         <swiper-container class="img-box" slides-per-view="4">
-                          <swiper-slide
-                            class="px-2 prod-cart"
-                            (click)="
+                          <swiper-slide class="px-2 prod-cart" (click)="
                               navigateTo('/product/product-details', p?.id)
-                            "
-                            *ngFor="
+                            " *ngFor="
                               let p of commonService.allData.products
-                                | tagProduct : activeTagId
-                            "
-                            ><img
-                              class="prod-img w-100"
-                              [src]="p?.bannerImage"
-                            />
+                                | tagProduct : activeTagId : activeCategoryId"><img class="prod-img w-100" [src]="p?.bannerImage" />
                             <div class="text-box p-3">
                               <p class="prod-name">{{ p?.name }}</p>
                             </div>
@@ -134,10 +89,7 @@
               }
               <div class="nav_menu d-flex">
                 <div class="nav_list nav_list_menu">
-                  <a
-                    class="nav_link text-uppercase"
-                    (click)="navigateTo('bespoke', null)"
-                  >
+                  <a class="nav_link text-uppercase" (click)="navigateTo('bespoke', null)">
                     <span class="nav-items pointer">Bespoke, by you</span>
                   </a>
                 </div>
@@ -145,17 +97,12 @@
             </div>
           </div>
           <div class="col-2 d-flex justify-content-end">
-            <div
-              class="navbar-brand text-uppercase textDanger nav-items pointer"
-              (click)="navigateTo('/contact', null)"
-            >
+            <div class="navbar-brand text-uppercase textDanger nav-items pointer"
+              (click)="navigateTo('/contact', null)">
               Contact
             </div>
             <div class="d-flex align-items-center">
-              <i
-                class="fa-solid fa-cart-plus nav-items pointer"
-                (click)="showCart()"
-              ></i>
+              <i class="fa-solid fa-cart-plus nav-items pointer" (click)="showCart()"></i>
             </div>
           </div>
         </div>
@@ -164,61 +111,35 @@
   </div>
   <div class="container-fluid header-tablet">
     <div class="row">
-      <div
-        class="col-3 d-flex flex-column align-items-center p-3 menu-items"
-        (click)="isMenuOpen = !isMenuOpen"
-      >
+      <div class="col-3 d-flex flex-column align-items-center p-3 menu-items" (click)="isMenuOpen = !isMenuOpen">
         <i class="fa-solid fa-bars"></i>
         <p>Menu</p>
       </div>
       <div class="col-3 d-flex flex-column align-items-center p-3 menu-items">
-        <i
-          class="fa-solid fa-magnifying-glass"
-          (click)="searchToggle = !searchToggle"
-        ></i>
+        <i class="fa-solid fa-magnifying-glass" (click)="searchToggle = !searchToggle"></i>
         <div class="d-flex">
           <div class="nav_list">
-            <p
-              class="d-flex justify-content-center"
-              (click)="searchToggle = !searchToggle"
-            >
+            <p class="d-flex justify-content-center" (click)="searchToggle = !searchToggle">
               Search
             </p>
-            <div
-              [ngClass]="
+            <div [ngClass]="
                 searchToggle ? 'dropdown-search' : 'dropdown-search-collapsed'
-              "
-            >
+              ">
               <div class="container-fluid">
-                <div
-                  class="search d-flex justify-content-between align-items-center p-4 w-100"
-                >
-                  <input
-                    type="text"
-                    placeholder="Search"
-                    class="form-control w-75"
-                  />
-                  <i
-                    class="fa-solid fa-magnifying-glass"
-                    (click)="searchToggle = !searchToggle"
-                  ></i>
+                <div class="search d-flex justify-content-between align-items-center p-4 w-100">
+                  <input type="text" placeholder="Search" class="form-control w-75" />
+                  <i class="fa-solid fa-magnifying-glass" (click)="searchToggle = !searchToggle"></i>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div
-        class="col-3 d-flex flex-column align-items-center p-3 menu-items"
-        (click)="isAccountOpen = !isAccountOpen"
-      >
+      <div class="col-3 d-flex flex-column align-items-center p-3 menu-items" (click)="isAccountOpen = !isAccountOpen">
         <i class="fa-solid fa-user"></i>
         <p>Profile</p>
       </div>
-      <div
-        (click)="isCartOpen = !isCartOpen"
-        class="col-3 d-flex flex-column align-items-center p-3 menu-items"
-      >
+      <div (click)="isCartOpen = !isCartOpen" class="col-3 d-flex flex-column align-items-center p-3 menu-items">
         <i class="fa-solid fa-bag-shopping"></i>
         <p>Cart</p>
       </div>
@@ -226,14 +147,9 @@
   </div>
 </div>
 
-<div
-  [ngClass]="isMenuOpen ? 'modal-open toggle-modal' : 'modal-open toggle-close'"
->
+<div [ngClass]="isMenuOpen ? 'modal-open toggle-modal' : 'modal-open toggle-close'">
   <div *ngIf="isMenuOpen" class="offcanvas-header m-0 px-4 py-2">
-    <img
-      src="../../../../../assets/images/gold-logo.png"
-      class="img-fluid-m me-3 logo-img"
-    />
+    <img src="../../../../../assets/images/gold-logo.png" class="img-fluid-m me-3 logo-img" />
     <button type="button" class="btn" (click)="isMenuOpen = !isMenuOpen">
       <i class="fa-solid fa-xmark"></i>
     </button>
@@ -241,35 +157,25 @@
 
   <div *ngIf="isMenuOpen" class="offcanvas-body m-0">
     <div class="option p-4">
-      <div
-        *ngFor="let item of commonService.allData.tags"
-        class="option-item border-bottom d-flex justify-content-between py-3"
-        (click)="handleCategory(item)"
-      >
+      <div *ngFor="let item of commonService.allData.tags"
+        class="option-item border-bottom d-flex justify-content-between py-3" (click)="handleCategory(item)">
         <p class="w-75 text-uppercase">{{ item.title }}</p>
         <div class="d-flex justify-content-end align-items-center w-25">
           <i class="fa-solid fa-chevron-right"></i>
         </div>
       </div>
-      <div
-        class="option-item border-bottom d-flex justify-content-between py-3"
-        (click)="navigateTo('/contact', null); isMenuOpen = !isMenuOpen"
-      >
+      <div class="option-item border-bottom d-flex justify-content-between py-3"
+        (click)="navigateTo('/contact', null); isMenuOpen = !isMenuOpen">
         <p class="w-75 text-uppercase">Contact</p>
       </div>
     </div>
   </div>
 </div>
-<div
-  [ngClass]="
+<div [ngClass]="
     isAccountOpen ? 'modal-open toggle-modal' : 'modal-open toggle-close'
-  "
->
+  ">
   <div *ngIf="isAccountOpen" class="offcanvas-header m-0 px-4 py-2">
-    <img
-      src="../../../../../assets/images/gold-logo.png"
-      class="img-fluid-m me-3 logo-img"
-    />
+    <img src="../../../../../assets/images/gold-logo.png" class="img-fluid-m me-3 logo-img" />
     <button type="button" class="btn" (click)="isAccountOpen = !isAccountOpen">
       <i class="fa-solid fa-xmark"></i>
     </button>
@@ -277,28 +183,19 @@
 
   <div *ngIf="isAccountOpen" class="offcanvas-body m-0">
     <div class="option p-4">
-      <div
-        class="option-item border-bottom d-flex justify-content-between py-3"
-        (click)="
+      <div class="option-item border-bottom d-flex justify-content-between py-3" (click)="
           navigateTo('/auth/login', null); isAccountOpen = !isAccountOpen
-        "
-      >
+        ">
         <p class="w-75 text-uppercase">My Account</p>
       </div>
-      <div
-        class="option-item border-bottom d-flex justify-content-between py-3"
-        (click)="
+      <div class="option-item border-bottom d-flex justify-content-between py-3" (click)="
           navigateTo('/order/wishlist', null); isAccountOpen = !isAccountOpen
-        "
-      >
+        ">
         <p class="w-75 text-uppercase">Wishlist</p>
       </div>
-      <div
-        class="option-item border-bottom d-flex justify-content-between py-3"
-        (click)="
+      <div class="option-item border-bottom d-flex justify-content-between py-3" (click)="
           navigateTo('/order/my-orders', null); isAccountOpen = !isAccountOpen
-        "
-      >
+        ">
         <p class="w-75 text-uppercase">My Orders</p>
       </div>
     </div>
@@ -307,72 +204,42 @@
 <div [ngClass]="isCartOpen ? 'modal-open cart-modal' : 'modal-open cart-close'">
   <div class="cart-header m-0 px-4 py-3 border-bottom bg-light">
     <h4>Your Cart</h4>
-    <button
-      type="button"
-      class="btn text-dark"
-      (click)="isCartOpen = !isCartOpen"
-    >
+    <button type="button" class="btn text-dark" (click)="isCartOpen = !isCartOpen">
       <i class="fa-solid fa-xmark"></i>
     </button>
   </div>
 
-  <div
-    class="cart-body m-0 bg-white p-3 d-flex flex-column justify-content-between"
-  >
+  <div class="cart-body m-0 bg-white p-3 d-flex flex-column justify-content-between">
     <div class="product-part">
       <ng-container *ngIf="!cartData.length; else elseBlock">
         <div class="w-100 d-flex align-items-center">
-          <img
-            class="img-fluid"
-            src="../../../../../assets/images/no-product.png"
-            alt=""
-          />
+          <img class="img-fluid" src="../../../../../assets/images/no-product.png" alt="" />
         </div>
       </ng-container>
       <ng-template #elseBlock>
         <div class="row border-bottom d-flex" *ngFor="let p of cartData">
           <div class="col-3">
-            <img
-              width="150"
-              (click)="isCartOpen = !isCartOpen"
-              class="img-fluid cart-img pointer"
+            <img width="150" (click)="isCartOpen = !isCartOpen" class="img-fluid cart-img pointer"
               [src]="p?.cartWithVariants?.variantImages[0].image"
-              (click)="navigateTo('/product/product-details',p?.cartWithVariants?.variantWithProduct?.id)"
-              alt=""
-            />
+              (click)="navigateTo('/product/product-details',p?.cartWithVariants?.variantWithProduct?.id)" alt="" />
           </div>
-          <div
-            class="col-8 d-flex justify-content-center bg-white flex-column p-3"
-          >
+          <div class="col-8 d-flex justify-content-center bg-white flex-column p-3">
             <p (click)="isCartOpen = !isCartOpen" class="pointer">
               {{ p?.cartWithVariants?.variantWithProduct.hsn }}
             </p>
-            <p
-              class="text-color-secondary small-text"
-              *ngFor="
+            <p class="text-color-secondary small-text" *ngFor="
                 let attr of p?.cartWithVariants?.variantWithAttrVariantMap
-              "
-            >
+              ">
               {{ attr.AttrVariantMapWithAttributes.name }} : {{ attr?.value }}
             </p>
             <div class="d-flex align-items-center">
-              <input
-                type="number"
-                class="w-50 border-0"
-                [min]="0"
-                [(ngModel)]="p.qty"
-                [value]="p.qty"
-              />
-              <label
-                >x {{ p?.cartWithVariants?.price | currency : "INR" }}</label
-              >
+              <input type="number" class="w-50 border-0" [min]="0" [(ngModel)]="p.qty" [value]="p.qty" />
+              <label>x {{ p?.cartWithVariants?.price | currency : "INR" }}</label>
             </div>
           </div>
           <div class="col-1 d-flex align-items-center bg-white">
-            <i
-              class="fa-solid fa-trash"
-              (click)="navigateTo('/product/product-details', p?.cartWithVariants?.variantWithProduct?.id)"
-            ></i>
+            <i class="fa-solid fa-trash"
+              (click)="navigateTo('/product/product-details', p?.cartWithVariants?.variantWithProduct?.id)"></i>
           </div>
         </div>
       </ng-template>
@@ -408,24 +275,15 @@
         </div>
         <div class="row">
           <div class="col-12 mb-2">
-            <button
-              [disabled]="!cartData.length"
-              type="button"
-              class="btn btn-dark py-2"
-              (click)="checkout(); isCartOpen = !isCartOpen"
-            >
+            <button [disabled]="!cartData.length" type="button" class="btn btn-dark py-2"
+              (click)="checkout(); isCartOpen = !isCartOpen">
               Checkout
             </button>
           </div>
           <div class="col-12">
-            <button
-              [disabled]="!cartData.length"
-              type="button"
-              class="btn btn-light py-2"
-              (click)="
+            <button [disabled]="!cartData.length" type="button" class="btn btn-light py-2" (click)="
                 navigateTo('/order/cart', null); isCartOpen = !isCartOpen
-              "
-            >
+              ">
               Cart
             </button>
           </div>
@@ -442,28 +300,17 @@
     </button>
   </div>
 
-  <div
-    class="offcanvas-body m-0 px-4 d-flex flex-column justify-content-between"
-  >
+  <div class="offcanvas-body m-0 px-4 d-flex flex-column justify-content-between">
     <div class="option">
-      <div
-        class="option-item border-bottom d-flex justify-content-between py-3"
-        (click)="handleDataRemove()"
-      >
+      <div class="option-item border-bottom d-flex justify-content-between py-3" (click)="handleDataRemove()">
         <div class="d-flex align-items-center w-25">
           <i class="fa-solid fa-chevron-left"></i>
         </div>
         <p class="w-75 text-uppercase fw-bold">{{ category?.title }}</p>
       </div>
-      <div
-        *ngFor="let cat of category.categories"
-        class="option-item border-bottom d-flex justify-content-between py-3"
-        (click)="navigateToDynamic(cat?.name); handleDataRemove()"
-      >
-        <p
-          class="w-75 text-uppercase"
-          (click)="isMenuOpen = !isMenuOpen; handleDataRemove()"
-        >
+      <div *ngFor="let cat of category.categories" class="option-item border-bottom d-flex justify-content-between py-3"
+        (click)="navigateToDynamic(cat?.name); handleDataRemove()">
+        <p class="w-75 text-uppercase" (click)="isMenuOpen = !isMenuOpen; handleDataRemove()">
           {{ cat?.name }}
         </p>
         <div class="d-flex justify-content-end align-items-center w-25">
@@ -472,13 +319,9 @@
       </div>
       <div class="dropdownItem p-3">
         <swiper-container class="img-box" slides-per-view="1">
-          <swiper-slide
-            class="px-2 prod-cart"
-            (click)="navigateTo('/product/product-details', p?.id)"
-            *ngFor="
+          <swiper-slide class="px-2 prod-cart" (click)="navigateTo('/product/product-details', p?.id)" *ngFor="
               let p of commonService.allData.products | tagProduct : activeTagId
-            "
-            ><img class="prod-img w-100" [src]="p?.bannerImage" />
+            "><img class="prod-img w-100" [src]="p?.bannerImage" />
             <div class="text-box p-3">
               <p class="prod-name">{{ p?.name }}</p>
             </div>
@@ -489,14 +332,8 @@
   </div>
 </div>
 <ng-template #search let-modal>
-  <div
-    class="search d-flex justify-content-between align-items-center p-4 w-100"
-  >
-    <input
-      type="text"
-      placeholder="Search our catalog"
-      class="form-control w-75 background-primary"
-    />
+  <div class="search d-flex justify-content-between align-items-center p-4 w-100">
+    <input type="text" placeholder="Search our catalog" class="form-control w-75 background-primary" />
     <i class="fa-solid fa-magnifying-glass"></i>
   </div>
 </ng-template>

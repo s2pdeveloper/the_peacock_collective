@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -15,16 +15,8 @@ import { CustomerService } from 'src/app/services/customer.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent {
+export class RegisterComponent implements AfterContentInit {
   showEye: boolean = true;
-
-  constructor(
-    private router: Router,
-    private customerService: CustomerService,
-    private toasterService: ToastrService,
-    private storageService: StorageService
-  ) {
-  }
   registerForm = new FormGroup({
     socialTitle: new FormControl(null),
     firstName: new FormControl(null),
@@ -37,6 +29,18 @@ export class RegisterComponent {
     password: new FormControl(null),
     DOB: new FormControl(null),
   });
+
+  constructor(
+    private router: Router,
+    private customerService: CustomerService,
+    private toasterService: ToastrService,
+    private storageService: StorageService,
+    // private cd: ChangeDetectorRef
+  ) {
+  }
+  ngAfterContentInit(): void {
+    // this.cd.markForCheck()
+  }
 
   navigateTo(path: any) {
     this.router.navigate([path]);

@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
       this.commonService.allData = success.result;
       this.loader = false;
 
-      this.stateService.checkAndGetData(ALL_DATA, success.result, {})
+      // this.stateService.checkAndGetData(ALL_DATA, success.result, {})
       // this.loader = false;
     }, error => {
       console.log("error", error);

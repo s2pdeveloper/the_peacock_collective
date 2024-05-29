@@ -5,17 +5,19 @@ import { Pipe, PipeTransform } from '@angular/core';
   // standalone: true
 })
 export class TagProductPipe implements PipeTransform {
-  transform(products: any[]=[], tagId: number=null): any {
+  transform(products: any[] = [], tagId: number = null, activeCategoryId: number = null): any {
     try {
 
-      if(products.length && tagId){
-        return products.filter(x=>{
-          if(x.productWithTagMap.some(y=>y.tagId==tagId)){
+      if (products.length && tagId && activeCategoryId) {
+        return products.filter(x => {
+          if (x.productWithCategory.id == activeCategoryId && x.productWithTagMap.some(y => y.tagId == tagId)) {
             return x;
           }
         })
+      } else {
+        return [];
       }
-    
+
     } catch (error) {
       console.log('error', error);
       return [];

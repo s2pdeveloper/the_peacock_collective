@@ -44,6 +44,11 @@ module.exports = (sequelize, DataTypes) => {
       as: "subCatagories",
       onDelete: 'CASCADE',
     });
+    Categories.hasMany(models.CategoryTagMap, {
+      foreignKey: "categoryId",
+      as: "categoryWithtags",
+      onDelete: 'CASCADE',
+    });
     // Categories.belongsTo(models.Categories, {
     //   foreignKey: "parentId",
     //   as: "categories",

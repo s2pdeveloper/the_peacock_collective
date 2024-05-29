@@ -9,6 +9,7 @@ const AttrVariantMap = require("../../../../models").AttrVariantMap;
 const ProdTagMap = require("../../../../models").ProdTagMap;
 const Variant = require("../../../../models").Variant;
 const Cart = require("../../../../models").Cart;
+const CategoryTagMap = require("../../../../models").CategoryTagMap;
 const {
   OPTIONS,
   generateResponse,
@@ -31,12 +32,19 @@ const getAllMasterData = asyncHandler(async (req, res) => {
     where: {
       parentId: null,
     },
-    include: {
-      model: Categories,
-      as: "subCatagories",
-      // required: false,
-      
-    },
+    include: [
+      {
+        model: Categories,
+        as: "subCatagories",
+        // required: false,
+
+      },
+      {
+        model: CategoryTagMap,
+        as: "categoryWithtags",
+        // required: false,
+      }
+    ],
     order: [[column, direction]],
   };
   let variantQuery = {
@@ -97,17 +105,17 @@ const getAllMasterData = asyncHandler(async (req, res) => {
   ];
   Promise.all(promissArr)
     .then((values) => {
-      console.log("values",values);
+      console.log("values1111111111", values);
       const result = {
-        // categories: values[0],
-        // products: values[1],
-        // tags: values[2],
-        // attributes: values[3],
-        // variants: values[4],
+        categories: values[0],
+        products: values[1],
+        tags: values[2],
+        attributes: values[3],
+        variants: values[4],
       };
       return res
         .status(resCode.HTTP_OK)
-        .json(generateResponse(resCode.HTTP_OK, values));
+        .json(generateResponse(resCode.HTTP_OK, result));
     })
     .catch((err) => {
       throw new ApiError(
