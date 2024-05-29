@@ -15,6 +15,7 @@ const productAttributeRoutes = require("./productAttribute/router");
 const AttrVariantMap = require("./AttrVariantMap/routes");
 const tagsRoutes = require("./tag/routes");
 const contact=require("./contact/routes")
+const order=require("./order/routes")
 
 router.use('/user', userRoutes);
 router.use('/variantImages', variantImageRoutes);
@@ -30,6 +31,7 @@ router.use('/productAttribute', productAttributeRoutes);
 router.use('/AttrVariantMap', AttrVariantMap);
 router.use('/tag', tagsRoutes);
 router.use('/contact',contact);
+router.use('/order',order);
 
 
 module.exports = router;

@@ -31,7 +31,10 @@ export class NewArrivalsComponent implements OnInit {
       prevEl: '.swiper-button-prev',
     },
   });
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('commonService.allData.products',this.commonService.allData.products);
+    
+  }
 
   showNavigationIndicators = false;
   navigateTo(path: any, param: any) {

@@ -1,5 +1,9 @@
 const Model = require("../../models").Order;
 
+module.exports.getSequenceNumber = async () => {
+  return (await Model.count()) + 1;
+};
+
 module.exports.findByPk = async (id) => {
   return await Model.findByPk(id);
 };

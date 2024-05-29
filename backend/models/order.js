@@ -10,16 +10,33 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },
+      orderNumber: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      total: {
+        type: DataTypes.FLOAT,
+        allowNull: true,
+      },
+      discount: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      shippingFee: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
       status: {
         type: DataTypes.ENUM(
-          OPTIONS.defaultStatus.ACTIVE,
-          OPTIONS.defaultStatus.INACTIVE,
+          OPTIONS.defaultStatus.ACCEPT,
+          OPTIONS.defaultStatus.REJECTED,
           OPTIONS.defaultStatus.APPROVED,
-          OPTIONS.defaultStatus.DISPATACHED,
+          OPTIONS.defaultStatus.DISPATCHED,                              
+          OPTIONS.defaultStatus.DELIVERED,                              
           
         ),
         allowNull: false,
-        defaultValue: OPTIONS.defaultStatus.ACTIVE,
+        defaultValue: OPTIONS.defaultStatus.ACCEPT,
       },
       
     },

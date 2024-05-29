@@ -8,6 +8,7 @@ const OPTIONS = {
   emailSenderName: "email sender",
   randomUsernameSize: 4,
   randomShopSize: 4,
+  orderNumber: 10000000,
   resetPasswordExpireInDays: 720,
   defaultTax: 2,
   otpExpireInDays: 1,
@@ -77,12 +78,14 @@ const OPTIONS = {
       ];
     },
   },
+  
   defaultStatus: {
     ACTIVE: "active",
+    ACCEPT: "accept",
     INACTIVE: "inactive",
     UNAPPROVED: "unapproved",
     APPROVED: "approved",
-    DISPATACHED:"dispatched",
+    DISPATCHED:"dispatched",
     DELIVERED:"delivered",
     CANCEL:"cancel",
     REJECTED: "rejected",

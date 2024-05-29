@@ -149,14 +149,14 @@ const NavigationItems = [
         icon: "fa-brands fa-vimeo",
       },
       
-      // {
-      //   id: "variant",
-      //   title: "Variant",
-      //   type: "item",
-      //   classes: "nav-item",
-      //   url: "/default/variant",
-      //   icon: "fa-solid fa-tag",
-      // },
+      {
+        id: "order",
+        title: "Order",
+        type: "item",
+        classes: "nav-item",
+        url: "/default/order/order-list",
+        icon: "fa-solid fa-tag",
+      },
       // {
       //   id: "inventory",
       //   title: "Inventory",

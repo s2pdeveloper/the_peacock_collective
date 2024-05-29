@@ -50,7 +50,7 @@ export default class LoginComponent {
     this.authService.login(this.loginForm.value).subscribe((success) => {
       console.log("success", success);
       this.toastService.success('Login Successfully')
-      this.storageService.set("Inv_Bill_User", success);
+      this.storageService.set("Peacock_User", success);
       // this.spinner.hide();
       let route = "./default";
 

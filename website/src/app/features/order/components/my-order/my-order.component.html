@@ -61,11 +61,11 @@
                   {{ order.qty }}
                 </div>
                 <div class="col-2 text-center light-dark small-text my-auto">
-                  {{ order.price | currency : "INR" }}
+                  {{ order.orderVariantMapWithVariant.price | currency : "INR" }}
                 </div>
                 <div class="col-2 text-center light-dark small-text my-auto">
                   <p class="py-auto">
-                    {{ order.price * order.qty | currency : "INR" }}
+                    {{ order.price | currency : "INR" }}
                   </p>
                 </div>
               </div>

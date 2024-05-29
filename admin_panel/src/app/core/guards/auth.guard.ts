@@ -14,7 +14,7 @@ export class AuthGuard {
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    let roles = this.storageService.get("Inv_Bill_User").roleName;
+    let roles = this.storageService.get("Peacock_User").roleName;
     if (
       ["Sales", "Super Admin", "Admin", "MR"].some((x) =>
         roles.some((y: string) => x == y)
@@ -28,7 +28,7 @@ export class AuthGuard {
     return false;
 
     // if (typeof window !== 'undefined') {
-    //   if (localStorage.getItem('Inv_Bill_User')) {
+    //   if (localStorage.getItem('Peacock_User')) {
     //     // logged in so return true
     //     return true;
     //   }

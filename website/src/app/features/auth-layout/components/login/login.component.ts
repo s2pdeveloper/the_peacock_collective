@@ -69,11 +69,9 @@ export class LoginComponent implements OnInit {
   }
   getAddresses() {
     if (this.user) {
-      this.addressService
-        .getAll()
-        .subscribe((success: any) => {
-          this.allAddresses = success.result.rows;
-        });
+      this.addressService.getAll().subscribe((success: any) => {
+        this.allAddresses = success.result.rows;
+      });
     }
   }
   createAddress() {
