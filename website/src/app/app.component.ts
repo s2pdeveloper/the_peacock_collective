@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { CommonService } from './services/common.service';
-import { SpinnerService, StorageService } from './core/services';
+// import { SpinnerService, StorageService } from './core/services';
 import { PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { StateService } from './services/state.service';
@@ -10,13 +10,11 @@ import { StateService } from './services/state.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  title = 'website';
   loader = true;
   user: any;
   constructor(
     private commonService: CommonService,
-    private storageService: StorageService,
-    private spinner: SpinnerService,
+    // private storageService: StorageService,
     private stateService: StateService,
     @Inject(PLATFORM_ID) private _platformId: Object,
   ) {
@@ -24,7 +22,7 @@ export class AppComponent implements OnInit {
   }
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
-      this.user = this.storageService.get('Customer');
+      // this.user = this.storageService.get('Customer');
       console.log("isPlatformBrowser");
       const results: any = this.stateService.getState('ALL_DATA', null);
       console.log("results===========1", results);
@@ -33,6 +31,7 @@ export class AppComponent implements OnInit {
         this.getAllMasterData();
       } else {
         this.commonService.allData = results;
+        this.loader = false;
       }
 
     } else {
