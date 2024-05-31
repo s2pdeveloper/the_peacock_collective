@@ -3,7 +3,7 @@ import { CommonService } from './services/common.service';
 import { SpinnerService, StorageService } from './core/services';
 import { PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { ALL_DATA, StateService } from './services/state.service';
+import { StateService } from './services/state.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -25,8 +25,21 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
       this.user = this.storageService.get('Customer');
+      console.log("isPlatformBrowser");
+      const results: any = this.stateService.getState('ALL_DATA', null);
+      console.log("results===========1", results);
+
+      if (!results) {
+        this.getAllMasterData();
+      } else {
+        this.commonService.allData = results;
+      }
+
+    } else {
+      this.getAllMasterData();
+      console.log("isPlatformServer11111");
+
     }
-    this.getAllMasterData();
 
   }
 
@@ -37,8 +50,10 @@ export class AppComponent implements OnInit {
       this.commonService.allData = success.result;
       this.loader = false;
 
-      // this.stateService.checkAndGetData(ALL_DATA, success.result, {})
-      // this.loader = false;
+      this.stateService.saveState('ALL_DATA', success.result);
+      const results: any = this.stateService.getState('ALL_DATA', null);
+      console.log("results===========4444", results);
+      this.loader = false;
     }, error => {
       console.log("error", error);
       this.loader = false;

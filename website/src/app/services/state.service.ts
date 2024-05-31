@@ -4,38 +4,35 @@ import { isPlatformServer } from '@angular/common';
 import { tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-export const ALL_DATA = makeStateKey('all_data');
+// export const ALL_DATA = makeStateKey('all_data');
 
 @Injectable({
     providedIn: 'root'
 })
 export class StateService {
 
-    private isServer = false;
+    isBrowser = false;
+    isServer = false;
 
-    constructor(
-        private tstate: TransferState,
-        @Inject(PLATFORM_ID) platformId: Object,
-    ) {
-        this.isServer = isPlatformServer(platformId);
+    constructor(private transferState: TransferState) { }
+
+    saveState<T>(key: string, data: any): void {
+        this.transferState.set<T>(makeStateKey(key), data);
     }
 
-    checkAndGetData(key: StateKey<any>, getDataObservable: Observable<any>, defaultValue: any = []) {
-        if (this.tstate.hasKey(key)) {
-            return of(this.tstate.get(key, defaultValue));
-        } else {
-            return getDataObservable.pipe(
-                tap((data) => {
-                    if (this.isServer) {
-                        this.tstate.set(key, data);
-                    }
-                })
-            );
-        }
+    getState<T>(key: string, defaultValue: any = []): T {
+        const state = this.transferState.get<T>(
+            makeStateKey(key),
+            defaultValue
+        );
+        this.transferState.remove(makeStateKey(key));
+        return state;
     }
 
-    getDynamicStateKey(key: string) {
-        return makeStateKey(key);
+    hasState<T>(key: string) {
+        return this.transferState.hasKey<T>(makeStateKey(key));
     }
+
+
 
 }

@@ -6,7 +6,7 @@ import { ApiService } from '../core/services';
 })
 export class CommonService {
   readonly BASE_URL = 'common';
-  allData: any = [];
+  allData: any = {};
 
   constructor(private http: ApiService) { }
 
