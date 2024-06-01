@@ -112,6 +112,7 @@ const getAllMasterData = asyncHandler(async (req, res) => {
         tags: values[2],
         attributes: values[3],
         variants: values[4],
+        
       };
       return res
         .status(resCode.HTTP_OK)
