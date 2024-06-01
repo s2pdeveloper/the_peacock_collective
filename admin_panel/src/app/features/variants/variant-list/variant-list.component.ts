@@ -20,6 +20,9 @@ export class VariantListComponent {
     private spinner: SpinnerService,
     private toastService: ToastService
   ) { }
+  page: number = 1;
+  pageSize: number = 25;
+  collection: number = 0;
   @Input() variantList: any = [];
   @Output() customEvent = new EventEmitter<any>();
   selectedRow;

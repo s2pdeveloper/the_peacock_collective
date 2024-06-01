@@ -23,6 +23,7 @@ const ApiError = require("../../../../config/middlewares/api.error");
 const {
   asyncHandler,
 } = require("../../../../config/middlewares/async.handler");
+const { Json } = require("sequelize/lib/utils");
 
 const getAllMasterData = asyncHandler(async (req, res) => {
   let column = "createdAt";
@@ -37,13 +38,19 @@ const getAllMasterData = asyncHandler(async (req, res) => {
         model: Categories,
         as: "subCatagories",
         // required: false,
-
       },
       {
         model: CategoryTagMap,
         as: "categoryWithtags",
+        include: [
+          {
+            model: Tag,
+            as: "CategoryTagMapWithTag",
+            attributes: ["title"],
+          },
+        ],
         // required: false,
-      }
+      },
     ],
     order: [[column, direction]],
   };
@@ -101,18 +108,18 @@ const getAllMasterData = asyncHandler(async (req, res) => {
     Product.findAll(productQuery),
     Tag.findAll({}),
     Attribute.findAll({}),
-    Variant.findAll(variantQuery)
+    Variant.findAll(variantQuery),
   ];
   Promise.all(promissArr)
     .then((values) => {
       console.log("values1111111111", values);
+      // values = JSON.parse(JSON.stringify(values));
       const result = {
         categories: values[0],
         products: values[1],
         tags: values[2],
         attributes: values[3],
         variants: values[4],
-        
       };
       return res
         .status(resCode.HTTP_OK)
@@ -314,6 +321,5 @@ const getAllMasterData = asyncHandler(async (req, res) => {
   //   }),
 });
 module.exports = {
-  getAllMasterData
-
-}
+  getAllMasterData,
+};

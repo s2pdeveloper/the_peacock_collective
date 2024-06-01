@@ -8,11 +8,19 @@
         <div class="col-4">
           <div class="input-icons">
             <div class="input-group input-group-sm">
-              <input type="search" class="form-control" aria-label="Small" placeholder="Search" [(ngModel)]="search"
-                (input)="searchFn()" aria-describedby="inputGroup-sizing-sm" />
+              <input
+                type="search"
+                class="form-control"
+                aria-label="Small"
+                placeholder="Search"
+                [(ngModel)]="search"
+                (input)="searchFn()"
+                aria-describedby="inputGroup-sizing-sm"
+              />
               <div class="input-group-append">
                 <span class="input-group-text h-100" id="inputGroup-sizing-sm">
-                  <i class="ti ti-search"></i></span>
+                  <i class="ti ti-search"></i
+                ></span>
               </div>
             </div>
           </div>
@@ -42,31 +50,56 @@
             <tr *ngFor="let c of allData; let i = index">
               <td scope="row">{{ i + 1 }}</td>
               <td scope="row" class="text-start">{{ c?.name }}</td>
-
               <td scope="row">
-                {{ (c?.value | join : 'value') || '-'}}
+                <ng-container *ngIf="c.type == 'color'">
+                  <ng-container *ngFor="let code of c.value; let j = index">
+                    <i [style.color]="code" class="fa-solid fa-square mx-1"></i>
+                    {{ j < c.value.length - 1 ? "|" : "" }}
+                  </ng-container>
+                </ng-container>
+                <ng-container *ngIf="c.type == 'text'">
+                  {{ (c?.value | join: "value") || "-" }}
+                </ng-container>
+                <ng-container *ngIf="c.type == 'number'">
+                  {{ (c?.value | join: "value") || "-" }}
+                </ng-container>
               </td>
 
               <td scope="row" class="text-center">
-                <span class="badge rounded-pill  text-bg-{{
-                      c.status == 'active' ? 'success' : 'danger'
-                    }} px-2">
-                  {{ c.status | titlecase }}</span>
+                <span
+                  class="badge rounded-pill  text-bg-{{
+                    c.status == 'active' ? 'success' : 'danger'
+                  }} px-2"
+                >
+                  {{ c.status | titlecase }}</span
+                >
               </td>
 
               <td scope="row" class="text-center">
-                <button class="btn btn-sm action-btn mx-2" (click)="update(c)" ngbTooltip="Edit">
+                <button
+                  class="btn btn-sm action-btn mx-2"
+                  (click)="update(c)"
+                  ngbTooltip="Edit"
+                >
                   <i class="ti ti-edit-circle"></i>
                 </button>
 
-                <button class="btn btn-sm action-btn" (click)="open(c.id, deleteModal)" ngbTooltip="Delete">
+                <button
+                  class="btn btn-sm action-btn"
+                  (click)="open(c.id, deleteModal)"
+                  ngbTooltip="Delete"
+                >
                   <i class="ti ti-trash"></i>
                 </button>
               </td>
               <ng-template #deleteModal let-modal>
                 <div class="modal-header border-0">
-                  <button type="button" class="btn-close" aria-label="Close"
-                    (click)="modal.dismiss('Cross click')"></button>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    aria-label="Close"
+                    (click)="modal.dismiss('Cross click')"
+                  ></button>
                 </div>
                 <div class="modal-body border-0">
                   <h4 class="modal-title text-center" id="modal-basic-title">
@@ -74,10 +107,18 @@
                   </h4>
                 </div>
                 <div class="modal-footer justify-content-center border-0">
-                  <button type="button" class="btn px-4 btn-outline-danger" (click)="delete(selectedRow)">
+                  <button
+                    type="button"
+                    class="btn px-4 btn-outline-danger"
+                    (click)="delete(selectedRow)"
+                  >
                     YES
                   </button>
-                  <button type="button" class="btn px-4 btn-outline-primary" (click)="modal.dismiss('Cross click')">
+                  <button
+                    type="button"
+                    class="btn px-4 btn-outline-primary"
+                    (click)="modal.dismiss('Cross click')"
+                  >
                     NO
                   </button>
                 </div>
@@ -86,8 +127,12 @@
           </tbody>
         </table>
       </div>
-      <app-custom-pagination [(page)]="page" [(pageSize)]="pageSize" [(collection)]="collection"
-        (myOutput)="onChangePage(page)"></app-custom-pagination>
+      <app-custom-pagination
+        [(page)]="page"
+        [(pageSize)]="pageSize"
+        [(collection)]="collection"
+        (myOutput)="onChangePage(page)"
+      ></app-custom-pagination>
     </div>
   </div>
 </div>

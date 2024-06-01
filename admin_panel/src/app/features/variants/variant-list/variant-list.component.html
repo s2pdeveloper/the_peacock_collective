@@ -16,10 +16,15 @@
           </thead>
           <tbody class="tbody mt-3">
             <tr *ngFor="let c of variantList; let i = index">
-              <td scope="row">{{ i + 1 }}</td>
+              <td scope="row">{{ pageSize * (page - 1) + (i + 1) }}</td>
               <td scope="row">
                 <p *ngFor="let at of c.variantWithAttrVariantMap">
-                 {{at?.AttrVariantMapWithAttributes?.name + ' | ' + at.value}}
+                  <ng-container *ngIf="at?.AttrVariantMapWithAttributes?.name == 'color'">
+                    {{at?.AttrVariantMapWithAttributes?.name + ' | '}} <i [style.color]="at.value" class="fa-solid fa-square"></i>
+                  </ng-container>
+                  <ng-container *ngIf="at?.AttrVariantMapWithAttributes?.name != 'color'">
+                    {{at?.AttrVariantMapWithAttributes?.name + ' | ' + at.value}}
+                  </ng-container>
                 </p>
               </td>
               <td scope="row" class="text-start">{{ c?.sku }}</td>

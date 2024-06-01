@@ -146,16 +146,16 @@ const NavigationItems = [
         type: "item",
         classes: "nav-item",
         url: "/default/bespoke",
-        icon: "fa-brands fa-vimeo",
+        icon: "fa-solid fa-b",
       },
       
       {
         id: "order",
-        title: "Order",
+        title: "Orders",
         type: "item",
         classes: "nav-item",
         url: "/default/order/order-list",
-        icon: "fa-solid fa-tag",
+        icon: "fa-solid fa-clipboard-list",
       },
       // {
       //   id: "inventory",
