@@ -51,7 +51,13 @@
                   .variantWithAttrVariantMap
               "
             >
-              {{ opt.AttrVariantMapWithAttributes.name + " : " + opt.value }}
+            <ng-container *ngIf="opt.AttrVariantMapWithAttributes.name == 'color'">
+              {{opt.AttrVariantMapWithAttributes.name + ' | '}} <i [style.color]="opt.value" class="fa-solid fa-square"></i>
+            </ng-container>
+            <ng-container *ngIf="opt.AttrVariantMapWithAttributes.name != 'color'">
+              {{opt.AttrVariantMapWithAttributes.name + ' | ' + opt.value}}
+            </ng-container>
+              <!-- {{ opt.AttrVariantMapWithAttributes.name + " : " + opt.value }} -->
             </p>
           </div>
         </div>

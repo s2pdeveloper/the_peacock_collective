@@ -71,7 +71,7 @@
                       </div>
                       <div class="col-10 dropdownItem px-3">
                         <swiper-container class="img-box" slides-per-view="4">
-                          <swiper-slide class="px-2 prod-cart" (click)="
+                          <swiper-slide class="px-2 prod-cart w-25" (click)="
                               navigateTo('/product/product-details', p?.id)
                             " *ngFor="
                               let p of commonService.allData.products
@@ -322,7 +322,7 @@
       </div>
       <div class="dropdownItem p-3">
         <swiper-container class="img-box" slides-per-view="1">
-          <swiper-slide class="px-2 prod-cart" (click)="navigateTo('/product/product-details', p?.id)" *ngFor="
+          <swiper-slide class="px-2 prod-cart w-100" (click)="navigateTo('/product/product-details', p?.id)" *ngFor="
               let p of commonService.allData.products | tagProduct : activeTagId
             "><img class="prod-img w-100" [src]="p?.bannerImage" />
             <div class="text-box p-3">
