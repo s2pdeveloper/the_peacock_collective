@@ -42,7 +42,7 @@
                   <div class="p-3">
                     <p class="light-dark regular-font">
                       {{
-                        order.orderVariantMapWithVariant.variantWithProduct.hsn
+                        order.orderVariantMapWithVariant.sku
                       }}
                     </p>
                     <p
@@ -65,7 +65,7 @@
                 </div>
                 <div class="col-2 text-center light-dark small-text my-auto">
                   <p class="py-auto">
-                    {{ order.price | currency : "INR" }}
+                    {{ order.qty * order.orderVariantMapWithVariant.price | currency : "INR" }}
                   </p>
                 </div>
               </div>

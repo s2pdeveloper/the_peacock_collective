@@ -41,13 +41,16 @@ export class ProductDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.actRoute.queryParams.subscribe((params: any) => {
       if (params?.id) {
+        console.log('params-id',params);
+        
         this.products = this.commonService.allData.products.find(
-          (x) => x.id == params.id
+          (x) => x.id == Number(params.id)
         );
         console.log("this.products", this.products);
 
         this.variants = this.products.productWithVariants;
         this.currentVariant = this.products.productWithVariants[0];
+        this.attrArr = [];
         for (const item of this.currentVariant.variantWithAttrVariantMap) {
           this.attrArr.push({
             name: item.AttrVariantMapWithAttributes.name,

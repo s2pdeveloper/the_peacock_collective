@@ -25,8 +25,6 @@ export class AppComponent implements OnInit {
       // this.user = this.storageService.get('Customer');
       console.log("isPlatformBrowser", new Date().toLocaleString());
       const results: any = this.stateService.getState('ALL_DATA', null);
-      console.log("results===========1", results);
-
       if (!results) {
         console.log('no ======results');
 

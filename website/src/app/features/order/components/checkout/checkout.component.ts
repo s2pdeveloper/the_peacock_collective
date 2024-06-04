@@ -22,7 +22,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   selectedAddressId: number = null;
   allAddresses: any[] = [];
   product: any[] = [];
-  cartData: any[] = [];
+  // cartData: any[] = [];
 
   type: string = null;
   constructor(
@@ -47,6 +47,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
       }
     });
+    if (this.type == 'CART') {
+      this.getAllCartData();
+    }
     this.product = sessionStorage.getItem('products')
       ? JSON.parse(sessionStorage.getItem('products'))
       : [];
@@ -72,6 +75,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             return x;
           }
         });
+        console.log('prod',prod);
+        
         prod.variant = variant;
         item.product = prod;
         item.price = item.qty * variant.price;
@@ -147,7 +152,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
   getAllCartData() {
     this.cartService.getAll().subscribe((success) => {
-      this.cartData = success.result.rows;
+      this.product = success.result.rows;
     });
   }
 }

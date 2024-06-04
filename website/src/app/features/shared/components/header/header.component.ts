@@ -35,102 +35,18 @@ export class HeaderComponent {
   constructor(
     @Inject(PLATFORM_ID) private _platformId: Object,
     private router: Router,
-    private storageService: StorageService,
     public commonService: CommonService,
     private tagCatPipe: TagCategoryPipe,
     private cartService: CartService,
     private toast: ToastService
   ) {
-    // this.user = this.storageService.get('Customer'); 
+   
   }
   private modalService = inject(NgbModal);
   openSearch(content: any) {
     this.modalService.open(content, { size: 'xl', centered: true });
   }
-  // Header Dropdown Data
-  categoryProducts: any[] = [
-    {
-      name: 'Product 1',
-      img: '../../../../../assets/images/bridal-look.webp',
-      catName: 'Blouses',
-      price: 11.5,
-    },
-    {
-      name: 'Product 2',
-      img: '../../../../../assets/images/bride-1.jpeg',
-      catName: 'Blouses',
-      price: 11.5,
-    },
-    {
-      name: 'Product 3',
-      img: '../../../../../assets/images/bride-4.jpg',
-      catName: 'Blouses',
-      price: 11.5,
-    },
-    {
-      name: 'Product 4',
-      img: '../../../../../assets/images/bride-2.jpg',
-      catName: 'Blouses',
-      price: 11.5,
-    },
-    {
-      name: 'Product 5',
-      img: '../../../../../assets/images/bridal-look.webp',
-      catName: 'Blouses',
-      price: 11.5,
-    },
-    {
-      name: 'Product 6',
-      img: '../../../../../assets/images/bride-1.jpeg',
-      catName: 'Blouses',
-      price: 11.5,
-    },
-    {
-      name: 'Product 7',
-      img: '../../../../../assets/images/bride-4.jpg',
-      catName: 'Blouses',
-      price: 11.5,
-    },
-    {
-      name: 'Product 8',
-      img: '../../../../../assets/images/bride-2.jpg',
-      catName: 'Blouses',
-      price: 11.5,
-    },
-    {
-      name: 'Product 9',
-      img: '../../../../../assets/images/bride-1.jpeg',
-      catName: 'Blouses',
-      price: 11.5,
-    },
-    {
-      name: 'Product 10',
-      img: '../../../../../assets/images/bride-2.jpg',
-      catName: 'Blouses',
-      price: 11.5,
-    },
-  ];
-  // Cart Data
-  product: any[] = [
-    {
-      name: 'Printed Chiffon Dress',
-      img: '../../../../../assets/products/chair.jpg',
-      size: 'S',
-      color: 'Yellow',
-      price: 10.5,
-      qty: 5,
-      shipCharge: 3.2,
-    },
-    {
-      name: 'Printed Chiffon Dress',
-      img: '../../../../../assets/products/printer.jpg',
-      size: 'S',
-      color: 'Yellow',
-      price: 10.5,
-      qty: 1,
-      shipCharge: 3.2,
-    },
-  ];
+
   get totalItemPrice() {
     let totalPriceArray = this.cartData.reduce((acc, currValue) => acc + (currValue.cartWithVariants.price * currValue.qty), 0);
     // return totalPriceArray.reduce(
@@ -139,10 +55,6 @@ export class HeaderComponent {
     // );
     return totalPriceArray;
   }
-  totalShipCharge = this.product.reduce(
-    (acc, currValue) => acc + currValue.shipCharge,
-    0
-  );
 
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
@@ -189,10 +101,7 @@ export class HeaderComponent {
     });
   }
   navigateToDynamic(item: any) {
-    console.log("item", item);
     this.activeCategoryId = item.id;
-
-
     const path: String = `pages/${item.id}`;
     this.router.navigate([path]);
     let ele: any = document.getElementById('topbar');
@@ -256,8 +165,6 @@ export class HeaderComponent {
     const filterCategory: any[] = this.commonService.allData.categories.filter(x => x.categoryWithtags.some(y => y.tagId == this.activeTagId));
     if (filterCategory.length) {
       this.activeCategoryId = filterCategory[0].id;
-      console.log("this.activeCategoryId", this.activeCategoryId);
-
     } else {
       this.activeCategoryId = null
     }
