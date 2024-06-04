@@ -44,20 +44,24 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.actRouter.queryParams.subscribe((params: any) => {
       if (params?.type) {
         this.type = params.type;
+
       }
     });
     this.product = sessionStorage.getItem('products')
       ? JSON.parse(sessionStorage.getItem('products'))
       : [];
+    console.log("this.product", this.product);
+
+
+    this.getAllCartData();
+
     this.getAddresses();
     console.log(
       'this.commonService.allData.product',
       this.commonService.allData.products
     );
     console.log('this.product', this.product);
-    let allProduct = JSON.parse(
-      JSON.stringify(this.commonService.allData.products)
-    );
+    let allProduct = JSON.parse(JSON.stringify(this.commonService.allData.products))
 
     if (this.product.length) {
       for (let item of this.product) {
@@ -75,7 +79,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
     console.log('this.product', this.product);
 
-    this.getAllCartData();
   }
   createOrder() {
 
@@ -122,6 +125,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (this.user) {
       this.addressService.getByCustomerId().subscribe((success: any) => {
         this.allAddresses = success.result.rows;
+        for (const item of this.allAddresses) {
+          if (item.isDefault) {
+            this.selectedAddressId = item.id;
+            break;
+          }
+        }
+        console.log("this.allAddresses", this.allAddresses);
+
       });
     }
   }
