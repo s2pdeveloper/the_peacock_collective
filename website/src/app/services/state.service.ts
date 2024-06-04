@@ -1,10 +1,5 @@
 import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
-import { TransferState, makeStateKey, StateKey } from '@angular/platform-browser';
-import { isPlatformServer } from '@angular/common';
-import { tap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
-
-// export const ALL_DATA = makeStateKey('all_data');
+import { TransferState, makeStateKey, StateKey } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -25,6 +20,8 @@ export class StateService {
             makeStateKey(key),
             defaultValue
         );
+        console.log("state==========1", state);
+
         this.transferState.remove(makeStateKey(key));
         return state;
     }

@@ -23,16 +23,23 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
       // this.user = this.storageService.get('Customer');
+      console.log("isPlatformBrowser", new Date().toLocaleString());
       const results: any = this.stateService.getState('ALL_DATA', null);
       if (!results) {
+        console.log('no ======results');
+
         this.getAllMasterData();
       } else {
         this.commonService.allData = results;
+        this.commonService.allData = { ...this.commonService.allData }
         this.loader = false;
       }
 
     } else {
       this.getAllMasterData();
+      console.log("isPlatformServer11111", new Date().toLocaleString());
+
+
     }
 
   }
@@ -44,8 +51,12 @@ export class AppComponent implements OnInit {
       this.commonService.allData = success.result;
       this.loader = false;
 
+      // let hasState = this.stateService.hasState('ALL_DATA');
+      // console.log("hasState----", hasState);
+
       this.stateService.saveState('ALL_DATA', success.result);
-      const results: any = this.stateService.getState('ALL_DATA', null);
+      // const results: any = this.stateService.getState('ALL_DATA', null);
+      // console.log("results===========4444", results);
       this.loader = false;
     }, error => {
       console.log("error", error);
