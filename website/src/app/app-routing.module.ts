@@ -1,5 +1,18 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, PreloadingStrategy, Route, RouterModule, Routes, withEnabledBlockingInitialNavigation } from '@angular/router';
+import { ExtraOptions } from '@angular/router';
+import { Observable, of } from 'rxjs';
+
+export class CustomPreloadingStrategy implements PreloadingStrategy {
+  preload(route: Route, load: () => Observable<any>): Observable<any> {
+    // Check if the route should be preloaded based on a custom condition
+    if (route.data && route.data['preload']) {
+      return load();
+    } else {
+      return of(null);
+    }
+  }
+}
 
 const routes: Routes = [
   {
@@ -13,6 +26,7 @@ const routes: Routes = [
       import('./features/landing-layout/landing-layout.module').then(
         (m) => m.LandingLayoutModule
       ),
+    data: { preload: true }
   },
   {
     path: 'auth',
@@ -47,12 +61,17 @@ const routes: Routes = [
   { path: 'bespoke', loadChildren: () => import('./features/bespoke/bespoke.module').then(m => m.BespokeModule) },
 ];
 
+const options: ExtraOptions = {
+  scrollPositionRestoration: 'enabled',
+  initialNavigation: 'enabledNonBlocking',
+  preloadingStrategy: CustomPreloadingStrategy
+}
+
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, {
-      preloadingStrategy: PreloadAllModules
-    }),
+    RouterModule.forRoot(routes, options),
   ],
   exports: [RouterModule],
+  providers: [CustomPreloadingStrategy]
 })
 export class AppRoutingModule { }
