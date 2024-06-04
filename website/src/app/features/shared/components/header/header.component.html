@@ -161,7 +161,7 @@
   <div *ngIf="isMenuOpen" class="offcanvas-body m-0">
     <div class="option p-4">
       <div *ngFor="let item of commonService.allData.tags"
-        class="option-item border-bottom d-flex justify-content-between py-3" (click)="handleCategory(item)">
+        class="option-item border-bottom d-flex justify-content-between py-3" (click)="handleCategory(item);changeActiveCategory()">
         <p class="w-75 text-uppercase">{{ item.title }}</p>
         <div class="d-flex justify-content-end align-items-center w-25">
           <i class="fa-solid fa-chevron-right"></i>
@@ -295,10 +295,12 @@
     </div>
   </div>
 </div>
+
+<!-- Mobile Toggle Menu -->
 <div [ngClass]="isCatOpen ? 'modal-open cart-modal' : 'modal-open cart-close'">
   <div class="offcanvas-header m-0 px-4 py-3 border-bottom">
     <h6 class="fw-bold">THE PEACOCK COLLECTIVE</h6>
-    <button type="button" class="btn text-dark" (click)="handleDataRemove()">
+    <button type="button" class="btn text-dark" (click)="handleDataRemove();isMenuOpen = !isMenuOpen">
       <i class="text-dark fa-solid fa-xmark"></i>
     </button>
   </div>
@@ -311,19 +313,22 @@
         </div>
         <p class="w-75 text-uppercase fw-bold">{{ category?.title }}</p>
       </div>
-      <div *ngFor="let cat of category.categories" class="option-item border-bottom d-flex justify-content-between py-3"
-        (click)="navigateToDynamic(cat?.name); handleDataRemove()">
-        <p class="w-75 text-uppercase" (click)="isMenuOpen = !isMenuOpen; handleDataRemove()">
+      <div *ngFor="let item of commonService.allData.categories
+      | tagCategory : activeTagId" class="option-item border-bottom d-flex justify-content-between py-3"
+        (click)="navigateToDynamic(item);handleDataRemove();isMenuOpen = !isMenuOpen">
+        <span [class.textDanger]="item?.name == 'Sale'" [class.active-category]="activeCategoryId==item.id" class="drop-items pointer"
+                           >{{ item?.name }}</span>
+        <!-- <p class="w-75 text-uppercase" (click)="isMenuOpen = !isMenuOpen; handleDataRemove()">
           {{ cat?.name }}
-        </p>
+        </p> -->
         <div class="d-flex justify-content-end align-items-center w-25">
           <i class="fa-solid fa-chevron-right"></i>
         </div>
       </div>
       <div class="dropdownItem p-3">
         <swiper-container class="img-box" slides-per-view="1">
-          <swiper-slide class="px-2 prod-cart w-100" (click)="navigateTo('/product/product-details', p?.id)" *ngFor="
-              let p of commonService.allData.products | tagProduct : activeTagId
+          <swiper-slide class="px-2 prod-cart w-100" (click)="navigateTo('/product/product-details', p?.id);handleDataRemove();isMenuOpen = !isMenuOpen" *ngFor="
+              let p of commonService.allData.products | tagProduct : activeTagId : activeCategoryId
             "><img class="prod-img w-100" [src]="p?.bannerImage" />
             <div class="text-box p-3">
               <p class="prod-name">{{ p?.name }}</p>

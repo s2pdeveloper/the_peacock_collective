@@ -23,10 +23,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
       // this.user = this.storageService.get('Customer');
-      console.log("isPlatformBrowser");
       const results: any = this.stateService.getState('ALL_DATA', null);
-      console.log("results===========1", results);
-
       if (!results) {
         this.getAllMasterData();
       } else {
@@ -36,8 +33,6 @@ export class AppComponent implements OnInit {
 
     } else {
       this.getAllMasterData();
-      console.log("isPlatformServer11111");
-
     }
 
   }
@@ -51,7 +46,6 @@ export class AppComponent implements OnInit {
 
       this.stateService.saveState('ALL_DATA', success.result);
       const results: any = this.stateService.getState('ALL_DATA', null);
-      console.log("results===========4444", results);
       this.loader = false;
     }, error => {
       console.log("error", error);

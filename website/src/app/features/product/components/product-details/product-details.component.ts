@@ -48,6 +48,7 @@ export class ProductDetailsComponent implements OnInit {
 
         this.variants = this.products.productWithVariants;
         this.currentVariant = this.products.productWithVariants[0];
+        this.attrArr = [];
         for (const item of this.currentVariant.variantWithAttrVariantMap) {
           this.attrArr.push({
             name: item.AttrVariantMapWithAttributes.name,
