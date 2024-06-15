@@ -1,6 +1,6 @@
 
 export const environment = {
   // websiteUrl: "https://jhumkaplanet.com/catalogoue?productId=",
-  apiEndpoint: "https://peacockadmin.s2pedutech.com/v1/website/",
+  apiEndpoint: "https://admin.peacockcollective.in/v1/website/",
   production: true,
 };
