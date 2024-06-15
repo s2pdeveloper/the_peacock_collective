@@ -56,7 +56,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     console.log("this.product", this.product);
 
 
-    this.getAllCartData();
+    // this.getAllCartData();
 
     this.getAddresses();
     console.log(

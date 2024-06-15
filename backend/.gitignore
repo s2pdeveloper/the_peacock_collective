@@ -5,7 +5,6 @@
 
 # Node artifact files
 node_modules/
-dist/
 /assets
 /store
 # server/assets/resume/
@@ -24,7 +23,6 @@ dist/
 
 # Maven
 target/
-dist/
 package-lock.json
 # JetBrains IDE
 .idea/
