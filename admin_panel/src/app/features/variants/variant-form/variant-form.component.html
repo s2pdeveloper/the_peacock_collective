@@ -4,7 +4,8 @@
       <div>{{ variantForm.value.id ? "Update" : "Create" }} Variant</div>
       <div>
         <a class="back-btn btn btn-primary" (click)="back()">
-          <i class="ti ti-arrow-left me-1"></i> Back</a>
+          <i class="ti ti-arrow-left me-1"></i> Back</a
+        >
       </div>
     </div>
   </div>
@@ -14,55 +15,136 @@
         <div class="col-md-4 mb-2">
           <label class="form-label">
             SKU
-            <span class="text-danger">*</span></label>
+            <span class="text-danger">*</span></label
+          >
           <input formControlName="sku" type="text" class="form-control" />
         </div>
         <div class="col-md-4 mb-2">
           <label class="form-label">
             Price
-            <span class="text-danger">*</span></label>
+            <span class="text-danger">*</span></label
+          >
           <input formControlName="price" type="number" class="form-control" />
         </div>
         <div class="col-md-4 mb-2">
           <label class="form-label">
             Qty
-            <span class="text-danger">*</span></label>
+            <span class="text-danger">*</span></label
+          >
           <input formControlName="qty" type="number" class="form-control" />
         </div>
         <div class="col-md-4 mb-3" *ngFor="let at of attributes">
           <label class="form-label">Select {{ at.label }}</label>
-          <select class="form-select" [ngModelOptions]=" 
-          {standalone: true}" [(ngModel)]="at.selectedValue">
+          <!-- <ng-select
+            [items]="at.attributes"
+            placeholder="Select {{ at.label }}"
+            [(ngModel)]="at.selectedValue"
+          >
+            <ng-container *ngIf="at?.type == 'color'">
+              <ng-template
+                ng-label-tmp
+                let-item="item"
+                *ngFor="let val of at.attributes"
+              >
+                <i [style.color]="item.val" class="fa-solid fa-square"></i>
+              </ng-template>
+            </ng-container>
+            <ng-container *ngIf="at?.type != 'color'">
+              <ng-template
+                ng-label-tmp
+                let-item="item"
+                *ngFor="let val of at.attributes"
+              >
+                <b>{{ item.val }}</b>
+              </ng-template>
+            </ng-container>
+          </ng-select> -->
+          <ng-container *ngIf="at?.label == 'color'">
+            <ng-select
+              [items]="at.attributes"
+              placeholder="Select {{ at.name }}"
+              [(ngModel)]="at.selectedValue"
+              [ngModelOptions]="{ standalone: true }"
+            >
+              <ng-template ng-label-tmp let-item="item">
+                <i
+                  [ngStyle]="{ color: item }"
+                  class="fa-solid fa-square mx-1"
+                ></i>
+                
+              </ng-template>
+              <ng-template ng-option-tmp let-item="item" let-index="index">
+                <i
+                  [ngStyle]="{ color: item }"
+                  class="fa-solid fa-square mx-1"
+                ></i>
+                <span class="ms-2">{{item}}</span>
+              </ng-template>
+            </ng-select>
+          </ng-container>
+          <ng-container *ngIf="at?.label != 'color'">
+            <ng-select
+              [items]="at.attributes"
+              placeholder="Select {{ at.name }}"
+              [(ngModel)]="at.selectedValue"
+              [ngModelOptions]="{ standalone: true }"
+            >
+              <ng-template ng-label-tmp let-item="item">
+                {{ item }}
+              </ng-template>
+              <ng-template ng-option-tmp let-item="item" let-index="index">
+                {{ item }}
+              </ng-template>
+            </ng-select>
+          </ng-container>
+
+          <!-- <select
+            class="form-select"
+            [ngModelOptions]="{ standalone: true }"
+            [(ngModel)]="at.selectedValue"
+          >
             <option selected disabled [value]="null">
               Select {{ at.label }}
             </option>
             <option *ngFor="let val of at.attributes" [value]="val">
               {{ val }}
             </option>
-          </select>
+          </select> -->
         </div>
 
         <div class="col-12 my-3">
           <div class="row">
             <div class="col-12">
               <div class="d-flex justify-content-center">
-                <button (click)="reset()" type="submit"
-                  class="btn px-5 btn-primary mx-2 shadow rounded rounded-3 d-flex align-items-center">
+                <button
+                  (click)="reset()"
+                  type="submit"
+                  class="btn px-5 btn-primary mx-2 shadow rounded rounded-3 d-flex align-items-center"
+                >
                   <i class="fa-solid fa-arrows-rotate me-2"></i>
                   Reset
                 </button>
-                <button *ngIf="!variantForm.value.id" type="submit"
+                <button
+                  *ngIf="!variantForm.value.id"
+                  type="submit"
                   class="btn px-5 btn-success shadow rounded rounded-3 mx-2 d-flex align-items-center"
-                  (click)="create()">
-                  <i [class]="
+                  (click)="create()"
+                >
+                  <i
+                    [class]="
                       variantForm.value.id != null
                         ? 'fa-pen-to-square'
                         : 'fa-plus'
-                    " class="fa-solid me-2"></i>
+                    "
+                    class="fa-solid me-2"
+                  ></i>
                   Create
                 </button>
-                <button *ngIf="variantForm.value.id" (click)="update()"
-                  class="btn px-5 btn-warning shadow rounded rounded-3 mx-2 d-flex align-items-center">
+                <button
+                  *ngIf="variantForm.value.id"
+                  (click)="update()"
+                  class="btn px-5 btn-warning shadow rounded rounded-3 mx-2 d-flex align-items-center"
+                >
                   <i class="fa-pen-to-square fa-solid me-2"></i>
                   Update
                 </button>
@@ -73,7 +155,10 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <app-variant-list [variantList]="variantList" (customEvent)="variantEvent($event)"></app-variant-list>
+          <app-variant-list
+            [variantList]="variantList"
+            (customEvent)="variantEvent($event)"
+          ></app-variant-list>
         </div>
       </div>
     </form>
