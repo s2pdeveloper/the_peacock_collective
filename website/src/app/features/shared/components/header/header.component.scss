@@ -10,23 +10,43 @@
 }
 
 .head:hover #topbar {
-  background-color: #fff;
+  background-color: #000;
   z-index: 100;
   position: relative;
   transition: all 0.5s ease-in-out;
+  .nav-items,
+  .drop-items {
+    color: #fff;
+  }
+  .icons i {
+    color: #fff !important;
+  }
+  .nav_link {
+    color: #fff !important;
+  }
 }
 
 .head:hover .header-web {
-  background-color: #fff;
+  background-color: #000;
   position: relative;
   transition: all 0.5s ease-in-out;
+  .nav-items,
+  .drop-items,
+  .nav_link {
+    color: #fff !important;
+  }
 }
 
 .head:hover .header-tablet {
-  background-color: #fff;
+  background-color: #000;
   z-index: 100;
   position: relative;
   transition: all 0.5s ease-in-out;
+  .nav-items,
+  .drop-items,
+  .nav_link {
+    color: #fff;
+  }
 }
 
 .btn-dark,
@@ -119,7 +139,7 @@
   left: 0;
   width: 100%;
   height: auto;
-  background: #fff;
+  background: #000;
   box-shadow: 0rem 0.2rem 0.5rem rgba(32, 7, 65, 0.14);
   clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
   transition: all 0.5s ease-in;
@@ -339,10 +359,12 @@ li {
       i {
         font-size: 1.2rem;
         margin-bottom: 0.5rem;
+        color: #000;
       }
 
       p {
         font-size: 0.9rem;
+        color: #000;
       }
     }
   }
@@ -364,7 +386,6 @@ li {
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
-
   .cart-modal,
   .cart-close,
   .toggle-modal,
@@ -374,7 +395,6 @@ li {
 }
 
 @media (max-width: 768px) {
-
   .cart-modal,
   .cart-close {
     width: 100%;

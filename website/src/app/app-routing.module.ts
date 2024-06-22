@@ -41,9 +41,9 @@ const routes: Routes = [
       import('./features/contact/contact.module').then((m) => m.ContactModule),
   },
   {
-    path: 'account',
+    path: 'about-us',
     loadChildren: () =>
-      import('./features/account/account.module').then((m) => m.AccountModule),
+      import('./features/about-us/about-us.module').then((m) => m.AboutUsModule),
   },
   {
     path: 'product',

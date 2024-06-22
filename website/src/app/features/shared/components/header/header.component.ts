@@ -18,7 +18,7 @@ export class HeaderComponent {
   qty: number = 1;
   closeResult = '';
   scrollValue: number = 0;
-  scrollPosition: any;
+  scrollPosition: number = 0;
   isMenuOpen: boolean = false;
   isAccountOpen: boolean = false;
   isCatOpen: boolean = false;
