@@ -1,17 +1,31 @@
 .about-text {
-    display: inline-block;
-    position: relative;
-    font-weight: bold;
-    color: #2d2b5c; 
-    padding-inline: 1rem;
+  display: inline-block;
+  position: relative;
+  font-weight: bold;
+  color: #2d2b5c;
+  padding-inline: 1rem;
+//   font-family: "Buffalo", sans-serif;
 }
 .about-text::after {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 2px; 
-    background-color: #2d2b5c; 
-    position: absolute;
-    bottom: -10px;
-    left: 0;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #2d2b5c;
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+}
+p {
+  font-size: 18px;
+  font-family: "Buffalo", sans-serif;
+}
+.signature {
+  font-size: 26px;
+  font-family: "Brittany", sans-serif;
+}
+@media (max-width:768px){
+  p {
+    font-size: 14px;
+  }
 }

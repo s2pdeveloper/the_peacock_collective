@@ -1,4 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import {
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { StorageService } from 'src/app/core/services';
@@ -13,6 +20,8 @@ import { OrderService } from 'src/app/services/order.service';
   styleUrls: ['./checkout.component.scss'],
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
+  @Inject(PLATFORM_ID) private _platformId: Object;
+
   showEye: boolean = true;
   collapsed: boolean = false;
   user: any;
@@ -44,17 +53,17 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.actRouter.queryParams.subscribe((params: any) => {
       if (params?.type) {
         this.type = params.type;
-
       }
     });
     if (this.type == 'CART') {
       this.getAllCartData();
     }
-    this.product = sessionStorage.getItem('products')
-      ? JSON.parse(sessionStorage.getItem('products'))
-      : [];
-    console.log("this.product", this.product);
-
+    if (isPlatformBrowser(this._platformId)) {
+      this.product = sessionStorage.getItem('products')
+        ? JSON.parse(sessionStorage.getItem('products'))
+        : [];
+      console.log('this.product', this.product);
+    }
 
     // this.getAllCartData();
 
@@ -64,7 +73,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.commonService.allData.products
     );
     console.log('this.product', this.product);
-    let allProduct = JSON.parse(JSON.stringify(this.commonService.allData.products))
+    let allProduct = JSON.parse(
+      JSON.stringify(this.commonService.allData.products)
+    );
 
     if (this.product.length) {
       for (let item of this.product) {
@@ -75,18 +86,16 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             return x;
           }
         });
-        console.log('prod',prod);
-        
+        console.log('prod', prod);
+
         prod.variant = variant;
         item.product = prod;
         item.price = item.qty * variant.price;
       }
     }
     console.log('this.product', this.product);
-
   }
   createOrder() {
-
     let payload = {
       products: this.product,
       addressId: this.selectedAddressId,
@@ -96,9 +105,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.orderService.create(payload).subscribe({
       next: (success) => {
         this.toasterService.success('Order placed successfully!!');
-        sessionStorage.removeItem('products');
+        if (isPlatformBrowser(this._platformId)) {
+          sessionStorage.removeItem('products');
+          // this.carts = success;
+        }
         this.router.navigate(['/order/my-orders']);
-        // this.carts = success;
       },
       error: (err) => {
         console.log('err', err);
@@ -118,12 +129,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     return totalPriceArray;
   }
   ngOnDestroy(): void {
-    try {
-      if (sessionStorage.getItem('products')) {
-        sessionStorage.removeItem('products');
+    if (isPlatformBrowser(this._platformId)) {
+      try {
+        if (sessionStorage.getItem('products')) {
+          sessionStorage.removeItem('products');
+        }
+      } catch (error) {
+        console.log('error', error);
       }
-    } catch (error) {
-      console.log('error', error);
     }
   }
   getAddresses() {
@@ -136,8 +149,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             break;
           }
         }
-        console.log("this.allAddresses", this.allAddresses);
-
+        console.log('this.allAddresses', this.allAddresses);
       });
     }
   }

@@ -57,22 +57,22 @@ export class HeaderComponent {
   }
 
   ngOnInit(): void {
-    if (isPlatformBrowser(this._platformId)) {
-      window.addEventListener('wheel', (event) => {
-        this.scrollValue = Math.sign(event.deltaY);
-      });
-    }
+    // if (isPlatformBrowser(this._platformId)) {
+    //   window.addEventListener('wheel', (event) => {
+    //     this.scrollValue = Math.sign(event.deltaY);
+    //   });
+    // }
   }
 
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    const scrollPositionValue =
-      window.pageYOffset ||
-      document.documentElement.scrollTop ||
-      document.body.scrollTop ||
-      0;
-    this.scrollPosition = scrollPositionValue;
-  }
+  // @HostListener('window:scroll', [])
+  // onWindowScroll() {
+  //   const scrollPositionValue =
+  //     window.pageYOffset ||
+  //     document.documentElement.scrollTop ||
+  //     document.body.scrollTop ||
+  //     0;
+  //   this.scrollPosition = scrollPositionValue;
+  // }
   navigateTo(path: any, id: any) {
     if (path == '/order/my-orders' || path == '/order/wishlist') {
       if (isPlatformBrowser(this._platformId)) {

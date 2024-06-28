@@ -3,11 +3,11 @@
   margin: 0;
 }
 .main-row {
-  height: 83vh;
+  height: 80vh;
 }
 .main-page {
   width: 100%;
-  height: 110vh;
+  height: 80vh;
   position: relative;
   .video-box {
     width: 100%;
@@ -19,10 +19,10 @@
     }
   }
 }
-.landing-col {
-  position: relative;
-  transform: translateY(-27%);
-}
+// .landing-col {
+//   position: relative;
+//   transform: translateY(-27%);
+// }
 .landing-text {
   position: absolute;
   top: 90%;
@@ -36,14 +36,7 @@
 }
 @media (max-width: 771px) {
   .main-row {
-    height: 35vh;
-  }
-  .main-page {
-    height: 70vh;
-  }
-  .landing-col {
-    position: relative;
-    transform: translateY(-40%);
+    height: auto;
   }
   .landing-text {
     p,

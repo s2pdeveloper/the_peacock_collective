@@ -2,7 +2,20 @@
 @import "./themes/variable";
 @import "./themes/custom";
 @import "ngx-toastr/toastr";
-@import '~bs-stepper/dist/css/bs-stepper.min.css';
+@import "~bs-stepper/dist/css/bs-stepper.min.css";
+@font-face {
+  font-family: "Buffalo";
+  src: url("assets/font/Buffalo/Buffalo.otf") format("opentype"),
+    url("assets/font/Buffalo/Buffalo.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Brittany";
+  src: url("assets/font/brittany/BrittanySignature.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
 
 * {
   // font-family: "Cormorant Garamond", serif;
@@ -23,10 +36,10 @@
   border-radius: 0;
   outline: 5px solid #000;
 }
-.light-blue-backdrop{
+.light-blue-backdrop {
   background: #5cb3fd;
 }
-.disabled{
+.disabled {
   pointer-events: none;
   opacity: 0.5;
 }

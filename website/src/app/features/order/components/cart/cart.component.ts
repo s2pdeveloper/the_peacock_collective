@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { StorageService } from 'src/app/core/services';
@@ -11,11 +12,12 @@ import { CommonService } from 'src/app/services/common.service';
   styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
+  @Inject(PLATFORM_ID) private _platformId: Object
   qty: number = 1;
   user: any = null;
   originalCart = [];
   carts = [];
-  showUpdate : boolean = false;
+  showUpdate: boolean = false;
   constructor(
     private router: Router,
     public commonService: CommonService,
@@ -34,8 +36,7 @@ export class CartComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getAllCart();
-    console.log('carts',this.carts);
-    
+    console.log('carts', this.carts);
   }
   deleteVariant(item, i) {
     this.payloadData.delete.push(item.id);
@@ -51,22 +52,22 @@ export class CartComponent implements OnInit {
 
       if (this.checkForVariantQtyExceeds(item)) {
         item.error = true;
-        console.log('this.carts',this.carts);
+        console.log('this.carts', this.carts);
         return;
-      }else{
+      } else {
         item.error = false;
       }
       if (orgCart && orgCart.qty != item.qty) {
         this.payloadData.edit.push(item);
       }
     }
-    
+
     console.log('this.payloadData)', this.payloadData);
 
     this.cartService.updateAll(this.payloadData).subscribe({
       next: (success) => {
         // this.carts = success;
-        this.toasterService.success('Cart updated successfully')
+        this.toasterService.success('Cart updated successfully');
       },
       error: (err) => {
         console.log('err', err);
@@ -79,9 +80,7 @@ export class CartComponent implements OnInit {
       if (item.id == cart.variantId) {
         if (typeof +cart.qty == 'number') {
           if (item.qty < cart.qty) {
-            this.toasterService.error(
-              'Quantity not available in stock!!'
-            );
+            this.toasterService.error('Quantity not available in stock!!');
             qtyExceed = true;
           }
           break;
@@ -125,12 +124,13 @@ export class CartComponent implements OnInit {
         variantId: x.variantId,
       };
     });
-
-    sessionStorage.setItem('products', JSON.stringify(checkoutProduts));
-    this.router.navigate(['/order/checkout'], {
-      queryParams: {
-        type: 'CART',
-      },
-    });
+    if (isPlatformBrowser(this._platformId)) {
+      sessionStorage.setItem('products', JSON.stringify(checkoutProduts));
+      this.router.navigate(['/order/checkout'], {
+        queryParams: {
+          type: 'CART',
+        },
+      });
+    }
   }
 }
