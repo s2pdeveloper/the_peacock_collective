@@ -23,25 +23,33 @@ const {
   asyncHandler,
 } = require("../../../../config/middlewares/async.handler");
 const cloudinary = require("../../../../shared/service/cloudinary.service");
+const variantRepository = require("../../../../models/repository/adminRepo/variantRepository")
 
 const modelObj = {
   create: asyncHandler(async (req, res) => {
     req.body.customerId = req.user.id;
     req.body.orderNumber = `ORD${OPTIONS.orderNumber + (await OrderRepository.getSequenceNumber())
-    }`;
-    console.log('body-----------',req.body);
-    
-    let createData = await OrderRepository.create(req.body);
+      }`;
+
     if (req.body.products.length) {
-      let arr = req.body.products.map((x) => {
-        return {
-          variantId: x.variantId,
-          orderId: createData.id,
-          price: x.price,
-          qty: x.qty,
-        };
-      });
-      await OrderVariantMapRepository.bulkCreate(arr);
+      let variantInstanceArr = [];
+      for await (const item of req.body.products) {
+        let variant = await variantRepository.findByPk(item.variantId);
+        variant.qty = variant.qty - item.qty;
+        variantInstanceArr.push(variant.save());
+      }
+    let createData = await OrderRepository.create(req.body);
+    let data = req.body.products.map((x)=>{
+      return {
+        variantId: x.variantId,
+        orderId: createData.id,
+        price: x.price,
+        qty: x.qty,
+      };
+    })
+
+      await OrderVariantMapRepository.bulkCreate(data);
+      await Promise.all(variantInstanceArr)
       const query = {
         where: {
           customerId: req.user.id,
@@ -228,6 +236,22 @@ const modelObj = {
       res.status(500).json({ message: "Internal server error" });
     }
   }),
+  validateOrder : asyncHandler(async (req, res) => {
+    console.log('body-----------', req.body);
+    for await (const item of req.body.products) {
+      let variant = await variantRepository.findByPk(item.variantId);
+      console.log("variant",variant);
+      if (variant.qty < item.qty) {
+        let errors = `Quantity of ${variant.sku} you selected in not available`;
+        throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
+      }
+    }
+    return res.status(resCode.HTTP_OK).json(
+      generateResponse(resCode.HTTP_OK, {
+        message: 'Order Validate Successfully!!',
+      })
+    );
+  })
 };
 
 module.exports = modelObj;

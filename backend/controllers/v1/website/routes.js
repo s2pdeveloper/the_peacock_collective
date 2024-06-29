@@ -11,6 +11,7 @@ const wishList = require("./wishList/routes");
 const contact = require("./contact/routes");
 const tag = require("./tag/routes");
 const bespoke = require("./bespoke/routes");
+const payment = require("./payment/routes")
 
 router.use("/product", product);
 router.use("/category", category);
@@ -25,5 +26,6 @@ router.use("/address", address);
 router.use("/wishList", wishList);
 router.use("/contact", contact);
 router.use("/bespoke",bespoke);
+router.use("/payment",payment);
 
 module.exports = router;

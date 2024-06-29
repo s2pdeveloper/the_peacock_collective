@@ -1,5 +1,5 @@
 
-import Stripe from 'stripe';
+const Stripe =  require('stripe');
 const stripe = new Stripe('sk_test_51PWF72RoUfMOrpS2zDwqtAFoOKckFXq2lO6SgiMj0TBzJ89PmHcrpgNVplYNCbja1DovA21PKH9s96vySAGaJPSQ00sLv2u93I');
 // const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -16,7 +16,7 @@ const stripe = new Stripe('sk_test_51PWF72RoUfMOrpS2zDwqtAFoOKckFXq2lO6SgiMj0TBz
 //     return charge.status;
 // }
 
-export const createPayment = (body) => {
+ const createPayment = (body) => {
     stripe.customers.create({
         email: body.stripeEmail,
         source: body.stripeToken,
@@ -48,7 +48,9 @@ export const createPayment = (body) => {
             // res.send(err)       // If some error occurs
         });
 
-}
-
+};
+module.exports = {
+    createPayment
+};
 
 

@@ -159,7 +159,7 @@ const modelObj = {
     if (deleted != 0) {
       return res.json(
         generateResponse(resCode.HTTP_OK, {
-          message: MESSAGES.apiSuccessStrings.DELETED("Cart"),
+          message: MESSAGES.apiSuccessStrings.DELETED("Product from cart"),
         })
       );
     } else {
@@ -198,6 +198,7 @@ const modelObj = {
       })
     );
   }),
+
 };
 
 module.exports = modelObj;
