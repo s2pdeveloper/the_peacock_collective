@@ -16,6 +16,9 @@ export class OrderService {
   create(payload: any) {
     return this.http.post(this.BASE_URL, payload).pipe(map((res: any) => res));
   }
+  validateOrder(payload: any) {
+    return this.http.post(this.BASE_URL + '/validateOrder', payload).pipe(map((res: any) => res));
+  }
 
   update(id: any, payload: any) {
     return this.http

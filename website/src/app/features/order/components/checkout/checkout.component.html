@@ -1,6 +1,12 @@
 <div class="container-fluid">
   <div class="row justify-content-center">
     <div class="col-11">
+      <p class="py-3 text-color-primary pointer">
+        <span (click)="navigateTo('/')">Home</span> /
+        <span>Checkout</span>
+      </p>
+    </div>
+    <div class="col-11">
       <h1 class="p-4 regular-weight">Checkout</h1>
     </div>
     <div class="col-11">
@@ -53,17 +59,29 @@
               <div [ngClass]="collapsedPayment ? 'd-none' : 'd-block'" class="px-4 py-3">
                 <div class="row align-items-center px-4 py-3">
                   <div class="col-1">
-                    <input type="radio" name="" id="cod" />
+                    <input type="radio" value="cod" [(ngModel)]="payment" name="payment" id="cod" />
                   </div>
                   <div class="col-11">
                     <label for="cod">COD</label>
                   </div>
                 </div>
+                <div class="row align-items-center px-4 py-3">
+                  <div class="col-1">
+                    <input type="radio" value="card"  [(ngModel)]="payment" name="payment" id="card" />
+                  </div>
+                  <div class="col-11">
+                    <label for="card">CARD</label>
+                  </div>
+                </div>
               </div>
+              
               <div [ngClass]="collapsedPayment ? 'd-none' : 'd-block'" class="p-4 pt-1">
                 <div class="row justify-content-center">
                   <div class="col-12">
-                    <button class="btn btn-dark py-3" (click)="createOrder()">
+                    <div class="card-container" *ngIf="payment == 'card'">
+                      <app-strive (striveEvent)="striveEvent($event)"></app-strive>
+                  </div>
+                    <button *ngIf="payment != 'card'" class="btn btn-dark py-3" (click)="createOrder()">
                       Place Order
                     </button>
                   </div>
@@ -93,24 +111,25 @@
                 <div *ngFor="let d of product" class="row justify-content-between">
                   <div class="col-3 p-3 pb-0">
                     <img (click)="navigateTo('/product/product-details')" class="img-fluid"
-                      [src]="d?.product?.variant?.variantImages[0].image" alt="" />
+                      [src]="d?.variant?.variantImages[0].image" alt="" />
                   </div>
                   <div class="col-9">
                     <p class="regular-font">
                       <span class="pointer" (click)="navigateTo('/product/product-details')">{{
-                        d?.product?.productWithVariants[0]?.sku }}</span>
+                        d?.variant?.sku }}</span>
                     </p>
-                    <p class="text-color-secondary small-text" *ngFor="
-                        let attr of d?.product?.variant
+                    <p class="text-color-secondary small-text attr" *ngFor="
+                        let attr of d?.variant
                           ?.variantWithAttrVariantMap
                       ">
                       {{ attr.AttrVariantMapWithAttributes.name }} :
-                      {{ attr?.value }}
+                      <ng-container *ngIf="attr?.AttrVariantMapWithAttributes?.type == 'color'"> <i class="fa-solid fa-square" [ngStyle]="{'background-color':attr?.value}" ></i></ng-container>
+                      <ng-container *ngIf="attr?.AttrVariantMapWithAttributes?.type != 'color'"> {{ attr?.value }}</ng-container>
                     </p>
                   </div>
                   <div class="col-12 d-flex justify-content-end">
                     <p class="small-text">
-                      x{{ d?.qty}} {{ d?.product?.variant.price | currency : "INR" }}
+                      x{{ d?.qty}} {{ d?.variant.price | currency : "INR" }}
                     </p>
                   </div>
                   <div class="col-12 d-flex justify-content-end">

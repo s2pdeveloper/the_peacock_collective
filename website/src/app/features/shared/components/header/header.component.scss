@@ -273,15 +273,27 @@ li {
         align-items: center;
         position: relative;
 
-        i {
-          color: #000;
-          cursor: pointer;
-        }
+      
       }
     }
   }
 }
-
+i {
+  color: #000;
+  cursor: pointer;
+}
+.fa-square{
+  width: 20px;
+  height: 20px;
+  &::before{
+    content: '';
+  }
+}
+.attr{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
 .product-part {
   max-height: 35vh;
   min-height: 35vh;

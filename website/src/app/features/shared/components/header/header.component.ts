@@ -7,6 +7,7 @@ import { CartService } from 'src/app/services/cart.service';
 import { CommonService } from 'src/app/services/common.service';
 import { PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -36,6 +37,7 @@ export class HeaderComponent {
     @Inject(PLATFORM_ID) private _platformId: Object,
     private router: Router,
     public commonService: CommonService,
+    private toasterService: ToastrService,
     private tagCatPipe: TagCategoryPipe,
     private cartService: CartService,
     private toast: ToastService
@@ -135,13 +137,14 @@ export class HeaderComponent {
         variantId: x.variantId,
       };
     });
-
+    if (isPlatformBrowser(this._platformId)) {
     sessionStorage.setItem('products', JSON.stringify(checkoutProduts));
     this.router.navigate(['/order/checkout'], {
       queryParams: {
         type: 'CART',
       },
     });
+  }
   }
 
   showCart() {
@@ -155,6 +158,17 @@ export class HeaderComponent {
     } else {
       this.toast.warning('Please login for show your cart');
     }
+  }
+  deleteVariant(id) {
+    this.cartService.delete(id).subscribe({
+      next: (success) => {
+        this.toasterService.success(success?.result?.message);
+        this.getAllCartData()
+      },
+      error: (err) => {
+        console.log('err', err);
+      },
+    });
   }
   getAllCartData() {
     this.cartService.getAll().subscribe((success) => {

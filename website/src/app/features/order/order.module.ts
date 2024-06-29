@@ -8,6 +8,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MyOrderComponent } from './components/my-order/my-order.component';
 import { WishlistComponent } from './components/wishlist/wishlist.component';
+import { StriveComponent } from './components/strive/strive.component';
 
 const routes: Routes = [
   { path: 'cart', component: CartComponent },
@@ -16,7 +17,7 @@ const routes: Routes = [
   { path: 'wishlist', component: WishlistComponent },
 ];
 @NgModule({
-  declarations: [OrderComponent, CartComponent, CheckoutComponent,MyOrderComponent,WishlistComponent],
+  declarations: [OrderComponent, CartComponent, CheckoutComponent,MyOrderComponent,WishlistComponent,StriveComponent],
   imports: [CommonModule,FormsModule,ReactiveFormsModule, RouterModule.forChild(routes)],
 })
 export class OrderModule {}

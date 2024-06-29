@@ -1,0 +1,88 @@
+/* Style for the card container */
+.card-container {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .card-container .card {
+    background-color: #1a1f71;
+    color: white;
+    border-radius: 10px;
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .card-container .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+    pointer-events: none;
+  }
+  
+  .card-container .card .card-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 150px;
+  }
+  
+  .card-container .card .card-number {
+    font-size: 18px;
+    letter-spacing: 2px;
+  }
+  
+  .card-container .card .card-name,
+  .card-container .card .card-expiry {
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+  
+  .card-container .card .card-expiry {
+    align-self: flex-end;
+  }
+  
+  .card-container .card .card-logo {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    height: 30px;
+  }
+  
+  /* Style for the card element */
+  #card-element {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 18px;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 2px;
+  }
+  
+  #card-element::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  #card-element:focus {
+    outline: none;
+  }
+  .btn-dark,
+.btn-light {
+  width: 100% !important;
+  padding: 0.5rem 0 !important;
+  border-radius: 0 !important;
+}
+.btn:focus {
+  box-shadow: none;
+}
+.btn:active{
+  border: 0;
+}

@@ -36,11 +36,19 @@ export class CartComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getAllCart();
-    console.log('carts', this.carts);
   }
-  deleteVariant(item, i) {
-    this.payloadData.delete.push(item.id);
-    this.carts.splice(i, 1);
+  deleteVariant(id) {
+    console.log("id222222",id);
+    this.cartService.delete(id).subscribe({
+      next: (success) => {
+        console.log('success', success);
+        this.toasterService.success(success?.result?.message);
+        this.getAllCart()
+      },
+      error: (err) => {
+        console.log('err', err);
+      },
+    });
   }
   updateAllCart() {
     this.payloadData.edit = [];
@@ -95,7 +103,6 @@ export class CartComponent implements OnInit {
   getAllCart() {
     this.cartService.getAll().subscribe({
       next: (success) => {
-        console.log('success', success);
         this.originalCart = JSON.parse(JSON.stringify(success.result.rows));
         this.carts = JSON.parse(JSON.stringify(success.result.rows));
       },
@@ -110,10 +117,6 @@ export class CartComponent implements OnInit {
         acc + currValue.cartWithVariants.price * currValue.qty,
       0
     );
-    // return totalPriceArray.reduce(
-    //   (acc, currValue) => acc + currValue.totalPrice,
-    //   0
-    // );
     return totalPriceArray;
   }
   checkout() {

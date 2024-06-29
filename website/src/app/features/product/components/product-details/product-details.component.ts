@@ -1,4 +1,5 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { SpinnerService, StorageService } from 'src/app/core/services';
@@ -27,7 +28,8 @@ export class ProductDetailsComponent implements OnInit {
     private cartService: CartService,
     private storageService: StorageService,
     private toasterService: ToastrService,
-    private wishlistService: WishlistService
+    private wishlistService: WishlistService,
+    @Inject(PLATFORM_ID) private _platformId: Object,
 
   ) {
     this.user = this.storageService.get('Customer');
@@ -135,12 +137,14 @@ export class ProductDetailsComponent implements OnInit {
       qty: this.qty,
       variantId: this.currentVariant.id,
     };
+    if (isPlatformBrowser(this._platformId)) {
     sessionStorage.setItem("products", JSON.stringify([payload]));
     this.router.navigate(['/order/checkout'], {
       queryParams: {
         type: 'BUY'
       }
     });
+  }
   }
   addToWishlist() {
     if (!this.user) {

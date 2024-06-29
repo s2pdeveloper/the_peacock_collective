@@ -35,8 +35,8 @@ sudo certbot --nginx -d peacock.s2pedutech.com
 node dist/website/server/main.js
 
 <!-- Pending Bugs -->
-1) Delete Variant from cart
-2) Checkout Details
+1) Delete Variant from cart --OK
+2) Checkout Details --OK
 3) Payment UI
-4) Decrease quantity after order the product
+4) Decrease quantity after order the product --OK
 5) Remove Image from Tag & Category (Admin Panel)

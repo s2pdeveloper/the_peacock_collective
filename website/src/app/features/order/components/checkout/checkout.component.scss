@@ -97,6 +97,18 @@ input:focus{
   margin: 1rem;
     // width: 45%;
 }
+.fa-square{
+  width: 20px;
+  height: 20px;
+  &::before{
+    content: '';
+  }
+}
+.attr{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
 @media (max-width: 992px) {
   .personal-info,
   .address-info,
@@ -112,3 +124,4 @@ input:focus{
 .promo-input {
   background-color: transparent;
 }
+

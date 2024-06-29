@@ -73,6 +73,19 @@ input:focus {
 .borderDanger {
   border: 1px solid #d13737;
 }
+.fa-square{
+  width: 20px;
+  height: 20px;
+  &::before{
+    content: '';
+  }
+}
+.attr{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
 @media (max-width: 575px) {
   .offSet {
     margin-left: 33.33333333% !important;
