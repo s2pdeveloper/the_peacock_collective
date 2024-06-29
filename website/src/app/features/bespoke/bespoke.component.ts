@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,6 +12,7 @@ import { BespokeService } from 'src/app/services/bespoke';
   styleUrls: ['./bespoke.component.scss'],
 })
 export class BespokeComponent {
+  @ViewChild('attachments') attachment: any;
   fileName: any = '';
   url: any = null;
   files: {
@@ -90,7 +91,12 @@ export class BespokeComponent {
       this.isOther = false;
     }
   }
-  imageDelete() {}
+  imageDelete() {
+    if (this.files.length) {
+      this.files=[];
+      this.attachment.nativeElement.value = '';
+    }
+  }
   openUrl(url) {
     window.open(url, '_blank');
   }

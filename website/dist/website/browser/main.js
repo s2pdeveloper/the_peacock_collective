@@ -217,10 +217,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _features_shared_shared_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./features/shared/shared.module */ 9194);
 /* harmony import */ var _features_landing_layout_landing_layout_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./features/landing-layout/landing-layout.module */ 8543);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/forms */ 4456);
-/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ngx-toastr */ 4285);
+/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ngx-toastr */ 4285);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common/http */ 6443);
 /* harmony import */ var _core_services__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./core/services */ 2589);
-/* harmony import */ var ngx_spinner__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ngx-spinner */ 1249);
+/* harmony import */ var ngx_spinner__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ngx-spinner */ 1249);
+/* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/platform-browser/animations */ 835);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 7580);
 
 
@@ -235,7 +236,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 class AppModule {
   static #_ = this.ɵfac = function AppModule_Factory(t) {
     return new (t || AppModule)();
@@ -250,9 +251,7 @@ class AppModule {
       useClass: _core_services__WEBPACK_IMPORTED_MODULE_4__.AuthInterceptor,
       multi: true
     }, (0,_angular_platform_browser__WEBPACK_IMPORTED_MODULE_7__.provideClientHydration)()],
-    imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_7__.BrowserModule, _app_routing_module__WEBPACK_IMPORTED_MODULE_0__.AppRoutingModule, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_8__.NgbModule, _features_landing_layout_landing_layout_module__WEBPACK_IMPORTED_MODULE_3__.LandingLayoutModule, _features_shared_shared_module__WEBPACK_IMPORTED_MODULE_2__.SharedModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_6__.HttpClientModule, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormsModule, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.ReactiveFormsModule,
-    // BrowserAnimationsModule,
-    ngx_spinner__WEBPACK_IMPORTED_MODULE_10__.NgxSpinnerModule, ngx_toastr__WEBPACK_IMPORTED_MODULE_11__.ToastrModule.forRoot({
+    imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_7__.BrowserModule, _app_routing_module__WEBPACK_IMPORTED_MODULE_0__.AppRoutingModule, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_8__.NgbModule, _features_landing_layout_landing_layout_module__WEBPACK_IMPORTED_MODULE_3__.LandingLayoutModule, _features_shared_shared_module__WEBPACK_IMPORTED_MODULE_2__.SharedModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_6__.HttpClientModule, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormsModule, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.ReactiveFormsModule, _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_10__.BrowserAnimationsModule, ngx_spinner__WEBPACK_IMPORTED_MODULE_11__.NgxSpinnerModule, ngx_toastr__WEBPACK_IMPORTED_MODULE_12__.ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-top-right',
       closeButton: true,
@@ -263,9 +262,7 @@ class AppModule {
 (function () {
   (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵsetNgModuleScope"](AppModule, {
     declarations: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent],
-    imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_7__.BrowserModule, _app_routing_module__WEBPACK_IMPORTED_MODULE_0__.AppRoutingModule, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_8__.NgbModule, _features_landing_layout_landing_layout_module__WEBPACK_IMPORTED_MODULE_3__.LandingLayoutModule, _features_shared_shared_module__WEBPACK_IMPORTED_MODULE_2__.SharedModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_6__.HttpClientModule, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormsModule, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.ReactiveFormsModule,
-    // BrowserAnimationsModule,
-    ngx_spinner__WEBPACK_IMPORTED_MODULE_10__.NgxSpinnerModule, ngx_toastr__WEBPACK_IMPORTED_MODULE_11__.ToastrModule]
+    imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_7__.BrowserModule, _app_routing_module__WEBPACK_IMPORTED_MODULE_0__.AppRoutingModule, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_8__.NgbModule, _features_landing_layout_landing_layout_module__WEBPACK_IMPORTED_MODULE_3__.LandingLayoutModule, _features_shared_shared_module__WEBPACK_IMPORTED_MODULE_2__.SharedModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_6__.HttpClientModule, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormsModule, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.ReactiveFormsModule, _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_10__.BrowserAnimationsModule, ngx_spinner__WEBPACK_IMPORTED_MODULE_11__.NgxSpinnerModule, ngx_toastr__WEBPACK_IMPORTED_MODULE_12__.ToastrModule]
   });
 })();
 
@@ -925,13 +922,13 @@ class NewArrivalsComponent {
       }
       if (rf & 2) {
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"](4);
-        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtextInterpolate"](ctx.commonService == null ? null : ctx.commonService.allData == null ? null : ctx.commonService.allData.categories[0] == null ? null : ctx.commonService.allData.categories[0].name);
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtextInterpolate"](ctx.commonService == null ? null : ctx.commonService.allData == null ? null : ctx.commonService.allData.categories == null ? null : ctx.commonService.allData.categories[0] == null ? null : ctx.commonService.allData.categories[0].name);
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"](6);
-        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("ngForOf", _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵpipeBind2"](11, 4, ctx.commonService.allData.products, ctx.commonService == null ? null : ctx.commonService.allData == null ? null : ctx.commonService.allData.categories[0]));
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("ngForOf", _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵpipeBind2"](11, 4, ctx.commonService.allData.products, ctx.commonService == null ? null : ctx.commonService.allData == null ? null : ctx.commonService.allData.categories == null ? null : ctx.commonService.allData.categories[0]));
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"](7);
-        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("ngForOf", _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵpipeBind2"](18, 7, ctx.commonService.allData.products, ctx.commonService == null ? null : ctx.commonService.allData == null ? null : ctx.commonService.allData.categories[0]));
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("ngForOf", _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵpipeBind2"](18, 7, ctx.commonService.allData.products, ctx.commonService == null ? null : ctx.commonService.allData == null ? null : ctx.commonService.allData.categories == null ? null : ctx.commonService.allData.categories[0]));
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"](7);
-        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("ngForOf", _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵpipeBind2"](25, 10, ctx.commonService.allData.products, ctx.commonService == null ? null : ctx.commonService.allData == null ? null : ctx.commonService.allData.categories[0]));
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("ngForOf", _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵpipeBind2"](25, 10, ctx.commonService.allData.products, ctx.commonService == null ? null : ctx.commonService.allData == null ? null : ctx.commonService.allData.categories == null ? null : ctx.commonService.allData.categories[0]));
       }
     },
     dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_5__.NgForOf, _pipes_home_product_pipe__WEBPACK_IMPORTED_MODULE_3__.HomeProductPipe],

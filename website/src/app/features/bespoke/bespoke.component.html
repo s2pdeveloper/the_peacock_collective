@@ -472,6 +472,7 @@
                                 type="file"
                                 class="form-control"
                                 [multiple]="true"
+                                #attachments
                                 accept=".png,.jpeg,.jpg,.pdf,.svg,.gif"
                                 (change)="fileChosen($event)"
                               />
@@ -484,6 +485,7 @@
                                 >
                                   <img
                                     height="300"
+                                    
                                     class="w-100 new-img p-2"
                                     [src]="file.url"
                                     alt="image"

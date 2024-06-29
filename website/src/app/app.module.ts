@@ -11,7 +11,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './core/services';
 import { NgxSpinnerModule } from 'ngx-spinner';
-// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -23,7 +23,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    // BrowserAnimationsModule,
+    BrowserAnimationsModule,
     NgxSpinnerModule,
     ToastrModule.forRoot({
       timeOut: 3000,

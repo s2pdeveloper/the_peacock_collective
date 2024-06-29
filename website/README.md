@@ -33,3 +33,10 @@ sudo ln -s /etc/nginx/sites-available/peacock.s2pedutech.com /etc/nginx/sites-en
 sudo certbot --nginx -d peacock.s2pedutech.com 
 
 node dist/website/server/main.js
+
+<!-- Pending Bugs -->
+1) Delete Variant from cart
+2) Checkout Details
+3) Payment UI
+4) Decrease quantity after order the product
+5) Remove Image from Tag & Category (Admin Panel)

@@ -1,14 +1,14 @@
 <div class="container-fluid collection py-5">
   <div class="row">
     <div class="col-12 py-4 d-flex justify-content-center">
-      <p class="section-heading">{{commonService?.allData?.categories[0]?.name}}</p>
+      <p class="section-heading">{{commonService?.allData?.categories?.[0]?.name}}</p>
     </div>
     <div class="col-12 product large-list">
       <div class="row product-row">
         <div class="col-12 product-column">
           <div class="card border-0">
             <swiper-container class="img-box" slides-per-view="4">
-              <ng-container *ngFor="let p of commonService.allData.products | homeProduct : commonService?.allData?.categories[0]">
+              <ng-container *ngFor="let p of commonService.allData.products | homeProduct : commonService?.allData?.categories?.[0]">
                 <swiper-slide   class="p-2 bg-light prod-cart border"
                 (click)="navigateTo('/product/product-details',p?.id)" >
                 <img class="img-fluid w-100" [src]="p?.bannerImage" />
@@ -33,7 +33,7 @@
         <div class="col-12 product-column">
           <div class="card border-0">
             <swiper-container class="img-box" slides-per-view="2">
-              <ng-container *ngFor="let p of commonService.allData.products | homeProduct : commonService?.allData?.categories[0]">
+              <ng-container *ngFor="let p of commonService.allData.products | homeProduct : commonService?.allData?.categories?.[0]">
                 <swiper-slide   class="p-2 prod-cart border"
                 (click)="navigateTo('/product/product-details',p?.id)" >
                 <img class="img-fluid w-100" [src]="p?.bannerImage" />
@@ -58,7 +58,7 @@
         <div class="col-12 product-column">
           <div class="card border-0">
             <swiper-container class="img-box" slides-per-view="2">
-              <ng-container *ngFor="let p of commonService.allData.products | homeProduct : commonService?.allData?.categories[0]">
+              <ng-container *ngFor="let p of commonService.allData.products | homeProduct : commonService?.allData?.categories?.[0]">
                 <swiper-slide   class="p-2 prod-cart border"
                 (click)="navigateTo('/product/product-details',p?.id)" >
                 <img class="img-fluid w-100" [src]="p?.bannerImage" />

@@ -20,31 +20,27 @@ export class AuthInterceptor implements HttpInterceptor {
     private router: Router,
     private toast: ToastService,
     @Inject(PLATFORM_ID) private _platformId: Object
-
-  ) { }
+  ) {}
 
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    let user=null
+    let user = null;
     // const user = this.storageService.get('userData');
     if (isPlatformBrowser(this._platformId)) {
-      user= JSON.parse(localStorage.getItem('Customer'));
+      user = JSON.parse(localStorage.getItem('Customer'));
     }
-    const excludePath = [
-
-    ]
-
-
+    const excludePath = [];
 
     request = request.clone({
       url: environment.apiEndpoint + request.url,
-      ...((user && user?.token) && {
-        setHeaders: {
-          authorization: `Bearer ${user.token}`,
-        },
-      })
+      ...(user &&
+        user?.token && {
+          setHeaders: {
+            authorization: `Bearer ${user.token}`,
+          },
+        }),
     });
 
     return next.handle(request).pipe(
@@ -53,7 +49,11 @@ export class AuthInterceptor implements HttpInterceptor {
         if (errorResponse instanceof HttpErrorResponse) {
           if (errorResponse.status == 401) {
             this.router.navigate(['/login']);
-            this.toast.error("Unautherise request")
+            this.toast.error('Unautherise request');
+          } else {
+            if (errorResponse.error) {
+              this.toast.error(errorResponse.error.error);
+            }
           }
         }
         return throwError(() => errorResponse.error);
