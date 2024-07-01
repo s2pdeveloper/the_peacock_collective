@@ -109,13 +109,18 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     console.log('this.222222222', this.product);
   }
   createOrder() {
-    let payload = {
-      products: this.product,
-      addressId: this.selectedAddressId,
-      type: this.type,
-    };
-    console.log('payload', payload);
-    this.orderValidate(payload);
+    if (this.payment == 'cod') {
+      let payload = {
+        products: this.product,
+        addressId: this.selectedAddressId,
+        type: this.type,
+      };
+      console.log('payload', payload);
+      this.orderValidate(payload);
+    } else {
+      
+    }
+
   }
   orderValidate(payload) {
     this.orderService.validateOrder(payload).subscribe({

@@ -206,6 +206,7 @@ const modelObj = {
     const query = {
       where: {
         customerId: req.user.id,
+        id : req.params.id
       },
     };
     let itemDetails = await OrderRepository.findOneByCondition(query);

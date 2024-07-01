@@ -11,6 +11,7 @@ import { CustomPaginationComponent } from "@core/components/custom-pagination/cu
 import { NgbTooltipModule } from "@ng-bootstrap/ng-bootstrap";
 import { SubcategoryListComponent } from './subcategory-list/subcategory-list.component';
 import { NgSelectModule } from "@ng-select/ng-select";
+import { SharedModule } from "src/app/theme/shared/shared.module";
 const routes: Routes = [
   {
     path: "",
@@ -31,6 +32,7 @@ const routes: Routes = [
     NgxSpinnerModule,
     CustomPaginationComponent,
     NgbTooltipModule,
+    SharedModule,
     NgSelectModule,
     RouterModule.forChild(routes),
   ],

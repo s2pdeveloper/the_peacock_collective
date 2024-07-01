@@ -37,6 +37,6 @@ node dist/website/server/main.js
 <!-- Pending Bugs -->
 1) Delete Variant from cart --OK
 2) Checkout Details --OK
-3) Payment UI
+3) Payment UI --OK
 4) Decrease quantity after order the product --OK
-5) Remove Image from Tag & Category (Admin Panel)
+5) Remove Image from Tag & Category (Admin Panel) --OK

@@ -60,6 +60,7 @@ export class OrderViewComponent {
       .subscribe((success: any) => {
         this.spinner.hide();
         this.toastService.success(success?.message);
+        this.navigateTo("default/order/order-list")
         this.getData();
       });
   }

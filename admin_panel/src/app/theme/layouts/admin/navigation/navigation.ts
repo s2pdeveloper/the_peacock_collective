@@ -124,14 +124,14 @@ const NavigationItems = [
         url: "/default/attribute",
         icon: "fa-brands fa-angular",
       },
-      {
-        id: "vendor",
-        title: "Vendor",
-        type: "item",
-        classes: "nav-item",
-        url: "/default/vendor",
-        icon: "fa-solid fa-user-tie",
-      },
+      // {
+      //   id: "vendor",
+      //   title: "Vendor",
+      //   type: "item",
+      //   classes: "nav-item",
+      //   url: "/default/vendor",
+      //   icon: "fa-solid fa-user-tie",
+      // },
       {
         id: "all-variants",
         title: "All variants",

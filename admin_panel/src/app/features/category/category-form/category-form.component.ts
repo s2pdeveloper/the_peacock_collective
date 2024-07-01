@@ -44,7 +44,7 @@ export class CategoryFormComponent {
     description: new FormControl(null),
     status: new FormControl("active", [Validators.required]),
     parentId: new FormControl(null),
-    tagId: new FormControl([]),
+    tagId: new FormControl([], [Validators.required]),
 
   });
   options = [];
@@ -58,8 +58,8 @@ export class CategoryFormComponent {
       key: "name",
     },
     {
-      message: "Slug is required",
-      key: "slug",
+      message: "Tag is required",
+      key: "tagId",
     },
     {
       message: "Status is required",

@@ -71,7 +71,7 @@ export class ProductInfoFormComponent {
     name: new FormControl(null, [Validators.required]),
     categoryId: new FormControl(null, [Validators.required]),
     description: new FormControl(null),
-    hsn: new FormControl(null),
+    hsn: new FormControl(null, [Validators.required]),
     gst: new FormControl(null),
     inStock: new FormControl(false),
     isTrending: new FormControl(false),
@@ -81,7 +81,7 @@ export class ProductInfoFormComponent {
     returnableDays: new FormControl(null),
     soldIndividually: new FormControl(false),
     bannerImage: new FormControl(null),
-    tagId: new FormControl([]),
+    tagId: new FormControl([], [Validators.required]),
     status: new FormControl("active"),
   });
   get form() {

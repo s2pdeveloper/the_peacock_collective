@@ -1,6 +1,5 @@
 const _ = require("lodash");
 const pug = require("pug");
-
 const OPTIONS = {
   appVersion: "1.0.0",
   appSchemaUrl: "project_name",
@@ -102,6 +101,9 @@ const OPTIONS = {
     HOME: "home",
     WORK: "work",
     OTHERS: "others",
+  },
+  transactionsType: {
+    STRIPE: "stripe",
   },
   devicePlatforms: {
     ANDROID: "android",

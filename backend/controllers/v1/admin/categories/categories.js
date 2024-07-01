@@ -14,7 +14,7 @@ const {
 const cloudinary = require("../../../../shared/service/cloudinary.service");
 const categoryRepository = require("../../../../models/repository/categoryRepository");
 const categoryTagMapRepository = require("../../../../models/repository/categoryTagMapRepository");
-const { CategoryTagMap } = require("../../../../models");
+const { CategoryTagMap ,Tag} = require("../../../../models");
 const modelObj = {
   create: asyncHandler(async (req, res) => {
 
@@ -36,10 +36,7 @@ const modelObj = {
 
     // let createObj = await generateCreateData(new Model(), req.body);
     // await createObj.save();
-    console.log("req.body", req.body);
     req.body.tagId = JSON.parse(req.body.tagId);
-
-
     let category = await categoryRepository.create(req.body);
     if (req.body.tagId.length) {
       let arr = [];
@@ -95,11 +92,16 @@ const modelObj = {
       // attributes: {
       //   exclude: ['userId'],
       // },
-      // include: {
-      //   model: User,
-      //   as: 'shop',
-      //   attributes: ['id', 'name', 'mobile'],
-      // },
+      include: {
+        model: CategoryTagMap,
+        as: 'categoryWithtags',
+        attributes: ['tagId'],
+        include : {
+          model: Tag,
+          as: 'CategoryTagMapWithTag',
+          attributes: ['title'],
+        }
+      },
       ...(req.query.page &&
         req.query.pageSize && {
         offset: +offset,
