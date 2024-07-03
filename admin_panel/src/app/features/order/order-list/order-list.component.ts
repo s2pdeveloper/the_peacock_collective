@@ -70,7 +70,7 @@ export class OrderListComponent {
     this.orderService.getAll(params).subscribe((success: any) => {
       this.spinner.hide();
       this.data = success;
-      this.collection = success.count;
+      this.collection = success.length;
     });
   }
 }

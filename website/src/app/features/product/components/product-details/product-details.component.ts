@@ -49,7 +49,6 @@ export class ProductDetailsComponent implements OnInit {
           (x) => x.id == Number(params.id)
         );
         console.log("this.products", this.products);
-
         this.variants = this.products.productWithVariants;
         this.currentVariant = this.products.productWithVariants[0];
         this.attrArr = [];
@@ -58,9 +57,11 @@ export class ProductDetailsComponent implements OnInit {
             name: item.AttrVariantMapWithAttributes.name,
             type: item.AttrVariantMapWithAttributes.type,
             value: [item.value],
+            img:null,
             selectedValue: item.value ? item.value : null,
           });
         }
+        
         // for (const [i, item] of this.products.productWithVariants.entries()) {
         //   for (const varMap of item.variantWithAttrVariantMap) {
         //     let index = this.attrArr.findIndex(
@@ -95,6 +96,7 @@ export class ProductDetailsComponent implements OnInit {
         name: item.AttrVariantMapWithAttributes.name,
         type: item.AttrVariantMapWithAttributes.type,
         value: [item.value],
+        img : this.currentVariant.variantImages[0]?.image,
         selectedValue: item.value ? item.value : null,
       });
     }

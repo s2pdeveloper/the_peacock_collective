@@ -46,14 +46,17 @@
                       }}
                     </p>
                     <p
-                      class="text-muted small-text"
+                      class="text-muted small-text attr"
                       *ngFor="
                         let item of order.orderVariantMapWithVariant
                           .variantWithAttrVariantMap
                       "
                     >
                       {{ item.AttrVariantMapWithAttributes.name }}:
-                      {{ item.value }}
+
+                      <ng-container *ngIf="item?.AttrVariantMapWithAttributes?.type == 'color'"> <i class="fa-solid fa-square" [ngStyle]="{'background-color':item?.value}" ></i></ng-container>
+                      <ng-container *ngIf="item?.AttrVariantMapWithAttributes?.type != 'color'"> {{ item?.value }}</ng-container>
+                      <!-- {{ item.value }} -->
                     </p>
                   </div>
                 </div>

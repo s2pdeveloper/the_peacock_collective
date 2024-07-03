@@ -38,14 +38,19 @@ export class AllProductVariantsComponent {
     }
   }
   update(data: any) {
+    console.log('data',data);
+    
     let payload = {
       price: data.price,
-      qty: data.qty,
+      qty: data.qty + data.addQty,
     };
+    console.log('payload',payload);
+    
     this.spinner.show();
     this.variantService.update(data.id, payload).subscribe((success: any) => {
       this.spinner.hide();
       this.toastService.success(success.message);
+      this.getAllProductVariant();
     });
   }
   updateAll() {

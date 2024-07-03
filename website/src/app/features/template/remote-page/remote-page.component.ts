@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from 'src/app/services/common.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { CommonService } from 'src/app/services/common.service';
   styleUrls: ['./remote-page.component.scss'],
 })
 export class RemotePageComponent implements OnInit {
-  constructor(private activatedRoute: ActivatedRoute,private commonService : CommonService) {}
+  constructor(private activatedRoute: ActivatedRoute,private commonService : CommonService,private router : Router) {}
   id: number = null;
   initialData: any = {};
   products: any[] = [
@@ -75,5 +75,8 @@ export class RemotePageComponent implements OnInit {
       this.id = Number(params.id)
       this.initialData = this.commonService.allData.categories.find((x) => x.id == this.id);
     });
+  }
+  navigateTo(path: any,id:any) {
+    this.router.navigate([path],{queryParams : {id:id}});
   }
 }

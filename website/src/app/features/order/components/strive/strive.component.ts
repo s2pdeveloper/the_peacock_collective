@@ -11,7 +11,7 @@ export class StriveComponent {
   stripe: Stripe | null = null;
   card: any;
   paymentError: string | null = null;
-  @Output() striveEvent = new EventEmitter();
+  @Output() stripeEvent = new EventEmitter();
   constructor(private http: HttpClient) { }
 
   async ngOnInit() {
@@ -57,7 +57,7 @@ export class StriveComponent {
   handlePayment(token: any) {
  
     console.log('Received Stripe token:', token);
-    this.striveEvent.emit(token);
+    this.stripeEvent.emit(token);
     // this.http.post('http://localhost:3000/charge', { token: token })
     //   .subscribe(
     //     response => console.log('Payment successful', response),

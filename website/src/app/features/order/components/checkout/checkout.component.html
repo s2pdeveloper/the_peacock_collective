@@ -79,9 +79,9 @@
                 <div class="row justify-content-center">
                   <div class="col-12">
                     <div class="card-container" *ngIf="payment == 'card'">
-                      <app-strive (striveEvent)="striveEvent($event)"></app-strive>
+                      <app-strive (stripeEvent)="stripePay($event)"></app-strive>
                   </div>
-                    <button *ngIf="payment != 'card'" class="btn btn-dark py-3" (click)="createOrder()">
+                    <button *ngIf="payment != 'card'" class="btn btn-dark py-3 mt-3" (click)="createOrder()">
                       Place Order
                     </button>
                   </div>

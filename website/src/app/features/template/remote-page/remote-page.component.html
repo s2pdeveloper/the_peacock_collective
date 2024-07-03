@@ -1,6 +1,14 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 img-wrapper">
+      <div class="row w-100 justify-content-between">
+        <div class="col-12 col-lg-11">
+          <p class="px-3 py-3 text-color-primary pointer">
+            <span (click)="navigateTo('/',null)">Home</span> /
+            <span>{{ initialData?.name }}</span>
+          </p>
+        </div>
+      </div>
       <img
         class="img-fluid w-100"
         src="../../../../assets/products/sari/front.jpeg"

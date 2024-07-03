@@ -43,7 +43,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private commonService: CommonService,
     private cartService: CartService,
     private paymentService: PaymentService,
-    @Inject(PLATFORM_ID) private _platformId: Object,
+    @Inject(PLATFORM_ID) private _platformId: Object
   ) {
     this.user = this.storageService.get('Customer');
   }
@@ -59,7 +59,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     // if (this.type == 'CART') {
     //   this.getAllCartData();
     // }
-    console.log("isPlatformBrowser(this._platformId", isPlatformBrowser(this._platformId));
+    console.log(
+      'isPlatformBrowser(this._platformId',
+      isPlatformBrowser(this._platformId)
+    );
 
     if (isPlatformBrowser(this._platformId)) {
       this.product = sessionStorage.getItem('products')
@@ -83,53 +86,52 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (this.product.length) {
       for (let i = 0; i < this.product.length; i++) {
         let item = this.product[i];
-        console.log("item.variantId", item.variantId);
+        console.log('item.variantId', item.variantId);
 
         let variant = null;
         for (let p of allProduct) {
           if (p.productWithVariants.some((y) => y.id == item.variantId)) {
             variant = p.productWithVariants.find((s) => s.id == item.variantId);
             if (variant) {
-              console.log("variant---1", variant);
+              console.log('variant---1', variant);
               // p.variant = variant;
               this.product[i].product = p;
               this.product[i].variant = variant;
               // this.product[i].product.variant = JSON.parse(JSON.stringify(variant))
               this.product[i].price = this.product[i].qty * variant.price;
-              console.log("this.product[i].product.variant", this.product[i]);
-              console.log("this.product[i].product", p);
+              console.log('this.product[i].product.variant', this.product[i]);
+              console.log('this.product[i].product', p);
               break;
             }
           }
         }
-
       }
-
     }
     console.log('this.222222222', this.product);
   }
   createOrder() {
-    if (this.payment == 'cod') {
-      let payload = {
-        products: this.product,
-        addressId: this.selectedAddressId,
-        type: this.type,
-      };
-      console.log('payload', payload);
-      this.orderValidate(payload);
-    } else {
-      
-    }
-
+    let payload = {
+      products: this.product,
+      addressId: this.selectedAddressId,
+      type: this.type,
+    };
+    console.log('payload', payload);
+    this.orderValidate(payload);
   }
   orderValidate(payload) {
     this.orderService.validateOrder(payload).subscribe({
       next: (success) => {
-        this.order(payload)
-      }
-    })
+        this.order(payload);
+      },
+    });
   }
-  striveEvent(token:any){
+  stripePay(token: any) {
+    let amount = this.product.reduce(
+      (acc, currValue) => acc + currValue.price,
+      0
+    );
+    console.log('amount', amount);
+
     let payload = {
       products: this.product,
       addressId: this.selectedAddressId,
@@ -137,18 +139,18 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     };
     this.orderService.validateOrder(payload).subscribe({
       next: (success) => {
-        this.paymentStrive(token,payload)
+        this.paymentStrive(token, payload, amount);
         // this.order(payload)
-      }
-    })
+      },
+    });
   }
-  paymentStrive(token,payload){
-   this.paymentService.pay(token).subscribe( {
-     next: (success) => {
-      console.log("success",success);
-      this.order(payload)
-    }
-   });
+  paymentStrive(token, payload, amount) {
+    this.paymentService.pay({ token: token, amount: amount }).subscribe({
+      next: (success) => {
+        console.log('success', success);
+        this.order(payload);
+      },
+    });
   }
   order(payload) {
     this.orderService.create(payload).subscribe({
@@ -167,8 +169,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
   get totalItemPrice() {
     let totalPriceArray = this.product.reduce(
-      (acc, currValue) =>
-        acc + currValue?.variant.price * currValue.qty,
+      (acc, currValue) => acc + currValue?.variant.price * currValue.qty,
       0
     );
     // return totalPriceArray.reduce(
@@ -213,7 +214,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
   getAllCartData() {
     this.cartService.getAll().subscribe((success) => {
-      console.log("success", success);
+      console.log('success', success);
 
       this.product = success.result.rows;
     });
