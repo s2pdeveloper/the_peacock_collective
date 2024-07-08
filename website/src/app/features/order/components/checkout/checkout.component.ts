@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { StorageService } from 'src/app/core/services';
+import { SpinnerService, StorageService } from 'src/app/core/services';
 import { AddressService } from 'src/app/services/address.service';
 import { CartService } from 'src/app/services/cart.service';
 import { CommonService } from 'src/app/services/common.service';
@@ -40,6 +40,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private storageService: StorageService,
     private addressService: AddressService,
     private toasterService: ToastrService,
+    private spinnerService: SpinnerService,
     private commonService: CommonService,
     private cartService: CartService,
     private paymentService: PaymentService,
@@ -56,28 +57,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.type = params.type;
       }
     });
-    // if (this.type == 'CART') {
-    //   this.getAllCartData();
-    // }
-    console.log(
-      'isPlatformBrowser(this._platformId',
-      isPlatformBrowser(this._platformId)
-    );
 
     if (isPlatformBrowser(this._platformId)) {
       this.product = sessionStorage.getItem('products')
         ? JSON.parse(sessionStorage.getItem('products'))
         : [];
-      console.log('this.product55555--------1', this.product);
     }
 
-    // this.getAllCartData();
-
     this.getAddresses();
-    console.log(
-      'this.commonService.allData.product',
-      this.commonService.allData.products
-    );
     // console.log('this.product', this.product);
     let allProduct = JSON.parse(
       JSON.stringify(this.commonService.allData.products)
@@ -86,28 +73,22 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (this.product.length) {
       for (let i = 0; i < this.product.length; i++) {
         let item = this.product[i];
-        console.log('item.variantId', item.variantId);
-
         let variant = null;
         for (let p of allProduct) {
           if (p.productWithVariants.some((y) => y.id == item.variantId)) {
             variant = p.productWithVariants.find((s) => s.id == item.variantId);
             if (variant) {
-              console.log('variant---1', variant);
               // p.variant = variant;
               this.product[i].product = p;
               this.product[i].variant = variant;
               // this.product[i].product.variant = JSON.parse(JSON.stringify(variant))
               this.product[i].price = this.product[i].qty * variant.price;
-              console.log('this.product[i].product.variant', this.product[i]);
-              console.log('this.product[i].product', p);
               break;
             }
           }
         }
       }
     }
-    console.log('this.222222222', this.product);
   }
   createOrder() {
     let payload = {
@@ -115,7 +96,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       addressId: this.selectedAddressId,
       type: this.type,
     };
-    console.log('payload', payload);
     this.orderValidate(payload);
   }
   orderValidate(payload) {
@@ -130,8 +110,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       (acc, currValue) => acc + currValue.price,
       0
     );
-    console.log('amount', amount);
-
     let payload = {
       products: this.product,
       addressId: this.selectedAddressId,
@@ -139,22 +117,39 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     };
     this.orderService.validateOrder(payload).subscribe({
       next: (success) => {
-        this.paymentStrive(token, payload, amount);
+        this.paymentStripe(token, payload, amount);
         // this.order(payload)
       },
     });
   }
-  paymentStrive(token, payload, amount) {
-    this.paymentService.pay({ token: token, amount: amount }).subscribe({
+  paymentStripe(token, payload, amount) {
+    this.spinnerService.show();
+    let res = {
+      token: token.id,
+      amount: amount,
+    };
+    this.paymentService.pay(res).subscribe({
       next: (success) => {
-        console.log('success', success);
-        this.order(payload);
+        this.spinnerService.show();
+        let orderPayload = {
+          ...payload,
+          amount: amount,
+          transId : success?.result?.data?.id,
+        }
+        this.order(orderPayload);
       },
+      error : (err) =>{
+        this.spinnerService.show();
+        console.log('err',err);
+        
+      }
     });
   }
   order(payload) {
+    this.spinnerService.show();
     this.orderService.create(payload).subscribe({
       next: (success) => {
+        this.spinnerService.hide()
         this.toasterService.success('Order placed successfully!!');
         if (isPlatformBrowser(this._platformId)) {
           sessionStorage.removeItem('products');
@@ -163,6 +158,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.router.navigate(['/order/my-orders']);
       },
       error: (err) => {
+        this.spinnerService.hide()
         console.log('err', err);
       },
     });
@@ -199,7 +195,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             break;
           }
         }
-        console.log('this.allAddresses', this.allAddresses);
       });
     }
   }
@@ -214,8 +209,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
   getAllCartData() {
     this.cartService.getAll().subscribe((success) => {
-      console.log('success', success);
-
       this.product = success.result.rows;
     });
   }

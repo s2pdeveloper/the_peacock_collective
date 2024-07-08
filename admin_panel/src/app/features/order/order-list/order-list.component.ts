@@ -1,15 +1,15 @@
-import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { SpinnerService } from '@core/services';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { BespokeService } from '@shared/services/bespoke';
-import { OrderService } from '@shared/services/order';
-import { ToastrService } from 'ngx-toastr';
+import { Component, inject } from "@angular/core";
+import { Router } from "@angular/router";
+import { SpinnerService } from "@core/services";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { BespokeService } from "@shared/services/bespoke";
+import { OrderService } from "@shared/services/order";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
-  selector: 'app-order-list',
-  templateUrl: './order-list.component.html',
-  styleUrls: ['./order-list.component.scss']
+  selector: "app-order-list",
+  templateUrl: "./order-list.component.html",
+  styleUrls: ["./order-list.component.scss"],
 })
 export class OrderListComponent {
   page: number = 1;
@@ -26,9 +26,9 @@ export class OrderListComponent {
     private orderService: OrderService,
     private spinner: SpinnerService,
     private toastService: ToastrService
-  ) { }
+  ) {}
 
-  updateUser(c: any) { }
+  updateUser(c: any) {}
   ngOnInit(): void {
     this.getAll();
   }
@@ -57,7 +57,6 @@ export class OrderListComponent {
     } else {
       this.router.navigate([page]);
     }
-
   }
 
   getAll() {
@@ -66,11 +65,12 @@ export class OrderListComponent {
       page: this.page,
       pageSize: this.pageSize,
       search: this.search,
+      order: true,
     };
     this.orderService.getAll(params).subscribe((success: any) => {
       this.spinner.hide();
-      this.data = success;
-      this.collection = success.length;
+      this.data = success.data;
+      this.collection = success.count;
     });
   }
 }

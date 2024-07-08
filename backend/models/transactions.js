@@ -30,6 +30,13 @@ module.exports = (sequelize, DataTypes) => {
       tableName: "Transactions",
     }
   );
+  Transactions.associate = (models) => {
+    Transactions.belongsTo(models.Customer, {
+      foreignKey: 'customerId',
+      as: 'transactionWithCustomer',
+       onDelete: 'CASCADE',
+    });
+  };
 
   return Transactions;
 };

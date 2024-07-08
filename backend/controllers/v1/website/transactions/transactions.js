@@ -8,7 +8,6 @@ const {
 const MESSAGES = require("../../../../config/options/messages.options");
 const TransactionsRepository = require("../../../../models/repository/transactionRepository");
 const { Customer } = require("../../../../models");
-
 const modelObj = {
   create: asyncHandler(async (req, res) => {
     await TransactionsRepository.create(req.body);
@@ -28,9 +27,9 @@ const modelObj = {
     } = req.query;
     let offset = (page - 1) * pageSize || 0;
     let query = {
-      // where: {
-      //   customerId: req.user.id,
-      // },
+      where: {
+        customerId: req.user.id,
+      },
       order: [[column, direction]],
 
       include: [
@@ -38,7 +37,6 @@ const modelObj = {
           model: Customer,
           as: "transactionWithCustomer",
           attributes: ["firstName", "lastName"],
-          required:false
         },
       ],
 
@@ -48,8 +46,8 @@ const modelObj = {
     let response = await TransactionsRepository.findAll(query);
 
     return res
-      .status(MESSAGES.resCode.HTTP_OK)
-      .json(generateResponse(MESSAGES.resCode.HTTP_OK, response));
+      .status(resCode.HTTP_OK)
+      .json(generateResponse(resCode.HTTP_OK, response));
   }),
 
   // update: asyncHandler(async (req, res) => {

@@ -24,10 +24,13 @@ const {
 } = require("../../../../config/middlewares/async.handler");
 const cloudinary = require("../../../../shared/service/cloudinary.service");
 const variantRepository = require("../../../../models/repository/adminRepo/variantRepository")
+const transactionsRepository = require("../../../../models/repository/transactionRepository")
 
 const modelObj = {
   create: asyncHandler(async (req, res) => {
     req.body.customerId = req.user.id;
+    console.log(' req.body===========================', req.body);
+    
     req.body.orderNumber = `ORD${OPTIONS.orderNumber + (await OrderRepository.getSequenceNumber())
       }`;
 
@@ -39,6 +42,8 @@ const modelObj = {
         variantInstanceArr.push(variant.save());
       }
     let createData = await OrderRepository.create(req.body);
+    console.log('createData',createData);
+    
     let data = req.body.products.map((x)=>{
       return {
         variantId: x.variantId,
@@ -47,6 +52,15 @@ const modelObj = {
         qty: x.qty,
       };
     })
+    if (req.body.transId) {
+      let transData = {
+        orderId: createData.id,
+        amount : req.body.amount,
+        transId : req.body.transId,
+        customerId : req.user.id
+      }
+        await transactionsRepository.create(transData);
+    }
 
       await OrderVariantMapRepository.bulkCreate(data);
       await Promise.all(variantInstanceArr)

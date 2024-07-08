@@ -39,3 +39,6 @@ module.exports.create = async (data) => {
 module.exports.update = async (data, query) => {
   return await Model.update(data, query);
 };
+module.exports.count = async (query) => {
+  return await Model.count(query);
+};

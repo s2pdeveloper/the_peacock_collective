@@ -197,6 +197,11 @@ const routes: Routes = [
         loadChildren: () =>
           import("./features/order/order.module").then((m) => m.OrderModule),
       },
+      {
+        path: "transactions",
+        loadChildren: () =>
+          import("./features/transaction/transaction.module").then((m) => m.TransactionModule),
+      },
     ],
   },
 ];

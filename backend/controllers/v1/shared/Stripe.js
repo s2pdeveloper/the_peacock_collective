@@ -4,13 +4,13 @@ const stripe = new Stripe('sk_test_51PWF72RoUfMOrpS2zDwqtAFoOKckFXq2lO6SgiMj0TBz
 // const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 
- const createPayment = async ({payload}) => {
-    console.log('token',payload);
+ const createPayment = async (body) => {
+    console.log('token',body);
     
     const charge = await stripe.charges.create({
-        amount: payload?.amount * 100, // amount in cents
+        amount: body?.amount * 100, // amount in cents
         currency: 'inr',
-        source: payload?.token?.id, // token obtained with Stripe.js
+        source: body.token, // token obtained with Stripe.js
         description: 'Charge for test@example.com',
         // receipt_email: ''
     });

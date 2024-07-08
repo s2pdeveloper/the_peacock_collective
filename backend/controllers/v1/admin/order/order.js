@@ -80,8 +80,15 @@ const modelObj = {
       pageSize = 10,
       column = "createdAt",
       direction = "DESC",
+      search = null,
+      order = false,
+      parentId = null,
     } = req.query;
+    console.log('page', page, "pageSize", pageSize);
+
     let offset = (page - 1) * pageSize || 0;
+    console.log('offset', offset);
+
     let query = {
       where: {
         customerId: req.user.id,
@@ -131,15 +138,22 @@ const modelObj = {
           ],
         },
       ],
-
       offset: +offset,
       limit: +pageSize,
     };
     let response = await OrderRepository.findAll(query);
+    let countQuery = {
+      where: {
+        customerId: req.user.id,
+      },
+    }
+    let count = await OrderRepository.count(countQuery);
+    console.log('count', count);
+
 
     return res
       .status(resCode.HTTP_OK)
-      .json(generateResponse(resCode.HTTP_OK, response));
+      .json(generateResponse(resCode.HTTP_OK, { data: response, count: count }));
   }),
 
   getById: asyncHandler(async (req, res) => {
@@ -206,7 +220,7 @@ const modelObj = {
     const query = {
       where: {
         customerId: req.user.id,
-        id : req.params.id
+        id: req.params.id
       },
     };
     let itemDetails = await OrderRepository.findOneByCondition(query);

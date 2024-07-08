@@ -11,6 +11,7 @@ const modelObj = {
         return res.status(MESSAGES.resCode.HTTP_OK).json(
             generateResponse(MESSAGES.resCode.HTTP_OK, {
               message: MESSAGES.apiSuccessStrings.ADDED("Payment"),
+              data : data
             })
           );
     })

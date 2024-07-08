@@ -157,6 +157,14 @@ const NavigationItems = [
         url: "/default/order/order-list",
         icon: "fa-solid fa-clipboard-list",
       },
+      {
+        id: "transactions",
+        title: "Transactions",
+        type: "item",
+        classes: "nav-item",
+        url: "/default/transactions/trans-list",
+        icon: "fa-solid fa-clipboard-list",
+      },
       // {
       //   id: "inventory",
       //   title: "Inventory",
