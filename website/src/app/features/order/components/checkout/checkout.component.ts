@@ -127,6 +127,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     let res = {
       token: token.id,
       amount: amount,
+      email: this.user.email,
+      name: this.user.name,
     };
     this.paymentService.pay(res).subscribe({
       next: (success) => {
@@ -134,22 +136,21 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         let orderPayload = {
           ...payload,
           amount: amount,
-          transId : success?.result?.data?.id,
-        }
+          transId: success?.result?.data?.id,
+        };
         this.order(orderPayload);
       },
-      error : (err) =>{
+      error: (err) => {
         this.spinnerService.show();
-        console.log('err',err);
-        
-      }
+        console.log('err', err);
+      },
     });
   }
   order(payload) {
     this.spinnerService.show();
     this.orderService.create(payload).subscribe({
       next: (success) => {
-        this.spinnerService.hide()
+        this.spinnerService.hide();
         this.toasterService.success('Order placed successfully!!');
         if (isPlatformBrowser(this._platformId)) {
           sessionStorage.removeItem('products');
@@ -158,7 +159,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.router.navigate(['/order/my-orders']);
       },
       error: (err) => {
-        this.spinnerService.hide()
+        this.spinnerService.hide();
         console.log('err', err);
       },
     });

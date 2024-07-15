@@ -84,11 +84,7 @@ const modelObj = {
       order = false,
       parentId = null,
     } = req.query;
-    console.log('page', page, "pageSize", pageSize);
-
     let offset = (page - 1) * pageSize || 0;
-    console.log('offset', offset);
-
     let query = {
       where: {
         customerId: req.user.id,
@@ -148,8 +144,6 @@ const modelObj = {
       },
     }
     let count = await OrderRepository.count(countQuery);
-    console.log('count', count);
-
 
     return res
       .status(resCode.HTTP_OK)

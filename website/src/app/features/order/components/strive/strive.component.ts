@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Stripe, loadStripe } from '@stripe/stripe-js';
-
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-strive',
   templateUrl: './strive.component.html',
@@ -33,9 +33,7 @@ export class StriveComponent {
         iconColor: '#fa755a',
       },
     };
-    this.stripe = await loadStripe(
-      'pk_test_51PWF72RoUfMOrpS2zDM6QRuvnQHPwSKGtOx93h3JHPdVxcNpL6NbhmnqdlUHqUUiECqETZrTID9PbhAIdi210qoU001RM4Ppe4'
-    );
+    this.stripe = await loadStripe(environment.stripePublishKey);
     const expressCheckoutOptions = {
       buttonType: {
         applePay: 'buy',
