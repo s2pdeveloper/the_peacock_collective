@@ -19,22 +19,27 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 // }
 
 const createPayment = (body) => {
-    stripe.customers.create({
-        email: body.email,
-        source: body.token,
-        name: body.name,
-    })
-      .then((customer) => {
-            return stripe.charges.create({
-                amount: body?.amount * 100,
-                description: 'Product purchase',
-                currency: 'inr',
-                customer: customer.id
-            });
+    return new Promise((resolve, reject) => {
+        stripe.customers.create({
+            email: body.email,
+            source: body.token,
+            name: body.name,
         })
-        .catch((err) => {
-            console.error(err)     
-        });
+          .then(async (customer) => {
+                let result= await stripe.charges.create({
+                    amount: body?.amount * 100,
+                    description: 'Product purchase',
+                    currency: 'inr',
+                    customer: customer.id
+                });
+                resolve(result)
+            })
+            .catch((err) => {
+                console.error(err)  
+                reject(err)   
+            });
+    })
+
 
 };
 module.exports = {

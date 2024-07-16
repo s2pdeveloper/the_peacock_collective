@@ -138,7 +138,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           amount: amount,
           transId: success?.result?.data?.id,
         };
-        this.order(orderPayload);
+        if (success?.result?.data?.status == 'succeeded') {
+          this.order(orderPayload);
+        }else{
+            this.toasterService.error("Transaction Failed!!")
+        }
       },
       error: (err) => {
         this.spinnerService.show();

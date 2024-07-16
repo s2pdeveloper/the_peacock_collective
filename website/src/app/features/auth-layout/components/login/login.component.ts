@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
     private toasterService: ToastrService
   ) {
     this.user = this.storageService.get('Customer');
+    
   }
   addressForm = new FormGroup({
     name: new FormControl(null),
@@ -47,6 +48,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAddresses();
+    console.log('this.user',this.user);
+
   }
 
   navigateTo(path: any) {

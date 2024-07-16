@@ -50,6 +50,7 @@ export class RegisterComponent implements AfterContentInit {
       let formData: any = this.registerForm.value;
       this.customerService.register(formData).subscribe((success: any) => {
         this.toasterService.success(success?.result?.message);
+        
         this.router.navigate(['/auth/login']);
       });
     } else {
