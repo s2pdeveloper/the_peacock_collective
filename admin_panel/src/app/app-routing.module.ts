@@ -27,6 +27,11 @@ const routes: Routes = [
           import("./features/authentication/register/register.component"),
       },
       {
+        path: "change-pwd",
+        loadComponent: () =>
+          import("./features/authentication/changepwd/changepwd.component"),
+      },
+      {
         path: "qr-sheet",
         loadComponent: () =>
           import("./features/authentication/QRSheet/QRSheet.component"),
