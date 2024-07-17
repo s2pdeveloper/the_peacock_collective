@@ -2,7 +2,8 @@ import { CommonModule } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { ActivatedRoute, Router, RouterModule } from "@angular/router";
-import { ValidationService } from "@core/components";
+import { validateField } from "@core/services/formValidators";
+import { ValidationService } from "@core/services/validation.service";
 import { UserService } from "@shared/services/user.service";
 import { NgxSpinnerService } from "ngx-spinner";
 import { ToastrService } from "ngx-toastr";
@@ -110,11 +111,11 @@ export default class ChangepwdComponent implements OnInit {
 
     setPass() {
 
-        // this.submitted = true;
-        // if (this.setPasswordForm.invalid) {
-        //     validateField(this.setPasswordForm);
-        //     return
-        // }
+        this.submitted = true;
+        if (this.setPasswordForm.invalid) {
+            validateField(this.setPasswordForm);
+            return
+        }
 
         // this.spinner.show();
         // this.userService.setPassword(this.setPasswordForm.value).subscribe(
