@@ -1,0 +1,78 @@
+<div class="">
+  <div class="h-100-custom-2">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9 mx-auto">
+          <form [formGroup]="setPasswordForm">
+            <div class="card shadow-sm mt-custom">
+              <div class="card-body py-5" style="background: rgba(241,241,241,0.99)">
+                <div class="row">
+                  <div class="col-md-6 border-lgin d-flex align-items-center">
+                    <img src="../../../assets/img/forgot-pass.jpg" style="mix-blend-mode: multiply;" class="img-fluid" alt="">
+                  </div>
+                  <div class="col-md-6">
+                    <div class="text-center">
+                      <img src="../../../assets/img/s2plogo.png" width="200" alt="">
+                      <h4 class="text-center my-4" style="color: #ff0707;">Change Your
+                        Password?</h4>
+                    </div>
+
+                    <div class="mb-3">
+
+                      <div class="input-group">
+                        <input formControlName="password" class="input form-control input-inner-shadow"
+                          placeholder="Password" [type]="visible" [ngClass]="{
+      'is-invalid': f['password'].invalid && submitted
+    }" />
+                        <div class="input-group-append">
+                          <span class="input-group-text" (click)="password_visible()" *ngIf="visible == 'password'">
+                            <i class="fa fa-eye-slash"></i>
+                          </span>
+                          <span class="input-group-text" (click)="password_disable()" *ngIf="visible == 'text'">
+                            <i class="fa fa-eye"></i>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="mt-1">
+                        <div class="text-danger  mt-1 ms-1" *ngIf="f['password'].invalid && submitted">
+                          {{ formError('password') }}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="mb-3">
+                      <div class="input-group">
+                        <input formControlName="confirmPassword" [type]="fieldTextType ? 'text' : 'password'"
+                          class="input form-control input-inner-shadow" placeholder="Confirm Password" [ngClass]="{
+                            'is-invalid': f['confirmPassword'].invalid && submitted
+                          }" />
+                        <span class="input-group-text">
+                          <i class="fa" [ngClass]="{
+                     'fa-eye-slash': !fieldTextType,
+                     'fa-eye': fieldTextType}" (click)="toggleFieldTextType()"></i>
+                        </span>
+                      </div>
+                      <div class="mt-1">
+                        <div class="text-danger  mt-1 ms-1" *ngIf="f['confirmPassword'].invalid && submitted">
+                          {{ formError('confirmPassword') }}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-center">
+                      <button type="button" (click)="setPass()" class="btn btn-primary">
+                        Submit
+                      </button>
+                    </div>
+                    <div class="text-center mt-3">
+                      Back To <a [routerLink]="['/auth/login']" [routerLinkActive]="['router-link-active']">Login.</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
