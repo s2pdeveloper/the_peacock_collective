@@ -7,7 +7,7 @@ import {
 } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SpinnerService, ToastService } from "@core/services";
-import { ValidationService } from "@core/components";
+import { ValidationService } from "@core/components/validation-messages/validation-messages.service";
 import { CustomerService } from "@shared/services/customer.service";
 import { NgbModal, NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 @Component({

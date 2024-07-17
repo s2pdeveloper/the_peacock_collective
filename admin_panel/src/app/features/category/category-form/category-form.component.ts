@@ -9,9 +9,9 @@ import {
 import { ActivatedRoute, Router, RouterOutletContract } from "@angular/router";
 import { SpinnerService, ToastService } from "@core/services";
 import { CategoryService } from "@shared/services/category.service";
-import { ValidationService } from "@core/components";
 import { DomSanitizer } from "@angular/platform-browser";
 import { TagsService } from "@shared/services/tags.service";
+import { ValidationService } from "@core/components/validation-messages/validation-messages.service";
 @Component({
   selector: "app-category-form",
   templateUrl: "./category-form.component.html",
