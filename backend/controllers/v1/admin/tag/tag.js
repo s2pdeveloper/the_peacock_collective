@@ -27,7 +27,6 @@ const modelObj = {
       let message = MESSAGES.apiErrorStrings.Data_EXISTS("Tag");
       throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
     }
-    console.log("req.body", req.body);
     await TagRepository.create(req.body);
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
@@ -80,10 +79,6 @@ const modelObj = {
       .json(generateResponse(resCode.HTTP_OK, existing));
   }),
   update: asyncHandler(async (req, res) => {
-    console.log('id--------------------',req.params.id);
-    
-    console.log('body',req.body);
-    
     let query = {
       where: {
         id: Number(req.params.id),
@@ -95,8 +90,6 @@ const modelObj = {
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     } else {
      let tag = await TagRepository.update(req.body, query);
-     console.log('tag',tag);
-     
       return res.json(
         generateResponse(resCode.HTTP_OK, {
           message: MESSAGES.apiSuccessStrings.UPDATE("Tag"),

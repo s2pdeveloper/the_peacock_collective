@@ -108,7 +108,6 @@ const modelObj = {
       },
     });
 
-    // console.log("itemDetails============", itemDetails);
     if (!itemDetails) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS('Categories');
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST)
@@ -118,7 +117,6 @@ const modelObj = {
         if (itemDetails.image) {
           await cloudinary.deleteFile(itemDetails.image);
         }
-        console.log("req.file.path", req.file);
         req.body.image = await cloudinary.uploadFromBuffer(req.file.buffer);
       }
 

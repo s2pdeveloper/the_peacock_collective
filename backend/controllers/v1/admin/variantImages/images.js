@@ -31,8 +31,6 @@ const modelObj = {
     // }
     // console.log("your file in req.", req.file);
     // console.log("your file in buffer", req.file.buffer);
-    console.log('req.file',req.file);
-    
     if (req.file) {
       req.body.image = await cloudinary.uploadFromBuffer(req.file.buffer);
     } else {
@@ -51,7 +49,6 @@ const modelObj = {
   }),
 
   getAll: asyncHandler(async (req, res) => {
-    console.log("your model", Model);
     const {
       page = 1,
       pageSize = 10,
@@ -146,10 +143,8 @@ const modelObj = {
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
     if (req.file) {
-      console.log('itemDetails.image', itemDetails.image);
       await cloudinary.deleteFile(itemDetails.image);
       req.body.image = await cloudinary.uploadFromBuffer(req.file.buffer);
-      console.log(req.body);
     }
 
     // itemDetails = await generateCreateData(itemDetails, req.body);

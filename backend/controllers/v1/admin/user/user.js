@@ -27,7 +27,6 @@ const roles = OPTIONS.usersRoles;
 const userObj = {
   //** Get all users */
   getAllUsers: asyncHandler(async (req, res) => {
-    console.log("you HIT the GET all user ");
     const {
       page = 1,
       pageSize = 10,
@@ -467,8 +466,6 @@ const userObj = {
   },
   //** reset the password */
   resetPassword: async (req, res) => {
-    console.log("++++++++++++++HIT The resetPassword++++++++");
-
     let query = {
       where: {
         id: req.body.id,
@@ -636,7 +633,6 @@ const userObj = {
         .json(generateResponse(resCode.HTTP_BAD_REQUEST, error));
     } else {
       if (user.resetPin === req.body.resetPin) {
-        console.log("hit the setPassword", user.resetPin);
         user.password = await bcrypt.hash(
           req.body.password,
           bcrypt.genSaltSync(8)

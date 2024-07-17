@@ -38,7 +38,6 @@ const modelObj = {
     let product = await createObj.save();
     if (req.body?.attributeArr) {
       req.body.attributeArr = JSON.parse(req.body.attributeArr);
-      console.log("req.body.attributeArr len", req.body.attributeArr.length);
       if (req.body.attributeArr.length) {
         let payloadMap = req.body.attributeArr.map(x => {
           return {
@@ -67,7 +66,6 @@ const modelObj = {
       search = null,
     } = req.query;
 
-    console.log("your query", search);
     let offset = (page - 1) * pageSize || 0;
     let query = {
       where: {

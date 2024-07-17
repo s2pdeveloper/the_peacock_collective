@@ -188,7 +188,6 @@ const modelObj = {
         );
       });
       Promise.all(promissArr).then((values) => {
-        console.log(values);
       });
     }
 

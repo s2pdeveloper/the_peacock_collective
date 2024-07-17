@@ -6,8 +6,6 @@ const modelObj = {
     pay: asyncHandler(async (req, res) => {
       let customerId = req.user.id
       let data =  await createPayment({...req.body,customerId});
-      console.log('data',data);
-      
         return res.status(MESSAGES.resCode.HTTP_OK).json(
             generateResponse(MESSAGES.resCode.HTTP_OK, {
               message: MESSAGES.apiSuccessStrings.ADDED("Payment"),

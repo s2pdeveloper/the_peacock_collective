@@ -41,7 +41,6 @@ const modelObj = {
     }
 
     let checkExisting=await variantRespository.findOneByCondition(query);
-    // console.log("request in variant", req.body);
     if (checkExisting) {
       let message = MESSAGES.apiErrorStrings.Data_EXISTS("Variant");
       throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
@@ -51,8 +50,6 @@ const modelObj = {
     // let variant = await createObj.save();
      
     let variant=await variantRespository.create(req.body)
-
-    console.log("your variant in after created", variant);
 
     if (req.body?.attributeArr && req.body?.attributeArr.length) {
       let payloadMap = req.body.attributeArr.map((x) => {
@@ -351,7 +348,6 @@ const modelObj = {
       );
     });
     Promise.allSettled(promissArr).then((values) => {
-      console.log(values);
       for (const result of values) {
         if (result.status == "rejected") {
           throw new ApiError(

@@ -5,7 +5,6 @@ module.exports.findByPk = async (id) => {
 };
 
 module.exports.findOneByCondition = async (condition) => {
-  console.log("your condition", condition);
   return await Model.findOne(condition);
 };
 

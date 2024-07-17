@@ -154,8 +154,6 @@ const modelObj = {
     };
 
     let itemDetails = await categoryRepository.findOneByCondition(query);
-
-    // console.log("itemDetails============", itemDetails);
     if (!itemDetails) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Categories");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);

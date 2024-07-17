@@ -29,8 +29,6 @@ const transactionsRepository = require("../../../../models/repository/transactio
 const modelObj = {
   create: asyncHandler(async (req, res) => {
     req.body.customerId = req.user.id;
-    console.log(' req.body===========================', req.body);
-    
     req.body.orderNumber = `ORD${OPTIONS.orderNumber + (await OrderRepository.getSequenceNumber())
       }`;
 
@@ -42,8 +40,6 @@ const modelObj = {
         variantInstanceArr.push(variant.save());
       }
     let createData = await OrderRepository.create(req.body);
-    console.log('createData',createData);
-    
     let data = req.body.products.map((x)=>{
       return {
         variantId: x.variantId,
@@ -185,7 +181,6 @@ const modelObj = {
         if (itemDetails.image) {
           await cloudinary.deleteFile(itemDetails.image);
         }
-        console.log("req.file.path", req.file);
         req.body.image = await cloudinary.uploadFromBuffer(req.file.buffer);
       }
 
@@ -251,10 +246,8 @@ const modelObj = {
     }
   }),
   validateOrder : asyncHandler(async (req, res) => {
-    console.log('body-----------', req.body);
     for await (const item of req.body.products) {
       let variant = await variantRepository.findByPk(item.variantId);
-      console.log("variant",variant);
       if (variant.qty < item.qty) {
         let errors = `Quantity of ${variant.sku} you selected in not available`;
         throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);

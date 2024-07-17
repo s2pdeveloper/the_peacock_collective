@@ -25,6 +25,7 @@ const modelObj = {
       pageSize = 10,
       column = "createdAt",
       direction = "DESC",
+      // search = null,
     } = req.query;
     let offset = (page - 1) * pageSize || 0;
     let query = {

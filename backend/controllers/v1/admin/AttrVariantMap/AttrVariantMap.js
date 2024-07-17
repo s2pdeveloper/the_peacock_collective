@@ -35,7 +35,6 @@ const modelObj = {
   }),
 
   getAll: asyncHandler(async (req, res) => {
-    console.log("your model", Model);
     const {
       page = 1,
       pageSize = 10,

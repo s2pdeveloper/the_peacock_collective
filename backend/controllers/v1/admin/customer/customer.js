@@ -133,7 +133,6 @@ const modelObj = {
         column = 'balance',
         direction = 'DESC',
       } = req.query;
-      console.log("req.user.id", req.user.id);
       let query = {
         where: {
           ...(![undefined, null, ''].includes(req.user.id) && {

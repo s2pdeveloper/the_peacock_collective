@@ -112,7 +112,6 @@ const getAllMasterData = asyncHandler(async (req, res) => {
   ];
   Promise.all(promissArr)
     .then((values) => {
-      console.log("values1111111111", values);
       // values = JSON.parse(JSON.stringify(values));
       const result = {
         categories: values[0],

@@ -62,7 +62,7 @@
               <td scope="row">{{ c?.role }}</td>
 
               <td scope="row" class="text-center">
-                <ng-container *ngIf="c?.role != 'Super_Admin'">
+                <ng-container *ngIf="c?.role != 'SUPER_ADMIN'">
                   <button
                     class="btn action-btn btn-sm mx-2"
                     (click)="navigateTo('/default/user/user-form', c?.id)"
