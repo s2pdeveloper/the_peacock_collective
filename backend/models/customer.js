@@ -106,25 +106,30 @@ module.exports = (sequelize, DataTypes) => {
     Customer.hasMany(models.Address, {
       foreignKey: 'customerId',
       as: 'customerWithAddresses',
-       onDelete: 'CASCADE',
+      onDelete: 'CASCADE',
     });
     Customer.hasMany(models.Transactions, {
       foreignKey: 'customerId',
       as: 'customerWithTransaction',
-       onDelete: 'CASCADE',
+      onDelete: 'CASCADE',
     });
     Customer.hasMany(models.Bespoke, {
       foreignKey: 'customerId',
       as: 'customerWithBespoke',
-       onDelete: 'CASCADE',
+      onDelete: 'CASCADE',
     });
-    
+
     Customer.hasMany(models.WishList, {
       foreignKey: 'customerId',
       as: 'customerWithWishList',
       onDelete: 'CASCADE',
     });
+    Customer.hasMany(models.Review, {
+      foreignKey: 'customerId',
+      as: 'customerWithReview',
+      onDelete: 'CASCADE',
+    });
   };
-  
+
   return Customer;
 };
