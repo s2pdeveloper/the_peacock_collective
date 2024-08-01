@@ -28,6 +28,6 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
     });
   };
-  // return Review;
+  return Review;
 
 };
