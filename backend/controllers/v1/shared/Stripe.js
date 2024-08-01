@@ -1,8 +1,6 @@
-
-const Stripe = require('stripe');
+const Stripe = require("stripe");
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 // const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-
 
 //  const createPayment = async (body) => {
 //     console.log('token',body);
@@ -18,32 +16,36 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 //     return charge;
 // }
 
-const createPayment = (body) => {
-    return new Promise((resolve, reject) => {
-        stripe.customers.create({
-            email: body.email,
-            source: body.token,
-            name: body.name,
-        })
-          .then(async (customer) => {
-                let result= await stripe.charges.create({
-                    amount: body?.amount * 100,
-                    description: 'Product purchase',
-                    currency: 'inr',
-                    customer: customer.id
-                });
-                resolve(result)
-            })
-            .catch((err) => {
-                console.error(err)  
-                reject(err)   
-            });
-    })
-
+const createPayment = async (body, user) => {
+    console.log("body",body);
+    let chargePayload={
+        amount: body?.amount * 100,
+        description: body?.desc,
+        receipt_email: body?.email,
+        currency: "inr",
+    }
+    console.log('chargePayload',chargePayload);
+    
+  if (user?.stripeId) {
+    return await stripe.charges.create({
+   ...chargePayload,
+      customer: user.stripeId,
+    });
+  } else {
+    let customer = await stripe.customers.create({
+      email: body.email,
+      source: body.token,
+      name: body.name,
+    });
+    user.stripeId = customer.id;
+    await user.save();
+    return await stripe.charges.create({
+        ...chargePayload,
+      customer: customer.id,
+    });
+  }
 
 };
 module.exports = {
-    createPayment
+  createPayment,
 };
-
-

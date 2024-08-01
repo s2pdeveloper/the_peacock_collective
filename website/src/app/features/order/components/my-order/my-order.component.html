@@ -11,7 +11,7 @@
               </p>
             </div>
           </div>
-          <div class="row mt-5 w-100 justify-content-between">
+          <div *ngIf="orderVariants.length" class="row mt-5 w-100 justify-content-between">
             <div class="col-12">
               <div class="row border-bottom pb-2">
                 <div class="col-5">Products</div>
@@ -81,6 +81,14 @@
                     Continue Shopping
                   </button>
                 </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="!orderVariants.length" class="col-12 p-3 border-bottom">
+            <h2 class="mb-4">No orders in Order List!</h2>
+            <div class="row">
+              <div class="col-9 col-md-4 col-lg-4">
+                <button class="btn btn-dark p-2" (click)="navigateTo('/home', null)">Continue Shopping</button>
               </div>
             </div>
           </div>

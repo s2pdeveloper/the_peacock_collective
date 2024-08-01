@@ -11,6 +11,9 @@ module.exports.findOneByCondition = async (condition) => {
 module.exports.findAndCountAll = async (query) => {
   return await Model.findAndCountAll(query);
 };
+module.exports.countAll = async () => {
+  return await Model.count();
+};
 
 module.exports.findAll = async (query) => {
   return await Model.findAll(query);

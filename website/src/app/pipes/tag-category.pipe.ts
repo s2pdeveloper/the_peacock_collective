@@ -9,7 +9,7 @@ export class TagCategoryPipe implements PipeTransform {
     try {
       // let categoryArr = [];
       if (categories.length && tagId) {
-        return categories.filter(x => x.categoryWithtags.some(y => y.tagId == tagId));
+        return categories.filter(x => x?.categoryWithtags?.some(y => y.tagId == tagId));
       }
     } catch (error) {
       console.log('error', error);

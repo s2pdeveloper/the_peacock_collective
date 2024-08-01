@@ -18,7 +18,7 @@
                 <i class="fa-solid fa-magnifying-glass pointer text-light" (click)="openSearch(search)"></i>
                 <div ngbDropdown>
                   <button type="button" class="btn" id="dropdownBasic1" ngbDropdownToggle>
-                    <i class="fa-solid fa-user pointer text-light"></i>
+                    <i class="fa-regular fa-user pointer text-light"></i>
                   </button>
                   <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                     <button class="p-3" ngbDropdownItem (click)="navigateTo('/auth/login', null)">
@@ -105,7 +105,7 @@
             </div>
           </div>
           <div class="col-2 d-flex justify-content-end">
-            <div class="navbar-brand text-uppercase textDanger pointer" (click)="navigateTo('/contact', null)">
+            <div class="navbar-brand text-light text-uppercase pointer" (click)="navigateTo('/contact', null)">
               Contact
             </div>
             <div class="d-flex align-items-center">

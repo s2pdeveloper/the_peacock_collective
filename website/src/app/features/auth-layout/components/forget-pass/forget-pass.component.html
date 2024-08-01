@@ -1,10 +1,6 @@
-<div class="container-fluid pb-5">
+<div class="container-fluid">
   <div class="row justify-content-center">
-    <div class="col-11">
-      <p class="py-3 text-color-primary pointer">
-        <span (click)="navigateTo('/')">Home</span> / Reset your password
-      </p>
-    </div>
+    <!--    
     <div class="col-11 py-4">
       <h2>Forgot your password?</h2>
     </div>
@@ -24,7 +20,7 @@
             <input type="email" class="background-primary form-control" formControlName="email"/>
           </div>
           <div class="col-5 col-md-2 col-lg-2 my-1">
-            <button class="btn btn-dark p-2" (click)="submit($event)">
+            <button class="btn btn-dark p-2" (click)="submit()">
               Send reset link
             </button>
           </div>
@@ -36,6 +32,56 @@
             <i class="fa-solid fa-chevron-left"></i>
             Back to login
           </p>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- New -->
+    <div class="d-none d-md-none d-lg-block col-lg-6 img-box">
+      <img src="../../../../../assets/images/login-img.webp" alt="" />
+    </div>
+    <div class="col-11 col-sm-8 col-md-6 col-lg-6">
+      <div class="row justify-content-center login-wrapper">
+        <div class="col-12">
+          <h1 class="mb-2">Forgot your password?</h1>
+          <p class="py-4">
+            Please enter the email address you used to register. You will
+            receive a temporary link to reset your password.
+          </p>
+          <form [formGroup]="forgetPassForm" class="pb-3">
+            <div class="row align-items-center justify-content-between">
+              <div class="col-12 mb-3">
+                <input
+                  type="email"
+                  class="form-control background-primary rounded"
+                  formControlName="email"
+                  autocomplete="off"
+                  placeholder="Email"
+                />
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-12 d-flex justify-content-center">
+                <button
+                  class="btn btn-dark py-2 px-3 rounded"
+                  (click)="submit()"
+                >
+                  Send Reset link
+                </button>
+              </div>
+            </div>
+          </form>
+          <div class="row pt-3">
+            <div class="col-12 d-flex justify-content-center">
+              <p
+                class="pointer forgot-pass"
+                (click)="navigateTo('/auth/login')"
+              >
+                <i class="fa-solid fa-chevron-left"></i>
+                Back to login
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

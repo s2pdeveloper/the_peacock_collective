@@ -1,74 +1,88 @@
-<div class="container-fluid py-5">
+<div class="container-fluid pt-5 pb-4 footer">
   <div class="row justify-content-center">
     <div class="col-11">
       <div class="row justify-content-between">
-        <div class="col-12 col-md-6 col-lg-4">
-          <p class="contact-text">Contact us</p>
-          <p class="mb-2 fw-bold">The Peacock Collective</p>
-          <div class="d-flex align-items-center mb-2">
-            <i class="fa-solid fa-location-pin me-2"></i>
-            <p>{{ data.address }}</p>
-          </div>
-          <div class="d-flex align-items-center mb-2">
-            <i class="fa-solid fa-phone me-2"></i>
-            <p>
-              <a [href]="'tel:' + data.phone" target="_blank">{{
-                data.phone
-              }}</a>
-            </p>
-          </div>
-          <div class="d-flex align-items-center mb-2">
-            <i class="fa-solid fa-envelope me-2"></i>
-            <p>
+        <div
+          class="col-6 col-md-6 col-lg-3"
+        >
+          <h3 class="mb-2 head-color">The Peacock Collective</h3>
+          <!-- Peacock info -->
+          <div class="d-flex flex-column mb-2">
+            <p class="mb-1 p-0 cursor">
               <a [href]="'mailto:' + data.email" target="_blank">{{
                 data.email
               }}</a>
             </p>
+            <p class="mb-1 p-0 cursor">
+              <a href="" target="_blank"> Instagram </a>
+            </p>
+            <p class="cursor" (click)="navigateTo('about-us')">
+              <span> About Us</span>
+            </p>
           </div>
-          <p>iqitcontactpage - module, you can put own text in configuration</p>
         </div>
-        <div class="col-12 col-md-4 col-lg-3">
-          <p class="follow-text">Follow us</p>
-          <div class="brands-icons d-flex justify-content-between pb-4">
-            <a [href]="data.fbLink" target="_blank">
-              <i class="fa-brands fa-facebook"></i
-            ></a>
-
-            <a [href]="data.twitterLink" target="_blank"
-              ><i class="fa-brands fa-twitter"></i
-            ></a>
-
-            <a [href]="data.googleLink" target="_blank"
-              ><i class="fa-brands fa-instagram"></i
-            ></a>
-
-            <a [href]="data.instaLink" target="_blank"
-              ><i class="fa-brands fa-google-plus-g"></i
-            ></a>
-
-            <a [href]="data.ytLink" target="_blank"
-              ><i class="fa-brands fa-pinterest"></i
-            ></a>
-
-            <a [href]="data.pinterestLink" target="_blank"
-              ><i class="fa-brands fa-youtube"></i
-            ></a>
-
-            <a [href]="data.vimeoLink" target="_blank"
-              ><i class="fa-brands fa-vimeo-v"></i
-            ></a>
+        <div
+          class="col-6 col-md-6 col-lg-3 d-flex flex-column align-items-center"
+        >
+          <!-- Peacock info -->
+          <div class="d-flex flex-column">
+            <p class="mb-2 p-0 cursor">
+              <span>Customer Reviews</span>
+            </p>
+            <p class="mb-2 p-0 cursor">
+              <span (click)="navigateTo('/info/terms-condition')"
+                >Terms & Conditions</span
+              >
+            </p>
+            <p class="mb-2 p-0 cursor">
+              <span (click)="navigateTo('/info/return-exchange')"
+                >Returns & Exchanges</span
+              >
+            </p>
+            <p class="mb-2 p-0 cursor">
+              <span (click)="navigateTo('/info/delivery')"
+                >Shipping & Delivery</span
+              >
+            </p>
           </div>
-          <p class="follow-text">Newsletter</p>
+        </div>
+        <div
+          class="col-6 col-md-6 col-lg-3 box-3"
+        >
+          <!-- Peacock info -->
+          <div class="d-flex flex-column">
+            <p class="mb-2 p-0 cursor">
+              <span (click)="navigateTo('/auth/login')">My Account</span>
+            </p>
+            <p class="mb-2 p-0 cursor">
+              <span (click)="navigateTo('/contact')">Contact Us</span>
+            </p>
+            <p class="mb-2 p-0 cursor">
+              <span (click)="navigateTo('/bespoke')"> Bespoke - By, You</span>
+            </p>
+            <p class="mb-2 p-0 cursor">
+              <span>Stay in Touch</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-3 box-4">
+          <p class="follow-text">Join my Newsletter</p>
           <form [formGroup]="footerForm">
-          <div class="input-wrapper">
-            <input type="text" placeholder="Your email address" formControlName="email"/>
-            <i class="fa-solid fa-envelope p-3" (click)="submit()"></i>
-          </div>
-        </form>
-          <p class="small-text pt-2">
-            You may unsubscribe at any moment. For that purpose, please find our
-            contact info in the legal notice.
-          </p>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                placeholder="Your email address"
+                formControlName="email"
+              />
+              <i
+                class="fa-solid cursor fa-arrow-right p-3"
+                (click)="submit()"
+              ></i>
+            </div>
+          </form>
+        </div>
+        <div class="col-12 py-3">
+          <p>&copy; 2024 peacock collective</p>
         </div>
       </div>
     </div>

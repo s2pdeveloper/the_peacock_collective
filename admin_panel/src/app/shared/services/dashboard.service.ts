@@ -6,7 +6,7 @@ import { map } from "rxjs";
 })
 export class DashboardService {
   routes: any = {
-    getAllPath: "dashboard/stats",
+    getAllPath: "dashboard",
     getDayWiseSalesPath: "dashboard/dayWiseSales",
     todayDataByCurrentDatePath: "dashboard/todayDataByCurrentDate",
     getDashCardStatsPath: "dashboard/getDashCardStats",
@@ -16,8 +16,8 @@ export class DashboardService {
 
   getAll(params: any) {
     return this.http.get(this.routes.getAllPath, params).pipe(
-      map((category: any) => {
-        return category;
+      map((res: any) => {
+        return res;
       })
     );
   }

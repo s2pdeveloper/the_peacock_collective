@@ -108,7 +108,7 @@ module.exports = (sequelize, DataTypes) => {
     return jwt.sign(payload, process.env.JWT_SECRET_KEY);
   };
   if (process.env.ENVIRONMENT != 'production')
-    sequelize.sync({ alter: false }).then(function () {
+    sequelize.sync({ alter: true }).then(function () {
 
     });
 

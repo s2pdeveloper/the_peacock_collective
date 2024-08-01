@@ -16,12 +16,10 @@
     background-size: cover;
     padding: 1rem;
     height: 80vh;
-    transform: scale(1);
     &:hover {
       background-size: 120%;
       transform: scale(1);
-      transition-duration: 0.2s;
-      transition-property: transform;
+      transition: all 0.8s;
     }
   }
   .text-box {

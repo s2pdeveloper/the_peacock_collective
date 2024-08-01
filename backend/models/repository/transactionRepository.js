@@ -15,7 +15,9 @@ module.exports.findAndCountAll = async (query) => {
 module.exports.findAll = async (query) => {
   return await Model.findAll(query);
 };
-
+module.exports.countAll = async () => {
+  return await Model.count();
+};
 module.exports.save = async (data) => {
   return await data.save();
 };

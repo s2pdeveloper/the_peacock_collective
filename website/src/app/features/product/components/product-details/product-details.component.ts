@@ -99,7 +99,7 @@ export class ProductDetailsComponent implements OnInit {
         img : this.currentVariant.variantImages[0]?.image,
         selectedValue: item.value ? item.value : null,
       });
-    }
+    }    
   }
   createCart() {
     try {

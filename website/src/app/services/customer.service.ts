@@ -34,5 +34,15 @@ export class CustomerService {
             .delete(this.BASE_URL + '/' + id)
             .pipe(map((res: any) => res));
     }
+    forgetPass(payload: any) {
+        return this.http
+            .put(this.BASE_URL + '/forgetPassword', payload)
+            .pipe(map((res: any) => res));
+    }
+    resetPass(payload: any) {
+        return this.http
+            .post(this.BASE_URL + '/resetPassword', payload)
+            .pipe(map((res: any) => res));
+    }
 
 }

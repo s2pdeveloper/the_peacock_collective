@@ -308,7 +308,7 @@ export default class DashboardComponent implements OnInit {
     //   );
     //   this.weekChart.render();
     // }, 500);
-    // this.getDashboardDetails();
+    this.getDashboardDetails();
     // this.getDayWiseSales();
     // this.getTodayDataByCurrentDate();
   }
@@ -316,52 +316,54 @@ export default class DashboardComponent implements OnInit {
   getDashboardDetails(): void {
     this.spinner.show();
     this.dashboardService.getAll({}).subscribe((success) => {
-      this.dashboardStats = success;
-      this.onNavChangeOfProfit();
-      this.topCategoriesOptions.xaxis = {
-        categories: success.categoryWiseSaleData.lowCategories.map(
-          (x: any) => x.categoryName
-        ),
-      };
-      this.topCategoriesOptions.series = [
-        {
-          name: "Top 5 Low Categories Amount",
-          data: success.categoryWiseSaleData.lowCategories.map(
-            (x: any) => x.totalValue
-          ),
-        },
-        {
-          name: "Top 5 Low Categories Quantity",
-          data: success.categoryWiseSaleData.lowCategories.map(
-            (x: any) => x.quantity
-          ),
-        },
-      ];
-      this.lowCategoriesOptions.series = [
-        {
-          name: "Top 5 High Categories Amount",
-          data: success.categoryWiseSaleData.topCategories.map(
-            (x: any) => x.totalValue
-          ),
-        },
-        {
-          name: "Top 5 High Categories Quantity",
-          data: success.categoryWiseSaleData.topCategories.map(
-            (x: any) => x.quantity
-          ),
-        },
-      ];
-      this.lowCategoriesOptions.xaxis = {
-        categories: success.categoryWiseSaleData.topCategories.map(
-          (x: any) => x.categoryName
-        ),
-      };
-      this.monthChartOptions.series = [
-        {
-          name: "Invoice Amount",
-          data: success.monthlyInvoiceData.data.map((x: any) => x.amount),
-        },
-      ];
+      console.log('success',success);
+      
+      // this.dashboardStats = success;
+      // this.onNavChangeOfProfit();
+      // this.topCategoriesOptions.xaxis = {
+      //   categories: success.categoryWiseSaleData.lowCategories.map(
+      //     (x: any) => x.categoryName
+      //   ),
+      // };
+      // this.topCategoriesOptions.series = [
+      //   {
+      //     name: "Top 5 Low Categories Amount",
+      //     data: success.categoryWiseSaleData.lowCategories.map(
+      //       (x: any) => x.totalValue
+      //     ),
+      //   },
+      //   {
+      //     name: "Top 5 Low Categories Quantity",
+      //     data: success.categoryWiseSaleData.lowCategories.map(
+      //       (x: any) => x.quantity
+      //     ),
+      //   },
+      // ];
+      // this.lowCategoriesOptions.series = [
+      //   {
+      //     name: "Top 5 High Categories Amount",
+      //     data: success.categoryWiseSaleData.topCategories.map(
+      //       (x: any) => x.totalValue
+      //     ),
+      //   },
+      //   {
+      //     name: "Top 5 High Categories Quantity",
+      //     data: success.categoryWiseSaleData.topCategories.map(
+      //       (x: any) => x.quantity
+      //     ),
+      //   },
+      // ];
+      // this.lowCategoriesOptions.xaxis = {
+      //   categories: success.categoryWiseSaleData.topCategories.map(
+      //     (x: any) => x.categoryName
+      //   ),
+      // };
+      // this.monthChartOptions.series = [
+      //   {
+      //     name: "Invoice Amount",
+      //     data: success.monthlyInvoiceData.data.map((x: any) => x.amount),
+      //   },
+      // ];
       this.spinner.hide();
     });
   }

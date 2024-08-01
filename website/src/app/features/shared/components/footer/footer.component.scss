@@ -2,30 +2,44 @@
   padding: 0;
   margin: 0;
   text-decoration: none;
+  color: #dee2e6a1;
+  font-size: 14px;
 }
-a{
-  color: #000;
+a {
+  color: #dee2e6a1;
+  &:hover {
+    color: #dee2e6a1;
+  }
 }
-.contact-text,
+.head-color {
+  font-size: 1.73rem;
+  color: rgb(222 226 230 / 90%);
+}
+.footer {
+  background-color: #796853;
+}
 .follow-text {
+  color: rgb(222 226 230 / 90%);
   font-size: 1.3rem;
-  margin-bottom: 1.7rem;
+  margin-bottom: 1.25rem;
 }
 .fa-brands {
   font-size: 1.3rem;
 }
 .input-wrapper {
-  border: solid 1px #e3e3e3;
-  background-color: #fff;
+  border-bottom: solid 1px #e3e3e3;
+  background-color: transparent;
   display: flex;
   input {
     width: 90%;
     border: none;
+    background-color: transparent;
     padding-left: 1rem;
     &:focus-visible {
       outline: none;
-      border-bottom: 1px solid #000;
-      background-color: #e3e3e37f;
+    }
+    &::placeholder {
+      color: #acaaa6;
     }
   }
 }
@@ -33,15 +47,49 @@ a{
   color: #acaaa6 !important;
   font-size: 0.75rem;
 }
-.brands-icons {
-  cursor: pointer;
+.cursor {
+  span,
+  a {
+    cursor: pointer;
+    word-wrap: break-word;
+    text-wrap: wrap;
+    &:hover {
+      color: #fff;
+      border-bottom: 1px solid #fff;
+    }
+  }
+  &:hover {
+    transition: all 0.9s;
+    transform: translateX(10px);
+  }
 }
 @media (max-width: 768px) {
+  .head-color {
+    font-size: 1rem;
+    color: rgb(222 226 230 / 90%);
+  }
   .brands-icons {
     justify-content: flex-start !important;
     i {
       font-size: 1rem;
       margin-right: 1rem;
     }
+  }
+  .follow-text {
+    margin-bottom: 0;
+    margin-top: 0.5rem;
+  }
+  .box-3 {
+    margin-block: 0.75rem;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .box-3,.box-4 {
+    margin-block: 0.75rem;
+  }
+  .follow-text {
+    
+    margin-bottom: 0;
+    margin-top: 0.5rem;
   }
 }

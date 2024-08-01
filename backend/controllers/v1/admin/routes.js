@@ -17,6 +17,7 @@ const tagsRoutes = require("./tag/routes");
 const contact=require("./contact/routes")
 const order=require("./order/routes")
 const transactions = require("./transactions/routes")
+const dashboard = require("./dashboard/routes")
 
 router.use('/user', userRoutes);
 router.use('/variantImages', variantImageRoutes);
@@ -34,6 +35,7 @@ router.use('/tag', tagsRoutes);
 router.use('/contact',contact);
 router.use('/order',order);
 router.use('/transactions',transactions);
+router.use('/dashboard',dashboard);
 
 
 module.exports = router;

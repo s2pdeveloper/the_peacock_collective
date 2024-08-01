@@ -12,7 +12,7 @@ export class ContactComponent {
   showNavigationArrows = false;
   data: any = {
     phone: '+48 541 44 27',
-    email: 'info@info.com',
+    email: 'support@peacockcollective.in',
     address: '66-764 City, Street 23',
     fbLink: '',
     twitterLink: '',

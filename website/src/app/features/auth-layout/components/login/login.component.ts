@@ -18,7 +18,6 @@ export class LoginComponent implements OnInit {
   showAddressForm: boolean = false;
   allAddresses: any[] = [];
   user: any;
-  showMenuIndex: Number = null;
   addressId: Number;
 
   constructor(
@@ -29,16 +28,15 @@ export class LoginComponent implements OnInit {
     private toasterService: ToastrService
   ) {
     this.user = this.storageService.get('Customer');
-    
   }
   addressForm = new FormGroup({
-    name: new FormControl(null),
-    location: new FormControl(null),
-    country: new FormControl(null),
-    state: new FormControl(null),
-    city: new FormControl(null),
-    pinCode: new FormControl(null),
-    type: new FormControl(null),
+    name: new FormControl(null, [Validators.required]),
+    location: new FormControl(null, [Validators.required]),
+    country: new FormControl(null, [Validators.required]),
+    state: new FormControl(null, [Validators.required]),
+    city: new FormControl(null, [Validators.required]),
+    pinCode: new FormControl(null, [Validators.required]),
+    type: new FormControl(null, [Validators.required]),
     isDefault: new FormControl(null),
   });
   loginForm = new FormGroup({
@@ -48,8 +46,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAddresses();
-    console.log('this.user',this.user);
-
+    console.log('this.user', this.user);
   }
 
   navigateTo(path: any) {
@@ -58,16 +55,15 @@ export class LoginComponent implements OnInit {
 
   submit() {
     if (this.loginForm.value) {
-      this.customerService
-        .login(this.loginForm.value)
-        .subscribe((success: any) => {
+      this.customerService.login(this.loginForm.value).subscribe(
+        (success: any) => {
           this.user = success.result;
           this.storageService.set('Customer', success.result);
           this.toasterService.success('Login done Successfully!!!');
           this.getAddresses();
-        },error =>{
-          
-        });
+        },
+        (error) => {}
+      );
     } else {
       this.toasterService.error('Something went wrong!!');
     }
@@ -79,11 +75,18 @@ export class LoginComponent implements OnInit {
       });
     }
   }
+  logout(){
+   this.user = this.storageService.remove('Customer');
+  }
   createAddress() {
     if (this.user) {
       this.spinnerService.show();
-      this.showAddressForm = !this.showAddressForm;
-      if (this.addressForm.value) {
+      if (this.addressForm.invalid) {
+        this.spinnerService.hide();
+        this.toasterService.error('Please fill required fields!');
+        return;
+      } else {
+        this.showAddressForm = !this.showAddressForm;
         let formData: any = this.addressForm.value;
         formData.customerId = this.user.id;
         this.addressService.create(formData).subscribe((success: any) => {
@@ -91,9 +94,6 @@ export class LoginComponent implements OnInit {
           this.getAddresses();
           this.toasterService.success('Address added successfully!!');
         });
-      } else {
-        this.spinnerService.hide();
-        this.toasterService.error('Please fill required fields!');
       }
     } else {
       this.spinnerService.hide();
@@ -126,7 +126,6 @@ export class LoginComponent implements OnInit {
       this.addressService
         .update(this.addressId, formData)
         .subscribe((success: any) => {
-          this.showMenuIndex = null;
           this.showAddressForm = !this.showAddressForm;
           this.toasterService.success('Address update successfully!!');
           this.getAddresses();
@@ -138,7 +137,6 @@ export class LoginComponent implements OnInit {
       let formData: any = this.addressForm.value;
       formData.customerId = this.user.id;
       this.addressService.delete(id).subscribe((success: any) => {
-        this.showMenuIndex = null;
         this.toasterService.success('Address deleted successfully!!');
         this.getAddresses();
       });

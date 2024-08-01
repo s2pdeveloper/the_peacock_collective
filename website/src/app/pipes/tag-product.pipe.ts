@@ -10,7 +10,7 @@ export class TagProductPipe implements PipeTransform {
 
       if (products.length && tagId && activeCategoryId) {
         return products.filter(x => {
-          if (x.productWithCategory.id == activeCategoryId && x.productWithTagMap.some(y => y.tagId == tagId)) {
+          if (x?.productWithCategory?.id == activeCategoryId && x?.productWithTagMap?.some(y => y.tagId == tagId)) {
             return x;
           }
         })

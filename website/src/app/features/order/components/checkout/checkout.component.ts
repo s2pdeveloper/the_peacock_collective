@@ -110,9 +110,18 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       (acc, currValue) => acc + currValue.price,
       0
     );
+    const description = (product: any) => {
+      let str = '';
+      for (const item of product) {
+        str =(str ? str + ',' : '') + `${item.variant.sku} (QTY: ${item.qty},Price : ₹ ${item.variant.price} / unit)`;
+        
+      }
+      return str;
+    };
     let payload = {
       products: this.product,
       addressId: this.selectedAddressId,
+      desc: description(this.product),
       type: this.type,
     };
     this.orderService.validateOrder(payload).subscribe({
@@ -126,6 +135,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.spinnerService.show();
     let res = {
       token: token.id,
+      desc : payload.desc,
       amount: amount,
       email: this.user.email,
       name: this.user.name,
@@ -140,8 +150,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         };
         if (success?.result?.data?.status == 'succeeded') {
           this.order(orderPayload);
-        }else{
-            this.toasterService.error("Transaction Failed!!")
+        } else {
+          this.toasterService.error('Transaction Failed!!');
         }
       },
       error: (err) => {
@@ -151,6 +161,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     });
   }
   order(payload) {
+    console.log('payload', payload);
+
     this.spinnerService.show();
     this.orderService.create(payload).subscribe({
       next: (success) => {

@@ -16,10 +16,35 @@
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-family: "Reynor";
+  src: url("assets/font/reynor/Reynor\ -\ Italic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Mokoto";
+  src: url("assets/font/mokoto/Mokoto\ Demo.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "ravensara";
+  src: url("assets/font/ravensara/RavensaraSans-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "yessica";
+  src: url("assets/font/yessica/Yessica-Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
 
 * {
   // font-family: "Cormorant Garamond", serif;
-  font-family: "Barlow", sans-serif;
+  // font-family: "Barlow", sans-serif;
+  font-family: "Forum", serif ; 
 }
 ::-webkit-scrollbar {
   width: 2px;

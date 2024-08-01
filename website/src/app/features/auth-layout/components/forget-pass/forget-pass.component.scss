@@ -2,10 +2,37 @@
   padding: 0;
   margin: 0;
 }
+.forgot-pass {
+  border-bottom: 1px solid #000;
+}
+.form-side {
+  padding-inline: 4rem;
+}
+.login-wrapper{
+  padding: 5rem;
+}
+.btn-dark {
+  font-size: 18px !important;
+}
+.img-box {
+  height: 100vh;
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+.form-control,
+.input-number {
+  border: 0;
+  border-radius: 0;
+  padding: 0.75rem 1rem !important;
+}
 .form-control,.input-number {
   border: 0;
   border-radius: 0;
-  padding: 0.5rem 1rem !important;
+  padding: 0.75rem 1rem !important;
 }
 .background-primary {
   background-color: #f8f8f8;

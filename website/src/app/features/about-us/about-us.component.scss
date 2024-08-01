@@ -1,11 +1,17 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
 .about-text {
   display: inline-block;
   position: relative;
   font-weight: bold;
   color: #2d2b5c;
   padding-inline: 1rem;
-//   font-family: "Buffalo", sans-serif;
+  font-family: "ravensara" !important;
 }
+
 .about-text::after {
   content: "";
   display: block;
@@ -24,7 +30,7 @@ p {
   font-size: 26px;
   font-family: "Brittany", sans-serif;
 }
-@media (max-width:768px){
+@media (max-width: 768px) {
   p {
     font-size: 14px;
   }
