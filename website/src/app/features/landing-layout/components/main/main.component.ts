@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-main',
@@ -6,21 +6,14 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit, AfterViewInit {
-  constructor() {}
-  ngOnInit(): void {}
-  ngAfterViewInit() {
-    try {
-      const video: HTMLVideoElement | null = document.getElementById(
-        'myVideo'
-      ) as HTMLVideoElement;
-      console.log('video', video);
-      if (video) {
-        video.play().catch((error) => {
-          console.error('Error attempting to play', error);
-        });
-      }
-    } catch (error) {
-      console.error('Error attempting to play', error);
-    }
+  @ViewChild('videoElement') videoElement: ElementRef<HTMLVideoElement>;
+  constructor() { }
+  ngOnInit(): void { }
+  ngAfterViewInit(): void {
+    const video: HTMLVideoElement = this.videoElement.nativeElement;
+    video.muted = true;
+    video.play().catch(error => {
+      console.error('Error trying to play the video', error);
+    });
   }
 }
