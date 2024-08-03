@@ -31,6 +31,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   allAddresses: any[] = [];
   product: any[] = [];
   // cartData: any[] = [];
+  shippingFee = 0;
+  discount = 0;
+
 
   type: string = null;
   constructor(
@@ -99,7 +102,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       products: this.product,
       addressId: this.selectedAddressId,
       type: this.type,
-      amount : amount
+      amount: (amount + this.shippingFee) - this.discount,
+      shippingFee: this.shippingFee,
+      discount: this.discount,
     };
     this.orderValidate(payload);
   }
@@ -118,8 +123,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     const description = (product: any) => {
       let str = '';
       for (const item of product) {
-        str =(str ? str + ',' : '') + `${item.variant.sku} (QTY: ${item.qty},Price : ₹ ${item.variant.price} / unit)`;
-        
+        str = (str ? str + ',' : '') + `${item.variant.sku} (QTY: ${item.qty},Price : ₹ ${item.variant.price} / unit)`;
+
       }
       return str;
     };
@@ -140,7 +145,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.spinnerService.show();
     let res = {
       token: token.id,
-      desc : payload.desc,
+      desc: payload.desc,
       amount: amount,
       email: this.user.email,
       name: this.user.name,
@@ -150,8 +155,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.spinnerService.show();
         let orderPayload = {
           ...payload,
-          amount: amount,
+          amount: (amount + this.shippingFee) - this.discount,
           transId: success?.result?.data?.id,
+          shippingFee: this.shippingFee,
+          discount: this.discount,
         };
         if (success?.result?.data?.status == 'succeeded') {
           this.order(orderPayload);

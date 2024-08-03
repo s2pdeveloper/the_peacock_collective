@@ -98,6 +98,34 @@ export default class DashboardComponent implements OnInit {
   chartData: any = [];
   chartDataX_axis: any = [];
   todayData: any;
+  yearlyOrderValue = {
+    "Apr": 0,
+    "May": 0,
+    "Jun": 0,
+    "Jul": 0,
+    "Aug": 0,
+    "Sept": 0,
+    "Oct": 0,
+    "Nov": 0,
+    "Dec": 0,
+    "Jan": 0,
+    "Feb": 0,
+    "Mar": 0,
+  }
+  yearlyInvoiceCount = {
+    "Apr": 0,
+    "May": 0,
+    "Jun": 0,
+    "Jul": 0,
+    "Aug": 0,
+    "Sept": 0,
+    "Oct": 0,
+    "Nov": 0,
+    "Dec": 0,
+    "Jan": 0,
+    "Feb": 0,
+    "Mar": 0,
+  }
 
   // constructor
   constructor(
@@ -106,103 +134,8 @@ export default class DashboardComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private toastService: ToastrService
   ) {
-    this.chartOptions_4 = {
-      chart: {
-        type: "bar",
-        height: 365,
-        toolbar: {
-          show: false,
-        },
-      },
-      colors: ["#13c2c2"],
-      plotOptions: {
-        bar: {
-          columnWidth: "45%",
-          borderRadius: 4,
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      series: [
-        {
-          data: [10, 95, 70, 42, 65, 55, 78],
-        },
-      ],
-      stroke: {
-        curve: "smooth",
-        width: 2,
-      },
-      xaxis: {
-        categories: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-      },
-      yaxis: {
-        show: false,
-      },
-      grid: {
-        show: false,
-      },
-    };
-    this.chartOptions_5 = {
-      chart: {
-        type: "line",
-        height: 340,
-        toolbar: {
-          show: false,
-        },
-      },
-      colors: ["#faad14"],
-      plotOptions: {
-        bar: {
-          columnWidth: "45%",
-          borderRadius: 4,
-        },
-      },
-      stroke: {
-        curve: "smooth",
-        width: 1.5,
-      },
-      grid: {
-        strokeDashArray: 4,
-      },
-      series: [
-        {
-          data: [58, 90, 38, 83, 63, 75, 35, 55],
-        },
-      ],
-      xaxis: {
-        type: "datetime",
-        categories: [
-          "2018-05-19T00:00:00.000Z",
-          "2018-06-19T00:00:00.000Z",
-          "2018-07-19T01:30:00.000Z",
-          "2018-08-19T02:30:00.000Z",
-          "2018-09-19T03:30:00.000Z",
-          "2018-10-19T04:30:00.000Z",
-          "2018-11-19T05:30:00.000Z",
-          "2018-12-19T06:30:00.000Z",
-        ],
-        labels: {
-          format: "MMM",
-        },
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-      },
-      yaxis: {
-        show: false,
-      },
-    };
-    this.chartOptions_6 = {
+
+    this.monthChartOptions = structuredClone({
       chart: {
         type: "bar",
         height: 430,
@@ -248,26 +181,13 @@ export default class DashboardComponent implements OnInit {
       series: [
         {
           name: "Invoice Count",
-          data: [0, 0, 0, 0, 0, 0, 0],
+          data: [],
         },
         {
           name: "Invoice Revenue",
-          data: [0, 0, 0, 0, 0, 0, 0],
+          data: [],
         },
       ],
-      xaxis: {
-        categories: ["Sun", "Mon", "Tues", "Wed", "Thu", "Fri", "Sat"],
-      },
-    };
-    this.dayOfWeekChartOptions = structuredClone(this.chartOptions_6);
-    this.salesStatisticsChartOptions = structuredClone({
-      ...this.chartOptions_6,
-      xaxis: {
-        categories: ["Expenses", "Revenue", "Profit (₹)", "Profit (%)"],
-      },
-    });
-    this.monthChartOptions = structuredClone({
-      ...this.chartOptions_6,
       xaxis: {
         categories: [
           "Apr",
@@ -285,21 +205,8 @@ export default class DashboardComponent implements OnInit {
         ],
       },
     });
-    this.topCategoriesOptions = structuredClone({
-      ...this.chartOptions_6,
-      xaxis: {
-        categories: [],
-      },
-    });
-    this.lowCategoriesOptions = structuredClone({
-      ...this.chartOptions_6,
-      xaxis: {
-        categories: [],
-      },
-    });
   }
 
-  // life cycle event
   ngOnInit(): void {
     // setTimeout(() => {
     //   this.weekChart = new ApexCharts(
@@ -312,13 +219,38 @@ export default class DashboardComponent implements OnInit {
     // this.getDayWiseSales();
     // this.getTodayDataByCurrentDate();
   }
+  groupByMonth(data) {
+
+    let yearlyData = data.reduce((result, order) => {
+      const date = new Date(order.createdAt);
+      const month = date.toLocaleString('default', { month: 'short' }); // e.g., "August 2024"
+
+      if (!result[month]) {
+        result[month] = [];
+      }
+      result[month].push(order);
+
+      return result;
+    }, {});
+    for (const key in yearlyData) {
+      if (yearlyData[key].length) {
+        this.yearlyOrderValue[key] = yearlyData[key].reduce((accu, curr) => accu + (curr.amount ?? 0), 0)
+        this.yearlyInvoiceCount[key] = yearlyData[key].length;
+      }
+    }
+  }
 
   getDashboardDetails(): void {
     this.spinner.show();
     this.dashboardService.getAll({}).subscribe((success) => {
-      console.log('success',success);
       
-      // this.dashboardStats = success;
+      this.dashboardStats = success;
+      this.groupByMonth(success.yearlyOrder);
+      this.monthChartOptions.series[0].data = [this.yearlyInvoiceCount['Apr'], this.yearlyInvoiceCount['May'], this.yearlyInvoiceCount['Jun'], this.yearlyInvoiceCount['Jul'], this.yearlyInvoiceCount['Aug'], this.yearlyInvoiceCount['Sept'], this.yearlyInvoiceCount['Oct'], this.yearlyInvoiceCount['Nov'], this.yearlyInvoiceCount['Dec'], this.yearlyInvoiceCount['Jan'], this.yearlyInvoiceCount['Feb'], this.yearlyInvoiceCount['Mar']];
+
+      this.monthChartOptions.series[1].data = [this.yearlyOrderValue['Apr'], this.yearlyOrderValue['May'], this.yearlyOrderValue['Jun'], this.yearlyOrderValue['Jul'], this.yearlyOrderValue['Aug'], this.yearlyOrderValue['Sept'], this.yearlyOrderValue['Oct'], this.yearlyOrderValue['Nov'], this.yearlyOrderValue['Dec'], this.yearlyOrderValue['Jan'], this.yearlyOrderValue['Feb'], this.yearlyOrderValue['Mar']];
+      this.monthChartOptions = { ...this.monthChartOptions }
+
       // this.onNavChangeOfProfit();
       // this.topCategoriesOptions.xaxis = {
       //   categories: success.categoryWiseSaleData.lowCategories.map(

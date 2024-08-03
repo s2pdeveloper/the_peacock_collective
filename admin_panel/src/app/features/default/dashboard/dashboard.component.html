@@ -8,7 +8,7 @@
               <h6 class="mb-2 f-w-400 text-muted">Todays Statistics</h6>
             </div>
           </div>
-          <div class="col-auto d-flex ms-auto">
+          <!-- <div class="col-auto d-flex ms-auto">
             <div class="mx-1">
               <input
                 type="date"
@@ -24,13 +24,13 @@
                 <i class="fa-solid fa-filter"></i>
               </button>
             </div>
-          </div>
+          </div> -->
         </div>
         <div class="row mt-2">
           <div class="col-auto">
             Sales
             <span class="badge px-2 text-bg-success">
-              ₹ {{ todayData?.totalRevenue || 0 }}
+             {{ dashboardStats?.todayOrderValue || 0 | currency : 'INR'}}
             </span>
           </div>
           <div class="col-auto p-0">
@@ -48,18 +48,10 @@
           <div class="col-auto">
             Order
             <span class="badge px-2 text-bg-info">
-              {{ todayData?.customerFootFall || 0 }}
+              {{ dashboardStats?.todayOrderCount || 0 }}
             </span>
           </div>
-          <div class="col-auto p-0">
-            <span class="text-primary fw-bold">|</span>
-          </div>
-          <div class="col-auto">
-            Sold Items
-            <span class="badge px-2 text-bg-warning">
-              {{ todayData?.newCustomer || 0 }}
-            </span>
-          </div>
+        
           <!-- <div class="col-auto p-0">
             <span class="text-primary fw-bold">|</span>
           </div>
@@ -96,7 +88,7 @@
           <div class="col-auto">
             Number Of Customer
             <span class="badge px-3 text-bg-success">
-              {{ dashboardStats.customerCount }}
+              {{ dashboardStats?.customers}}
             </span>
           </div>
           <div class="col-auto p-0">
@@ -105,7 +97,7 @@
           <div class="col-auto">
             Total Transactions
             <span class="badge px-3 text-bg-secondary">
-              {{ dashboardStats.invoiceCount }}
+              {{ dashboardStats?.transactions}}
             </span>
           </div>
           <div class="col-auto p-0">
@@ -114,7 +106,7 @@
           <div class="col-auto">
             Total Categories
             <span class="badge px-3 text-bg-info">
-              {{ dashboardStats.categoryCount }}
+              {{ dashboardStats?.categories }}
             </span>
           </div>
           <div class="col-auto p-0">
@@ -123,7 +115,7 @@
           <div class="col-auto">
             Number Of Product
             <span class="badge px-3 text-bg-warning">
-              {{ dashboardStats.productCount }}
+              {{ dashboardStats?.products }}
             </span>
           </div>
         </div>
@@ -336,10 +328,10 @@
         <div class="row">
           <div class="col-auto">
             <div class="mb-3">
-              <h6 class="mb-2 f-w-400 text-muted">Monthly Income</h6>
+              <h6 class="mb-2 f-w-400 text-muted">Yearly Income</h6>
               <h4 class="mb-3">
                 <span class="badge text-bg-info">
-                  ₹ {{ dashboardStats?.monthlyInvoiceData?.totalSum || 0 }}
+                  {{ dashboardStats?.yearlyOrderValue || 0 | currency : 'INR' }}
                 </span>
               </h4>
             </div>

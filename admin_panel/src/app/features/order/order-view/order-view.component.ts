@@ -4,12 +4,19 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { SpinnerService, ToastService } from "@core/services";
 import { OrderService } from "@shared/services/order";
 
+enum OrderStatus{
+  ACTIVE = "active",
+  ACCEPT = "accept",
+  REJECTED = "rejected",
+}
+
 @Component({
   selector: "app-order-view",
   templateUrl: "./order-view.component.html",
   styleUrls: ["./order-view.component.scss"],
 })
 export class OrderViewComponent {
+  OrderStatus=OrderStatus
   id: number = null;
   data: any = {};
   subtotal: number = 0;
@@ -19,7 +26,7 @@ export class OrderViewComponent {
     private orderService: OrderService,
     private spinner: SpinnerService,
     private toastService: ToastService
-  ) {}
+  ) { }
   orderForm = new FormGroup({
     total: new FormControl(null),
     discount: new FormControl(null),
@@ -44,13 +51,13 @@ export class OrderViewComponent {
         this.orderForm.patchValue(success);
         this.orderForm.controls['discount'].setValue(success.discount ?? 0)
         this.orderForm.controls['shippingFee'].setValue(success.shippingFee ?? 0)
-        
+
         this.subtotal = this.data.orderWithOrderVariantMap
-        .map((x) => x.price)
-        .reduce((acc, currentValue) => acc + currentValue, 0);
+          .map((x) => x.price)
+          .reduce((acc, currentValue) => acc + currentValue, 0);
 
         this.orderForm.controls['total'].setValue(this.subtotal)
-          
+
       });
     } catch (error) {
       console.log("error", error);
@@ -69,7 +76,7 @@ export class OrderViewComponent {
       });
   }
   totalChange() {
-    let total:any = this.subtotal;
+    let total: any = this.subtotal;
     if (this.orderForm.value.discount) {
       total =
         (this.subtotal - (this.orderForm.value.discount / 100) * this.subtotal) ?? this.subtotal;

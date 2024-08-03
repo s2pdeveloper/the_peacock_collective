@@ -23,6 +23,7 @@ const modelObj = {
     const currDate = new Date();
     const startOfDay = new Date(currDate.setHours(0, 0, 0, 0));
     const endOfDay = new Date(currDate.setHours(23, 59, 59, 999));
+    const { financialYearStart, financialYearEnd } = getCurrentFinancialYearDates();
 
     const TodayOrderQuery = {
       where: {
@@ -33,10 +34,9 @@ const modelObj = {
     };
     const MonthlyOrderQuery = {
       where: {
-        [Op.and]: [
-          sequelize.where(sequelize.fn("MONTH", sequelize.col('createdAt')), currDate.getMonth() + 1),
-          sequelize.where(sequelize.fn("YEAR", sequelize.col('createdAt')), currDate.getFullYear()),
-        ],
+        createdAt: {
+          [Op.between]: [financialYearStart, financialYearEnd],
+        },
       },
     };
 
@@ -59,8 +59,10 @@ const modelObj = {
           transactions: values[1],
           categories: values[2],
           products: values[3],
-          monthlyOrder: values[4],
-          todayOrder: values[5],
+          yearlyOrder: values[4].rows,
+          yearlyOrderValue: values[4].rows.reduce((accu, curr) => accu + (curr.amount ?? 0), 0),
+          todayOrderValue: values[5].rows.reduce((accu, curr) => accu + (curr.amount ?? 0), 0),
+          todayOrderCount: values[5].count
         };
         return res
           .status(resCode.HTTP_OK)
@@ -75,6 +77,27 @@ const modelObj = {
       });
   }),
 };
+function getCurrentFinancialYearDates() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth(); // 0 is January, 11 is December
+
+  let financialYearStart;
+  let financialYearEnd;
+
+  if (month >= 3) { // April (3) or later
+    financialYearStart = new Date(year, 3, 1); // April 1st of the current year
+    financialYearEnd = new Date(year + 1, 2, 31); // March 31st of the next year
+  } else { // January, February, March
+    financialYearStart = new Date(year - 1, 3, 1); // April 1st of the previous year
+    financialYearEnd = new Date(year, 2, 31); // March 31st of the current year
+  }
+
+  return {
+    financialYearStart: financialYearStart.setHours(0, 0, 0, 0), // Format as needed
+    financialYearEnd: financialYearEnd.setHours(23, 59, 59, 999) // Format as needed
+  };
+}
 
 
 module.exports = modelObj;

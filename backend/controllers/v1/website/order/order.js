@@ -39,24 +39,24 @@ const modelObj = {
         variant.qty = variant.qty - item.qty;
         variantInstanceArr.push(variant.save());
       }
-    let createData = await OrderRepository.create(req.body);
-    let data = req.body.products.map((x)=>{
-      return {
-        variantId: x.variantId,
-        orderId: createData.id,
-        price: x.price,
-        qty: x.qty,
-      };
-    })
-    if (req.body.transId) {
-      let transData = {
-        orderId: createData.id,
-        amount : req.body.amount,
-        transId : req.body.transId,
-        customerId : req.user.id
-      }
+      let createData = await OrderRepository.create(req.body);
+      let data = req.body.products.map((x) => {
+        return {
+          variantId: x.variantId,
+          orderId: createData.id,
+          price: x.price,
+          qty: x.qty,
+        };
+      })
+      if (req.body.transId) {
+        let transData = {
+          orderId: createData.id,
+          amount: req.body.amount,
+          transId: req.body.transId,
+          customerId: req.user.id
+        }
         await transactionsRepository.create(transData);
-    }
+      }
 
       await OrderVariantMapRepository.bulkCreate(data);
       await Promise.all(variantInstanceArr)
@@ -245,7 +245,7 @@ const modelObj = {
       res.status(500).json({ message: "Internal server error" });
     }
   }),
-  validateOrder : asyncHandler(async (req, res) => {
+  validateOrder: asyncHandler(async (req, res) => {
     for await (const item of req.body.products) {
       let variant = await variantRepository.findByPk(item.variantId);
       if (variant.qty < item.qty) {

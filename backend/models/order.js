@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      total: {
+      amount: {
         type: DataTypes.FLOAT,
         allowNull: true,
       },
@@ -28,17 +28,17 @@ module.exports = (sequelize, DataTypes) => {
       },
       status: {
         type: DataTypes.ENUM(
+          OPTIONS.defaultStatus.ACTIVE,
           OPTIONS.defaultStatus.ACCEPT,
           OPTIONS.defaultStatus.REJECTED,
-          OPTIONS.defaultStatus.APPROVED,
-          OPTIONS.defaultStatus.DISPATCHED,                              
-          OPTIONS.defaultStatus.DELIVERED,                              
-          
+          OPTIONS.defaultStatus.DISPATCHED,
+          OPTIONS.defaultStatus.DELIVERED,
+
         ),
         allowNull: false,
-        defaultValue: OPTIONS.defaultStatus.ACCEPT,
+        defaultValue: OPTIONS.defaultStatus.ACTIVE,
       },
-      
+
     },
     {
       timestamps: true,
