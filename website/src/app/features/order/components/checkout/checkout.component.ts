@@ -91,10 +91,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
   }
   createOrder() {
+    let amount = this.product.reduce(
+      (acc, currValue) => acc + currValue.price,
+      0
+    );
     let payload = {
       products: this.product,
       addressId: this.selectedAddressId,
       type: this.type,
+      amount : amount
     };
     this.orderValidate(payload);
   }

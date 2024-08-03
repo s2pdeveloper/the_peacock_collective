@@ -150,14 +150,24 @@ const modelObj = {
     //   { isDefault: false },
     //   { where: { customerId: req.body.customerId } }
     // );
-    let query = { where: { customerId: req.user.id } };
-    await addressRepository.update({ isDefault: false }, query);
-    // const address = await Model.findOne({ where: { id: req.body.addressId } });
-    const address = await addressRepository.update(
+    let existing = await addressRepository.findByPk(req.body.addressId);
+    let existingDefault = await addressRepository.findOneByCondition({
+      isDefault: true,
+    });
+    console.log("existing", existing);
+
+    if (existing && existing.isDefault == false) {
+      const address = await addressRepository.update(
+        { isDefault: true },
+        { where: { id: req.body.addressId } }
+      );
+    }
+    await addressRepository.update(
       { isDefault: false },
-      { where: { id: req.params.id } }
+      { where: { id: existingDefault.id } }
     );
-    if (address[0] == 0) {
+
+    if (!existing) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Address");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }

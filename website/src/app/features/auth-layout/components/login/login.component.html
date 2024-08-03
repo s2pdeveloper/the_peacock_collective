@@ -166,7 +166,7 @@
                       type="radio"
                       name="type"
                       id="typeOther"
-                      value="other"
+                      value="others"
                       formControlName="type"
                     />
                     <label class="form-check-label" for="typeOther"
@@ -333,21 +333,29 @@
               class="col-12 card position-relative mb-3"
             >
               <div class="row">
-                <div class="col-4 col-md-3 col-lg-2 d-flex justify-content-center align-items-center">
+                <div
+                  class="col-4 col-md-3 col-lg-2 d-flex justify-content-center align-items-center"
+                >
                   <span
                     class="bg-danger text-white rounded-pill px-3 py-2 ms-2"
                     >{{ add.type }}</span
                   >
                 </div>
-                <div class="col-4 col-md-3 col-lg-2 d-flex justify-content-center align-items-center">
+                <div
+                  class="col-4 col-md-3 col-lg-2 d-flex justify-content-center align-items-center"
+                >
                   <p>{{ add?.name }}</p>
                 </div>
-                <div class="col-4 col-md-3 col-lg-3 d-flex justify-content-center align-items-center">
+                <div
+                  class="col-4 col-md-3 col-lg-3 d-flex justify-content-center align-items-center"
+                >
                   <p>
                     {{ add?.location }}
                   </p>
                 </div>
-                <div class="col-6 col-md-3 col-lg-2 d-flex justify-content-center align-items-center">
+                <div
+                  class="col-6 col-md-3 col-lg-2 d-flex justify-content-center align-items-center"
+                >
                   <p>{{ add?.phone }}</p>
                 </div>
                 <div
@@ -366,6 +374,15 @@
                     <i class="fa-solid fa-trash"></i>
                   </span>
                 </div>
+              </div>
+              <div [class.bg-success]="add.isDefault" class="badge pointer">
+                <button [disabled]="add.isDefault" class="default-btn" (click)="setDefault(add.id)">
+                  <span
+                    [class.text-light]="add.isDefault"
+                    [class.text-dark]="!add.isDefault"
+                    >Set Default{{add.isDefault}}</span
+                  >
+                </button>
               </div>
             </div>
           </div>

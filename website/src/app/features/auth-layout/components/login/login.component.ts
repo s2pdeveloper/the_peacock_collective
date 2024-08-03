@@ -36,8 +36,8 @@ export class LoginComponent implements OnInit {
     state: new FormControl(null, [Validators.required]),
     city: new FormControl(null, [Validators.required]),
     pinCode: new FormControl(null, [Validators.required]),
-    type: new FormControl(null, [Validators.required]),
-    isDefault: new FormControl(null),
+    type: new FormControl('home', [Validators.required]),
+    isDefault: new FormControl(false),
   });
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required]),
@@ -101,6 +101,8 @@ export class LoginComponent implements OnInit {
     }
   }
   setDefault(id: Number) {
+    console.log('id',id);
+    
     if (this.allAddresses.length > 0) {
       this.spinnerService.show();
       let payload = {

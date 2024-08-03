@@ -92,6 +92,10 @@
 .icon:hover{
   background-color: #ededed;
 }
+.default-btn{
+  background: transparent;
+  border: none;
+}
 @media (max-width: 1024px) {
   .login-wrapper{
     padding: 2rem 0;

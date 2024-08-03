@@ -21,7 +21,7 @@ export class OrderViewComponent {
     private toastService: ToastService
   ) {}
   orderForm = new FormGroup({
-    total: new FormControl(0),
+    total: new FormControl(null),
     discount: new FormControl(null),
     shippingFee: new FormControl(null),
     status: new FormControl("approved", [Validators.required]),
@@ -42,11 +42,15 @@ export class OrderViewComponent {
         this.spinner.hide();
         this.data = success;
         this.orderForm.patchValue(success);
-        console.log("this.subtotal11", this.subtotal);
-
+        this.orderForm.controls['discount'].setValue(success.discount ?? 0)
+        this.orderForm.controls['shippingFee'].setValue(success.shippingFee ?? 0)
+        
         this.subtotal = this.data.orderWithOrderVariantMap
-          .map((x) => x.price)
-          .reduce((acc, currentValue) => acc + currentValue, 0);
+        .map((x) => x.price)
+        .reduce((acc, currentValue) => acc + currentValue, 0);
+
+        this.orderForm.controls['total'].setValue(this.subtotal)
+          
       });
     } catch (error) {
       console.log("error", error);
@@ -68,7 +72,7 @@ export class OrderViewComponent {
     let total:any = this.subtotal;
     if (this.orderForm.value.discount) {
       total =
-        this.subtotal - (this.orderForm.value.discount / 100) * this.subtotal;
+        (this.subtotal - (this.orderForm.value.discount / 100) * this.subtotal) ?? this.subtotal;
     }
     if (this.orderForm.value.shippingFee) {
       total += this.orderForm.value.shippingFee;

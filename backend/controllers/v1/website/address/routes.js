@@ -52,7 +52,7 @@ app.delete(
 );
 
 app.put(
-  "/makeDefault/:id",
+  "/makeDefault",
   // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
   // validate("updateCustomer"),
