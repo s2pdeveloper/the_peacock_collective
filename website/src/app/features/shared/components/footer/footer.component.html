@@ -67,19 +67,19 @@
         </div>
         <div class="col-12 col-md-4 col-lg-3 box-4">
           <p class="follow-text">Join my Newsletter</p>
-          <form [formGroup]="footerForm">
+        
             <div class="input-wrapper">
               <input
                 type="text"
                 placeholder="Your email address"
-                formControlName="email"
+                [(ngModel)]="email"
               />
               <i
                 class="fa-solid cursor fa-arrow-right p-3"
                 (click)="submit()"
               ></i>
             </div>
-          </form>
+          
         </div>
         <div class="col-12 py-3">
           <p>&copy; 2024 peacock collective</p>

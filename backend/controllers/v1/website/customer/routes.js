@@ -73,6 +73,12 @@ app.post(
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
   controller.resetPassword
 );
+app.post(
+  "/enquiryEmail",
+  // authHandler.authenticateJWT(),
+  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  controller.enquiryEmail
+);
 
 
 app.put(

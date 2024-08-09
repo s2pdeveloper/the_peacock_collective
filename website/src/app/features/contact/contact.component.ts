@@ -1,13 +1,19 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { CustomerService } from 'src/app/services/customer.service';
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss'],
 })
 export class ContactComponent {
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private toasterService: ToastrService,
+    private customerService: CustomerService
+  ) {}
   showNavigationIndicators = false;
   showNavigationArrows = false;
   data: any = {
@@ -22,17 +28,26 @@ export class ContactComponent {
   };
   messageForm = new FormGroup({
     email: new FormControl('', [Validators.required]),
-    query: new FormControl('', [Validators.required]),
+    enquiryMsg: new FormControl('', [Validators.required]),
   });
   navigateTo(path: any) {
     this.router.navigate([path]);
   }
-  submit(e: any) {
-    e.preventDefault();
-    if (!!this.messageForm.value) {
-      console.log('this.messageForm.value', this.messageForm.value);
+  submit() {
+    if (this.messageForm.invalid) {
+      this.toasterService.error('please fill required fields!!');
+      return;
+    }
+    try {
+      this.customerService
+        .enquiryEmail(this.messageForm.value)
+        .subscribe((success) => {
+          this.toasterService.success('Sent Successfully!!');
+          this.messageForm.reset()
+        });
+    } catch (error) {
+      console.log(error);
     }
   }
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }

@@ -20,7 +20,6 @@ const cloudinary = require("../../../../shared/service/cloudinary.service");
 
 const modelObj = {
   create: asyncHandler(async (req, res) => {
-
     let checkExisting = await CustomerRepository.findOneByCondition({
       where: {
         email: req.body.email,
@@ -51,7 +50,6 @@ const modelObj = {
       url: `${process.env.REQ_URL}#/change-pwd?sub=${user.id}&pin=${user.resetPin}&role=${user.role}`,
     };
     mail.sendForgetMail(req, data);
-
 
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
@@ -132,7 +130,6 @@ const modelObj = {
   }),
 
   delete: asyncHandler(async (req, res) => {
-
     let user = await CustomerRepository.findByPk(req.params.id);
 
     if (!user) {
@@ -146,9 +143,9 @@ const modelObj = {
 
     let query = {
       where: {
-        id: req.params.id
-      }
-    }
+        id: req.params.id,
+      },
+    };
     await CustomerRepository.delete(query);
     return res.json(
       generateResponse(resCode.HTTP_OK, {
@@ -158,7 +155,6 @@ const modelObj = {
   }),
 
   resetPassword: asyncHandler(async (req, res) => {
-
     let user = await CustomerRepository.findByPk(req.body.id);
     if (!user) {
       const error = MESSAGES.apiErrorStrings.INVALID_REQUEST;
@@ -181,12 +177,10 @@ const modelObj = {
       let errors = MESSAGES.apiErrorStrings.INVALID_TOKEN;
       throw new ApiError(errors, resCode.HTTP_INTERNAL_SERVER_ERROR);
     }
-
   }),
 
   updatePassword: asyncHandler(async (req, res) => {
-
-    let user = await CustomerRepository.findByPk(req.user.id);  // here user should be find by id using req.user
+    let user = await CustomerRepository.findByPk(req.user.id); // here user should be find by id using req.user
     console.log("your got the user", user);
     if (!user) {
       let errors = MESSAGES.apiErrorStrings.OTP_EXPIRED;
@@ -222,7 +216,6 @@ const modelObj = {
         throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
       }
     }
-
   }),
 
   login: asyncHandler(async (req, res) => {
@@ -249,7 +242,6 @@ const modelObj = {
         ) {
           let errors = MESSAGES.apiErrorStrings.USER_BLOCKED;
           throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
-
         }
         existingUser.lastLoginAt = new Date();
         await CustomerRepository.save(existingUser);
@@ -274,7 +266,6 @@ const modelObj = {
   }),
 
   forgetPassword: asyncHandler(async (req, res) => {
-
     if (!req.body.email) {
       const errors = MESSAGES.apiErrorStrings.INVALID_REQUEST;
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
@@ -311,9 +302,33 @@ const modelObj = {
       );
     }
   }),
+  enquiryEmail: asyncHandler(async (req, res) => {
+    if (!req.body.email) {
+      const errors = MESSAGES.apiErrorStrings.INVALID_REQUEST;
+      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
+    }
+    console.log('req.body',req.body);
+    
+    let data = {
+      enquiryEmail: req.body?.email,
+      enquiryMsg: req.body?.enquiryMsg,
+      email :`${process.env.EMAIL_SEND_ID}`,
+      subject: `Enquiry mail from ${req.body.email}`,
+      companyLogo:
+        "https://peacock-collective.web.app/assets/images/gold-logo.png",
+      template: "enquiryEmail.html"
+    };
+    console.log("data",data);
+    
+    mail.sendForgetMail(req, data);
+    return res.status(resCode.HTTP_OK).json(
+      generateResponse(resCode.HTTP_OK, {
+        message: MESSAGES.apiSuccessStrings.SEND('Email'),
+      })
+    );
+  }),
 
   verifyEmail: asyncHandler(async (req, res, next) => {
-
     const user = await CustomerRepository.findByPk(req.params.id);
     if (!user) {
       return res.send(`

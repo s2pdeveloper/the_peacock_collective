@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { CustomerService } from 'src/app/services/customer.service';
 
 @Component({
   selector: 'app-footer',
@@ -9,11 +11,12 @@ import { Router } from '@angular/router';
 })
 export class FooterComponent {
   private router = inject(Router);
-  constructor() {}
+  constructor(
+    private toasterService: ToastrService,
+    private customerService: CustomerService
+  ) {}
+  email: string = '';
 
-  footerForm = new FormGroup({
-    email: new FormControl('', [Validators.required]),
-  });
   data: any = {
     phone: '+48 541 44 27',
     email: 'support@peacockcollective.in',
@@ -27,8 +30,19 @@ export class FooterComponent {
     vimeoLink: '',
   };
   submit() {
-    if (!!this.footerForm.value) {
-      console.log('formValue', this.footerForm.value);
+    if (!this.email) {
+      this.toasterService.error('please enter email first!!');
+      return;
+    }
+    try {
+      this.customerService
+        .enquiryEmail({ email: this.email })
+        .subscribe((success) => {
+          this.toasterService.success('Sent Successfully!!');
+          this.email = '';
+        });
+    } catch (error) {
+      console.log(error);
     }
   }
   navigateTo(path: any) {
