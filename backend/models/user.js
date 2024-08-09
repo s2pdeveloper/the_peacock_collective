@@ -1,10 +1,10 @@
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const { OPTIONS, generateURl } = require("../config/options/global.options");
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const { OPTIONS, generateURl } = require('../config/options/global.options');
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
-    "User",
+    'User',
     {
       id: {
         allowNull: false,
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       role: {
         type: DataTypes.ENUM(
           OPTIONS.usersRoles.SUPER_ADMIN,
-          OPTIONS.usersRoles.EMPLOYEE
+          OPTIONS.usersRoles.EMPLOYEE,
         ),
         allowNull: false,
       },
@@ -84,13 +84,13 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       timestamps: true,
-      tableName: "User",
+      tableName: 'User',
       indexes: [
         {
-          name: "PRIMARY",
+          name: 'PRIMARY',
           unique: true,
-          using: "BTREE",
-          fields: [{ name: "id" }],
+          using: 'BTREE',
+          fields: [{ name: 'id' }],
         },
       ],
     }
@@ -107,8 +107,10 @@ module.exports = (sequelize, DataTypes) => {
     const payload = { id: this.id, role: this.role };
     return jwt.sign(payload, process.env.JWT_SECRET_KEY);
   };
-  // if (process.env.ENVIRONMENT != "production")
-    sequelize.sync({ alter: true }).then(function () {});
+  if (process.env.ENVIRONMENT != 'production')
+    sequelize.sync({ alter: true }).then(function () {
+
+    });
 
   return User;
 };
