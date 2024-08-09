@@ -1,0 +1,91 @@
+@font-face {
+    font-family: 'Ravensara Sans';
+    src: url('RavensaraSansMedium.eot');
+    src: local('Ravensara Sans Medium'), local('RavensaraSansMedium'),
+        url('RavensaraSansMedium.eot?#iefix') format('embedded-opentype'),
+        url('RavensaraSansMedium.woff2') format('woff2'),
+        url('RavensaraSansMedium.woff') format('woff'),
+        url('RavensaraSansMedium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Ravensara Sans';
+    src: url('RavensaraSans-Bold.eot');
+    src: local('Ravensara Sans Bold'), local('RavensaraSans-Bold'),
+        url('RavensaraSans-Bold.eot?#iefix') format('embedded-opentype'),
+        url('RavensaraSans-Bold.woff2') format('woff2'),
+        url('RavensaraSans-Bold.woff') format('woff'),
+        url('RavensaraSans-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Ravensara Sans';
+    src: url('RavensaraSansLight.eot');
+    src: local('Ravensara Sans Light'), local('RavensaraSansLight'),
+        url('RavensaraSansLight.eot?#iefix') format('embedded-opentype'),
+        url('RavensaraSansLight.woff2') format('woff2'),
+        url('RavensaraSansLight.woff') format('woff'),
+        url('RavensaraSansLight.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Ravensara Sans';
+    src: url('RavensaraSans-Regular.eot');
+    src: local('Ravensara Sans'), local('RavensaraSans-Regular'),
+        url('RavensaraSans-Regular.eot?#iefix') format('embedded-opentype'),
+        url('RavensaraSans-Regular.woff2') format('woff2'),
+        url('RavensaraSans-Regular.woff') format('woff'),
+        url('RavensaraSans-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Ravensara Sans Semi';
+    src: url('RavensaraSansSemiBold.eot');
+    src: local('Ravensara Sans Semi Bold'), local('RavensaraSansSemiBold'),
+        url('RavensaraSansSemiBold.eot?#iefix') format('embedded-opentype'),
+        url('RavensaraSansSemiBold.woff2') format('woff2'),
+        url('RavensaraSansSemiBold.woff') format('woff'),
+        url('RavensaraSansSemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Ravensara Sans';
+    src: url('RavensaraSansBlack.eot');
+    src: local('Ravensara Sans Black'), local('RavensaraSansBlack'),
+        url('RavensaraSansBlack.eot?#iefix') format('embedded-opentype'),
+        url('RavensaraSansBlack.woff2') format('woff2'),
+        url('RavensaraSansBlack.woff') format('woff'),
+        url('RavensaraSansBlack.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Ravensara Sans';
+    src: url('RavensaraSansThin.eot');
+    src: local('Ravensara Sans Thin'), local('RavensaraSansThin'),
+        url('RavensaraSansThin.eot?#iefix') format('embedded-opentype'),
+        url('RavensaraSansThin.woff2') format('woff2'),
+        url('RavensaraSansThin.woff') format('woff'),
+        url('RavensaraSansThin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
