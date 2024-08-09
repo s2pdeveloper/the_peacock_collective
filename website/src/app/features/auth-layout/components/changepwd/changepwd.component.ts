@@ -96,6 +96,7 @@ export default class ChangepwdComponent implements OnInit {
         .resetPass(payload)
         .subscribe((success) => {
           console.log('success', success);
+          this.navigateTo('/auth/login')
           this.toastService.success(success?.result?.message)
         });
     }

@@ -116,6 +116,8 @@ export class ProductDetailsComponent implements OnInit {
         variantId: this.currentVariant.id,
         customerId: this.user.id,
       };
+      console.log('payload',payload);
+      
 
       this.cartService.create(payload).subscribe((success) => {
         this.toasterService.success("Product added to cart!!")

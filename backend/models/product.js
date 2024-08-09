@@ -49,6 +49,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     salePrice: {
       type: DataTypes.INTEGER,
+      set(value) {
+        value ? this.setDataValue('salePrice', +value.toFixed(2)) : null
+      },
       allowNull: true,
     },
     returnableDays: {

@@ -1,18 +1,11 @@
-<div class="container-fluid pb-5">
+<!-- <div class="container-fluid pb-5">
   <div class="row justify-content-center">
     <div class="col-11">
-      <!-- <p class="py-3 text-color-primary pointer">
-        <span (click)="navigateTo('/')">Home</span> / Reset your password
-      </p> -->
     </div>
     <div class="col-11 py-4">
       <h2>Set New Password</h2>
     </div>
     <div class="col-11 px-3 py-4 border">
-      <!-- <p class="pb-2">
-        Please enter the email address you used to register. You will receive a
-        temporary link to reset your password.
-      </p> -->
       <form [formGroup]="chnagePassForm" class="pb-3 border-bottom">
         <div class="row flex-column">
           <div class="col-12">
@@ -81,6 +74,67 @@
             <i class="fa-solid fa-chevron-left"></i>
             Back to login
           </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="d-none d-md-none d-lg-block col-lg-6 img-box">
+      <img src="../../../../../assets/images/login-img.webp" alt="" />
+    </div>
+    <div class="col-11 col-sm-8 col-md-6 col-lg-6">
+      <div class="row justify-content-center login-wrapper">
+        <div class="col-12 col-lg-12">
+          <h1 class="mb-4">Set New Password</h1>
+          <form [formGroup]="chnagePassForm" class="pb-3">
+            <div class="row">
+              <div class="col-12 my-2">
+                <input
+                  type="text"
+                  class="form-control background-primary rounded"
+                  formControlName="password"
+                  [ngClass]="{
+                    'is-invalid': f['password'].invalid && submitted
+                  }"
+                  autocomplete="off"
+                  placeholder="New Password"
+                />
+              </div>
+              <div class="col-12 my-2">
+                <input
+                  type="text"
+                  class="form-control background-primary rounded"
+                  formControlName="confirmPassword"
+                  [ngClass]="{
+                    'is-invalid': f['confirmPassword'].invalid && submitted
+                  }"
+                  autocomplete="off"
+                  placeholder="Confirm Password"
+                />
+              </div>
+             
+            </div>
+            <div class="row justify-content-center mt-2">
+              <div class="col-12 d-flex justify-content-center">
+                <button
+                  class="btn btn-dark py-2 px-3 rounded"
+                  (click)="submit()"
+                >
+                  Sign up
+                </button>
+              </div>
+            </div>
+          </form>
+          <div class="row pt-3">
+            <div class="col-12 d-flex">
+              <p class="pointer">
+                <i class="fa-solid fa-chevron-left"></i>
+               <span (click)="navigateTo('/auth/login')"> Back to login </span> 
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

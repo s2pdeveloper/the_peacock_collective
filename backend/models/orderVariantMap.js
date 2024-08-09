@@ -13,6 +13,9 @@ module.exports = (sequelize, DataTypes) => {
       price: {
         type: DataTypes.INTEGER,
         allowNull: true,
+        set(value) {
+          value ? this.setDataValue('price', +value.toFixed(2)) : null
+        },
       },
       qty: {
         type: DataTypes.INTEGER,
