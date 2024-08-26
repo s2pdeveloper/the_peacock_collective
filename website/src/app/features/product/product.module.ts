@@ -17,7 +17,7 @@ const routes: Routes = [
     redirectTo: 'product-list',
   },
   { path: 'product-list', component: ProductListComponent },
-  { path: 'product-details', component: ProductDetailsComponent },
+  { path: 'product-details/:id', component: ProductDetailsComponent },
   { path: 'product-compare', component: ProductCompareComponent },
 ];
 @NgModule({

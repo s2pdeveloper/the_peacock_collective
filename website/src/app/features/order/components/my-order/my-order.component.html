@@ -6,7 +6,7 @@
           <div class="row w-100 justify-content-between">
             <div class="col-12 col-lg-11">
               <p class="py-3 text-color-primary pointer">
-                <span (click)="navigateTo('/',null)">Home</span> /
+                <span (click)="navigateTo('/')">Home</span> /
                 <span>My Orders</span>
               </p>
             </div>
@@ -20,42 +20,31 @@
                 <div class="col-2 text-center">Total</div>
               </div>
 
-              <div
-                class="row border-bottom p-2"
-                *ngFor="let order of orderVariants; let i = index"
-              >
+              <div class="row border-bottom p-2" *ngFor="let order of orderVariants; let i = index">
                 <div class="col-5 text-center d-block d-md-flex d-lg-flex">
-                  <img
-                    width="100"
-                    height="90"
-                    [src]="
+                  <img width="100" height="90" [src]="
                       order?.orderVariantMapWithVariant?.variantImages[0].image
-                    "
-                    (click)="
-                      navigateTo(
-                        '/product/product-details',
-                        order?.orderVariantMapWithVariant?.variantWithProduct?.id
+                    " (click)="
+                      navigateToProdDetails(
+                        order?.orderVariantMapWithVariant?.productId
                       )
-                    "
-                    alt=""
-                  />
+                    " alt="" />
                   <div class="p-3">
                     <p class="light-dark regular-font">
                       {{
-                        order.orderVariantMapWithVariant.sku
+                      order.orderVariantMapWithVariant.sku
                       }}
                     </p>
-                    <p
-                      class="text-muted small-text attr"
-                      *ngFor="
+                    <p class="text-muted small-text attr" *ngFor="
                         let item of order.orderVariantMapWithVariant
                           .variantWithAttrVariantMap
-                      "
-                    >
+                      ">
                       {{ item.AttrVariantMapWithAttributes.name }}:
 
-                      <ng-container *ngIf="item?.AttrVariantMapWithAttributes?.type == 'color'"> <i class="fa-solid fa-square" [ngStyle]="{'background-color':item?.value}" ></i></ng-container>
-                      <ng-container *ngIf="item?.AttrVariantMapWithAttributes?.type != 'color'"> {{ item?.value }}</ng-container>
+                      <ng-container *ngIf="item?.AttrVariantMapWithAttributes?.type == 'color'"> <i
+                          class="fa-solid fa-square" [ngStyle]="{'background-color':item?.value}"></i></ng-container>
+                      <ng-container *ngIf="item?.AttrVariantMapWithAttributes?.type != 'color'"> {{ item?.value
+                        }}</ng-container>
                       <!-- {{ item.value }} -->
                     </p>
                   </div>
@@ -74,10 +63,7 @@
               </div>
               <div class="row py-5">
                 <div class="col-6 col-md-4 col-lg-2">
-                  <button
-                    class="btn btn-dark"
-                    (click)="navigateTo('/home', null)"
-                  >
+                  <button class="btn btn-dark" (click)="navigateTo('/home')">
                     Continue Shopping
                   </button>
                 </div>
@@ -88,7 +74,7 @@
             <h2 class="mb-4">No orders in Order List!</h2>
             <div class="row">
               <div class="col-9 col-md-4 col-lg-4">
-                <button class="btn btn-dark p-2" (click)="navigateTo('/home', null)">Continue Shopping</button>
+                <button class="btn btn-dark p-2" (click)="navigateTo('/home')">Continue Shopping</button>
               </div>
             </div>
           </div>

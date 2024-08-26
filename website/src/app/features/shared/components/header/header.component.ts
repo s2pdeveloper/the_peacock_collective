@@ -75,7 +75,7 @@ export class HeaderComponent {
   //     0;
   //   this.scrollPosition = scrollPositionValue;
   // }
-  navigateTo(path: any, id: any) {
+  navigateTo(path: any) {
     if (path == '/order/my-orders' || path == '/order/wishlist') {
       if (isPlatformBrowser(this._platformId)) {
         let user = localStorage.getItem('Customer') ? true : false;
@@ -85,13 +85,17 @@ export class HeaderComponent {
         }
       }
     }
-    this.router.navigate([path], { queryParams: { id: id } });
+    this.router.navigate([path]);
     let ele: any = document.getElementById('topbar');
     ele.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
       inline: 'nearest',
     });
+  }
+  navigateToProdDetails(id:number) {
+    let path = `/product/product-details/${id}`
+    this.router.navigate([path]);
   }
   navigateWithParams(path: any, param: any) {
     this.router.navigate([path], { queryParams: { brand: param } });

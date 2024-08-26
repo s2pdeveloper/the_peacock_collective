@@ -30,12 +30,13 @@
             <div class="col-12">
               <img
                 class="img-fluid banner-img pointer"
-                [src]="currentVariant?.variantImages[0]?.image"
+                [src]="bannerImg"
                 alt="product-image"
               />
             </div>
             <div class="col-3 m-3" *ngFor="let img of currentVariant?.variantImages">
               <img 
+              (click)="handleImg(img?.image)"
               class="img-fluid rest-img"
               [src]="img?.image"
               alt="product-image"

@@ -34,7 +34,11 @@ export class MyOrderComponent implements OnInit {
       },
     });
   }
-  navigateTo(path: any,id:any) {
-    this.router.navigate([path],{queryParams : {id:id}});
+  navigateTo(path: any) {
+    this.router.navigate([path]);
+  }
+  navigateToProdDetails(id:number) {
+    let path = `/product/product-details/${id}`
+    this.router.navigate([path]);
   }
 }

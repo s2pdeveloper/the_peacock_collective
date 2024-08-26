@@ -10,7 +10,7 @@
             <swiper-container class="img-box" slides-per-view="4">
               <ng-container *ngFor="let p of commonService.allData.products | homeProduct : commonService?.allData?.categories?.[0]">
                 <swiper-slide   class="p-2 bg-light prod-cart border"
-                (click)="navigateTo('/product/product-details',p?.id)" >
+                (click)="navigateTo(p?.id)" >
                 <img class="img-fluid w-100" [src]="p?.bannerImage" />
                 <div class="text-box p-2">
                   <div class="d-flex justify-content-center">
@@ -36,7 +36,7 @@
             <swiper-container class="img-box" slides-per-view="2">
               <ng-container *ngFor="let p of commonService.allData.products | homeProduct : commonService?.allData?.categories?.[0]">
                 <swiper-slide   class="p-2 prod-cart border"
-                (click)="navigateTo('/product/product-details',p?.id)" >
+                (click)="navigateTo(p?.id)" >
                 <img class="img-fluid w-100" [src]="p?.bannerImage" />
                 <div class="text-box p-2">
                   <div class="d-flex justify-content-center">
@@ -61,7 +61,7 @@
             <swiper-container class="img-box" slides-per-view="2">
               <ng-container *ngFor="let p of commonService.allData.products | homeProduct : commonService?.allData?.categories?.[0]">
                 <swiper-slide   class="p-2 prod-cart border"
-                (click)="navigateTo('/product/product-details',p?.id)" >
+                (click)="navigateTo(p?.id)" >
                 <img class="img-fluid w-100" [src]="p?.bannerImage" />
                 <div class="text-box p-2">
                   <div class="d-flex justify-content-center">
@@ -80,35 +80,4 @@
       </div>
     </div>
   </div>
-  <!-- <div class="row">
-    <div class="col-12 py-4 d-flex flex-column align-items-center">
-      <p class="section-heading">Templates</p>
-
-      <div class="row">
-        <div class="col-12 justify-content-evenly">
-          <button
-            type="button"
-            class="btn btn-primary py-2 px-3 m-2"
-            (click)="navigateTo('pages/component-a')"
-          >
-            Component A
-          </button>
-          <button
-            type="button"
-            class="btn btn-primary py-2 px-3 m-2"
-            (click)="navigateTo('pages/component-b')"
-          >
-            Component B
-          </button>
-          <button
-            type="button"
-            class="btn btn-primary py-2 px-3 m-2"
-            (click)="navigateTo('pages/component-c')"
-          >
-            Component C
-          </button>
-        </div>
-      </div>
-    </div>
-  </div> -->
 </div>

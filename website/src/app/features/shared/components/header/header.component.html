@@ -3,12 +3,12 @@
     <div class="row bg-dark upper-row">
       <div class="col-11">
         <div class="row">
-          <div class="col-4 d-flex pointer" (click)="navigateTo('/', null)">
+          <div class="col-4 d-flex pointer" (click)="navigateTo('/')">
             <img width="55" src="../../../../../assets/images/gold-logo.png" alt="logo" />
           </div>
           <div class="col-8 col-lg-4 ship-text">
             <p>
-              <img (click)="navigateTo('/', null)" class="img-fluid pointer"
+              <img (click)="navigateTo('/')" class="img-fluid pointer"
                 src="../../../../../assets/images/companyName.png" alt="Company Name" />
             </p>
           </div>
@@ -21,13 +21,13 @@
                     <i class="fa-regular fa-user pointer text-light"></i>
                   </button>
                   <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                    <button class="p-3" ngbDropdownItem (click)="navigateTo('/auth/login', null)">
+                    <button class="p-3" ngbDropdownItem (click)="navigateTo('/auth/login')">
                       MY ACCOUNT
                     </button>
-                    <button class="p-3" ngbDropdownItem (click)="navigateTo('/order/wishlist', null)">
+                    <button class="p-3" ngbDropdownItem (click)="navigateTo('/order/wishlist')">
                       WISHLIST
                     </button>
-                    <button class="p-3" ngbDropdownItem (click)="navigateTo('/order/my-orders', null)">
+                    <button class="p-3" ngbDropdownItem (click)="navigateTo('/order/my-orders')">
                       MY ORDERS
                     </button>
                   </div>
@@ -72,7 +72,7 @@
                       <div class="col-10 dropdownItem px-3">
                         <swiper-container class="img-box" slides-per-view="4">
                           <swiper-slide class="px-2 prod-cart w-25" (click)="
-                              navigateTo('/product/product-details', p?.id)
+                              navigateToProdDetails(p?.id)
                             " *ngFor="
                               let p of commonService.allData.products
                                 | tagProduct : activeTagId : activeCategoryId
@@ -90,14 +90,14 @@
               }
               <div class="nav_menu d-flex">
                 <div class="nav_list nav_list_menu">
-                  <a class="nav_link text-uppercase" (click)="navigateTo('bespoke', null)">
+                  <a class="nav_link text-uppercase" (click)="navigateTo('bespoke')">
                     <span class="nav-items pointer text-light">Bespoke, by you</span>
                   </a>
                 </div>
               </div>
               <div class="nav_menu d-flex">
                 <div class="nav_list nav_list_menu">
-                  <a class="nav_link text-uppercase" (click)="navigateTo('about-us', null)">
+                  <a class="nav_link text-uppercase" (click)="navigateTo('about-us')">
                     <span class="nav-items pointer text-light">About Us</span>
                   </a>
                 </div>
@@ -105,7 +105,7 @@
             </div>
           </div>
           <div class="col-2 d-flex justify-content-end">
-            <div class="navbar-brand text-light text-uppercase pointer" (click)="navigateTo('/contact', null)">
+            <div class="navbar-brand text-light text-uppercase pointer" (click)="navigateTo('/contact')">
               Contact
             </div>
             <div class="d-flex align-items-center">
@@ -173,15 +173,15 @@
         </div>
       </div>
       <div class="option-item border-bottom d-flex justify-content-between py-3"
-        (click)="navigateTo('/bespoke', null); isMenuOpen = !isMenuOpen">
+        (click)="navigateTo('/bespoke'); isMenuOpen = !isMenuOpen">
         <p class="w-75 text-uppercase">Bespoke</p>
       </div>
       <div class="option-item border-bottom d-flex justify-content-between py-3"
-        (click)="navigateTo('/about-us', null); isMenuOpen = !isMenuOpen">
+        (click)="navigateTo('/about-us'); isMenuOpen = !isMenuOpen">
         <p class="w-75 text-uppercase">About Us</p>
       </div>
       <div class="option-item border-bottom d-flex justify-content-between py-3"
-        (click)="navigateTo('/contact', null); isMenuOpen = !isMenuOpen">
+        (click)="navigateTo('/contact'); isMenuOpen = !isMenuOpen">
         <p class="w-75 text-uppercase">Contact</p>
       </div>
     </div>
@@ -200,17 +200,17 @@
   <div *ngIf="isAccountOpen" class="offcanvas-body m-0">
     <div class="option p-4">
       <div class="option-item border-bottom d-flex justify-content-between py-3" (click)="
-          navigateTo('/auth/login', null); isAccountOpen = !isAccountOpen
+          navigateTo('/auth/login'); isAccountOpen = !isAccountOpen
         ">
         <p class="w-75 text-uppercase">My Account</p>
       </div>
       <div class="option-item border-bottom d-flex justify-content-between py-3" (click)="
-          navigateTo('/order/wishlist', null); isAccountOpen = !isAccountOpen
+          navigateTo('/order/wishlist'); isAccountOpen = !isAccountOpen
         ">
         <p class="w-75 text-uppercase">Wishlist</p>
       </div>
       <div class="option-item border-bottom d-flex justify-content-between py-3" (click)="
-          navigateTo('/order/my-orders', null); isAccountOpen = !isAccountOpen
+          navigateTo('/order/my-orders'); isAccountOpen = !isAccountOpen
         ">
         <p class="w-75 text-uppercase">My Orders</p>
       </div>
@@ -237,8 +237,7 @@
           <div class="col-3">
             <img width="150" (click)="isCartOpen = !isCartOpen" class="img-fluid cart-img pointer"
               [src]="p?.cartWithVariants?.variantImages[0].image" (click)="
-                navigateTo(
-                  '/product/product-details',
+                navigateToProdDetails(
                   p?.cartWithVariants?.variantWithProduct?.id
                 )
               " alt="" />
@@ -308,7 +307,7 @@
           </div>
           <div class="col-12">
             <button [disabled]="!cartData.length" type="button" class="btn btn-light py-2" (click)="
-                navigateTo('/order/cart', null); isCartOpen = !isCartOpen
+                navigateTo('/order/cart'); isCartOpen = !isCartOpen
               ">
               Cart
             </button>
@@ -354,7 +353,7 @@
       <div class="dropdownItem p-3">
         <swiper-container class="img-box" slides-per-view="1">
           <swiper-slide class="px-2 prod-cart w-100" (click)="
-              navigateTo('/product/product-details', p?.id);
+              navigateToProdDetails(p?.id);
               handleDataRemove();
               isMenuOpen = !isMenuOpen
             " *ngFor="

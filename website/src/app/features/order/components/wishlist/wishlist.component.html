@@ -6,46 +6,30 @@
           <div class="row w-100 justify-content-between">
             <div class="col-12 col-lg-11">
               <p class="py-3 text-color-primary pointer">
-                <span (click)="navigateTo('/', null)">Home</span> /
+                <span (click)="navigateTo('/')">Home</span> /
                 <span>Wishlist</span>
               </p>
             </div>
           </div>
           <div *ngIf="wishlist.length" class="col-12 p-3 border-bottom">
             <div class="row">
-              <div
-                class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex flex-wrap p-2"
-                *ngFor="let p of wishlist"
-              >
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex flex-wrap p-2" *ngFor="let p of wishlist">
                 <div class="d-flex flex-column align-items-center py-3 w-100">
-                  <img
-                    height="250"
-                    class="w-100"
-                    [src]="p?.variantWithWishList?.variantImages[0]?.image"
-                    (click)="
-                      navigateTo(
-                        '/product/product-details',
+                  <img height="250" class="w-100" [src]="p?.variantWithWishList?.variantImages[0]?.image" (click)="
+                      navigateToProdDetails(
                         p?.variantWithWishList?.variantWithProduct?.id
                       )
-                    "
-                    alt=""
-                  />
+                    " alt="" />
                   <p class="mb-0">
                     {{ p?.variantWithWishList?.variantWithProduct?.name }}
                   </p>
                   <p class="mb-0">
                     {{ p?.variantWithWishList?.price | currency : "INR" }}
                   </p>
-                  <button
-                    class="btn btn-dark p-2 w-50"
-                    (click)="createCart(p.variantId)"
-                  >
+                  <button class="btn btn-dark p-2 w-50" (click)="createCart(p.variantId)">
                     <i class="fa-solid fa-bag-shopping me-2"></i>Add to cart
                   </button>
-                  <button
-                    class="btn btn-dark mt-1 p-2 w-50"
-                    (click)="deleteList(p.id)"
-                  >
+                  <button class="btn btn-dark mt-1 p-2 w-50" (click)="deleteList(p.id)">
                     <i class="fa-solid fa-trash me-2"></i>Remove
                   </button>
                 </div>
@@ -56,7 +40,7 @@
             <h2 class="mb-4">No Products is added in Wishlist!</h2>
             <div class="row">
               <div class="col-9 col-md-4 col-lg-4">
-                <button class="btn btn-dark p-2" (click)="navigateTo('/home', null)">Continue Shopping</button>
+                <button class="btn btn-dark p-2" (click)="navigateTo('/home')">Continue Shopping</button>
               </div>
             </div>
           </div>

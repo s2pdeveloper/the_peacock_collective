@@ -45,8 +45,9 @@ export class NewArrivalsComponent implements OnInit ,AfterViewInit{
   }
 
   showNavigationIndicators = false;
-  navigateTo(path: any, param: any) {
-    this.router.navigate([path], { queryParams: { id: param } });
+  navigateTo( param: any) {
+    let path = `/product/product-details/${param}`
+    this.router.navigate([path]);
     let ele: any = document.getElementById('topbar');
     ele.scrollIntoView({
       behavior: 'smooth',

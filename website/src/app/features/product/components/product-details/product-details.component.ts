@@ -21,6 +21,7 @@ export class ProductDetailsComponent implements OnInit {
   currentVariant = null;
   variants: any[] = [];
   user: any;
+  bannerImg: any;
   constructor(
     private router: Router,
     public commonService: CommonService,
@@ -41,26 +42,26 @@ export class ProductDetailsComponent implements OnInit {
     this.router.navigate([path]);
   }
   ngOnInit(): void {
-    this.actRoute.queryParams.subscribe((params: any) => {
+    this.actRoute.params.subscribe((params: any) => {
       if (params?.id) {
-        console.log('params-id',params);
-        
         this.products = this.commonService.allData.products.find(
           (x) => x.id == Number(params.id)
         );
-        console.log("this.products", this.products);
         this.variants = this.products.productWithVariants;
         this.currentVariant = this.products.productWithVariants[0];
+
         this.attrArr = [];
+        this.bannerImg = this.currentVariant.variantImages[0]?.image
         for (const item of this.currentVariant.variantWithAttrVariantMap) {
           this.attrArr.push({
             name: item.AttrVariantMapWithAttributes.name,
             type: item.AttrVariantMapWithAttributes.type,
             value: [item.value],
-            img:null,
+            img: null,
             selectedValue: item.value ? item.value : null,
           });
         }
+        console.log(this.bannerImg);
         
         // for (const [i, item] of this.products.productWithVariants.entries()) {
         //   for (const varMap of item.variantWithAttrVariantMap) {
@@ -91,16 +92,21 @@ export class ProductDetailsComponent implements OnInit {
   handleVariant(data: any) {
     this.currentVariant = data;
     this.attrArr = [];
+    this.bannerImg = this.currentVariant.variantImages[0]?.image;
     for (const item of data.variantWithAttrVariantMap) {
       this.attrArr.push({
         name: item.AttrVariantMapWithAttributes.name,
         type: item.AttrVariantMapWithAttributes.type,
         value: [item.value],
-        img : this.currentVariant.variantImages[0]?.image,
+        img: this.currentVariant.variantImages[0]?.image,
         selectedValue: item.value ? item.value : null,
       });
-    }    
+    }
   }
+  handleImg(img:string){
+    this.bannerImg = img;
+  }
+
   createCart() {
     try {
       if (!this.user) {
@@ -116,8 +122,8 @@ export class ProductDetailsComponent implements OnInit {
         variantId: this.currentVariant.id,
         customerId: this.user.id,
       };
-      console.log('payload',payload);
-      
+      console.log('payload', payload);
+
 
       this.cartService.create(payload).subscribe((success) => {
         this.toasterService.success("Product added to cart!!")
@@ -142,13 +148,13 @@ export class ProductDetailsComponent implements OnInit {
       variantId: this.currentVariant.id,
     };
     if (isPlatformBrowser(this._platformId)) {
-    sessionStorage.setItem("products", JSON.stringify([payload]));
-    this.router.navigate(['/order/checkout'], {
-      queryParams: {
-        type: 'BUY'
-      }
-    });
-  }
+      sessionStorage.setItem("products", JSON.stringify([payload]));
+      this.router.navigate(['/order/checkout'], {
+        queryParams: {
+          type: 'BUY'
+        }
+      });
+    }
   }
   addToWishlist() {
     if (!this.user) {

@@ -54,6 +54,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   navigateTo(path: any) {
     this.router.navigate([path]);
   }
+  navigateToProdDetails(id:any) {
+    let path = `/product/product-details/${id}`
+    this.router.navigate([path]);
+  }
   ngOnInit(): void {
     this.actRouter.queryParams.subscribe((params: any) => {
       if (params?.type) {

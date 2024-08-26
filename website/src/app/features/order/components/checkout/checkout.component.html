@@ -110,12 +110,12 @@
               <div *ngIf="!collapsedDetails">
                 <div *ngFor="let d of product" class="row justify-content-between">
                   <div class="col-3 p-3 pb-0">
-                    <img (click)="navigateTo('/product/product-details')" class="img-fluid"
+                    <img (click)="navigateToProdDetails(d?.product?.id)" class="img-fluid"
                       [src]="d?.variant?.variantImages[0].image" alt="" />
                   </div>
                   <div class="col-9">
                     <p class="regular-font">
-                      <span class="pointer" (click)="navigateTo('/product/product-details')">{{
+                      <span class="pointer" (click)="navigateToProdDetails(d?.product?.id)">{{
                         d?.variant?.sku }}</span>
                     </p>
                     <p class="text-color-secondary small-text attr" *ngFor="
