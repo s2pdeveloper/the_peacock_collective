@@ -68,6 +68,7 @@ export class LoginComponent implements OnInit {
       this.toasterService.error('Something went wrong!!');
     }
   }
+  
   getAddresses() {
     if (this.user) {
       this.addressService.getAll().subscribe((success: any) => {

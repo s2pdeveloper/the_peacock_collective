@@ -2,10 +2,14 @@ import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SpinnerService, StorageService } from 'src/app/core/services';
 import { CartService } from 'src/app/services/cart.service';
 import { CommonService } from 'src/app/services/common.service';
 import { WishlistService } from 'src/app/services/wishlist.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CustomerService } from 'src/app/services/customer.service';
+import { AddressService } from 'src/app/services/address.service';
 
 @Component({
   selector: 'app-product-details',
@@ -13,34 +17,51 @@ import { WishlistService } from 'src/app/services/wishlist.service';
   styleUrls: ['./product-details.component.scss'],
 })
 export class ProductDetailsComponent implements OnInit {
-  actRoute = inject(ActivatedRoute);
+  private modalService = inject(NgbModal);
+  private actRoute = inject(ActivatedRoute);
   qty: number = 1;
   tabActive: String = '';
   products: any = null;
+  isLoginDone: boolean = false;
   attrArr: any[] = [];
   currentVariant = null;
   variants: any[] = [];
   user: any;
   bannerImg: any;
+  event: any;
+
   constructor(
     private router: Router,
     public commonService: CommonService,
     private spinnerService: SpinnerService,
     private cartService: CartService,
+    private customerService: CustomerService,
     private storageService: StorageService,
     private toasterService: ToastrService,
     private wishlistService: WishlistService,
+    private addressService: AddressService,
     @Inject(PLATFORM_ID) private _platformId: Object,
 
   ) {
     this.user = this.storageService.get('Customer');
   }
+  showEye: boolean = true;
   setTabActive(key: any) {
     this.tabActive = key;
   }
+  loginForm = new FormGroup({
+    email: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required]),
+  });
+
   navigateTo(path: any) {
     this.router.navigate([path]);
   }
+
+  openLogin(content: any) {
+    this.modalService.open(content, { centered: true });
+  }
+
   ngOnInit(): void {
     this.actRoute.params.subscribe((params: any) => {
       if (params?.id) {
@@ -62,7 +83,7 @@ export class ProductDetailsComponent implements OnInit {
           });
         }
         console.log(this.bannerImg);
-        
+
         // for (const [i, item] of this.products.productWithVariants.entries()) {
         //   for (const varMap of item.variantWithAttrVariantMap) {
         //     let index = this.attrArr.findIndex(
@@ -103,42 +124,61 @@ export class ProductDetailsComponent implements OnInit {
       });
     }
   }
-  handleImg(img:string){
+  handleImg(img: string) {
     this.bannerImg = img;
   }
 
   createCart() {
+    if (this.qty > this.currentVariant.qty) {
+      this.qty = this.currentVariant.qty;
+    }
+    let payload = {
+      qty: this.qty,
+      variantId: this.currentVariant.id,
+      customerId: this.user.id,
+    };
+    this.cartService.create(payload).subscribe((success) => {
+      this.toasterService.success("Product added to cart!!")
+    });
+  }
+
+  validateCart(login, event) {
     try {
       if (!this.user) {
-        this.toasterService.warning('Please login to add cart');
-        return;
+        this.openLogin(login);
+        this.event = event;
+      } else {
+        this.createCart()
       }
-
-      if (this.qty > this.currentVariant.qty) {
-        this.qty = this.currentVariant.qty;
-      }
-      let payload = {
-        qty: this.qty,
-        variantId: this.currentVariant.id,
-        customerId: this.user.id,
-      };
-      console.log('payload', payload);
-
-
-      this.cartService.create(payload).subscribe((success) => {
-        this.toasterService.success("Product added to cart!!")
-      });
     } catch (error) {
       console.log("error", error);
 
     }
   }
 
-  buyNow() {
-    if (!this.user) {
-      this.toasterService.warning('Please login to buy product');
-      return;
+  loginSubmit() {
+    if (this.loginForm.value) {
+      this.customerService.login(this.loginForm.value).subscribe(
+        (success: any) => {
+          this.user = success.result;
+          this.storageService.set('Customer', success.result);
+          this.toasterService.success('Login done Successfully!!!');
+          this.isLoginDone = true;
+          this.modalService.dismissAll()
+          if (this.event == 'cart') {
+            this.createCart()
+          }
+          if (this.event == 'buyNow') {
+            this.createBuyNow()
+          }
+        },
+        (error) => { }
+      );
+    } else {
+      this.toasterService.error('Something went wrong!!');
     }
+  }
+  createBuyNow(){
     if (this.qty > this.currentVariant.qty) {
       this.qty = this.currentVariant.qty;
     }
@@ -155,6 +195,20 @@ export class ProductDetailsComponent implements OnInit {
         }
       });
     }
+  }
+  validateBuyNow(login,event) {
+    try {
+      if (!this.user) {
+        this.openLogin(login);
+        this.event = event;
+      } else {
+        this.createBuyNow()
+      }
+    } catch (error) {
+      console.log("error", error);
+
+    }
+  
   }
   addToWishlist() {
     if (!this.user) {

@@ -6,7 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductCompareComponent } from './components/product-compare/product-compare.component';
 import { register } from 'swiper/element/bundle';
 register();
@@ -27,7 +27,7 @@ const routes: Routes = [
     ProductDetailsComponent,
     ProductCompareComponent,
   ],
-  imports: [CommonModule,NgxSliderModule,FormsModule, RouterModule.forChild(routes)],
+  imports: [CommonModule,ReactiveFormsModule,NgxSliderModule,FormsModule, RouterModule.forChild(routes)],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ProductModule {}
