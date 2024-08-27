@@ -244,7 +244,7 @@
           </div>
           <div class="col-8 d-flex justify-content-center bg-white flex-column p-3">
             <p (click)="isCartOpen = !isCartOpen" class="pointer">
-              {{ p?.cartWithVariants?.variantWithProduct.hsn }}
+              {{ p?.cartWithVariants?.sku }}
             </p>
             <p class="text-color-secondary small-text attr" *ngFor="
                 let attr of p?.cartWithVariants?.variantWithAttrVariantMap

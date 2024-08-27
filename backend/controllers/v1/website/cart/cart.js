@@ -56,7 +56,7 @@ const modelObj = {
         {
           model: Variant,
           as: "cartWithVariants",
-          attributes: ["price", "qty"],
+          attributes: ["price", "qty","sku"],
           include: [
             {
               model: AttrVariantMap,

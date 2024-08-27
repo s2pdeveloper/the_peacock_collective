@@ -166,8 +166,9 @@ const modelObj = {
       },
     };
 
-    // let existing = await Model.findOne(query);
-    let deleted=await imagesRepository.delete(query);
+    let existing = await imagesRepository.findByPk(req.params.id);
+    let deleted = await imagesRepository.delete(query);
+    console.log("deleted---------",deleted);
     // let deletedItem = await Model.destroy(query);
     if (deleted!=0) {
       await cloudinary.deleteFile(existing.image);

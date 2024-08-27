@@ -82,8 +82,6 @@ export class ProductDetailsComponent implements OnInit {
             selectedValue: item.value ? item.value : null,
           });
         }
-        console.log(this.bannerImg);
-
         // for (const [i, item] of this.products.productWithVariants.entries()) {
         //   for (const varMap of item.variantWithAttrVariantMap) {
         //     let index = this.attrArr.findIndex(

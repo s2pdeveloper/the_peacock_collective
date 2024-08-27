@@ -24,7 +24,7 @@ export class VariantImagesComponent {
     private toastService: ToastService,
     private spinner: SpinnerService,
     private domSanitizer: DomSanitizer
-  ) {}
+  ) { }
 
   imageForm = new FormGroup({
     id: new FormControl(null),
@@ -105,8 +105,10 @@ export class VariantImagesComponent {
     });
   }
   deleteImg(id: string) {
+    console.log(id);
     this.spinner.show();
     this.variantImageService.delete(id).subscribe((success: any) => {
+      this.toastService.warning(success?.message);
       this.spinner.hide();
       this.getByProductId(this.variantId);
     });
