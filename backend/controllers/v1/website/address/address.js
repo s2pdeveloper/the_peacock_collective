@@ -146,16 +146,10 @@ const modelObj = {
   // }),
 
   makeDefault: asyncHandler(async (req, res, next) => {
-    // const updated = await Model.update(
-    //   { isDefault: false },
-    //   { where: { customerId: req.body.customerId } }
-    // );
     let existing = await addressRepository.findByPk(req.body.addressId);
-    let existingDefault = await addressRepository.findOneByCondition({
-      isDefault: true,
+    let existingDefault = await addressRepository.findOneByCondition( {
+      where: { isDefault:true }
     });
-    console.log("existing", existing);
-
     if (existing && existing.isDefault == false) {
       const address = await addressRepository.update(
         { isDefault: true },

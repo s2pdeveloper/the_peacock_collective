@@ -33,12 +33,13 @@ const getAllMasterData = asyncHandler(async (req, res) => {
     where: {
       parentId: null,
     },
+    attributes: ["createdAt", "id", "name", "status"],
     include: [
-      {
-        model: Categories,
-        as: "subCatagories",
-        // required: false,
-      },
+      // {
+      //   model: Categories,
+      //   as: "subCatagories",
+      //   // required: false,
+      // },
       {
         model: CategoryTagMap,
         as: "categoryWithtags",
@@ -110,15 +111,41 @@ const getAllMasterData = asyncHandler(async (req, res) => {
     Attribute.findAll({}),
     Variant.findAll(variantQuery),
   ];
+
   Promise.all(promissArr)
     .then((values) => {
       // values = JSON.parse(JSON.stringify(values));
+        // Filtered Products
+      const filteredProducts = [];
+
+      for (const prod of values[1]) {
+        for (const item of prod.productWithVariants) {
+          if (item.variantImages.length) {
+            filteredProducts.push(prod);
+          }
+        }
+      }
+      const uniqueProducts = filteredProducts.filter(
+        (ele, index) => filteredProducts.indexOf(ele) == index
+      );
+
+      // Filtered Category
+      const includesArr = filteredProducts.map((p) => p.categoryId);
+      const filteredArr = [];
+      for (const item of includesArr) {
+        let filter = values[0].filter((cat) => cat.id == item);
+        filteredArr.push(...filter);
+      }
+      const uniqueCategories = filteredArr.filter(
+        (ele, index) => filteredArr.indexOf(ele) == index
+      );
       const result = {
-        categories: values[0],
-        products: values[1],
+        categories: uniqueCategories,
+        products: uniqueProducts,
         tags: values[2],
         attributes: values[3],
         variants: values[4],
+        // uniqueCategories: uniqueCategories
       };
       return res
         .status(resCode.HTTP_OK)
