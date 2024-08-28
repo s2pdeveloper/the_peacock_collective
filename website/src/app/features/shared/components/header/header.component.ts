@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Inject, inject } from '@angular/core';
+import { Component, ElementRef, HostListener, Inject, inject, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { StorageService, ToastService } from 'src/app/core/services';
@@ -15,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
   providers: [TagCategoryPipe],
 })
 export class HeaderComponent {
+  customer:any;
   searchToggle: boolean = false;
   qty: number = 1;
   closeResult = '';
@@ -40,9 +41,10 @@ export class HeaderComponent {
     private toasterService: ToastrService,
     private tagCatPipe: TagCategoryPipe,
     private cartService: CartService,
-    private toast: ToastService
+    private toast: ToastService,
+    private storageService : StorageService
   ) {
-   
+    this.customer = this.storageService.get('Customer');
   }
   private modalService = inject(NgbModal);
   openSearch(content: any) {
@@ -59,6 +61,7 @@ export class HeaderComponent {
   }
 
   ngOnInit(): void {
+    
     // if (isPlatformBrowser(this._platformId)) {
     //   window.addEventListener('wheel', (event) => {
     //     this.scrollValue = Math.sign(event.deltaY);
@@ -160,7 +163,7 @@ export class HeaderComponent {
       this.isCartOpen = !this.isCartOpen;
       this.getAllCartData();
     } else {
-      this.toast.warning('Please login for show your cart');
+      this.toast.warning('Please login to view your cart');
     }
   }
   deleteVariant(id) {
