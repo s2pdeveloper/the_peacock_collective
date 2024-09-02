@@ -207,6 +207,11 @@ const routes: Routes = [
         loadChildren: () =>
           import("./features/transaction/transaction.module").then((m) => m.TransactionModule),
       },
+      {
+        path: "query-mails",
+        loadChildren: () =>
+          import("./features/query-mails/query-mails.module").then((m) => m.QueryMailsModule),
+      },
     ],
   },
 ];

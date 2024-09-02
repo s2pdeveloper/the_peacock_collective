@@ -87,10 +87,13 @@
                     </button>
                   </div>
                 </div>
-                <i
-                  class="fa-solid fa-cart-plus nav-items pointer text-light"
-                  (click)="showCart()"
-                ></i>
+                <div class="cart">
+                  <i
+                    class="fa-solid fa-cart-plus nav-items pointer text-light"
+                    (click)="showCart()"
+                  ></i>
+                  <p class="cart-badge text-light">{{cartCnt}}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -198,10 +201,14 @@
               Contact
             </div>
             <div class="d-flex align-items-center">
-              <i
-                class="fa-solid fa-cart-plus nav-items pointer text-light"
-                (click)="showCart()"
-              ></i>
+              <div class="cart">
+                <i
+                  class="fa-solid fa-cart-plus nav-items pointer text-light"
+                  (click)="showCart()"
+                ></i>
+                <p class="cart-badge text-light">{{cartCnt}}</p>
+              </div>
+            
             </div>
           </div>
         </div>

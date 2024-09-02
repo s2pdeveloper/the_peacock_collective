@@ -17,7 +17,7 @@ const {
   asyncHandler,
 } = require("../../../../config/middlewares/async.handler");
 const cloudinary = require("../../../../shared/service/cloudinary.service");
-
+const QueryMailsRepository = require("../../../../models/repository/queryMailsRepository");
 const modelObj = {
   create: asyncHandler(async (req, res) => {
     let checkExisting = await CustomerRepository.findOneByCondition({
@@ -307,23 +307,27 @@ const modelObj = {
       const errors = MESSAGES.apiErrorStrings.INVALID_REQUEST;
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
-    console.log('req.body',req.body);
-    
+    console.log("req.body", req.body);
+
     let data = {
       enquiryEmail: req.body?.email,
       enquiryMsg: req.body?.enquiryMsg,
-      email :`${process.env.EMAIL_SEND_ID}`,
+      email: `${process.env.EMAIL_SEND_ID}`,
       subject: `Enquiry mail from ${req.body.email}`,
       companyLogo:
         "https://peacock-collective.web.app/assets/images/gold-logo.png",
-      template: "enquiryEmail.html"
+      template: "enquiryEmail.html",
     };
-    console.log("data",data);
-    
+    console.log("data", data);
+    let emailPayload = {
+      email: req.body?.email,
+      message: req.body?.enquiryMsg,
+    };
+    QueryMailsRepository.create(emailPayload);
     mail.sendForgetMail(req, data);
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
-        message: MESSAGES.apiSuccessStrings.SEND('Email'),
+        message: MESSAGES.apiSuccessStrings.SEND("Email"),
       })
     );
   }),

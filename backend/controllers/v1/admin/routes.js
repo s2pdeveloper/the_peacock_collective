@@ -18,6 +18,7 @@ const contact=require("./contact/routes")
 const order=require("./order/routes")
 const transactions = require("./transactions/routes")
 const dashboard = require("./dashboard/routes")
+const queryMails = require("./queryMails/routes")
 
 router.use('/user', userRoutes);
 router.use('/variantImages', variantImageRoutes);
@@ -36,6 +37,7 @@ router.use('/contact',contact);
 router.use('/order',order);
 router.use('/transactions',transactions);
 router.use('/dashboard',dashboard);
+router.use('/queryMails',queryMails);
 
 
 module.exports = router;

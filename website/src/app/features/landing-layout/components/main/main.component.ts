@@ -16,4 +16,12 @@ export class MainComponent implements OnInit, AfterViewInit {
       console.error('Error trying to play the video', error);
     });
   }
+  goDown(ele:any){
+    const element = document.getElementById(ele)
+    element.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+      inline: 'nearest',
+    });
+  }
 }
