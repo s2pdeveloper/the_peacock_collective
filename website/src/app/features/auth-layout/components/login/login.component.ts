@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { SpinnerService, StorageService } from 'src/app/core/services';
 import { AddressService } from 'src/app/services/address.service';
+import { CartService } from 'src/app/services/cart.service';
+import { CommonService } from 'src/app/services/common.service';
 import { CustomerService } from 'src/app/services/customer.service';
 
 @Component({
@@ -25,7 +27,9 @@ export class LoginComponent implements OnInit {
     private customerService: CustomerService,
     private spinnerService: SpinnerService,
     private addressService: AddressService,
-    private toasterService: ToastrService
+    private toasterService: ToastrService,
+    private commonService: CommonService,
+    private cartService: CartService,
   ) {
     this.user = this.storageService.get('Customer');
   }
@@ -56,11 +60,19 @@ export class LoginComponent implements OnInit {
   submit() {
     if (this.loginForm.value) {
       this.customerService.login(this.loginForm.value).subscribe(
-        (success: any) => {
-          this.user = success.result;
-          this.storageService.set('Customer', success.result);
-          this.toasterService.success('Login done Successfully!!!');
-          this.getAddresses();
+        (success: any) => { 
+          if (success) {
+            this.user = success.result;
+            this.storageService.set('Customer', success.result);
+            this.toasterService.success('Login done Successfully!!!');
+            this.getAddresses();
+            this.cartService.getAll().subscribe((success) => {
+              let count = success.result.rows.reduce((acc, curr) => acc + curr.qty, 0);
+              this.commonService.resetCart();
+              this.commonService.addToCart(count);
+            });
+            this.commonService.setLogin()
+          }
         },
         (error) => {}
       );
@@ -68,7 +80,7 @@ export class LoginComponent implements OnInit {
       this.toasterService.error('Something went wrong!!');
     }
   }
-  
+
   getAddresses() {
     if (this.user) {
       this.addressService.getAll().subscribe((success: any) => {
@@ -76,8 +88,10 @@ export class LoginComponent implements OnInit {
       });
     }
   }
-  logout(){
-   this.user = this.storageService.remove('Customer');
+  logout() {
+    this.user = this.storageService.remove('Customer');
+    this.commonService.setLogout();
+    this.commonService.resetCart();
   }
   createAddress() {
     if (this.user) {
@@ -102,8 +116,8 @@ export class LoginComponent implements OnInit {
     }
   }
   setDefault(id: Number) {
-    console.log('id',id);
-    
+    console.log('id', id);
+
     if (this.allAddresses.length > 0) {
       this.spinnerService.show();
       let payload = {

@@ -1,4 +1,11 @@
-import { Component, ElementRef, HostListener, Inject, inject, Input } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  Inject,
+  inject,
+  Input,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { StorageService, ToastService } from 'src/app/core/services';
@@ -8,6 +15,7 @@ import { CommonService } from 'src/app/services/common.service';
 import { PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -15,11 +23,13 @@ import { ToastrService } from 'ngx-toastr';
   providers: [TagCategoryPipe],
 })
 export class HeaderComponent {
-  customer:any;
+  customer: any;
   searchToggle: boolean = false;
   qty: number = 1;
+  cartCnt: Observable<number>;
   closeResult = '';
   scrollValue: number = 0;
+
   scrollPosition: number = 0;
   isMenuOpen: boolean = false;
   isAccountOpen: boolean = false;
@@ -42,7 +52,7 @@ export class HeaderComponent {
     private tagCatPipe: TagCategoryPipe,
     private cartService: CartService,
     private toast: ToastService,
-    private storageService : StorageService
+    private storageService: StorageService
   ) {
     this.customer = this.storageService.get('Customer');
   }
@@ -52,7 +62,11 @@ export class HeaderComponent {
   }
 
   get totalItemPrice() {
-    let totalPriceArray = this.cartData.reduce((acc, currValue) => acc + (currValue.cartWithVariants.price * currValue.qty), 0);
+    let totalPriceArray = this.cartData.reduce(
+      (acc, currValue) =>
+        acc + currValue.cartWithVariants.price * currValue.qty,
+      0
+    );
     // return totalPriceArray.reduce(
     //   (acc, currValue) => acc + currValue.totalPrice,
     //   0
@@ -61,7 +75,18 @@ export class HeaderComponent {
   }
 
   ngOnInit(): void {
-    
+    this.commonService.getLoginStatus().subscribe((success) => {
+      this.customer = success;
+    });
+    this.cartCnt = this.commonService.getCntData();
+    if (isPlatformBrowser(this._platformId)) {
+      let user = localStorage.getItem('Customer') ? true : false;
+      if (user) {
+        this.getAllCartData();
+      }
+    }
+
+    // this.commonService.addToCart(1);
     // if (isPlatformBrowser(this._platformId)) {
     //   window.addEventListener('wheel', (event) => {
     //     this.scrollValue = Math.sign(event.deltaY);
@@ -96,8 +121,8 @@ export class HeaderComponent {
       inline: 'nearest',
     });
   }
-  navigateToProdDetails(id:number) {
-    let path = `/product/product-details/${id}`
+  navigateToProdDetails(id: number) {
+    let path = `/product/product-details/${id}`;
     this.router.navigate([path]);
   }
   navigateWithParams(path: any, param: any) {
@@ -145,17 +170,17 @@ export class HeaderComponent {
       };
     });
     if (isPlatformBrowser(this._platformId)) {
-    sessionStorage.setItem('products', JSON.stringify(checkoutProduts));
-    this.router.navigate(['/order/checkout'], {
-      queryParams: {
-        type: 'CART',
-      },
-    });
-  }
+      sessionStorage.setItem('products', JSON.stringify(checkoutProduts));
+      this.router.navigate(['/order/checkout'], {
+        queryParams: {
+          type: 'CART',
+        },
+      });
+    }
   }
 
   showCart() {
-    let user = null
+    let user = null;
     if (isPlatformBrowser(this._platformId)) {
       user = localStorage.getItem('Customer') ? true : false;
     }
@@ -170,7 +195,7 @@ export class HeaderComponent {
     this.cartService.delete(id).subscribe({
       next: (success) => {
         this.toasterService.success(success?.result?.message);
-        this.getAllCartData()
+        this.getAllCartData();
       },
       error: (err) => {
         console.log('err', err);
@@ -180,15 +205,19 @@ export class HeaderComponent {
   getAllCartData() {
     this.cartService.getAll().subscribe((success) => {
       this.cartData = success.result.rows;
+      let count = success.result.rows.reduce((acc, curr) => acc + curr.qty, 0);
+      this.commonService.resetCart();
+      this.commonService.addToCart(count);
     });
   }
   changeActiveCategory() {
-    const filterCategory: any[] = this.commonService.allData.categories.filter(x => x.categoryWithtags.some(y => y.tagId == this.activeTagId));
+    const filterCategory: any[] = this.commonService.allData.categories.filter(
+      (x) => x.categoryWithtags.some((y) => y.tagId == this.activeTagId)
+    );
     if (filterCategory.length) {
       this.activeCategoryId = filterCategory[0].id;
     } else {
-      this.activeCategoryId = null
+      this.activeCategoryId = null;
     }
-
   }
 }

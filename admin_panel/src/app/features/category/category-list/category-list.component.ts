@@ -22,7 +22,7 @@ export class CategoryListComponent {
     private categoryService: CategoryService,
     private spinner: NgxSpinnerService,
     private toastService: ToastrService
-  ) { }
+  ) {}
   page: number = 1;
   pageSize: number = 10;
   collection: number = 0;
@@ -33,6 +33,8 @@ export class CategoryListComponent {
   category: any = [];
   allData: any = [];
   image: any = [];
+  isHomeShow: boolean;
+
   ngOnInit(): void {
     this.getAll();
   }
@@ -60,6 +62,24 @@ export class CategoryListComponent {
       ? this.getAll()
       : null;
   }
+
+  selectCategory(id) {
+    // this.isHomeShow =
+    console.log(id);
+    this.spinner.show();
+    this.categoryService.showCategory(id).subscribe(
+      (success: any) => {
+        this.toastService.success("Category Show in Website");
+        this.spinner.hide();
+        this.getAll();
+      },
+      (error) => {
+        this.spinner.hide();
+        this.toastService.error("Somethig Went Wrong!");
+      }
+    );
+  }
+
   subCatagory(catagory) {
     this.router.navigate(["/default/category/category-form"], {
       queryParams: { parendId: catagory.id },
@@ -72,7 +92,7 @@ export class CategoryListComponent {
       page: this.page,
       pageSize: this.pageSize,
       search: this.search,
-      category: true
+      category: true,
     };
     this.categoryService.getAll(params).subscribe((success: any) => {
       this.spinner.hide();

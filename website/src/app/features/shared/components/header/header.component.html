@@ -27,7 +27,7 @@
                   class="fa-solid fa-magnifying-glass pointer text-light"
                   (click)="openSearch(search)"
                 ></i>
-               
+
                 <div *ngIf="customer" ngbDropdown>
                   <button
                     type="button"
@@ -92,7 +92,7 @@
                     class="fa-solid fa-cart-plus nav-items pointer text-light"
                     (click)="showCart()"
                   ></i>
-                  <p class="cart-badge text-light">{{cartCnt}}</p>
+                  <p class="cart-badge text-light">{{ cartCnt | async}}</p>
                 </div>
               </div>
             </div>
@@ -206,9 +206,8 @@
                   class="fa-solid fa-cart-plus nav-items pointer text-light"
                   (click)="showCart()"
                 ></i>
-                <p class="cart-badge text-light">{{cartCnt}}</p>
+                <p class="cart-badge text-light">{{ cartCnt | async }}</p>
               </div>
-            
             </div>
           </div>
         </div>

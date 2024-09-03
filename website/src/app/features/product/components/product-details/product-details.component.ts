@@ -10,6 +10,7 @@ import { WishlistService } from 'src/app/services/wishlist.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomerService } from 'src/app/services/customer.service';
 import { AddressService } from 'src/app/services/address.service';
+import { throttleTime } from 'rxjs';
 
 @Component({
   selector: 'app-product-details',
@@ -40,8 +41,7 @@ export class ProductDetailsComponent implements OnInit {
     private toasterService: ToastrService,
     private wishlistService: WishlistService,
     private addressService: AddressService,
-    @Inject(PLATFORM_ID) private _platformId: Object,
-
+    @Inject(PLATFORM_ID) private _platformId: Object
   ) {
     this.user = this.storageService.get('Customer');
   }
@@ -72,7 +72,7 @@ export class ProductDetailsComponent implements OnInit {
         this.currentVariant = this.products.productWithVariants[0];
 
         this.attrArr = [];
-        this.bannerImg = this.currentVariant.variantImages[0]?.image
+        this.bannerImg = this.currentVariant.variantImages[0]?.image;
         for (const item of this.currentVariant.variantWithAttrVariantMap) {
           this.attrArr.push({
             name: item.AttrVariantMapWithAttributes.name,
@@ -135,8 +135,18 @@ export class ProductDetailsComponent implements OnInit {
       variantId: this.currentVariant.id,
       customerId: this.user.id,
     };
-    this.cartService.create(payload).subscribe((success) => {
-      this.toasterService.success("Product added to cart!!")
+    this.cartService.create(payload).pipe(throttleTime(1000)).subscribe((success) => {
+      if (success) {
+        this.cartService.getAll().subscribe((success) => {
+          let count = success.result.rows.reduce(
+            (acc, curr) => acc + curr.qty,
+            0
+          );
+          this.commonService.resetCart();
+          this.commonService.addToCart(count);
+        });
+      }
+      this.toasterService.success('Product added to cart!!');
     });
   }
 
@@ -146,11 +156,10 @@ export class ProductDetailsComponent implements OnInit {
         this.openLogin(login);
         this.event = event;
       } else {
-        this.createCart()
+        this.createCart();
       }
     } catch (error) {
-      console.log("error", error);
-
+      console.log('error', error);
     }
   }
 
@@ -162,21 +171,21 @@ export class ProductDetailsComponent implements OnInit {
           this.storageService.set('Customer', success.result);
           this.toasterService.success('Login done Successfully!!!');
           this.isLoginDone = true;
-          this.modalService.dismissAll()
+          this.modalService.dismissAll();
           if (this.event == 'cart') {
-            this.createCart()
+            this.createCart();
           }
           if (this.event == 'buyNow') {
-            this.createBuyNow()
+            this.createBuyNow();
           }
         },
-        (error) => { }
+        (error) => {}
       );
     } else {
       this.toasterService.error('Something went wrong!!');
     }
   }
-  createBuyNow(){
+  createBuyNow() {
     if (this.qty > this.currentVariant.qty) {
       this.qty = this.currentVariant.qty;
     }
@@ -186,27 +195,25 @@ export class ProductDetailsComponent implements OnInit {
       variantId: this.currentVariant.id,
     };
     if (isPlatformBrowser(this._platformId)) {
-      sessionStorage.setItem("products", JSON.stringify([payload]));
+      sessionStorage.setItem('products', JSON.stringify([payload]));
       this.router.navigate(['/order/checkout'], {
         queryParams: {
-          type: 'BUY'
-        }
+          type: 'BUY',
+        },
       });
     }
   }
-  validateBuyNow(login,event) {
+  validateBuyNow(login, event) {
     try {
       if (!this.user) {
         this.openLogin(login);
         this.event = event;
       } else {
-        this.createBuyNow()
+        this.createBuyNow();
       }
     } catch (error) {
-      console.log("error", error);
-
+      console.log('error', error);
     }
-  
   }
   addToWishlist() {
     if (!this.user) {
@@ -219,13 +226,11 @@ export class ProductDetailsComponent implements OnInit {
     };
     this.wishlistService.create(payload).subscribe({
       next: (success) => {
-        this.toasterService.success("Product added to wishlist!!")
+        this.toasterService.success('Product added to wishlist!!');
       },
       error: (err) => {
         console.log('err', err);
-
       },
     });
-
   }
 }

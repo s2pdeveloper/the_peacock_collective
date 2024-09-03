@@ -1,29 +1,36 @@
 <div class="container-fluid collection py-5" id="newArrivals">
   <div class="row">
     <div class="col-12 py-4 d-flex justify-content-center">
-      <p class="section-heading">{{commonService?.allData?.categories?.[0]?.name}}</p>
+      <p class="section-heading">{{ selectedCategory?.name }}</p>
     </div>
     <div class="col-12 product large-list">
       <div class="row product-row">
         <div class="col-12 product-column">
           <div class="card border-0">
             <swiper-container class="img-box" slides-per-view="4">
-              <ng-container *ngFor="let p of commonService.allData.products | homeProduct : commonService?.allData?.categories?.[0]">
-                <swiper-slide   class="p-2 bg-light prod-cart border"
-                (click)="navigateTo(p?.id)" >
-                <img class="img-fluid w-100" [src]="p?.bannerImage" />
-                <div class="text-box p-2">
-                  <div class="d-flex justify-content-center">
-                    <p class="cat-name">{{ p?.name }}</p>
-                    <!-- <p class="fw-bold prod-price">
+              <ng-container
+                *ngFor="
+                  let p of commonService.allData.products
+                    | homeProduct : selectedCategory
+                "
+              >
+                <swiper-slide
+                  class="p-2 bg-light prod-cart border"
+                  (click)="navigateTo(p?.id)"
+                >
+                  <img class="img-fluid w-100" [src]="p?.bannerImage" />
+                  <div class="text-box p-2">
+                    <div class="d-flex justify-content-center">
+                      <p class="cat-name">{{ p?.name }}</p>
+                      <!-- <p class="fw-bold prod-price">
                       {{ product?.price | currency : "INR" }}
                     </p> -->
+                    </div>
                   </div>
-                </div>
-                <!-- <p class="prod-name text-center">{{ p?.hsn }}</p>
+                  <!-- <p class="prod-name text-center">{{ p?.hsn }}</p>
                 <p class="prod-name text-center">{{ p.name }}</p> -->
                 </swiper-slide>
-              </ng-container>              
+              </ng-container>
             </swiper-container>
           </div>
         </div>
@@ -34,21 +41,28 @@
         <div class="col-12 product-column">
           <div class="card border-0">
             <swiper-container class="img-box" slides-per-view="2">
-              <ng-container *ngFor="let p of commonService.allData.products | homeProduct : commonService?.allData?.categories?.[0]">
-                <swiper-slide   class="p-2 prod-cart border"
-                (click)="navigateTo(p?.id)" >
-                <img class="img-fluid w-100" [src]="p?.bannerImage" />
-                <div class="text-box p-2">
-                  <div class="d-flex justify-content-center">
-                    <p class="cat-name">{{ p?.name }}</p>
-                    <!-- <p class="fw-bold prod-price">
+              <ng-container
+                *ngFor="
+                  let p of commonService.allData.products
+                    | homeProduct : selectedCategory
+                "
+              >
+                <swiper-slide
+                  class="p-2 prod-cart border"
+                  (click)="navigateTo(p?.id)"
+                >
+                  <img class="img-fluid w-100" [src]="p?.bannerImage" />
+                  <div class="text-box p-2">
+                    <div class="d-flex justify-content-center">
+                      <p class="cat-name">{{ p?.name }}</p>
+                      <!-- <p class="fw-bold prod-price">
                       {{ product?.price | currency : "INR" }}
                     </p> -->
+                    </div>
                   </div>
-                </div>
-                <!-- <p class="prod-name text-center">{{ p?.hsn }}</p> -->
+                  <!-- <p class="prod-name text-center">{{ p?.hsn }}</p> -->
                 </swiper-slide>
-              </ng-container> 
+              </ng-container>
             </swiper-container>
           </div>
         </div>
@@ -59,21 +73,28 @@
         <div class="col-12 product-column">
           <div class="card border-0">
             <swiper-container class="img-box" slides-per-view="2">
-              <ng-container *ngFor="let p of commonService.allData.products | homeProduct : commonService?.allData?.categories?.[0]">
-                <swiper-slide   class="p-2 prod-cart border"
-                (click)="navigateTo(p?.id)" >
-                <img class="img-fluid w-100" [src]="p?.bannerImage" />
-                <div class="text-box p-2">
-                  <div class="d-flex justify-content-center">
-                    <p class="cat-name">{{ p?.name }}</p>
-                    <!-- <p class="fw-bold prod-price">
+              <ng-container
+                *ngFor="
+                  let p of commonService.allData.products
+                    | homeProduct : selectedCategory
+                "
+              >
+                <swiper-slide
+                  class="p-2 prod-cart border"
+                  (click)="navigateTo(p?.id)"
+                >
+                  <img class="img-fluid w-100" [src]="p?.bannerImage" />
+                  <div class="text-box p-2">
+                    <div class="d-flex justify-content-center">
+                      <p class="cat-name">{{ p?.name }}</p>
+                      <!-- <p class="fw-bold prod-price">
                       {{ product?.price | currency : "INR" }}
                     </p> -->
+                    </div>
                   </div>
-                </div>
-                <!-- <p class="prod-name text-center">{{ p?.hsn }}</p> -->
+                  <!-- <p class="prod-name text-center">{{ p?.hsn }}</p> -->
                 </swiper-slide>
-              </ng-container> 
+              </ng-container>
             </swiper-container>
           </div>
         </div>

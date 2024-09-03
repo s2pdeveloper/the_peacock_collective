@@ -117,9 +117,6 @@ const modelObj = {
       .json(generateResponse(resCode.HTTP_OK, response));
   }),
   getById: asyncHandler(async (req, res) => {
-
-
-
     let query = {
       where: {
         id: req.params.id,
@@ -191,6 +188,34 @@ const modelObj = {
         })
       );
     }
+  }),
+  showCategory: asyncHandler(async (req, res, next) => {
+    let existing = await categoryRepository.findByPk(req.params.id);
+    let existingDefault = await categoryRepository.findOneByCondition( {
+      where: { isShowHome:true }
+    });
+    if (existing && existing.isShowHome == false) {
+      const address = await categoryRepository.update(
+        { isShowHome: true },
+        { where: { id: req.params.id } }
+      );
+    }
+    if (existingDefault.isShowHome === true) {
+      await categoryRepository.update(
+        { isShowHome: false },
+        { where: { id: existingDefault.id } }
+      );
+    }
+
+    if (!existing) {
+      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Address");
+      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
+    }
+    return res.json(
+      generateResponse(resCode.HTTP_OK, {
+        message: MESSAGES.apiSuccessStrings.UPDATE("Address"),
+      })
+    );
   }),
   delete: asyncHandler(async (req, res) => {
     let query = {

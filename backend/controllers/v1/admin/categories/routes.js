@@ -29,6 +29,13 @@ app.get(
   // validate("checkParamId"),
   controller.getById
 );
+app.put(
+  "/showCategory/:id",
+  // authHandler.authenticateJWT(),
+  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  // validate("updateCustomer"),
+  controller.showCategory
+);
 app.delete(
   "/:id",
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),

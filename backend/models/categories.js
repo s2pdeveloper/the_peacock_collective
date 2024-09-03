@@ -23,6 +23,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: OPTIONS.defaultStatus.ACTIVE,
       },
+      isShowHome : {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
       image: {
         type: DataTypes.STRING,
         allowNull: true,

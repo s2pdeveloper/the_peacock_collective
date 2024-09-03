@@ -33,7 +33,7 @@ const getAllMasterData = asyncHandler(async (req, res) => {
     where: {
       parentId: null,
     },
-    attributes: ["createdAt", "id", "name", "status"],
+    attributes: ["createdAt", "id", "name", "status","isShowHome"],
     include: [
       // {
       //   model: Categories,
