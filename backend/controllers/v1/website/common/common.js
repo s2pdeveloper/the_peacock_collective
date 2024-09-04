@@ -28,12 +28,17 @@ const { Json } = require("sequelize/lib/utils");
 const getAllMasterData = asyncHandler(async (req, res) => {
   let column = "createdAt";
   let direction = "ASC";
-
+  const tagQuery = {
+    where:{
+      status : OPTIONS.defaultStatus.ACTIVE
+    },
+    order: [[column, direction]],
+  }
   const categoryQuery = {
     where: {
       parentId: null,
     },
-    attributes: ["createdAt", "id", "name", "status","isShowHome"],
+    attributes: ["createdAt", "id", "name", "status","isShowHome","description"],
     include: [
       // {
       //   model: Categories,
@@ -107,7 +112,7 @@ const getAllMasterData = asyncHandler(async (req, res) => {
   const promissArr = [
     Categories.findAll(categoryQuery),
     Product.findAll(productQuery),
-    Tag.findAll({}),
+    Tag.findAll(tagQuery),
     Attribute.findAll({}),
     Variant.findAll(variantQuery),
   ];

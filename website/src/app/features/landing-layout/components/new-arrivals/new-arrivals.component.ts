@@ -22,14 +22,14 @@ export class NewArrivalsComponent implements OnInit, AfterViewInit {
     public commonService: CommonService,
     @Inject(PLATFORM_ID) private _platformId: Object
   ) {}
-  selectedCategory: any = {};
+  selectedCategories: any[] = [];
   swiper;
 
   ngOnInit(): void {
-    this.selectedCategory = this.commonService?.allData?.categories.find(
+    this.selectedCategories = this.commonService?.allData?.categories.filter(
       (cat) => cat.isShowHome === true
     );
-    console.log('this.selectedCategory', this.selectedCategory);
+    console.log('this.selectedCategories', this.selectedCategories);
   }
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this._platformId)) {

@@ -33,7 +33,7 @@ export class CategoryListComponent {
   category: any = [];
   allData: any = [];
   image: any = [];
-  isHomeShow: boolean;
+  // isHomeShow: boolean;
 
   ngOnInit(): void {
     this.getAll();
@@ -63,17 +63,24 @@ export class CategoryListComponent {
       : null;
   }
 
-  selectCategory(id) {
+  selectCategory(cat) {
     // this.isHomeShow =
-    console.log(id);
+    // console.log(id);
     this.spinner.show();
-    this.categoryService.showCategory(id).subscribe(
+    let data = {
+      isShowHome: !cat.isShowHome,
+    };
+    this.categoryService.showCategory(cat.id, data).subscribe(
       (success: any) => {
-        this.toastService.success("Category Show in Website");
+        this.selectedRow = {};
+        this.modalService.dismissAll();
+        this.toastService.success("Category Visibility Updated");
         this.spinner.hide();
         this.getAll();
       },
       (error) => {
+        this.selectedRow = {};
+        this.modalService.dismissAll();
         this.spinner.hide();
         this.toastService.error("Somethig Went Wrong!");
       }
@@ -101,13 +108,13 @@ export class CategoryListComponent {
     });
   }
 
-  delete(id: any) {
-    this.spinner.show();
-    this.categoryService.delete(id).subscribe((success: any) => {
-      this.spinner.hide();
-      this.toastService.success(success.message);
-      this.modalService.dismissAll();
-      this.getAll();
-    });
-  }
+  // delete(id: any) {
+  //   this.spinner.show();
+  //   this.categoryService.delete(id).subscribe((success: any) => {
+  //     this.spinner.hide();
+  //     this.toastService.success(success.message);
+  //     this.modalService.dismissAll();
+  //     this.getAll();
+  //   });
+  // }
 }

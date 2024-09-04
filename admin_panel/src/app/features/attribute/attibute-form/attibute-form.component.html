@@ -12,8 +12,7 @@
   <div class="card-body justify-content-center">
     <form [formGroup]="attributeForm">
       <div class="row">
-        
-        <div class="col-md-4 mb-2">
+        <div class="col-md-4 mb-3">
           <label class="form-label">
             Name
             <span class="text-danger">*</span></label
@@ -25,59 +24,80 @@
             class="form-control"
           />
         </div>
-        <div class="col-md-3 mb-2">
+        <div class="col-md-3 mb-3">
           <label class="form-label">
             Type
             <span class="text-danger">*</span></label
           >
-          <select (change)="handleTypeChange($event)" formControlName="type" class="form-select">
+          <select
+            (change)="handleTypeChange($event)"
+            formControlName="type"
+            class="form-select"
+          >
             <option [selected]="true" disabled value="">Select Type</option>
             <option value="text">Text</option>
             <option value="number">Number</option>
             <option value="color">Color</option>
           </select>
         </div>
-        <div class="col-md-4 mb-2">
+        <div class="col-md-4 mb-3">
           <label class="form-label">
-            Value
+            Status
             <span class="text-danger">*</span></label
           >
-          <div formArrayName="value">
-            <div *ngFor="let skill of attributeValues.controls; let i = index" class="mb-2">
-              <div [formGroupName]="i" class="d-flex">
-                <!-- {{i}} -->
+          <select formControlName="status" class="form-control">
+            <option value="active">Active</option>
+            <option value="inactive">InActive</option>
+          </select>
+          <div></div>
+        </div>
 
-                <input
-                  class="form-control"
-                  [type]="type"
-                  formControlName="value"
-                  required=""
-                />
 
-                <button
-                  class="btn px-2 ms-2 btn-danger shadow rounded rounded-3 d-flex align-items-center"
-                  *ngIf="attributeValues.controls.length > 1"
-                  (click)="removeValue(i)"
-                >
-                  <i class="ti ti-trash"></i>
-                </button>
+        <div class="col-md-12">
+          <div class="d-flex mb-3">
+            <label class="form-label" style="margin-block: auto;">
+              Value
+              <span class="text-danger">*</span></label
+            >
+            <button
+              class="btn px-2 ms-2 mt-1 btn-warning shadow rounded rounded-3 d-flex align-items-center"
+              (click)="addValue()"
+            >
+              <i
+                [class]="attributeForm.value.id ? 'fa-pen-to-square' : 'fa-plus'"
+                class="fa-solid"
+              ></i>
+            </button>
+          </div>
+            
+
+            <div formArrayName="value" class="row mb-2">
+              <div
+                *ngFor="let skill of attributeValues.controls; let i = index"
+                class="col-md-4 mb-2"
+              >
+                <div [formGroupName]="i" class="d-flex">
+                  <!-- {{i}} -->
+
+                  <input
+                    class="form-control"
+                    [type]="type"
+                    formControlName="value"
+                    required=""
+                  />
+
+                  <button
+                    class="btn px-2 ms-2 btn-danger shadow rounded rounded-3 d-flex align-items-center"
+                    *ngIf="attributeValues.controls.length > 1"
+                    (click)="removeValue(i)"
+                  >
+                    <i class="ti ti-trash"></i>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
         </div>
-        <div class="col-md-1 mt-4">
-            <button
-            class="btn px-2 mt-1 btn-warning shadow rounded rounded-3 d-flex align-items-center"
-            (click)="addValue()"
-          >
-            <i
-              [class]="
-                attributeForm.value.id ? 'fa-pen-to-square' : 'fa-plus'
-              "
-              class="fa-solid"
-            ></i>
-          </button>
-        </div>
+        
 
         <!-- <div class="col-md-4 mb-2">
                     <label class="form-label">

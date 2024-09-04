@@ -191,21 +191,21 @@ const modelObj = {
   }),
   showCategory: asyncHandler(async (req, res, next) => {
     let existing = await categoryRepository.findByPk(req.params.id);
-    let existingDefault = await categoryRepository.findOneByCondition( {
-      where: { isShowHome:true }
-    });
-    if (existing && existing.isShowHome == false) {
-      const address = await categoryRepository.update(
-        { isShowHome: true },
+    // let existingDefault = await categoryRepository.findOneByCondition( {
+    //   where: { isShowHome:true }
+    // });
+    if (existing) {
+      const isShow = await categoryRepository.update(
+        { isShowHome: req.body.isShowHome },
         { where: { id: req.params.id } }
       );
     }
-    if (existingDefault.isShowHome === true) {
-      await categoryRepository.update(
-        { isShowHome: false },
-        { where: { id: existingDefault.id } }
-      );
-    }
+    // if (existingDefault.isShowHome === true) {
+    //   await categoryRepository.update(
+    //     { isShowHome: false },
+    //     { where: { id: existingDefault.id } }
+    //   );
+    // }
 
     if (!existing) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Address");

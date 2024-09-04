@@ -91,8 +91,15 @@ export class AllProductVariantsComponent {
       .subscribe((success: any) => {
         this.spinner.hide();
         this.variants = success?.rows;
-        // this.collection = success?.count;
+        this.collection = success?.count;
       });
+  }
+
+  onChangePage(pageNo) {
+    if (pageNo > 0) {
+      this.page = pageNo;
+    }
+    this.getAllProductVariant();
   }
   searchFn() {
     this.search.toString().length >= 3 || this.search.toString().length == 0

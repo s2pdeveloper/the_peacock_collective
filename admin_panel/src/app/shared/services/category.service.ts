@@ -37,9 +37,9 @@ export class CategoryService {
       .pipe(map((res: any) => res));
   }
   
-  showCategory(id){
+  showCategory(id, payload){
     return this.http
-      .put(this.BASE_URL + '/showCategory/' + id)
+      .put(this.BASE_URL + '/showCategory/' + id, payload)
       .pipe(map((res: any) => res));
   }
 }
