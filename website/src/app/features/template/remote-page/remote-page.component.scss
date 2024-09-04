@@ -33,6 +33,9 @@
 .description {
   padding: 0 1.25rem;
 }
+.pointer{
+  cursor: pointer;
+}
 .btn {
   text-transform: uppercase;
   width: auto;
@@ -40,8 +43,8 @@
 }
 .prod-cart {
   .prod-img {
-    min-height: 35vw;
-    max-height: 35vw;
+    min-height: 26vw;
+    max-height: 26vw;
     object-fit: cover;
   }
 }
