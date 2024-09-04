@@ -1,14 +1,14 @@
-import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TransactionsService } from '@shared/services/transactions.service';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { ToastrService } from 'ngx-toastr';
+import { Component, inject } from "@angular/core";
+import { Router } from "@angular/router";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { TransactionsService } from "@shared/services/transactions.service";
+import { NgxSpinnerService } from "ngx-spinner";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
-  selector: 'app-transaction-list',
-  templateUrl: './transaction-list.component.html',
-  styleUrls: ['./transaction-list.component.scss']
+  selector: "app-transaction-list",
+  templateUrl: "./transaction-list.component.html",
+  styleUrls: ["./transaction-list.component.scss"],
 })
 export class TransactionListComponent {
   private modalService = inject(NgbModal);
@@ -25,7 +25,7 @@ export class TransactionListComponent {
   direction: number = -1;
   search: any = "";
   selectedRow: any;
-  transactions:any;
+  transactions: any;
   ngOnInit(): void {
     this.getAll();
   }
@@ -54,13 +54,13 @@ export class TransactionListComponent {
       search: this.search,
     };
     this.transService.getAll(obj).subscribe((success: any) => {
-      console.log('success',success);
+      console.log("success", success);
       this.spinner.hide();
       this.transactions = success;
       this.collection = success.length;
     });
   }
-  navigateTo(path:any){
+  navigateTo(path: any, id) {
     this.router.navigate([path]);
   }
 }

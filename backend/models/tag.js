@@ -14,11 +14,16 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      status: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: OPTIONS.defaultStatus.ACTIVE,
+      },
     },
     {
       timestamps: true,
       collection: "Tag",
-    }
+    },
   );
   // Tag.associate = (models) => {
   //   Tag.hasMany(models.ProdTagMap, {

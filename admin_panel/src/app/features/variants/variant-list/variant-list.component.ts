@@ -52,7 +52,7 @@ export class VariantListComponent {
     this.selectedRow = s;
     this.modalService.open(content, { centered: true });
   }
-  deleteVariant(data) {
-    this.customEvent.emit({ action: "DELETE", data: data });
-  }
+  // deleteVariant(data) {
+  //   this.customEvent.emit({ action: "DELETE", data: data });
+  // }
 }

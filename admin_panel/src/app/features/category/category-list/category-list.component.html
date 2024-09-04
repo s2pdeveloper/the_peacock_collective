@@ -42,8 +42,9 @@
               <th scope="col">Sr. No.</th>
               <th scope="col" class="text-start">Name</th>
               <th scope="col">Tag</th>
-              <!-- <th scope="col">Parent Category</th> -->
+              <th scope="col">Show on Home</th>
               <th scope="col">Status</th>
+              <!-- <th scope="col">View in Home Page</th> -->
               <th scope="col" class="mx-auto text-center">Action</th>
             </tr>
           </thead>
@@ -56,10 +57,19 @@
                   t?.CategoryTagMapWithTag?.title + " "
                 }}</span>
               </td>
-
-              <td scope="row" class="text-center">
+              <td scope="row" class="text-center" style="font-size: medium;">
                 <span
+                  *ngIf="c?.isShowHome"
                   class="badge rounded-pill  text-bg-{{
+                    c.status == 'active' ? 'success' : 'danger'
+                  }} px-2"
+                >
+                  {{ c?.isShowHome ? "Visible" : "" }}</span
+                >
+              </td>
+              <td scope="row" class="text-center" style="font-size: medium;">
+                <span
+                  class="badge rounded-pill text-bg-{{
                     c.status == 'active' ? 'success' : 'danger'
                   }} px-2"
                 >
@@ -77,15 +87,18 @@
                     <i class="ti ti-edit-circle"></i>
                   </button>
 
-                  <button
+                  <!-- <button
                     class="btn btn-sm action-btn mx-2"
                     (click)="open(c.id, deleteModal)"
                     ngbTooltip="Delete"
                   >
                     <i class="ti ti-trash"></i>
-                  </button>
+                  </button> -->
                   <div class="d-flex align-items-center mx-2">
-                    <input type="checkbox" [(ngModel)]="c.isShowHome" [value]="c.isShowHome" (click)="selectCategory(c.id)"/>
+                    <button class="btn btn-sm" (click)="open(c, visibleModal)">
+                      Display
+                    </button>
+                    <!-- <input type="checkbox" [(ngModel)]="c.isShowHome" [value]="c.isShowHome" (click)="selectCategory(c.id)"/> -->
                   </div>
                 </div>
 
@@ -94,7 +107,7 @@
                   <i class="ti ti-plus"></i>
                 </button> -->
               </td>
-              <ng-template #deleteModal let-modal>
+              <ng-template #visibleModal let-modal>
                 <div class="modal-header border-0">
                   <button
                     type="button"
@@ -105,14 +118,17 @@
                 </div>
                 <div class="modal-body border-0">
                   <h4 class="modal-title text-center" id="modal-basic-title">
-                    Are you sure you want to Delete ?
+                    Do you want to
+                    {{ selectedRow.isShowHome ? "remove" : "show" }}
+                    <span class="text-danger">{{ selectedRow.name }}</span>
+                    {{ selectedRow.isShowHome ? "from" : "on" }} Home?
                   </h4>
                 </div>
                 <div class="modal-footer justify-content-center border-0">
                   <button
                     type="button"
                     class="btn px-4 btn-outline-danger"
-                    (click)="delete(selectedRow)"
+                    (click)="selectCategory(selectedRow)"
                   >
                     YES
                   </button>

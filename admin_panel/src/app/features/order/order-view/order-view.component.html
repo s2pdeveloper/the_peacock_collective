@@ -106,8 +106,10 @@
                     Status
                     <span class="text-danger">*</span></label>
                   <select formControlName="status" class="form-control">
+                    <option [value]="OrderStatus.ACTIVE">{{OrderStatus.ACTIVE}}</option>
                     <option [value]="OrderStatus.ACCEPT">{{OrderStatus.ACCEPT}}</option>
                     <option [value]="OrderStatus.REJECTED">{{OrderStatus.REJECTED}}</option>
+                    <option [value]="OrderStatus.DELIVERED">{{OrderStatus.DELIVERED}}</option>
                   </select>
                 </div>
               </div>

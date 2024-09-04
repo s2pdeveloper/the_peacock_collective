@@ -25,9 +25,9 @@
             </div>
           </div>
         </div>
-        <div class="col-4">
+        <div class="d-flex col-auto justify-content-end">
           <button
-            class="btn btn-primary btn-sm action-btn mx-2"
+            class="btn btn-primary action-btn mx-3"
             (click)="updateAll()"
             ngbTooltip="Edit"
           >
@@ -44,7 +44,7 @@
               <th scope="col">Sr. No.</th>
               <th scope="col" class="text-start">Attribute</th>
               <th scope="col" class="text-start">SKU</th>
-              <th scope="col" class="text-start">QTY</th>
+              <th scope="col" class="text-end">QTY</th>
               <th scope="col">Add QTY</th>
               <th scope="col">Price</th>
               <th scope="col" class="mx-auto text-center">Action</th>
@@ -64,7 +64,7 @@
                 </p>
               </td>
               <td scope="row" class="text-start">{{ c?.sku }}</td>
-              <td scope="row" class="text-start">{{ c?.qty }}</td>
+              <td scope="row" class="text-end">{{ c?.qty }}</td>
 
               <td scope="row">
                 <div class="d-flex justify-content-center align-items-center">
@@ -121,6 +121,12 @@
           </tbody>
         </table>
       </div>
+      <app-custom-pagination
+        [(page)]="page"
+        [(pageSize)]="pageSize"
+        [(collection)]="collection"
+        (myOutput)="onChangePage(page)"
+      ></app-custom-pagination>
     </div>
   </div>
 </div>

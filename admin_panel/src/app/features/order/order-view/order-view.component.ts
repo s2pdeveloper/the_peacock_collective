@@ -4,10 +4,11 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { SpinnerService, ToastService } from "@core/services";
 import { OrderService } from "@shared/services/order";
 
-enum OrderStatus{
+enum OrderStatus {
   ACTIVE = "active",
   ACCEPT = "accept",
   REJECTED = "rejected",
+  DELIVERED = "delivered",
 }
 
 @Component({
@@ -16,7 +17,7 @@ enum OrderStatus{
   styleUrls: ["./order-view.component.scss"],
 })
 export class OrderViewComponent {
-  OrderStatus=OrderStatus
+  OrderStatus = OrderStatus;
   id: number = null;
   data: any = {};
   subtotal: number = 0;
@@ -26,12 +27,12 @@ export class OrderViewComponent {
     private orderService: OrderService,
     private spinner: SpinnerService,
     private toastService: ToastService
-  ) { }
+  ) {}
   orderForm = new FormGroup({
     total: new FormControl(null),
     discount: new FormControl(null),
     shippingFee: new FormControl(null),
-    status: new FormControl("approved", [Validators.required]),
+    status: new FormControl(OrderStatus.ACCEPT, [Validators.required]),
   });
   ngOnInit(): void {
     this.activated.queryParams.subscribe((params: any) => {
@@ -49,15 +50,16 @@ export class OrderViewComponent {
         this.spinner.hide();
         this.data = success;
         this.orderForm.patchValue(success);
-        this.orderForm.controls['discount'].setValue(success.discount ?? 0)
-        this.orderForm.controls['shippingFee'].setValue(success.shippingFee ?? 0)
+        this.orderForm.controls["discount"].setValue(success.discount ?? 0);
+        this.orderForm.controls["shippingFee"].setValue(
+          success.shippingFee ?? 0
+        );
 
         this.subtotal = this.data.orderWithOrderVariantMap
           .map((x) => x.price)
           .reduce((acc, currentValue) => acc + currentValue, 0);
 
-        this.orderForm.controls['total'].setValue(this.subtotal)
-
+        this.orderForm.controls["total"].setValue(this.subtotal);
       });
     } catch (error) {
       console.log("error", error);
@@ -71,7 +73,7 @@ export class OrderViewComponent {
       .subscribe((success: any) => {
         this.spinner.hide();
         this.toastService.success(success?.message);
-        this.navigateTo("default/order/order-list")
+        this.navigateTo("default/order/order-list");
         this.getData();
       });
   }
@@ -79,7 +81,8 @@ export class OrderViewComponent {
     let total: any = this.subtotal;
     if (this.orderForm.value.discount) {
       total =
-        (this.subtotal - (this.orderForm.value.discount / 100) * this.subtotal) ?? this.subtotal;
+        this.subtotal - (this.orderForm.value.discount / 100) * this.subtotal ??
+        this.subtotal;
     }
     if (this.orderForm.value.shippingFee) {
       total += this.orderForm.value.shippingFee;
