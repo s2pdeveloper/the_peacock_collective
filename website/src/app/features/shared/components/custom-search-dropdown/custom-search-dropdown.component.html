@@ -1,0 +1,15 @@
+<div class="search-dropdown" [ngClass]="{'open':shown}">
+    <div class="w-100 d-flex align-items-center" (click)="show()"><span>Search</span></div>
+    <div class="search-dropdown__dropdown">
+      <input class="search-dropdown__dropdown__search" type="text" placeholder="Search for a product..."
+        (keyup)="search($event)" #input
+        [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}"/>
+      <div class="search-dropdown__dropdown__scroller">
+        <div class="search-dropdown__dropdown__item" *ngFor="let item of items" (click)="select(item)">
+          {{item?.name | titlecase}}
+        </div>
+        <div class="search-dropdown__dropdown__msg" *ngIf="items?.length == 0">No Result Found</div>
+        <div class="search-dropdown__btn" (click)="show()"><span><i class="fa-solid fa-xmark"></i></span></div>
+      </div>
+    </div>
+  </div>

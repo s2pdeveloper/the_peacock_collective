@@ -3,6 +3,13 @@ const Product = require("../../../../models").Product;
 const ProdAttributeMap = require("../../../../models").ProdAttributeMap;
 const Attribute = require("../../../../models").Attribute;
 const Categories = require("../../../../models").Categories;
+const Images = require("../../../../models").Images;
+const Tag = require("../../../../models").Tag;
+const AttrVariantMap = require("../../../../models").AttrVariantMap;
+const ProdTagMap = require("../../../../models").ProdTagMap;
+const Variant = require("../../../../models").Variant;
+const Cart = require("../../../../models").Cart;
+const CategoryTagMap = require("../../../../models").CategoryTagMap;
 const {
   OPTIONS,
   generateResponse,
@@ -13,6 +20,7 @@ const resCode = MESSAGES.resCode;
 const Op = Sequelize.Op;
 
 const Model = Product;
+const productRepository = require('../../../../models/repository/productRepository')
 const ApiError = require("../../../../config/middlewares/api.error");
 const {
   asyncHandler,
@@ -63,39 +71,57 @@ const modelObj = {
       pageSize = 10,
       column = "createdAt",
       direction = "DESC",
-      search = null,
+      search = req.query.name,
     } = req.query;
-
+    console.log("search", search);
     let offset = (page - 1) * pageSize || 0;
-    let query = {
+    const query = {
       where: {
         ...(search && {
           [Op.or]: {
             name: { [Op.like]: `%${search}%` },
-            description: { [Op.like]: `%${search}%` },
+            // description: { [Op.like]: `%${search}%` },
             // description: { [Op.iLike]: `%${search}%` },
           },
         }),
       },
       order: [[column, direction]],
-      // attributes: {
-      //   exclude: ['userId'],
-      // },
-      include: {
-        model: ProdAttributeMap,
-        as: 'productWithProdAttributeMap',
-        paranoid: true, required: false,
-        // attributes: ['id', 'name', 'mobile'],
-      },
-      include: {
-        model: Categories,
-        as: 'productWithCategory',
-        // attributes: ['id', 'name', 'mobile'],
-      },
+      include: [
+        {
+          model: Variant,
+          as: "productWithVariants",
+          where: {
+            qty: { [Op.gt]: 0 },
+          },
+          include: [
+            {
+              model: AttrVariantMap,
+              as: "variantWithAttrVariantMap",
+              include: {
+                model: Attribute,
+                as: "AttrVariantMapWithAttributes",
+              },
+            },
+            {
+              model: Images,
+              as: "variantImages",
+            },
+          ],
+        },
+        {
+          model: ProdTagMap,
+          as: "productWithTagMap",
+        },
+
+        {
+          model: Categories,
+          as: "productWithCategory",
+        },
+      ],
       offset: +offset,
       limit: +pageSize,
     };
-    let response = await Model.findAndCountAll(query);
+    let response = await productRepository.findAll(query);
 
     return res
       .status(resCode.HTTP_OK)

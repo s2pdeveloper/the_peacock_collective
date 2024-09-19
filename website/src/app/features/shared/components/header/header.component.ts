@@ -1,10 +1,7 @@
 import {
   Component,
-  ElementRef,
-  HostListener,
   Inject,
   inject,
-  Input,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -44,6 +41,7 @@ export class HeaderComponent {
   activeCategoryId = null;
   user: any;
   currentVariant = null;
+  search: string;
   constructor(
     @Inject(PLATFORM_ID) private _platformId: Object,
     private router: Router,
@@ -74,6 +72,7 @@ export class HeaderComponent {
     return totalPriceArray;
   }
 
+  item = 469;
   ngOnInit(): void {
     this.commonService.getLoginStatus().subscribe((success) => {
       this.customer = success;
@@ -218,6 +217,11 @@ export class HeaderComponent {
       this.activeCategoryId = filterCategory[0].id;
     } else {
       this.activeCategoryId = null;
+    }
+  }
+  dismissModal(ev) {
+    if (ev) {
+      this.modalService.dismissAll()
     }
   }
 }

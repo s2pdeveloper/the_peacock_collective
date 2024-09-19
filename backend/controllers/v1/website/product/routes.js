@@ -16,7 +16,7 @@ const controller=require('../product/product')
 // );
 
 
-// app.get("/", controller.getAll);
+app.get("/", controller.getAll);
 
 // app.post(
 //   "/",

@@ -3,15 +3,15 @@
     <div class="col-12 img-wrapper">
       <img class="img-fluid w-100" src="../../../../assets/products/sari/front.jpeg" alt="" />
       <div class="text-part">
-        <p class="cat-name">{{ initialData?.categoryWithtags[0]?.CategoryTagMapWithTag?.title }}</p>
-        <p class="page-name">{{ initialData?.name }}</p>
+        <p class="cat-name">{{ category?.categoryWithtags[0]?.CategoryTagMapWithTag?.title }}</p>
+        <p class="page-name">{{ category?.name }}</p>
       </div>
     </div>
     <div class="col-12 py-5">
-      <div class="row justify-content-center" *ngIf="initialData?.description">
+      <div class="row justify-content-center" *ngIf="category?.description">
         <div class="col-12 col-md-9 col-lg-6">
           <p class="description text-center">
-            <q>{{ initialData?.description }}</q>
+            <q>{{ category?.description }}</q>
           </p>
         </div>
       </div>
@@ -176,7 +176,7 @@
       <div class="row justify-content-center">
         <div class="col-12 col-md-9 col-lg-6">
           <p class="description text-center">
-            <q>{{ initialData?.description }}</q>
+            <q>{{ category?.description }}</q>
           </p>
         </div>
       </div>
@@ -189,8 +189,8 @@
       </div>
       <div class="row product-textbox justify-content-center">
         <div class="col-10 col-md-10 col-lg-6 d-flex flex-column align-items-center">
-          <p class="text-center mb-3 fw-bold">{{initialData?.categoryWithtags[0]?.CategoryTagMapWithTag?.title}}</p>
-          <p class="text-center mb-3">{{ initialData?.name }}</p>
+          <p class="text-center mb-3 fw-bold">{{category?.categoryWithtags[0]?.CategoryTagMapWithTag?.title}}</p>
+          <p class="text-center mb-3">{{ category?.name }}</p>
           <button class="btn btn-dark">Explore</button>
         </div>
       </div>

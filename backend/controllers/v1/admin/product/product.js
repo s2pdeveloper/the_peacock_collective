@@ -226,7 +226,7 @@ const modelObj = {
       await cloudinary.deleteFile(item.bannerImage);
     }
 
-    let deletedItem = await Model.destroy(query);
+    let deletedItem = await Model.destroy(item);
     if (deletedItem) {
       let deleteQuery = {
         where: {
