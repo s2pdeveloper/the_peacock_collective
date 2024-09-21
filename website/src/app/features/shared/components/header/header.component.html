@@ -152,10 +152,11 @@
               ">
               <div class="container-fluid">
                 <div class="search d-flex justify-content-between align-items-center p-4 w-100">
-               
-                  <search-dropdown>
-                  </search-dropdown>
-                  <i class="fa-solid fa-magnifying-glass" (click)="searchToggle = !searchToggle"></i>
+                  <div class="w-100">
+                    <search-dropdown [ngClass]="isSearchOpen ? 'search-drop' : ''" (dismissModal)="dismissModal($event)">
+                    </search-dropdown>
+                  </div>
+                  <i  class="fa-solid fa-magnifying-glass" (click)="searchToggle = !searchToggle"></i>
                 </div>
               </div>
             </div>
@@ -394,10 +395,10 @@
 </div>
 <ng-template #search let-modal>
   <div class="search d-flex justify-content-between align-items-center p-4 w-100">
-    <!-- <input type="text" placeholder="Search our catalog" class="form-control w-75 transparent"
-      (input)="selectionsearch($event)" /> -->
-    <search-dropdown class="search-drop transparent" (dismissModal)="dismissModal($event)">
-    </search-dropdown>
+      <div class="w-100">
+        <search-dropdown [ngClass]="isSearchOpen ? 'search-drop' : 'search-collab'" class="transparent" (dismissModal)="dismissModal($event)">
+        </search-dropdown>
+      </div>
     <i class="fa-solid fa-magnifying-glass"></i>
   </div>
 </ng-template>

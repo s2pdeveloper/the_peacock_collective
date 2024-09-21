@@ -26,7 +26,6 @@ export class HeaderComponent {
   cartCnt: Observable<number>;
   closeResult = '';
   scrollValue: number = 0;
-
   scrollPosition: number = 0;
   isMenuOpen: boolean = false;
   isAccountOpen: boolean = false;
@@ -42,6 +41,7 @@ export class HeaderComponent {
   user: any;
   currentVariant = null;
   search: string;
+  isSearchOpen: boolean = false
   constructor(
     @Inject(PLATFORM_ID) private _platformId: Object,
     private router: Router,
@@ -220,8 +220,15 @@ export class HeaderComponent {
     }
   }
   dismissModal(ev) {
-    if (ev) {
+    if (ev.type == "SELECT") {
+      this.searchToggle = !this.searchToggle
       this.modalService.dismissAll()
+    }
+    else if (ev.type == "DESTROY") {
+      this.isSearchOpen = ev.isModal;
+    }
+    else {
+      this.isSearchOpen = ev.isModal;
     }
   }
 }

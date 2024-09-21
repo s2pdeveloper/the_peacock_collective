@@ -1,7 +1,7 @@
 $offset: 1px;
 .search-dropdown {
-  position: relative;
-  user-select: none;
+  // position: relative;
+  // user-select: none;
   font-size: 0.875rem;
   display: flex;
   justify-content: space-between;
@@ -23,9 +23,10 @@ $offset: 1px;
     }
   }
   #{$self}__dropdown {
-    position: absolute;
-    top: 0;
-    left: 0;
+
+    position: relative;
+    // top: 0;
+    // left: 0;
     width: 100%;
     padding: 0;
     background: white;

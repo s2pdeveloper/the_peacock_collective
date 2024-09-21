@@ -51,9 +51,9 @@
 @media (max-width: 575px) {
   .prod-cart {
     .prod-img {
-      min-height: 60vh;
-      max-height: 60vh;
-      object-fit: cover;
+      min-height: 45vh;
+      max-height: 45vh;
+      object-fit: contain;
     }
   }
   .text-part {
