@@ -237,9 +237,10 @@ export class ProductInfoFormComponent {
     console.log("event.target.files", event);
 
     if (event.target.files.length) {
-      if (event.target.files[0].size > 2000000) {
+      
+      if (event.target.files[0].size > 3000000) {
         this.toastService.warning(
-          "Unable to upload file of size more than 1MB"
+          "Unable to upload file of size more than 3MB"
         );
         return;
       }
