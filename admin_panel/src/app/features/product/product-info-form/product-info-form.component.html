@@ -33,9 +33,10 @@
           <select
             class="form-select"
             formControlName="categoryId"
-            (change)="getProductCode($event)"
+            (change)="getTag($event.target)"
           >
             <option selected disabled [value]="null">Select Category</option>
+            
             <option *ngFor="let cat of categoryArr" [value]="cat.id">
               {{ cat.name }}
             </option>

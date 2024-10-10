@@ -10,6 +10,7 @@ const resCode = MESSAGES.resCode;
 const Op = Sequelize.Op;
 
 const Model = Product;
+const productRepository = require('../../../../models/repository/productRepository')
 const ApiError = require("../../../../config/middlewares/api.error");
 const {
   asyncHandler,
@@ -220,17 +221,12 @@ const modelObj = {
     }
   }),
   delete: asyncHandler(async (req, res) => {
-    let query = {
-      where: {
-        id: req.params.id,
-      },
-    };
-    let item = await Model.findOne(query);
+    let item = await productRepository.findByPk(req.params.id);
     if (item && item?.bannerImage) {
       await cloudinary.deleteFile(item.bannerImage);
     }
 
-    let deletedItem = await Model.destroy(query);
+    let deletedItem = await Model.destroy(item);
     if (deletedItem) {
       let deleteQuery = {
         where: {

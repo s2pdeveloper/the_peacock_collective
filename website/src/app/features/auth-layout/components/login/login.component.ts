@@ -66,6 +66,7 @@ export class LoginComponent implements OnInit {
             this.storageService.set('Customer', success.result);
             this.toasterService.success('Login done Successfully!!!');
             this.getAddresses();
+            this.navigateTo('/');
             this.cartService.getAll().subscribe((success) => {
               let count = success.result.rows.reduce((acc, curr) => acc + curr.qty, 0);
               this.commonService.resetCart();

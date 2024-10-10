@@ -45,7 +45,7 @@ export class ProductInfoFormComponent {
     private toastService: ToastService,
     private domSanitizer: DomSanitizer,
     private validationService: ValidationService
-  ) {}
+  ) { }
 
   FORM_ERRORS = [
     {
@@ -216,26 +216,31 @@ export class ProductInfoFormComponent {
           (x) => x.attributeId
         );
       }
-      if(success?.productWithTagMap.length){
-        success.tagId=success?.productWithTagMap.map(x=>x.tagId);
+      if (success?.productWithTagMap.length) {
+        success.tagId = success?.productWithTagMap.map(x => x.tagId);
       }
 
       this.productForm.patchValue(success);
       this.spinner.hide();
     });
   }
-  getProductCode(ev) {
-    // this.productForm.controls["code"].setValue(
-    //   this.autoIncrementNos[ev.target.value]
-    // );
+  getTag(catId: any) {
+    let category = this.categoryArr.find((ele) => ele.id == catId.value)
+    let tagId = category?.categoryWithtags[0]?.tagId;
+    if (tagId) {
+      this.form.tagId.setValue([tagId])
+    } else {
+      this.form.tagId.setValue(null)
+    }
   }
   fileChosen(event: any, key) {
     console.log("event.target.files", event);
 
     if (event.target.files.length) {
-      if (event.target.files[0].size > 2000000) {
+      
+      if (event.target.files[0].size > 3000000) {
         this.toastService.warning(
-          "Unable to upload file of size more than 1MB"
+          "Unable to upload file of size more than 3MB"
         );
         return;
       }

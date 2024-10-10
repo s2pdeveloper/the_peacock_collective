@@ -29,16 +29,17 @@ const getAllMasterData = asyncHandler(async (req, res) => {
   let column = "createdAt";
   let direction = "ASC";
   const tagQuery = {
-    where:{
-      status : OPTIONS.defaultStatus.ACTIVE
+    where: {
+      status: OPTIONS.defaultStatus.ACTIVE
     },
     order: [[column, direction]],
   }
   const categoryQuery = {
     where: {
       parentId: null,
+      status: OPTIONS.defaultStatus.ACTIVE
     },
-    attributes: ["createdAt", "id", "name", "status","isShowHome","description"],
+    attributes: ["createdAt", "id", "name", "status", "isShowHome", "description"],
     include: [
       // {
       //   model: Categories,
@@ -70,6 +71,9 @@ const getAllMasterData = asyncHandler(async (req, res) => {
   };
 
   const productQuery = {
+    where: {
+      status: OPTIONS.defaultStatus.ACTIVE
+    },
     include: [
       {
         model: Variant,
@@ -120,7 +124,8 @@ const getAllMasterData = asyncHandler(async (req, res) => {
   Promise.all(promissArr)
     .then((values) => {
       // values = JSON.parse(JSON.stringify(values));
-        // Filtered Products
+      
+      // Filtered Products
       const filteredProducts = [];
 
       for (const prod of values[1]) {
