@@ -24,7 +24,7 @@
                     {{ p?.variantWithWishList?.variantWithProduct?.name }}
                   </p>
                   <p class="mb-0">
-                    {{ p?.variantWithWishList?.price | currency : "INR" }}
+                    {{ p?.variantWithWishList?.price | currency }}
                   </p>
                   <button class="btn btn-dark p-2 w-50" (click)="createCart(p.variantId)">
                     <i class="fa-solid fa-bag-shopping me-2"></i>Add to cart

@@ -285,7 +285,7 @@
             </p>
             <div class="d-flex align-items-center">
               <input type="number" class="w-50 border-0" [min]="0" [(ngModel)]="p.qty" [value]="p.qty" />
-              <label>x {{ p?.cartWithVariants?.price | currency : "INR" }}</label>
+              <label>x {{ p?.cartWithVariants?.price | currency }}</label>
             </div>
           </div>
           <div class="col-1 d-flex align-items-center bg-white">
@@ -301,17 +301,17 @@
             <p>
               {{ cartData.length }} {{ cartData.length > 1 ? "items" : "item" }}
             </p>
-            <p>{{ totalItemPrice | currency : "INR" }}</p>
+            <p>{{ totalItemPrice | currency }}</p>
           </div>
           <!-- <div class="col-12 d-flex justify-content-between">
             <p>Shipping</p>
-            <p>{{ totalShipCharge | currency : "INR" }}</p>
+            <p>{{ totalShipCharge | currency }}</p>
           </div> -->
         </div>
         <div class="row py-3">
           <div class="col-12 d-flex justify-content-between">
             <p>Total (tax incl.)</p>
-            <p>{{ totalItemPrice | currency : "INR" }}</p>
+            <p>{{ totalItemPrice | currency }}</p>
           </div>
         </div>
         <div class="row">
