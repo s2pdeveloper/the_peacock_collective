@@ -118,9 +118,9 @@ export class VariantImagesComponent {
     console.log("event.target.files", event);
 
     if (event.target.files.length) {
-      if (event.target.files[0].size > 3000000) {
+      if (event.target.files[0].size > 5000000) {
         this.toastService.warning(
-          "Unable to upload file of size more than 3MB"
+          "Unable to upload file of size more than 5MB"
         );
         return;
       }
