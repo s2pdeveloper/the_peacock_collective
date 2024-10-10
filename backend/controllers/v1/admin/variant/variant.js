@@ -246,14 +246,16 @@ const modelObj = {
       search = null,
     } = req.query;
     let offset = (page - 1) * pageSize || 0;
+    console.log("search",search);
+    
     let query = {
-      // where: {
-      //   ...(search && {
-      //     [Op.or]: {
-      //       name: { [Op.like]: search },
-      //     },
-      //   }),
-      // },
+      where: {
+        ...(search && {
+          [Op.or]: {
+            sku: { [Op.like]: search },
+          },
+        }),
+      },
       distinct: true,
       include: [
         {

@@ -12,14 +12,14 @@
   <div class="card-body justify-content-center">
     <form [formGroup]="categoryForm">
       <div class="row">
-        <div class="col-md-6 mb-2">
+        <div class="col-md-4 mb-2">
           <label class="form-label">
             Name
             <span class="text-danger">*</span></label>
-          <input formControlName="name" placeholder="name" type="text" class="form-control" />
+          <input formControlName="name" placeholder="Name" type="text" class="form-control" />
           <div></div>
         </div>
-        <div class="col-md-6 mb-2">
+        <!-- <div class="col-md-4 mb-2">
           <label class="form-label">Parent Category </label>
           <select formControlName="parentId" class="form-select">
             <option selected disabled value="">Select Parent Category</option>
@@ -28,8 +28,8 @@
               {{ opt.name }}
             </option>
           </select>
-        </div>
-        <div class="col-md-6 mb-2">
+        </div> -->
+        <div class="col-md-4 mb-2">
           <label class="form-label">
             Tags
             <span class="text-danger">*</span></label>
@@ -38,7 +38,7 @@
           </ng-select>
         </div>
 
-        <div class="col-md-6 mb-2">
+        <div class="col-md-4 mb-2">
           <label class="form-label">
             Status
             <span class="text-danger">*</span></label>

@@ -13,9 +13,9 @@ const modelObj = {
   // create: asyncHandler(async (req, res) => {
   //   await QueryMailsRepository.create(req.body);
   //   return res.status(resCode.HTTP_OK).json(
-  //     generateResponse(resCode.HTTP_OK, {
-  //       message: MESSAGES.apiSuccessStrings.ADDED("Transactions"),
-  //     })
+  //     generateResponse(reSSAGES.apiSuccessStrings.ADDED("Transactions"),
+  //     })sCode.HTTP_OK, {
+  //       message: ME
   //   );
   // }),
 
@@ -25,13 +25,17 @@ const modelObj = {
       pageSize = 10,
       column = "createdAt",
       direction = "DESC",
-      // search = null,
+      search = null,
     } = req.query;
     let offset = (page - 1) * pageSize || 0;
     let query = {
-      // where: {
-      //   customerId: req.user.id,
-      // },
+      where: {
+        ...(search && {
+          [Op.or]: {
+            email: { [Op.like]: search },
+          },
+        }),
+      },
       order: [[column, direction]],
 
       include: [

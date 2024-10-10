@@ -21,20 +21,20 @@ const modelObj = {
     // });
     req.body.customerId = req.user.id;
     createObj = await BespokeRepository.create(req.body);
-    if(req.files){
-      let imageArr=[];
+    if (req.files) {
+      let imageArr = [];
       for (const item of req.files) {
         let img = await cloudinary.uploadFromBuffer(item.buffer);
         imageArr.push(img);
       }
-      if(imageArr.length){
-        let bespokeMap=imageArr.map(x=>{
-          return{
-            image:x,
-            bespokeId:createObj.id
-          }
-        })
-       await BespokeRepository.bulkCreate(bespokeMap);
+      if (imageArr.length) {
+        let bespokeMap = imageArr.map((x) => {
+          return {
+            image: x,
+            bespokeId: createObj.id,
+          };
+        });
+        await BespokeRepository.bulkCreate(bespokeMap);
       }
     }
     return res.status(resCode.HTTP_OK).json(
@@ -48,17 +48,27 @@ const modelObj = {
     const {
       page = 1,
       pageSize = 10,
+      search = null,
       column = "createdAt",
       direction = "DESC",
     } = req.query;
     let offset = (page - 1) * pageSize || 0;
     let query = {
-      where: { customerId: req.user.id },
-      include : [{
-        model : Customer,
-        as: "customerWithBespoke",
+      where: {
+        ...(![undefined, null, ""].includes(search) && {
+          [Op.or]: {
+            email: { [Op.like]: search },
+          },
+        }),
+        customerId: req.user.id,
+      },
+      include: [
+        {
+          model: Customer,
+          as: "customerWithBespoke",
           attributes: ["firstName", "lastName"],
-      }],
+        },
+      ],
       order: [[column, direction]],
       offset: +offset,
       limit: +pageSize,

@@ -74,7 +74,7 @@ export class CategoryListComponent {
       (success: any) => {
         this.selectedRow = {};
         this.modalService.dismissAll();
-        this.toastService.success("Category Visibility Updated");
+        this.toastService.success("Category view on home");
         this.spinner.hide();
         this.getAll();
       },

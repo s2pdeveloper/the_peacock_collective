@@ -12,7 +12,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 export class AllProductVariantsComponent {
   variants: any[] = [];
   page: number = 1;
-  pageSize: number = 25;
+  pageSize: number = 10;
   collection: number = 0;
   column: string = "createdAt";
   direction: number = -1;

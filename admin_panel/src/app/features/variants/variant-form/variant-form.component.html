@@ -68,10 +68,10 @@
             >
               <ng-template ng-label-tmp let-item="item">
                 <i
-                  [ngStyle]="{ color: item }"
+                  [ngStyle]="{ color: item,background:'#000' }"
                   class="fa-solid fa-square mx-1"
                 ></i>
-                
+                {{item}}
               </ng-template>
               <ng-template ng-option-tmp let-item="item" let-index="index">
                 <i

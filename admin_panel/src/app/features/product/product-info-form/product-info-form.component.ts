@@ -203,8 +203,6 @@ export class ProductInfoFormComponent {
   getById(id: string) {
     this.spinner.show();
     this.productService.getById(id).subscribe((success: any) => {
-      console.log("success", success);
-
       if (success.bannerImage) {
         this.url = success.bannerImage;
       }
@@ -234,13 +232,10 @@ export class ProductInfoFormComponent {
     }
   }
   fileChosen(event: any, key) {
-    console.log("event.target.files", event);
-
     if (event.target.files.length) {
-      
-      if (event.target.files[0].size > 3000000) {
+      if (event.target.files[0].size > 5200000) {
         this.toastService.warning(
-          "Unable to upload file of size more than 3MB"
+          "Unable to upload file of size more than 5MB"
         );
         return;
       }
@@ -269,13 +264,10 @@ export class ProductInfoFormComponent {
   }
   onAttrChange(ev: any) {
     this.attributeArr = [];
-    console.log("ev", ev);
     for (const item of ev) {
       this.attributeArr.push(item.id);
     }
     this.attributeArr = [...this.attributeArr];
-
-    console.log("attr333333333333333333", this.attributeArr);
   }
   // getAllMasterData() {
   //   this.productService.getAllMasterData({}).subscribe((success: any) => {

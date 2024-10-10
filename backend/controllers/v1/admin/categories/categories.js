@@ -71,27 +71,11 @@ const modelObj = {
         ...(![undefined, null, ""].includes(search) && {
           [Op.or]: {
             name: { [Op.like]: search },
-            description: { [Op.like]: search },
+            // description: { [Op.like]: search },
           },
         }),
-        // ...(!category && {
-        //   parentId: {
-        //     [Op.ne]: null
-        //   }
-        // }),
-        // ...(category && {
-        //   parentId: {
-        //     [Op.eq]: null
-        //   }
-        // }),
-        // ...(parentId && {
-        //   parentId: parentId
-        // })
       },
       order: [[column, direction]],
-      // attributes: {
-      //   exclude: ['userId'],
-      // },
       include: {
         model: CategoryTagMap,
         as: 'categoryWithtags',

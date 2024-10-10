@@ -42,7 +42,7 @@
           <thead class="thead">
             <tr class="table-secondary">
               <th scope="col">Sr. No.</th>
-              <th scope="col" class="text-start">Attribute</th>
+              <!-- <th scope="col" class="text-start">Attribute</th> -->
               <th scope="col" class="text-start">SKU</th>
               <th scope="col" class="text-end">QTY</th>
               <th scope="col">Add QTY</th>
@@ -52,8 +52,8 @@
           </thead>
           <tbody class="tbody mt-3">
             <tr *ngFor="let c of variants; let i = index">
-              <td scope="row">{{ i + 1 }}</td>
-              <td scope="row">
+              <td scope="row">{{ pageSize * (page - 1) + (i + 1) }}</td>
+              <!-- <td scope="row">
                 <p *ngFor="let at of c.variantWithAttrVariantMap">
                   <ng-container *ngIf="at?.AttrVariantMapWithAttributes?.name == 'color'">
                     {{at?.AttrVariantMapWithAttributes?.name + ' | '}} <i [style.color]="at.value" class="fa-solid fa-square"></i>
@@ -62,7 +62,7 @@
                     {{at?.AttrVariantMapWithAttributes?.name + ' | ' + at.value}}
                   </ng-container>
                 </p>
-              </td>
+              </td> -->
               <td scope="row" class="text-start">{{ c?.sku }}</td>
               <td scope="row" class="text-end">{{ c?.qty }}</td>
 

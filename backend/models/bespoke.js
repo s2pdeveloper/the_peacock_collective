@@ -12,46 +12,46 @@ module.exports = (sequelize, DataTypes) => {
       },
       name: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       city: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       country: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       mobile: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false,
       },
       email: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       fromDate: {
         type: DataTypes.DATE,
-        allowNull: true,
+        allowNull: false,
       },
       toDate: {
         type: DataTypes.DATE,
-        allowNull: true,
+        allowNull: false,
       },
       eventOutfit: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       category: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       jewelryOption: {
         type: DataTypes.ENUM(
           OPTIONS.jewelryOption.YES,
           OPTIONS.jewelryOption.NO,
         ),
-        allowNull: true,
+        allowNull: false,
       },
     },
     {

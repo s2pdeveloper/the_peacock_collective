@@ -48,13 +48,14 @@ export class AuthInterceptor implements HttpInterceptor {
         console.log('errorResponse intercept', errorResponse);
         if (errorResponse instanceof HttpErrorResponse) {
           if (errorResponse.status == 401) {
-            this.router.navigate(['/login']);
-            this.toast.error('Unautherise request');
+            this.router.navigate(['/auth/login']);
+            this.toast.error('Please login first..');
           } else {
             if (errorResponse.error) {
               this.toast.error(errorResponse.error.error);
             }
           }
+          
         }
         return throwError(() => errorResponse.error);
       })

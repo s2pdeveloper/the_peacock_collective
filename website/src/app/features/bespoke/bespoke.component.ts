@@ -1,9 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { Component, inject, ViewChild } from '@angular/core';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import Stepper from 'bs-stepper';
-import { SpinnerService, ToastService } from 'src/app/core/services';
+import { SpinnerService, StorageService, ToastService } from 'src/app/core/services';
 import { BespokeService } from 'src/app/services/bespoke';
 
 @Component({
@@ -13,6 +13,7 @@ import { BespokeService } from 'src/app/services/bespoke';
 })
 export class BespokeComponent {
   @ViewChild('attachments') attachment: any;
+  storage = inject(StorageService);
   fileName: any = '';
   url: any = null;
   files: {
@@ -36,44 +37,58 @@ export class BespokeComponent {
     private domSanitizer: DomSanitizer,
     private toastService: ToastService,
     private bespokeService: BespokeService,
-    private spinner : SpinnerService,
+    private spinner: SpinnerService,
     private router: Router
   ) {}
 
   bespokeForm = new FormGroup({
-    name: new FormControl(''),
-    city: new FormControl(''),
-    country: new FormControl(''),
-    mobile: new FormControl(null),
-    email: new FormControl(''),
-    fromDate: new FormControl(''),
-    toDate: new FormControl(''),
-    eventOutfit: new FormControl(''),
+    name: new FormControl('', Validators.required),
+    city: new FormControl('', Validators.required),
+    country: new FormControl('', Validators.required),
+    mobile: new FormControl(null, Validators.required),
+    email: new FormControl('', Validators.required),
+    fromDate: new FormControl('', Validators.required),
+    toDate: new FormControl('', Validators.required),
+    eventOutfit: new FormControl('', Validators.required),
     category: new FormControl('bridal'),
     jewelryOption: new FormControl(this.jewelryOption[0].label),
   });
   submit() {
-    this.spinner.show();
-    let formData: FormData = new FormData();
-    if (this.isOther) {
-      this.bespokeForm.controls['category'].setValue(this.otherCategory);
-    }
-    for (const key in this.bespokeForm.value) {
-      if (this.bespokeForm.value[key]) {
-        formData.append(key, this.bespokeForm.value[key]);
+    try {
+      let token = this.storage.get('jSessionId') ?? '';
+      if (token) {
+        if (this.bespokeForm.invalid) {
+          this.toastService.error('Please fill required fields');
+        }
       }
-    }
-    if (this.files.length) {
-      for (const item of this.files) {
-        formData.append('image', item.file);
+      this.spinner.show();
+      let formData: FormData = new FormData();
+      if (this.isOther) {
+        this.bespokeForm.controls['category'].setValue(this.otherCategory);
       }
-    }
-    this.bespokeService.create(formData).subscribe((success) => {
+      for (const key in this.bespokeForm.value) {
+        if (this.bespokeForm.value[key]) {
+          formData.append(key, this.bespokeForm.value[key]);
+        }
+      }
+      if (this.files.length) {
+        for (const item of this.files) {
+          formData.append('image', item.file);
+        }
+      }
+      this.bespokeService.create(formData).subscribe((success) => {
+        this.spinner.hide();
+        console.log('success', success);
+        this.toastService.success(success?.result?.message);
+      },
+      (error) =>{
+        this.spinner.hide();
+      }
+      );
+      this.reset();
+    } catch (error) {
       this.spinner.hide();
-      console.log('success', success);
-      this.toastService.success(success?.result?.message);
-    });
-    this.reset();
+    }
   }
   reset() {
     this.bespokeForm.reset();
@@ -93,7 +108,7 @@ export class BespokeComponent {
   }
   imageDelete() {
     if (this.files.length) {
-      this.files=[];
+      this.files = [];
       this.attachment.nativeElement.value = '';
     }
   }
@@ -133,12 +148,12 @@ export class BespokeComponent {
       linear: true,
       animation: true,
       selectors: {
-        steps: ".step",
-        trigger: ".step-trigger",
-        stepper: ".bs-stepper",
+        steps: '.step',
+        trigger: '.step-trigger',
+        stepper: '.bs-stepper',
       },
     };
-    let step: any = new Stepper(document.querySelector(".bs-stepper"), options);
+    let step: any = new Stepper(document.querySelector('.bs-stepper'), options);
     step.to(count);
   }
   previous(count: any) {
@@ -146,12 +161,12 @@ export class BespokeComponent {
       linear: true,
       animation: true,
       selectors: {
-        steps: ".step",
-        trigger: ".step-trigger",
-        stepper: ".bs-stepper",
+        steps: '.step',
+        trigger: '.step-trigger',
+        stepper: '.bs-stepper',
       },
     };
-    let step: any = new Stepper(document.querySelector(".bs-stepper"), options);
+    let step: any = new Stepper(document.querySelector('.bs-stepper'), options);
     step.to(count);
   }
 }

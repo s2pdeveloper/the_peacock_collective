@@ -25,13 +25,17 @@ const modelObj = {
       pageSize = 10,
       column = "createdAt",
       direction = "DESC",
-      // search = null,
+      search = null,
     } = req.query;
     let offset = (page - 1) * pageSize || 0;
     let query = {
-      // where: {
-      //   customerId: req.user.id,
-      // },
+      where: {
+        ...(search && {
+          [Op.or]: {
+            transId: { [Op.like]: search },
+          },
+        }),
+      },
       order: [[column, direction]],
 
       include: [
@@ -39,7 +43,7 @@ const modelObj = {
           model: Customer,
           as: "transactionWithCustomer",
           attributes: ["firstName", "lastName"],
-          required:false
+          required: false,
         },
       ],
 

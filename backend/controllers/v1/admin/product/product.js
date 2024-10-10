@@ -19,6 +19,7 @@ const cloudinary = require("../../../../shared/service/cloudinary.service");
 
 const modelObj = {
   create: asyncHandler(async (req, res) => {
+    req.body.tagId = JSON.parse(req.body.tagId);
     let checkExisting = await Model.findOne({
       where: {
         name: req.body.name,
