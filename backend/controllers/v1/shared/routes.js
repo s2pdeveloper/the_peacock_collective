@@ -9,6 +9,7 @@ const shared = require('./shared');
 //const DIR_PATH = '../../../assets/uploadimages';
 
 let postUpload = multer({
+  limits: { fileSize: 1024 * 1024 * 10 },
   storage: multer.diskStorage({
     destination: (req, file, callback) => {
       callback(null, './shared/upload');
