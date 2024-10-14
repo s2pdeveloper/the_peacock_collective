@@ -53,11 +53,11 @@
                   {{ order.qty }}
                 </div>
                 <div class="col-2 text-center light-dark small-text my-auto">
-                  {{ order.orderVariantMapWithVariant.price | currency }}
+                  {{ order.orderVariantMapWithVariant.price | currency : 'CAD' }}
                 </div>
                 <div class="col-2 text-center light-dark small-text my-auto">
                   <p class="py-auto">
-                    {{ order.qty * order.orderVariantMapWithVariant.price | currency }}
+                    {{ order.qty * order.orderVariantMapWithVariant.price | currency : 'CAD' }}
                   </p>
                 </div>
               </div>

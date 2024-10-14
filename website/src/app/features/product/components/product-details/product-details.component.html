@@ -7,7 +7,7 @@
             <div class="col-12 col-lg-11">
               <p class="py-3 text-color-primary pointer">
                 <span (click)="navigateTo('/')">Home</span> /
-                <span>{{products?.productWithCategory.name}}</span> /
+                <span>{{ products?.productWithCategory.name }}</span> /
                 <span>{{ products?.name }}</span>
               </p>
             </div>
@@ -34,13 +34,17 @@
                 alt="product-image"
               />
             </div>
-            <div class="col-3 m-3" *ngFor="let img of currentVariant?.variantImages">
-              <img 
-              (click)="handleImg(img?.image)"
-              class="img-fluid rest-img"
-              [src]="img?.image"
-              alt="product-image"
-            />
+            <div class="col-12">
+              <swiper-container class="img-box" slides-per-view="3">
+                <swiper-slide *ngFor="let img of currentVariant?.variantImages">
+                  <img
+                    (click)="handleImg(img?.image)"
+                    class="img-fluid rest-img p-2"
+                    [src]="img?.image"
+                    alt="product-image"
+                  />
+                </swiper-slide>
+              </swiper-container>
             </div>
           </div>
         </div>
@@ -51,20 +55,20 @@
             <div class="col-12 pb-3">
               <h2 class="text-center">{{ currentVariant?.sku }}</h2>
               <h2 class="text-center">
-                {{ currentVariant?.price | currency }}
+                {{ currentVariant?.price | currency : "CAD" }}
               </h2>
             </div>
             <div class="col-10 variant-products border-top py-3">
               <div class="row">
                 <div
                   *ngFor="let item of variants"
-                  [class.img-border]="
-                    currentVariant?.variantImages[0]?.image ==
-                    item?.variantImages[0]?.image
-                  "
-                  class="col-3 m-2 prod-cart"
+                  class="col-3 m-2 d-flex justify-content-center prod-cart"
                 >
                   <img
+                    [class.img-border]="
+                      currentVariant?.variantImages[0]?.image ==
+                      item?.variantImages[0]?.image
+                    "
                     (click)="handleVariant(item)"
                     class="img-fluid variant-img"
                     [src]="item?.variantImages[0]?.image"
@@ -146,7 +150,7 @@
                   <button
                     type="button"
                     class="btn btn-dark h-100 py-2"
-                    (click)="validateCart(login,'cart')"
+                    (click)="validateCart(login, 'cart')"
                   >
                     <i class="fa-solid fa-cart-shopping text-light me-2"></i>Add
                     to cart
@@ -156,7 +160,7 @@
                   <button
                     type="button"
                     class="btn btn-dark h-100 py-2"
-                    (click)="validateBuyNow(login,'buyNow')"
+                    (click)="validateBuyNow(login, 'buyNow')"
                   >
                     <i class="fa-solid fa-bag-shopping text-light me-2"></i>Buy
                     Now
@@ -179,7 +183,7 @@
         </div>
       </div>
     </div>
-    <div class="col-11 py-4">
+    <!-- <div class="col-11 py-4">
       <div class="tabs">
         <span
           [ngClass]="tabActive == 'description' ? 'active' : 'inactive'"
@@ -233,31 +237,14 @@
           </button>
         </div>
       </div>
-    </div>
-    <div class="col-11 py-4">
+    </div> -->
+    <!-- <div class="col-11 py-4">
       <p class="product-text">8 other products in the same category:</p>
       <div class="col-12 product">
         <div class="row product-row">
-          <!-- <div
-            class="col-6 col-md-4 col-lg-3 product-column"
-            *ngFor="let p of products"
-          >
-            <div class="card border-0">
-              <div class="img-box">
-                <img class="img-fluid" [src]="p?.img" />
-              </div>
-              <div class="text-box p-3">
-                <div class="d-flex justify-content-between">
-                  <p class="cat-name">{{ p?.catName }}</p>
-                  <h5 class="fw-bold prod-price">{{ p?.price | currency }}</h5>
-                </div>
-                <p class="prod-name">{{ p?.name }}</p>
-              </div>
-            </div>
-          </div> -->
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
 
@@ -301,7 +288,7 @@
                 }
               </div>
             </div>
-          
+
             <div class="row justify-content-center">
               <div class="col-12 d-flex justify-content-center">
                 <button
@@ -313,10 +300,8 @@
               </div>
             </div>
           </form>
-      
         </div>
       </div>
     </div>
   </div>
-
 </ng-template>

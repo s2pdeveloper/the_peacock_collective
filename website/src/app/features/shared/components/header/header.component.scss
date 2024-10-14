@@ -73,10 +73,17 @@
   .textDanger {
     color: #ad0700;
   }
-
+  .img-box{
+    .prod-cart{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    } 
+  }
   .prod-img {
-    height: 300px;
-    object-fit: cover;
+    height: 280px;
+    width: 210px !important;
   }
 }
 
@@ -148,7 +155,7 @@
 }
 
 .dropdown-inner {
-  padding: 2rem 3.5rem;
+  padding: 1.5rem 3rem;
   border-top: 1px solid #ededed;
 }
 
@@ -356,7 +363,7 @@ i {
 .cart-img {
   min-height: 100px;
   max-height: 100px;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .search-drop {

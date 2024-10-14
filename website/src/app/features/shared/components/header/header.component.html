@@ -92,7 +92,7 @@
                               let p of commonService.allData.products
                                 | tagProduct : activeTagId : activeCategoryId
                             "><img class="prod-img w-100" [src]="p?.bannerImage" />
-                            <div class="text-box p-3">
+                            <div class="text-box pt-3">
                               <p class="prod-name">{{ p?.name }}</p>
                             </div>
                           </swiper-slide>
@@ -285,7 +285,7 @@
             </p>
             <div class="d-flex align-items-center">
               <input type="number" class="w-50 border-0" [min]="0" [(ngModel)]="p.qty" [value]="p.qty" />
-              <label>x {{ p?.cartWithVariants?.price | currency }}</label>
+              <label>x {{ p?.cartWithVariants?.price | currency : 'CAD' }}</label>
             </div>
           </div>
           <div class="col-1 d-flex align-items-center bg-white">
@@ -301,17 +301,17 @@
             <p>
               {{ cartData.length }} {{ cartData.length > 1 ? "items" : "item" }}
             </p>
-            <p>{{ totalItemPrice | currency }}</p>
+            <p>{{ totalItemPrice | currency : 'CAD' }}</p>
           </div>
           <!-- <div class="col-12 d-flex justify-content-between">
             <p>Shipping</p>
-            <p>{{ totalShipCharge | currency }}</p>
+            <p>{{ totalShipCharge | currency : 'CAD' }}</p>
           </div> -->
         </div>
         <div class="row py-3">
           <div class="col-12 d-flex justify-content-between">
             <p>Total (tax incl.)</p>
-            <p>{{ totalItemPrice | currency }}</p>
+            <p>{{ totalItemPrice | currency : 'CAD' }}</p>
           </div>
         </div>
         <div class="row">
@@ -375,8 +375,8 @@
         </div>
       </div>
       <div class="dropdownItem p-3">
-        <swiper-container class="img-box" slides-per-view="1">
-          <swiper-slide class="px-2 prod-cart w-100" (click)="
+        <swiper-container slides-per-view="1">
+          <swiper-slide class="px-2 w-100" (click)="
               navigateToProdDetails(p?.id);
               handleDataRemove();
               isMenuOpen = !isMenuOpen
