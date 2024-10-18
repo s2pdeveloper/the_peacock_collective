@@ -42,6 +42,7 @@ export class HeaderComponent {
   currentVariant = null;
   search: string;
   isSearchOpen: boolean = false
+  isVisible: boolean = false
   constructor(
     @Inject(PLATFORM_ID) private _platformId: Object,
     private router: Router,
@@ -92,6 +93,13 @@ export class HeaderComponent {
     //   });
     // }
   }
+  hide(){
+    if (isPlatformBrowser(this._platformId)) {
+      let element = document.getElementById('dropdown')
+      console.log("element",element);
+      element.style.clipPath = 'polygon(0 0, 100% 0, 100% 0, 0 0)'
+    }
+  }
 
   // @HostListener('window:scroll', [])
   // onWindowScroll() {
@@ -103,6 +111,7 @@ export class HeaderComponent {
   //   this.scrollPosition = scrollPositionValue;
   // }
   navigateTo(path: any) {
+    this.isVisible = false
     if (path == '/order/my-orders' || path == '/order/wishlist') {
       if (isPlatformBrowser(this._platformId)) {
         let user = localStorage.getItem('Customer') ? true : false;
@@ -123,8 +132,10 @@ export class HeaderComponent {
   navigateToProdDetails(id: number) {
     let path = `/product/product-details/${id}`;
     this.router.navigate([path]);
+    this.isVisible = !this.isVisible; 
   }
   navigateWithParams(path: any, param: any) {
+    this.isVisible = false
     this.router.navigate([path], { queryParams: { brand: param } });
     let ele: any = document.getElementById('topbar');
     ele.scrollIntoView({
@@ -134,6 +145,7 @@ export class HeaderComponent {
     });
   }
   navigateToDynamic(item: any) {
+    // this.isVisible = false
     this.activeCategoryId = item.id;
     const path: String = `pages/${item.id}`;
     this.router.navigate([path]);
@@ -210,6 +222,7 @@ export class HeaderComponent {
     });
   }
   changeActiveCategory() {
+    // this.isVisible = !this.isVisible;
     const filterCategory: any[] = this.commonService.allData.categories.filter(
       (x) => x.categoryWithtags.some((y) => y.tagId == this.activeTagId)
     );
@@ -230,5 +243,16 @@ export class HeaderComponent {
     else {
       this.isSearchOpen = ev.isModal;
     }
+  }
+  onMouseOver(itemId: number) {
+    this.activeTagId = itemId;
+    this.changeActiveCategory();
+    this.isVisible = this.toggleVisibility('show');
+  }
+  toggleVisibility(action: 'show' | 'hide'): boolean {
+    return action === 'show' ? true : false;
+  }
+  onMouseLeave() {
+    this.isVisible = this.toggleVisibility('hide');
   }
 }

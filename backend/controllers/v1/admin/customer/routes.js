@@ -8,41 +8,34 @@ const OPTIONS = require('../../../../config/options/global.options').OPTIONS;
 const controller = require('./customer');
 
 app.get(
-  '/getAll',
+  '/',
   // rolePermit(OPTIONS.usersRoles.SUPER_ADMIN),
   controller.getAll
 );
-app.get(
-  '/getAllCustomerDashBoard',
-  // rolePermit(roles.usersRoles.SUPER_ADMIN),
-  controller.getAllCustomerDashBoard
-);
 
 app.post(
-  '/create',
+  '/',
   // rolePermit(roles.usersRoles.SUPER_ADMIN),
-  upload.single('image'),
   // validate('createCustomer'),
   controller.create
 );
 
 app.get(
-  '/getById/:id',
+  '/:id',
   // rolePermit(roles.usersRoles.SUPER_ADMIN),
   // validate('checkParamId'),
   controller.getById
 );
 app.delete(
-  '/delete/:id',
+  '/:id',
   // rolePermit(roles.usersRoles.SUPER_ADMIN),
   // validate('checkParamId'),
   controller.delete
 );
 
 app.put(
-  '/update/:id',
+  '/:id',
   // rolePermit(roles.usersRoles.SUPER_ADMIN),
-  upload.single('image'),
   // validate('updateCustomer'),
   controller.update
 );

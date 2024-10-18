@@ -33,6 +33,18 @@
           >
           <input formControlName="qty" type="number" class="form-control" />
         </div>
+        <div class="col-md-12 mb-2">
+          <label class="form-label">
+            Discription
+            <span class="text-danger">*</span></label
+          >
+          <textarea
+            class="form-control"
+            formControlName="description"
+            placeholder="Description "
+            rows="3"
+          ></textarea>
+        </div>
         <div class="col-md-4 mb-3" *ngFor="let at of attributes">
           <label class="form-label">Select {{ at.label }}</label>
           <!-- <ng-select

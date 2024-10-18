@@ -29,6 +29,7 @@ export class VariantFormComponent {
     price: new FormControl(null),
     qty: new FormControl(null),
     productId: new FormControl(null),
+    description: new FormControl(''),
   });
   // FORM_ERRORS = [
   //   {
@@ -196,6 +197,7 @@ export class VariantFormComponent {
     this.f['sku'].setValue(null);
     this.f['qty'].setValue(null);
     this.f['id'].setValue(null);
+    this.f['description'].setValue(null);
   }
   openUrl(url) {
     window.open(url, "_blank");

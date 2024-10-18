@@ -23,7 +23,6 @@ const ApiError = require("../../../../config/middlewares/api.error");
 const {
   asyncHandler,
 } = require("../../../../config/middlewares/async.handler");
-const { Json } = require("sequelize/lib/utils");
 
 const getAllMasterData = asyncHandler(async (req, res) => {
   let column = "createdAt";
@@ -120,7 +119,6 @@ const getAllMasterData = asyncHandler(async (req, res) => {
     Attribute.findAll({}),
     Variant.findAll(variantQuery),
   ];
-
   Promise.all(promissArr)
     .then((values) => {
       // values = JSON.parse(JSON.stringify(values));

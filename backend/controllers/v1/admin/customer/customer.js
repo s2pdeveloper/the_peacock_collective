@@ -7,6 +7,7 @@ const {
 } = require('../../../../config/options/global.options');
 const MESSAGES = require('../../../../config/options/messages.options');
 const CustomerRepository = require('../../../../models/repository/CustomerRepository');
+const { asyncHandler } = require('../../../../config/middlewares/async.handler');
 const User = require('../../../../models').User;
 const Customer = require('../../../../models').Customer;
 // const CustomerRepository = require('../../../../models/repository/CustomerRepository');
@@ -15,276 +16,140 @@ const Op = sequelize.Op;
 
 
 const modelObj = {
-  create: async (req, res) => {
-    try {
-      let checkExisting = await CustomerRepository.findOneByCondition({
-        where: {
-          name: req.body.name,
-          mobile: req.body.mobile,
-        },
-      });
-      if (checkExisting) {
-        if (
-          ![undefined, null, ''].includes(req.file) &&
-          fs.existsSync(req.file.path)
-        ) {
-          fs.unlinkSync(req.file.path);
-        }
-        let errors = MESSAGES.apiErrorStrings.Data_EXISTS('Customer');
-        return res
-          .status(resCode.HTTP_BAD_REQUEST)
-          .json(
-            generateResponse(
-              resCode.HTTP_BAD_REQUEST,
-              errors,
-              MESSAGES.errorTypes.OAUTH_EXCEPTION
-            )
-          );
-      }
-      req.body.userId = req.user.id;
+  create: asyncHandler(async (req, res) => {
+    let checkExisting = await CustomerRepository.findOneByCondition({
+      where: {
+        email: req.body.email,
+      },
+    });
+    if (checkExisting) {
+      let message = MESSAGES.apiErrorStrings.Data_EXISTS("Email");
+      throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
+    }
 
-      if (![undefined, null, ''].includes(req.file)) {
-        req.body.image = req.file.filename;
-      }
-      await CustomerRepository.create(req.body);
-      return res.status(resCode.HTTP_OK).json(
-        generateResponse(resCode.HTTP_OK, {
-          message: MESSAGES.apiSuccessStrings.ADDED(`Customer`),
-        })
-      );
-    } catch (e) {
-      const errors = MESSAGES.apiErrorStrings.SERVER_ERROR;
-      res
-        .status(resCode.HTTP_INTERNAL_SERVER_ERROR)
-        .json(generateResponse(resCode.HTTP_INTERNAL_SERVER_ERROR, errors));
-      throw new Error(e);
-    }
-  },
-  getAll: async (req, res) => {
-    try {
-      const {
-        page = 1,
-        pageSize = 10,
-        column = 'createdAt',
-        direction = 'DESC',
-        search = null,
-        startPrice = null,
-        endPrice = null,
-      } = req.query;
-      let offset = (page - 1) * pageSize || 0;
-      let query = {
-        where: {
-          // ...(req.user.role == OPTIONS.usersRoles.SHOP_KEEPER && {
-          //   userId: { [Op.substring]: req.user.id },
-          // }),
+    let userData = req.body;
+    userData.password = await bcrypt.hash(
+      userData.password,
+      bcrypt.genSaltSync(8)
+    );
 
-          ...(![undefined, null, ''].includes(search) && {
-            [Op.or]: {
-              name: { [Op.substring]: search },
-              mobile: { [Op.substring]: search },
-              anotherMobile: { [Op.substring]: search },
-              address: { [Op.substring]: search },
-              email: { [Op.substring]: search },
-            },
-          }),
-        },
-        order: [[column, direction]],
-        attributes: {
-          exclude: ['userId'],
-        },
-        include: {
-          model: User,
-          as: 'shop',
-          attributes: ['id', 'name', 'mobile'],
-        },
-        offset: +offset,
-        limit: +pageSize,
-      };
-      let response = await CustomerRepository.findAndCountAll(query);
-      [response.range] = await Model.findAll({
-        attributes: [
-          [sequelize.fn('min', sequelize.col('balance')), 'startPrice'],
-          [sequelize.fn('max', sequelize.col('balance')), 'endPrice'],
-        ],
-        raw: true,
-      });
-      if (!response.rows) {
-        return res.status(resCode.HTTP_BAD_REQUEST).json(
-          generateResponse(resCode.HTTP_BAD_REQUEST, {
-            message: MESSAGES.apiSuccessStrings.EMPTY('Customer'),
-          })
-        );
-      }
-      return res
-        .status(resCode.HTTP_OK)
-        .json(generateResponse(resCode.HTTP_OK, response));
-    } catch (e) {
-      const errors = MESSAGES.apiErrorStrings.SERVER_ERROR;
-      res
-        .status(resCode.HTTP_INTERNAL_SERVER_ERROR)
-        .json(generateResponse(resCode.HTTP_INTERNAL_SERVER_ERROR, errors));
-      throw new Error(e);
-    }
-  },
-  getAllCustomerDashBoard: async (req, res) => {
-    try {
-      const {
-        pageSize = 5,
-        column = 'balance',
-        direction = 'DESC',
-      } = req.query;
-      let query = {
-        where: {
-          ...(![undefined, null, ''].includes(req.user.id) && {
-            userId: { [Op.substring]: req.user.id },
-          }),
-        },
-        order: [[column, direction]],
-        offset: 0,
-        limit: +pageSize,
-      };
-      let payload = {
-        rows: null,
-        calculation: null,
-      };
-      payload.rows = (await Model.findAll(query)) ?? null;
-      payload.calculation = await Model.findAll({
-        where: {
-          ...(![undefined, null, ''].includes(req.user.id) && {
-            userId: { [Op.substring]: req.user.id },
-          }),
-        },
-        attributes: [
-          [sequelize.fn('sum', sequelize.col('balance')), 'total'],
-          [sequelize.fn('count', sequelize.col('id')), 'count'],
-        ],
-        raw: true,
-      });
-      return res
-        .status(resCode.HTTP_OK)
-        .json(generateResponse(resCode.HTTP_OK, payload));
-    } catch (e) {
-      const errors = MESSAGES.apiErrorStrings.SERVER_ERROR;
-      res
-        .status(resCode.HTTP_INTERNAL_SERVER_ERROR)
-        .json(generateResponse(resCode.HTTP_INTERNAL_SERVER_ERROR, errors));
-      throw new Error(e);
-    }
-  },
-  getById: async (req, res) => {
-    try {
-      let existing = await CustomerRepository.findByPk(req.params.id);
-      if (!existing) {
-        let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS('Customer');
-        return res
-          .status(resCode.HTTP_BAD_REQUEST)
-          .json(
-            generateResponse(
-              resCode.HTTP_BAD_REQUEST,
-              errors,
-              MESSAGES.errorTypes.OAUTH_EXCEPTION
-            )
-          );
-      }
-      return res
-        .status(resCode.HTTP_OK)
-        .json(generateResponse(resCode.HTTP_OK, existing));
-    } catch (e) {
-      const errors = MESSAGES.apiErrorStrings.SERVER_ERROR;
-      res
-        .status(resCode.HTTP_INTERNAL_SERVER_ERROR)
-        .json(generateResponse(resCode.HTTP_INTERNAL_SERVER_ERROR, errors));
-      throw new Error(e);
-    }
-  },
-  update: async (req, res) => {
-    try {
-      let itemDetails = await CustomerRepository.findByPk(req.params.id);
-      if (!itemDetails) {
-        if (
-          ![undefined, null, ''].includes(req.file) &&
-          fs.existsSync(req.file.path)
-        ) {
-          fs.unlinkSync(req.file.path);
-        }
-        let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS('Customer');
-        return res
-          .status(resCode.HTTP_BAD_REQUEST)
-          .json(
-            generateResponse(
-              resCode.HTTP_BAD_REQUEST,
-              errors,
-              MESSAGES.errorTypes.OAUTH_EXCEPTION
-            )
-          );
-      } else {
-        itemDetails = await generateCreateData(itemDetails, req.body);
-        if (![undefined, null, ''].includes(req.file)) {
-          if (itemDetails.image) {
-            let path = `assets/${itemDetails.image.split('image/')[1]}`;
-            if (fs.existsSync(path)) {
-              fs.unlinkSync(path);
-            }
-          }
-          itemDetails.image = req.file.filename;
-        }
-        await CustomerRepository.save(itemDetails)
+    const user = await CustomerRepository.create(userData);
 
-        return res.json(
-          generateResponse(resCode.HTTP_OK, {
-            message: MESSAGES.apiSuccessStrings.UPDATE('Customer'),
-          })
-        );
-      }
-    } catch (e) {
-      const errors = MESSAGES.apiErrorStrings.SERVER_ERROR;
-      res
-        .status(resCode.HTTP_INTERNAL_SERVER_ERROR)
-        .json(generateResponse(resCode.HTTP_INTERNAL_SERVER_ERROR, errors));
-      throw new Error(e);
+    let data = {
+      userName: `${user.firstName} ${user.lastName}`,
+      email: user.email,
+      OTP: user.resetPin,
+      subject: `VERIFY EMAIL FOR PEACOCK`,
+      verifyLink: `${process.env.verifyLink}/api/v1/website/customer/verifyEmail/${user.id}`,
+      companyLogo:
+        "https://peacock-collective.web.app/assets/images/gold-logo.png",
+      template: "verifyEmail.html",
+      url: `${process.env.REQ_URL}#/change-pwd?sub=${user.id}&pin=${user.resetPin}&role=${user.role}`,
+    };
+    mail.sendForgetMail(req, data);
+
+    return res.status(resCode.HTTP_OK).json(
+      generateResponse(resCode.HTTP_OK, {
+        message: MESSAGES.apiSuccessStrings.ADDED("User"),
+      })
+    );
+  }),
+
+  getAll: asyncHandler(async (req, res) => {
+    const {
+      page = 1,
+      pageSize = 10,
+      column = "createdAt",
+      direction = "DESC",
+      search = null,
+    } = req.query;
+
+    const offset = (page - 1) * pageSize || 0;
+    const query = {
+      where: {
+        ...(search && {
+          [Op.or]: {
+            email: { [Op.like]: `%${search}%` },
+          },
+        }),
+      },
+      order: [[column, direction]],
+      offset: +offset,
+      limit: +pageSize,
+    };
+    const response = await CustomerRepository.findAndCountAll(query);
+
+    return res
+      .status(resCode.HTTP_OK)
+      .json(generateResponse(resCode.HTTP_OK, response));
+  }),
+  getById: asyncHandler(async (req, res) => {
+    let existing = await CustomerRepository.findByPk(req.params.id);
+
+    if (!existing) {
+      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("User");
+      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
-  },
-  delete: async (req, res) => {
-    try {
-      let query = {
-        where: {
-          id: req.params.id,
-        },
-      };
-      let item = await Model.findOne(query);
-      let imagePath =
-        item && item.image && item.image != 'undefined' ? item.image : null;
-      let deletedItem = await Model.destroy(query);
-      if (deletedItem) {
-        let path = `assets/${imagePath.split('image/')[1]}`;
-        if (fs.existsSync(path)) {
-          fs.unlinkSync(path);
-        }
-        return res.json(
-          generateResponse(resCode.HTTP_OK, {
-            message: MESSAGES.apiSuccessStrings.DELETED('Customer'),
-          })
-        );
-      } else {
-        let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS('Customer');
-        return res
-          .status(resCode.HTTP_BAD_REQUEST)
-          .json(
-            generateResponse(
-              resCode.HTTP_BAD_REQUEST,
-              errors,
-              MESSAGES.errorTypes.OAUTH_EXCEPTION
-            )
-          );
-      }
-    } catch (e) {
-      const errors = MESSAGES.apiErrorStrings.SERVER_ERROR;
-      res
-        .status(resCode.HTTP_INTERNAL_SERVER_ERROR)
-        .json(generateResponse(resCode.HTTP_INTERNAL_SERVER_ERROR, errors));
-      throw new Error(e);
+    return res
+      .status(resCode.HTTP_OK)
+      .json(generateResponse(resCode.HTTP_OK, existing));
+  }),
+
+  update: asyncHandler(async (req, res) => {
+    let query = {
+      where: {
+        id: req.user.id,
+        status: [OPTIONS.defaultStatus.ACTIVE, OPTIONS.defaultStatus.INACTIVE],
+        //  role: roles.getAllRolesAsArray(),
+      },
+    };
+    let user = await CustomerRepository.findOneByCondition(query);
+    if (!user) {
+      const errors = MESSAGES.apiErrorStrings.INVALID_REQUEST;
+      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
-  },
+    user.firstName = req.body.firstName || user.firstName;
+    user.lastName = req.body.lastName || user.lastName;
+    user.DOB = req.body.DOB || user.DOB;
+    user.email = req.body.email || user.email;
+    user.gender = req.body.gender || user.gender;
+
+    if (req.body?.profileImage) {
+      // user.profilePicture = req.body.profilePicture;
+      //HANDLE THE PROFILE IMAGE ON CLOUDINARY IN FUTURE
+    }
+    await CustomerRepository.save(user);
+    return res.status(resCode.HTTP_OK).json(
+      generateResponse(resCode.HTTP_OK, {
+        message: MESSAGES.apiSuccessStrings.UPDATE("User profile has been"),
+      })
+    );
+  }),
+
+  delete: asyncHandler(async (req, res) => {
+    let user = await CustomerRepository.findByPk(req.params.id);
+
+    if (!user) {
+      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("User");
+      throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
+    }
+
+    if (user && user?.profileImage) {
+      await cloudinary.deleteFile(item.profileImage);
+    }
+
+    let query = {
+      where: {
+        id: req.params.id,
+      },
+    };
+    await CustomerRepository.delete(query);
+    return res.json(
+      generateResponse(resCode.HTTP_OK, {
+        message: MESSAGES.apiSuccessStrings.DELETED("User"),
+      })
+    );
+  }),
 };
 
 module.exports = modelObj;
