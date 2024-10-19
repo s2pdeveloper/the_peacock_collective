@@ -217,15 +217,15 @@ export class HeaderComponent {
   changeActiveCategory() {
     // this.isVisible = !this.isVisible;
     const filterCategory: any[] = this.commonService.allData.categories.filter(
-      (x) => x.categoryWithtags.some((y) => y.tagId == this.activeTagId)
+      (x) => x?.categoryWithtags.some((y) => y?.tagId == this.activeTagId)
     );
     const activeCat : any = this.commonService.allData.categories.find(
-      (x) => x.categoryWithtags.some((y) => y.tagId == this.activeTagId)
+      (x) => x?.categoryWithtags.some((y) => y?.tagId == this.activeTagId)
     );
     this.activeTagTitle = activeCat?.categoryWithtags[0]?.CategoryTagMapWithTag?.title
     
     if (filterCategory.length) {
-      this.activeCategoryId = filterCategory[0].id;
+      this.activeCategoryId = filterCategory[0]?.id;
     } else {
       this.activeCategoryId = null;
     }
