@@ -222,7 +222,7 @@ export class HeaderComponent {
     const activeCat : any = this.commonService.allData.categories.find(
       (x) => x.categoryWithtags.some((y) => y.tagId == this.activeTagId)
     );
-    this.activeTagTitle = activeCat.categoryWithtags[0].CategoryTagMapWithTag.title
+    this.activeTagTitle = activeCat?.categoryWithtags[0]?.CategoryTagMapWithTag?.title
     
     if (filterCategory.length) {
       this.activeCategoryId = filterCategory[0].id;
