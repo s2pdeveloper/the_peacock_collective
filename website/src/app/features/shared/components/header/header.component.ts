@@ -43,6 +43,7 @@ export class HeaderComponent {
   search: string;
   isSearchOpen: boolean = false
   isVisible: boolean = false
+  activeTagTitle : string = ''
   constructor(
     @Inject(PLATFORM_ID) private _platformId: Object,
     private router: Router,
@@ -93,14 +94,6 @@ export class HeaderComponent {
     //   });
     // }
   }
-  hide(){
-    if (isPlatformBrowser(this._platformId)) {
-      let element = document.getElementById('dropdown')
-      console.log("element",element);
-      element.style.clipPath = 'polygon(0 0, 100% 0, 100% 0, 0 0)'
-    }
-  }
-
   // @HostListener('window:scroll', [])
   // onWindowScroll() {
   //   const scrollPositionValue =
@@ -226,6 +219,11 @@ export class HeaderComponent {
     const filterCategory: any[] = this.commonService.allData.categories.filter(
       (x) => x.categoryWithtags.some((y) => y.tagId == this.activeTagId)
     );
+    const activeCat : any = this.commonService.allData.categories.find(
+      (x) => x.categoryWithtags.some((y) => y.tagId == this.activeTagId)
+    );
+    this.activeTagTitle = activeCat.categoryWithtags[0].CategoryTagMapWithTag.title
+    
     if (filterCategory.length) {
       this.activeCategoryId = filterCategory[0].id;
     } else {

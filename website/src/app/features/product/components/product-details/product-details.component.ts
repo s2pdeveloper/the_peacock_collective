@@ -70,7 +70,8 @@ export class ProductDetailsComponent implements OnInit {
         );
         this.variants = this.products.productWithVariants;
         this.currentVariant = this.products.productWithVariants[0];
-
+        console.log(this.currentVariant);
+        
         this.attrArr = [];
         this.bannerImg = this.currentVariant.variantImages[0]?.image;
         for (const item of this.currentVariant.variantWithAttrVariantMap) {

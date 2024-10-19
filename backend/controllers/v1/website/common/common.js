@@ -34,10 +34,9 @@ const getAllMasterData = asyncHandler(async (req, res) => {
     order: [[column, direction]],
   }
   const categoryQuery = {
-    // where: {
-    //   parentId: null,
-    //   status: OPTIONS.defaultStatus.ACTIVE
-    // },
+    where: {
+      status: OPTIONS.defaultStatus.ACTIVE
+    },
     // attributes: ["createdAt", "id", "name", "status", "isShowHome", "description"],
     include: [
       // {

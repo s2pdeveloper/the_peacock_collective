@@ -29,7 +29,6 @@ export class NewArrivalsComponent implements OnInit, AfterViewInit {
     this.selectedCategories = this.commonService?.allData?.categories.filter(
       (cat) => cat.isShowHome === true
     );
-    console.log('this.selectedCategories', this.selectedCategories);
   }
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this._platformId)) {
