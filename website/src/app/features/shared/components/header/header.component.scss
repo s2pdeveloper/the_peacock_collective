@@ -5,7 +5,7 @@
   list-style: none;
 }
 
-.show:focus-visible {
+.showNav:focus-visible {
   outline: none !important;
 }
 
@@ -163,7 +163,7 @@
 // .nav_list_menu:hover .dropDown {
 //   clip-path: polygon(0 0, 100% 0, 100% 102%, 0 102%);
 // }
-.show{
+.showNav{
   clip-path: polygon(0 0, 100% 0, 100% 102%, 0 102%);
 }
 .hide {
@@ -300,6 +300,9 @@ li {
 i {
   color: #000;
   cursor: pointer;
+  &::after{
+    display: none ;
+  }
 }
 
 .fa-square {
