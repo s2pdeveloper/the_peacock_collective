@@ -67,22 +67,28 @@
         </div>
         <div class="col-12 col-md-4 col-lg-3 box-4">
           <p class="follow-text">Join my Newsletter</p>
-        
-            <div class="input-wrapper">
-              <input
-                type="text"
-                placeholder="Your email address"
-                [(ngModel)]="email"
-              />
-              <i
-                class="fa-solid cursor fa-arrow-right p-3"
-                (click)="submit()"
-              ></i>
-            </div>
+        <form [formGroup]="messageForm">
+          <div class="input-wrapper">
+            <input
+              type="email"
+              placeholder="Your email address"
+              formControlName="email"
+            />
+          
+            <i
+              class="fa-solid cursor fa-arrow-right p-3"
+              (click)="submit()"
+            ></i>
+          </div>
+          <span *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="text-danger">
+            <span *ngIf="email?.errors?.['required']">Email is required.</span>
+            <span *ngIf="email?.errors?.['pattern']">Please enter a valid email address, like user&#64;example.com</span>
+          </span>
+        </form>
           
         </div>
         <div class="col-12 py-3">
-          <p>&copy; 2024 peacock collective</p>
+          <p class="copyright">&copy; 2024 peacock collective</p>
         </div>
       </div>
     </div>

@@ -53,7 +53,13 @@ module.exports = (sequelize, DataTypes) => {
       tableName: "Address",
     }
   );
-
+  Address.associate = (models) => {
+    Address.belongsTo(models.Customer, {
+      foreignKey: 'customerId',
+      as: 'addressesWithCustomer',
+       onDelete: 'CASCADE',
+    });
+  };
 
   return Address;
 };

@@ -2,7 +2,7 @@
   padding: 0;
   margin: 0;
   text-decoration: none;
-  color: #dee2e6a1;
+  // color: #dee2e6a1;
   font-size: 14px;
 }
 a {
@@ -53,8 +53,8 @@ a {
     cursor: pointer;
     word-wrap: break-word;
     text-wrap: wrap;
+    color: #dee2e6a1;
     &:hover {
-      color: #fff;
       border-bottom: 1px solid #fff;
     }
   }
@@ -62,6 +62,9 @@ a {
     transition: all 0.9s;
     transform: translateX(10px);
   }
+}
+.copyright,i,input{
+  color: #dee2e6a1;
 }
 @media (max-width: 768px) {
   .head-color {

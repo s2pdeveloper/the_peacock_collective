@@ -27,9 +27,16 @@ export class ContactComponent {
       'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d317893.9737282887!2d-0.11951900000000001!3d51.503186!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604b900d26973%3A0x4291f3172409ea92!2slastminute.com%20London%20Eye!5e0!3m2!1sen!2sus!4v1708409035190!5m2!1sen!2sus',
   };
   messageForm = new FormGroup({
-    email: new FormControl('', [Validators.required]),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}'),
+    ]),
     enquiryMsg: new FormControl('', [Validators.required]),
   });
+
+  get email() {
+    return this.messageForm.get('email');
+  }
   navigateTo(path: any) {
     this.router.navigate([path]);
   }
@@ -43,7 +50,7 @@ export class ContactComponent {
         .enquiryEmail(this.messageForm.value)
         .subscribe((success) => {
           this.toasterService.success('Sent Successfully!!');
-          this.messageForm.reset()
+          this.messageForm.reset();
         });
     } catch (error) {
       console.log(error);

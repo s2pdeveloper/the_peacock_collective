@@ -388,6 +388,8 @@ i {
 
 .cart {
   position: relative;
+  cursor: pointer;
+  padding: 0 .5rem;
 
   .cart-badge {
     position: absolute;
@@ -402,6 +404,16 @@ i {
     align-items: center;
     font-size: 0.75rem;
   }
+}
+.dropdown-master{
+  border-radius: 0 !important;
+}
+.header-menus{
+  height: 3.5rem;
+  display: inline-grid;
+}
+.dropdown-toggle::after{
+  display: none !important;
 }
 
 @media (max-width: 992px) {

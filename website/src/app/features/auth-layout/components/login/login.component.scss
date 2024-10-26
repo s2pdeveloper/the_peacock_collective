@@ -96,6 +96,21 @@
   background: transparent;
   border: none;
 }
+.dropdown-container {
+  position: relative;  /* Position the container */
+}
+
+.custom-dropdown {
+  padding-right: 30px; /* Add padding to avoid overlap with arrow */
+}
+
+.dropdown-arrow {
+  position: absolute; /* Position it absolutely */
+  top: 50%;          /* Center vertically */
+  right: 50px;      /* Adjust this value for spacing */
+  transform: translateY(-50%); /* Vertically center the image */
+  pointer-events: none; /* Prevent interference with clicks */
+}
 @media (max-width: 1024px) {
   .login-wrapper{
     padding: 2rem 0;

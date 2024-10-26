@@ -7,7 +7,7 @@ import { ForgetPassComponent } from './components/forget-pass/forget-pass.compon
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import ChangepwdComponent from './components/changepwd/changepwd.component';
-
+import { NgSelectModule } from "@ng-select/ng-select";
 const routes: Routes = [
   {
     path: '',
@@ -29,6 +29,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
+    NgSelectModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
   ],

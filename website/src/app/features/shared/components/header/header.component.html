@@ -28,16 +28,16 @@
                   (click)="openSearch(search)"
                 ></i>
 
-                <div *ngIf="customer" ngbDropdown>
+                <div *ngIf="customer" ngbDropdown >
                   <button
                     type="button"
-                    class="btn"
+                    class="btn ps-3"
                     id="dropdownBasic1"
                     ngbDropdownToggle
                   >
                     <i class="fa-regular fa-user pointer text-light"></i>
                   </button>
-                  <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-master">
                     <button
                       class="p-3"
                       ngbDropdownItem
@@ -59,18 +59,25 @@
                     >
                       MY ORDERS
                     </button>
+                    <button
+                      class="p-3"
+                      ngbDropdownItem
+                      (click)="logout('/auth/login')"
+                    >
+                      LOG OUT
+                    </button>
                   </div>
                 </div>
                 <div *ngIf="!customer" ngbDropdown>
                   <button
                     type="button"
-                    class="btn"
-                    id="dropdownBasic1"
+                    class="btn ps-3"
+                    id="dropdownBasic2"
                     ngbDropdownToggle
                   >
                     <i class="fa-regular fa-user pointer text-light"></i>
                   </button>
-                  <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic2" class="dropdown-master">
                     <button
                       class="p-3"
                       ngbDropdownItem
@@ -87,10 +94,10 @@
                     </button>
                   </div>
                 </div>
-                <div class="cart">
+                <div class="cart"  (click)="showCart()">
                   <i
                     class="fa-solid fa-cart-plus nav-items pointer text-light"
-                    (click)="showCart()"
+                  
                   ></i>
                   <p class="cart-badge text-light">{{ cartCnt | async }}</p>
                 </div>
@@ -103,7 +110,7 @@
   </div>
   <div class="container-fluid header-web">
     <div class="row justify-content-center bg-dark">
-      <div class="col-11">
+      <div class="col-11 header-menus">
         <div class="row justify-content-around">
           <div class="col-10">
             <div class="d-flex h-100">
@@ -174,7 +181,7 @@
                 </div>
               </div>
               }
-              <div class="nav_menu d-flex">
+              <div class="nav_menu d-flex" (mouseover)="isVisible = false">
                 <div class="nav_list nav_list_menu">
                   <a
                     class="nav_link text-uppercase"
@@ -186,7 +193,7 @@
                   </a>
                 </div>
               </div>
-              <div class="nav_menu d-flex">
+              <div class="nav_menu d-flex" (mouseover)="isVisible = false">
                 <div class="nav_list nav_list_menu">
                   <a
                     class="nav_link text-uppercase"
@@ -196,15 +203,22 @@
                   </a>
                 </div>
               </div>
+              <div class="nav_menu d-flex " (mouseover)="isVisible = false">
+                <div class="nav_list nav_list_menu">
+                  <a
+                    class="nav_link text-uppercase"
+                    (click)="navigateTo('/contact')"
+                  >
+                    <span class="nav-items pointer text-light">Contact</span>
+                  </a>
+
+                
+                </div>
+              </div>
             </div>
           </div>
           <div class="col-2 d-flex justify-content-end">
-            <div
-              class="navbar-brand text-light text-uppercase pointer"
-              (click)="navigateTo('/contact')"
-            >
-              Contact
-            </div>
+           
             <div class="d-flex align-items-center">
               <div class="cart">
                 <i
@@ -212,6 +226,11 @@
                   (click)="showCart()"
                 ></i>
                 <p class="cart-badge text-light">{{ cartCnt | async }}</p>
+              </div>
+            </div>
+            <div class="d-flex align-items-center px-3" (click)="navigateTo('/order/wishlist')">
+              <div class="cart">
+                <i class="fa-regular fa-heart text-light"></i>
               </div>
             </div>
           </div>
@@ -430,32 +449,34 @@
             <p (click)="isCartOpen = !isCartOpen" class="pointer">
               {{ p?.cartWithVariants?.sku }}
             </p>
-            <p
-              class="text-color-secondary small-text attr"
-              *ngFor="
-                let attr of p?.cartWithVariants?.variantWithAttrVariantMap
-              "
-            >
-              {{ attr.AttrVariantMapWithAttributes.name }} :
-              <ng-container
-                *ngIf="attr?.AttrVariantMapWithAttributes?.type == 'color'"
+            <div class="d-flex">
+              <p
+                class="text-color-secondary small-text attr mx-2"
+                *ngFor="
+                  let attr of p?.cartWithVariants?.variantWithAttrVariantMap
+                "
               >
-                <i
-                  class="fa-solid fa-square"
-                  [ngStyle]="{ 'background-color': attr?.value }"
-                ></i
-              ></ng-container>
-              <ng-container
-                *ngIf="attr?.AttrVariantMapWithAttributes?.type != 'color'"
-              >
-                {{ attr?.value }}</ng-container
-              >
-            </p>
+                {{ attr.AttrVariantMapWithAttributes.name }} :
+                <ng-container
+                  *ngIf="attr?.AttrVariantMapWithAttributes?.type == 'color'"
+                >
+                  <i
+                    class="fa-solid fa-square"
+                    [ngStyle]="{ 'background-color': attr?.value }"
+                  ></i
+                ></ng-container>
+                <ng-container
+                  *ngIf="attr?.AttrVariantMapWithAttributes?.type != 'color'"
+                >
+                  {{ attr?.value }}</ng-container
+                >
+              </p>
+            </div>
             <div class="d-flex align-items-center">
               <input
                 type="number"
                 class="w-50 border-0"
-                [min]="0"
+                min="1"
                 [(ngModel)]="p.qty"
                 [value]="p.qty"
               />
@@ -490,15 +511,11 @@
             <p>{{ totalItemPrice | currency : "CAD" }}</p>
           </div>
         </div>
-        <div class="row">
+        <!-- <div class="row">
           <div class="col-12 description">
             <p>Spend $168.50 more to get free shipping!</p>
-            <p>
-              IQITFREEDELIVERYCOUNT - module, you can put own text in
-              configuration
-            </p>
           </div>
-        </div>
+        </div> -->
         <div class="row">
           <div class="col-12 mb-2">
             <button

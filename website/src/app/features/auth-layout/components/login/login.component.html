@@ -203,42 +203,29 @@
               >
                 <div class="col-2 d-flex align-items-center my-1">
                   <label for="inputPassword6" class="col-form-label"
-                    >Pin code
-                  </label>
+                    >Country</label
+                  >
                   <span class="text-danger">*</span>
                 </div>
-                <div class="col-9 my-1">
-                  <input
-                    type="number"
-                    class="form-control background-primary"
-                    formControlName="pinCode"
-                  />
+                <div class="col-9 my-1 dropdown-container">
+                  <ng-select
+                  class="form-control background-primary custom-dropdown"
+                  [items]="countries"
+                  bindLabel="name"
+                  bindValue="name"
+                  [clearable]="false" 
+                  (change)="onCountryChange($event)"
+                >
+                </ng-select>
+                <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
                 </div>
               </div>
             </div>
           </div>
-          <div class="row my-3">
-            <div class="col-12 col-md-12 col-lg-6">
-              <div
-                class="row justify-content-between justify-content-sm-start justify-content-md-start justify-content-lg-around"
-              >
-                <div class="col-2 d-flex align-items-center my-1">
-                  <label for="inputPassword6" class="col-form-label"
-                    >City
-                  </label>
-                  <span class="text-danger">*</span>
-                </div>
-                <div class="col-9 my-1">
-                  <input
-                    type="text"
-                    class="form-control background-primary"
-                    formControlName="city"
-                  />
-                </div>
-              </div>
-            </div>
+          <div class="row">
+           
             <div
-              class="col-12 col-md-12 col-lg-6 d-flex flex-column justify-content-center"
+              class="col-12 col-md-12 col-lg-6 d-flex flex-column justify-content-center my-3"
             >
               <div
                 class="row justify-content-between justify-content-sm-start justify-content-md-start justify-content-lg-around"
@@ -249,37 +236,70 @@
                   </label>
                   <span class="text-danger">*</span>
                 </div>
-                <div class="col-9 my-1">
-                  <input
-                    type="text"
-                    class="form-control background-primary"
-                    formControlName="state"
-                  />
+                <div class="col-9 my-1 dropdown-container">
+                  <ng-select
+                  class="form-control background-primary custom-dropdown"
+                  [items]="states"
+                  bindLabel="name"
+                  [(ngModel)]="selectedState"
+                  [ngModelOptions]="{standalone: true}"
+                  [clearable]="false" 
+                  bindValue="name"
+                  (change)="onStateChange($event)"
+                >
+                </ng-select>
+                <i *ngIf="states.length" class="fa-solid fa-chevron-down dropdown-arrow"></i>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="row my-3">
-            <div class="col-12 col-md-12 col-lg-6">
+            <div class="col-12 col-md-12 col-lg-6 my-3">
               <div
                 class="row justify-content-between justify-content-sm-start justify-content-md-start justify-content-lg-around"
               >
                 <div class="col-2 d-flex align-items-center my-1">
                   <label for="inputPassword6" class="col-form-label"
-                    >Country</label
-                  >
+                    >City
+                  </label>
+                  <span class="text-danger">*</span>
+                </div>
+                <div class="col-9 my-1 dropdown-container">
+                  <ng-select
+                  class="form-control background-primary custom-dropdown"
+                  [items]="cities"
+                  bindLabel="name"
+                  [(ngModel)]="selectedCity"
+                  [ngModelOptions]="{standalone: true}"
+                  [clearable]="false" 
+                  bindValue="name"
+                  (change)="onCityChange($event)"
+                >
+                </ng-select>
+                <i *ngIf="cities.length" class="fa-solid fa-chevron-down dropdown-arrow"></i>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-12 col-lg-6 my-3" >
+              <div
+                class="row justify-content-between justify-content-sm-start justify-content-md-start justify-content-lg-around"
+              >
+                <div class="col-2 d-flex align-items-center my-1">
+                  <label for="inputPassword6" class="col-form-label"
+                    >Pin code
+                  </label>
                   <span class="text-danger">*</span>
                 </div>
                 <div class="col-9 my-1">
                   <input
                     type="text"
+                    maxlength="6"
                     class="form-control background-primary"
-                    formControlName="country"
+                    formControlName="pinCode"
                   />
                 </div>
               </div>
             </div>
           </div>
+     
           <div class="row my-4 justify-content-center">
             <div class="col-3 col-md-2 col-lg-2 me-2">
               <button
@@ -356,7 +376,7 @@
                 <div
                   class="col-6 col-md-3 col-lg-2 d-flex justify-content-center align-items-center"
                 >
-                  <p>{{ add?.phone }}</p>
+                  <p>{{ add?.addressesWithCustomer?.phone }}</p>
                 </div>
                 <div
                   class="col-6 col-md-3 col-lg-3 d-flex justify-content-end align-items-center"

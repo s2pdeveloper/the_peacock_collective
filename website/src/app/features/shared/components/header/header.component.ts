@@ -54,7 +54,12 @@ export class HeaderComponent {
     private toast: ToastService,
     private storageService: StorageService
   ) {
-    this.customer = this.storageService.get('Customer');
+
+    
+    if(this.storageService.get('Customer')){ 
+      this.commonService.setLogin()
+    }
+    
   }
   private modalService = inject(NgbModal);
   openSearch(content: any) {
@@ -73,8 +78,6 @@ export class HeaderComponent {
     // );
     return totalPriceArray;
   }
-
-  item = 469;
   ngOnInit(): void {
     this.commonService.getLoginStatus().subscribe((success) => {
       this.customer = success;
@@ -252,5 +255,11 @@ export class HeaderComponent {
   }
   onMouseLeave() {
     this.isVisible = this.toggleVisibility('hide');
+  }
+  logout(path){
+    this.navigateTo(path);
+    this.user = this.storageService.remove('Customer');
+    this.commonService.setLogout();
+    this.commonService.resetCart();
   }
 }

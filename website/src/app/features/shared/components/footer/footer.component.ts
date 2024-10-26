@@ -15,8 +15,15 @@ export class FooterComponent {
     private toasterService: ToastrService,
     private customerService: CustomerService
   ) {}
-  email: string = '';
-
+  messageForm = new FormGroup({
+    email: new FormControl('', [
+      Validators.required,
+      Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}'),
+    ]),
+  });
+  get email() {
+    return this.messageForm.get('email');
+  }
   data: any = {
     phone: '+48 541 44 27',
     email: 'support@peacockcollective.in',
@@ -36,10 +43,10 @@ export class FooterComponent {
     }
     try {
       this.customerService
-        .enquiryEmail({ email: this.email })
+        .enquiryEmail(this.messageForm.value)
         .subscribe((success) => {
           this.toasterService.success('Sent Successfully!!');
-          this.email = '';
+          this.messageForm.reset();
         });
     } catch (error) {
       console.log(error);

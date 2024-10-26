@@ -116,6 +116,10 @@
                     placeholder="your@email.com"
                     formControlName="email"
                   />
+                  <span *ngIf="email?.invalid && (email?.dirty || email?.touched)" style="color: red;">
+                    <span *ngIf="email?.errors?.['required']">Email is required.</span>
+                    <span *ngIf="email?.errors?.['pattern']">Please enter a valid email address, like user&#64;example.com</span>
+                  </span>
                 </div>
                 <div class="mb-3">
                   <textarea

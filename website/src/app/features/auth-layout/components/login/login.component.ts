@@ -7,7 +7,7 @@ import { AddressService } from 'src/app/services/address.service';
 import { CartService } from 'src/app/services/cart.service';
 import { CommonService } from 'src/app/services/common.service';
 import { CustomerService } from 'src/app/services/customer.service';
-
+import { Country, State, City } from 'country-state-city';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -15,6 +15,12 @@ import { CustomerService } from 'src/app/services/customer.service';
 })
 export class LoginComponent implements OnInit {
   private storageService = inject(StorageService);
+  countries = Country.getAllCountries();
+  selectedCountryCode: string;
+  selectedState: any;
+  selectedCity: any;
+  states: any[] = [];
+  cities: any[] = [];
   showEye: boolean = true;
   show: boolean = true;
   showAddressForm: boolean = false;
@@ -29,7 +35,7 @@ export class LoginComponent implements OnInit {
     private addressService: AddressService,
     private toasterService: ToastrService,
     private commonService: CommonService,
-    private cartService: CartService,
+    private cartService: CartService
   ) {
     this.user = this.storageService.get('Customer');
   }
@@ -39,7 +45,11 @@ export class LoginComponent implements OnInit {
     country: new FormControl(null, [Validators.required]),
     state: new FormControl(null, [Validators.required]),
     city: new FormControl(null, [Validators.required]),
-    pinCode: new FormControl(null, [Validators.required]),
+    pinCode: new FormControl(null, [
+      Validators.required,
+      Validators.maxLength(6),
+      Validators.minLength(6),
+    ]),
     type: new FormControl('home', [Validators.required]),
     isDefault: new FormControl(false),
   });
@@ -50,7 +60,6 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAddresses();
-    console.log('this.user', this.user);
   }
 
   navigateTo(path: any) {
@@ -60,7 +69,7 @@ export class LoginComponent implements OnInit {
   submit() {
     if (this.loginForm.value) {
       this.customerService.login(this.loginForm.value).subscribe(
-        (success: any) => { 
+        (success: any) => {
           if (success) {
             this.user = success.result;
             this.storageService.set('Customer', success.result);
@@ -68,11 +77,14 @@ export class LoginComponent implements OnInit {
             this.getAddresses();
             this.navigateTo('/');
             this.cartService.getAll().subscribe((success) => {
-              let count = success.result.rows.reduce((acc, curr) => acc + curr.qty, 0);
+              let count = success.result.rows.reduce(
+                (acc, curr) => acc + curr.qty,
+                0
+              );
               this.commonService.resetCart();
               this.commonService.addToCart(count);
             });
-            this.commonService.setLogin()
+            this.commonService.setLogin();
           }
         },
         (error) => {}
@@ -159,5 +171,29 @@ export class LoginComponent implements OnInit {
         this.getAddresses();
       });
     }
+  }
+  onCountryChange(value: any) {
+    this.selectedState = '';
+    this.selectedCity = '';
+    this.cities = [];
+    this.addressForm.controls['state'].setValue('');
+    this.addressForm.controls['city'].setValue('');
+    this.selectedCountryCode = value?.isoCode;
+    this.addressForm.controls['country'].setValue(value?.name);
+    this.states = State?.getStatesOfCountry(value?.isoCode);
+  }
+
+  onStateChange(value: any) {
+    this.selectedState = value?.name;
+    this.cities = [];
+    this.addressForm.controls['state'].setValue(value?.name);
+    this.cities = City?.getCitiesOfState(
+      this.selectedCountryCode,
+      value?.isoCode
+    );
+  }
+  onCityChange(value: any) {
+    this.selectedCity = value?.name;
+    this.addressForm.controls['city'].setValue(value?.name);
   }
 }

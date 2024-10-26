@@ -1,5 +1,5 @@
 const sequelize = require("sequelize");
-const { Address } = require("../../../../models");
+const { Address,Customer } = require("../../../../models");
 const {
   OPTIONS,
   generateResponse,
@@ -44,6 +44,13 @@ const modelObj = {
     let query = {
       where: { customerId: req.user.id },
       order: [[column, direction]],
+      include: [
+        {
+          model: Customer,
+          as: "addressesWithCustomer",
+          attributes:["firstName","lastName","phone","email"]
+        },
+      ],
       offset: +offset,
       limit: +pageSize,
     };
