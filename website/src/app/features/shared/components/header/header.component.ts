@@ -1,8 +1,4 @@
-import {
-  Component,
-  Inject,
-  inject,
-} from '@angular/core';
+import { Component, Inject, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { StorageService, ToastService } from 'src/app/core/services';
@@ -41,9 +37,9 @@ export class HeaderComponent {
   user: any;
   currentVariant = null;
   search: string;
-  isSearchOpen: boolean = false
-  isVisible: boolean = false
-  activeTagTitle : string = ''
+  isSearchOpen: boolean = false;
+  isVisible: boolean = false;
+  activeTagTitle: string = '';
   constructor(
     @Inject(PLATFORM_ID) private _platformId: Object,
     private router: Router,
@@ -54,12 +50,9 @@ export class HeaderComponent {
     private toast: ToastService,
     private storageService: StorageService
   ) {
-
-    
-    if(this.storageService.get('Customer')){ 
-      this.commonService.setLogin()
+    if (this.storageService.get('Customer')) {
+      this.commonService.setLogin();
     }
-    
   }
   private modalService = inject(NgbModal);
   openSearch(content: any) {
@@ -107,7 +100,7 @@ export class HeaderComponent {
   //   this.scrollPosition = scrollPositionValue;
   // }
   navigateTo(path: any) {
-    this.isVisible = false
+    this.isVisible = false;
     if (path == '/order/my-orders' || path == '/order/wishlist') {
       if (isPlatformBrowser(this._platformId)) {
         let user = localStorage.getItem('Customer') ? true : false;
@@ -128,10 +121,10 @@ export class HeaderComponent {
   navigateToProdDetails(id: number) {
     let path = `/product/product-details/${id}`;
     this.router.navigate([path]);
-    this.isVisible = !this.isVisible; 
+    this.isVisible = !this.isVisible;
   }
   navigateWithParams(path: any, param: any) {
-    this.isVisible = false
+    this.isVisible = false;
     this.router.navigate([path], { queryParams: { brand: param } });
     let ele: any = document.getElementById('topbar');
     ele.scrollIntoView({
@@ -222,11 +215,12 @@ export class HeaderComponent {
     const filterCategory: any[] = this.commonService.allData.categories.filter(
       (x) => x?.categoryWithtags.some((y) => y?.tagId == this.activeTagId)
     );
-    const activeCat : any = this.commonService.allData.categories.find(
-      (x) => x?.categoryWithtags.some((y) => y?.tagId == this.activeTagId)
+    const activeCat: any = this.commonService.allData.categories.find((x) =>
+      x?.categoryWithtags.some((y) => y?.tagId == this.activeTagId)
     );
-    this.activeTagTitle = activeCat?.categoryWithtags[0]?.CategoryTagMapWithTag?.title
-    
+    this.activeTagTitle =
+      activeCat?.categoryWithtags[0]?.CategoryTagMapWithTag?.title;
+
     if (filterCategory.length) {
       this.activeCategoryId = filterCategory[0]?.id;
     } else {
@@ -234,14 +228,12 @@ export class HeaderComponent {
     }
   }
   dismissModal(ev) {
-    if (ev.type == "SELECT") {
-      this.searchToggle = !this.searchToggle
-      this.modalService.dismissAll()
-    }
-    else if (ev.type == "DESTROY") {
+    if (ev.type == 'SELECT') {
+      this.searchToggle = !this.searchToggle;
+      this.modalService.dismissAll();
+    } else if (ev.type == 'DESTROY') {
       this.isSearchOpen = ev.isModal;
-    }
-    else {
+    } else {
       this.isSearchOpen = ev.isModal;
     }
   }
@@ -256,10 +248,18 @@ export class HeaderComponent {
   onMouseLeave() {
     this.isVisible = this.toggleVisibility('hide');
   }
-  logout(path){
+  logout(path) {
     this.navigateTo(path);
     this.user = this.storageService.remove('Customer');
     this.commonService.setLogout();
     this.commonService.resetCart();
+  }
+
+  decrementQty(p: any): void {
+    p.qty = Math.max(1, p.qty - 1);
+  }
+
+  incrementQty(p: any): void {
+    p.qty = p.qty + 1;
   }
 }

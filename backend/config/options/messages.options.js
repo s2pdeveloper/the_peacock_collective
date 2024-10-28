@@ -58,6 +58,7 @@ const MESSAGES = {
     INVALID_CREDENTIALS: "The email and/or password entered are incorrect",
     INVALID_TOKEN: "Your email verification token is invalid or has expired",
     NO_ACTIVE_PLAN: "You have currently No Active Plan.",
+    PRODUCT_EXIST_IN_WHISHLIST:"Product already in wishlist"
   },
   apiSuccessStrings: {
     PASSWORD: (data) => `Your password has been ${data}`,
@@ -65,7 +66,7 @@ const MESSAGES = {
     PASSWORD_SEND: "Password has been shared to your registered email address",
     EMAIL_FORGOT: "Please check email for change password",
     LOGOUT_SUCCESS: "Logout successfully!",
-    SIGNUP_SUCCESS: "User registered successfully!",
+    SIGNUP_SUCCESS: "Congratulations! Your account has been successfully created",
     OTP_SENT_SUCCESS: "OTP sent successfully!",
     OTP_VERIFIED: "OTP verified successfully",
     USERNAME_SUCCESS: "User Name available",

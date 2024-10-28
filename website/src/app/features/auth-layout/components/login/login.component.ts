@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
           if (success) {
             this.user = success.result;
             this.storageService.set('Customer', success.result);
-            this.toasterService.success('Login done Successfully!!!');
+            this.toasterService.success('Successfully logged in!!!');
             this.getAddresses();
             this.navigateTo('/');
             this.cartService.getAll().subscribe((success) => {

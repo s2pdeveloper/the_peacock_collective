@@ -35,7 +35,7 @@ const modelObj = {
     });
 
     if (checkExisting) {
-      let message = MESSAGES.apiErrorStrings.Data_EXISTS("Already in WishList");
+      let message = MESSAGES.apiErrorStrings.PRODUCT_EXIST_IN_WHISHLIST;
       throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
     }
 

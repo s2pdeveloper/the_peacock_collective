@@ -11,14 +11,14 @@
                 <span>{{ products?.name }}</span>
               </p>
             </div>
-            <div
+            <!-- <div
               class="col-4 d-flex align-items-center justify-content-start justify-content-lg-end col-lg-1"
             >
               <p>
                 <i class="fa-solid fa-chevron-left me-2"></i>
                 <i class="fa-solid fa-chevron-right"></i>
               </p>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -81,6 +81,12 @@
               <p class="mb-2">
                 {{ currentVariant?.description }}
               </p>
+              <div class="row">
+                <div class="col-12 d-flex justify-content-center">
+                  <p class="badge text-bg-warning text-center p-2">In stock : {{currentVariant?.qty}} </p>
+                </div>
+              </div>
+
               <div class="row py-2 justify-content-center">
                 <div
                   class="col-4 col-lg-3 d-flex flex-column align-items-center"
@@ -140,11 +146,18 @@
                 <div
                   class="col-lg-2 m-2 d-flex input-div background-primary justify-content-center align-items-center"
                 >
-                  <input
+                  <!-- <input
                     type="number"
                     class="border-0 w-100 p-3"
                     [(ngModel)]="qty"
-                  />
+                  /> -->
+                  <div class="input-group justify-content-center my-2">
+                    <button class="input-group-text px-2" (click)="decrementQty()" >-</button>
+                    <input type="number" min="1"
+                    [(ngModel)]="qty" 
+                    readonly class="w-50 border-0 text-center p-1">
+                    <button class="input-group-text px-2" (click)="incrementQty()">+</button>
+                  </div>
                 </div>
                 <div class="col-12 col-lg-3 m-2">
                   <button

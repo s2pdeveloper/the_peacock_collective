@@ -71,7 +71,7 @@ export class ProductDetailsComponent implements OnInit {
         this.variants = this.products.productWithVariants;
         this.currentVariant = this.products.productWithVariants[0];
         console.log(this.currentVariant);
-        
+
         this.attrArr = [];
         this.bannerImg = this.currentVariant.variantImages[0]?.image;
         for (const item of this.currentVariant.variantWithAttrVariantMap) {
@@ -136,19 +136,22 @@ export class ProductDetailsComponent implements OnInit {
       variantId: this.currentVariant.id,
       customerId: this.user.id,
     };
-    this.cartService.create(payload).pipe(throttleTime(1000)).subscribe((success) => {
-      if (success) {
-        this.cartService.getAll().subscribe((success) => {
-          let count = success.result.rows.reduce(
-            (acc, curr) => acc + curr.qty,
-            0
-          );
-          this.commonService.resetCart();
-          this.commonService.addToCart(count);
-        });
-      }
-      this.toasterService.success('Product added to cart!!');
-    });
+    this.cartService
+      .create(payload)
+      .pipe(throttleTime(1000))
+      .subscribe((success) => {
+        if (success) {
+          this.cartService.getAll().subscribe((success) => {
+            let count = success.result.rows.reduce(
+              (acc, curr) => acc + curr.qty,
+              0
+            );
+            this.commonService.resetCart();
+            this.commonService.addToCart(count);
+          });
+        }
+        this.toasterService.success('Product added to cart!!');
+      });
   }
 
   validateCart(login, event) {
@@ -170,7 +173,7 @@ export class ProductDetailsComponent implements OnInit {
         (success: any) => {
           this.user = success.result;
           this.storageService.set('Customer', success.result);
-          this.toasterService.success('Login done Successfully!!!');
+          this.toasterService.success('Successfully logged in!!!');
           this.isLoginDone = true;
           this.modalService.dismissAll();
           if (this.event == 'cart') {
@@ -233,5 +236,12 @@ export class ProductDetailsComponent implements OnInit {
         console.log('err', err);
       },
     });
+  }
+  decrementQty(): void {
+    this.qty = Math.max(1, this.qty - 1);
+  }
+
+  incrementQty(): void {
+    this.qty = this.qty + 1;
   }
 }

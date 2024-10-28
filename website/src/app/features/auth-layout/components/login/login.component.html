@@ -72,7 +72,7 @@
     <div *ngIf="user" class="col-11 py-3">
       <div class="row justify-content-between align-items-center">
         <div class="col-9 col-sm-9 col-md-8 col-lg-6">
-          <h4 class="py-3">You are Already Logged in</h4>
+          <h4 class="py-3">You are already logged in</h4>
         </div>
         <div class="col-2 d-block d-sm-block d-md-none d-lg-none">
           <button (click)="logout()" class="btn btn-dark">
@@ -334,7 +334,7 @@
             <i class="fa-solid fa-location-dot text-danger me-2"></i>
             <span>
               My
-              {{ allAddresses.length == 1 ? "Address" : "Addresses" }}
+              {{ allAddresses.length == 1 ? "address" : "adresses" }}
             </span>
           </h2>
         </div>
@@ -343,7 +343,7 @@
             (click)="showAddressForm = !showAddressForm"
             class="btn px-3 btn-dark"
           >
-            Add New Address
+          Add new address
           </button>
         </div>
         <div class="col-12 py-3">

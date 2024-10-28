@@ -136,4 +136,11 @@ export class CartComponent implements OnInit {
       });
     }
   }
+  decrementQty(p: any): void {
+    p.qty = Math.max(1, p.qty - 1);
+  }
+
+  incrementQty(p: any): void {
+    p.qty = p.qty + 1;
+  }
 }

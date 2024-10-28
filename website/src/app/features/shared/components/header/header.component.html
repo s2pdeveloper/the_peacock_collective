@@ -24,14 +24,14 @@
             <div class="icons-box">
               <div class="icons">
                 <i
-                  class="fa-solid fa-magnifying-glass pointer text-light"
+                  class="fa-solid fa-magnifying-glass pointer text-light px-2"
                   (click)="openSearch(search)"
                 ></i>
 
                 <div *ngIf="customer" ngbDropdown >
                   <button
                     type="button"
-                    class="btn ps-3"
+                    class="btn px-2"
                     id="dropdownBasic1"
                     ngbDropdownToggle
                   >
@@ -94,13 +94,13 @@
                     </button>
                   </div>
                 </div>
-                <div class="cart"  (click)="showCart()">
+                <!-- <div class="cart"  (click)="showCart()">
                   <i
                     class="fa-solid fa-cart-plus nav-items pointer text-light"
                   
                   ></i>
                   <p class="cart-badge text-light">{{ cartCnt | async }}</p>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
@@ -230,6 +230,13 @@
             <div class="d-flex align-items-center px-3" (click)="navigateTo('/order/wishlist')">
               <div class="cart">
                 <i class="fa-regular fa-heart text-light"></i>
+              </div>
+              <div class="cart"  (click)="showCart()">
+                <i
+                  class="fa-solid fa-cart-plus nav-items pointer text-light"
+                
+                ></i>
+                <p class="cart-badge text-light">{{ cartCnt | async }}</p>
               </div>
             </div>
           </div>
@@ -472,16 +479,26 @@
               </p>
             </div>
             <div class="d-flex align-items-center">
-              <input
+              <!-- <input
                 type="number"
                 class="w-50 border-0"
                 min="1"
                 [(ngModel)]="p.qty"
                 [value]="p.qty"
+                readonly
+                
               />
               <label
                 >x {{ p?.cartWithVariants?.price | currency : "CAD" }}</label
-              >
+              > -->
+              <div class="input-group my-2">
+                <button class="input-group-text px-2" (click)="decrementQty(p)" >-</button>
+                <input type="number" min="1"
+                [(ngModel)]="p.qty"
+                [value]="p.qty"
+                readonly class="w-25 border-0 text-center p-1">
+                <button class="input-group-text px-2" (click)="incrementQty(p)">+</button>
+              </div>
             </div>
           </div>
           <div class="col-1 d-flex align-items-center bg-white">

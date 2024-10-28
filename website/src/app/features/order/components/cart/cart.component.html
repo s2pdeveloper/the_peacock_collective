@@ -51,14 +51,21 @@
               {{ p?.cartWithVariants?.price | currency : 'CAD' }}
             </div>
             <div class="col-4 col-sm-2 col-md-2 col-lg-3 text-center my-auto">
-              <input
+              <!-- <input
                 type="number"
                 min="0"
                 [class.borderDanger]="p.error"
                 class="w-50 input-number background-primary"
                 [(ngModel)]="p.qty"
                 (change)="showUpdate = !showUpdate"
-              />
+              /> -->
+              <div class="input-group justify-content-center my-2">
+                <button class="input-group-text px-2" (click)="decrementQty(p)" >-</button>
+                <input [class.borderDanger]="p.error" type="number" min="0"
+                [(ngModel)]="p.qty" 
+                readonly class="w-50 border-0 text-center p-1 input-number background-primary"  (change)="showUpdate = !showUpdate">
+                <button class="input-group-text px-2" (click)="incrementQty(p)">+</button>
+              </div>
             </div>
             <div class="col-2 col-md-1 col-lg-2 text-center light-dark small-text my-auto">
               <p class="py-auto">
@@ -119,7 +126,7 @@
                   </h5>
                 </div>
               </div>
-              <div class="row">
+              <!-- <div class="row">
                 <div class="col-12 description">
                   <p>Spend $168.50 more to get free shipping!</p>
                   <p class="regular-weight">
@@ -127,9 +134,9 @@
                     configuration
                   </p>
                 </div>
-              </div>
+              </div> -->
             </div>
-            <div class="row p-4 background-primary">
+            <!-- <div class="row p-4 background-primary">
               <div class="col-2">
                 <i class="fa-solid fa-tag"></i>
               </div>
@@ -139,7 +146,7 @@
               <div class="col-3 d-flex justify-content-end">
                 <p class="regular-weight">Add</p>
               </div>
-            </div>
+            </div> -->
             <div class="row p-3">
               <div class="col-12">
                 <button
