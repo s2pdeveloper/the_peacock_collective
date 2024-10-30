@@ -68,7 +68,7 @@ const modelObj = {
       include: {
         model: Variant,
         as: "variantWithWishList",
-        attributes: ["price"],
+        attributes: ["price","sku"],
         include: [
           {
             model: Product,

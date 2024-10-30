@@ -192,8 +192,10 @@ li {
 }
 
 .info-part {
-  max-height: 52vh;
-  min-height: 52vh;
+  max-height: 35vh;
+  min-height: 35vh;
+  display: flex;
+  align-items: flex-end;
 
   .description {
     color: #0c5460;
@@ -321,8 +323,8 @@ i {
 }
 
 .product-part {
-  max-height: 35vh;
-  min-height: 35vh;
+  max-height: 50vh;
+  min-height: 50vh;
   overflow-y: scroll;
 
   &::-webkit-scrollbar {

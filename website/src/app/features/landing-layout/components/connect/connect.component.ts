@@ -9,22 +9,31 @@ import { CustomerService } from 'src/app/services/customer.service';
   styleUrls: ['./connect.component.scss'],
 })
 export class ConnectComponent {
-  email: string = '';
+
   constructor(
     private toasterService: ToastrService,
     private customerService: CustomerService
   ) {}
+  messageForm = new FormGroup({
+    email: new FormControl('', [
+      Validators.required,
+      Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}'),
+    ]),
+  });
+  get email() {
+    return this.messageForm.get('email');
+  }
   submit() {
-    if (!this.email) {
+    if (this.messageForm.invalid) {
       this.toasterService.error('please enter email first!!');
       return;
     }
     try {
       this.customerService
-        .enquiryEmail({ email: this.email })
+        .enquiryEmail(this.messageForm.value)
         .subscribe((success) => {
           this.toasterService.success('Sent Successfully!!');
-          this.email = '';
+          this.messageForm.reset();
         });
     } catch (error) {
       console.log(error);

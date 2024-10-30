@@ -2,12 +2,18 @@
     <div class="row justify-content-center">
         <div class="col-11 col-md-11 col-lg-5">
             <p class="connect-text">Stay connected to get the best deals</p>
+            <form [formGroup]="messageForm">
             <div class="input-wrapper">
-                <input type="text" placeholder="Your email address" [(ngModel)]="email">
-                <div class="subs-box">
-                    <p class="pointer" (click)="submit()">subscribe</p>
+                    <input type="text" placeholder="Your email address" formControlName="email">
+                    <div class="subs-box">
+                        <p class="pointer" (click)="submit()">subscribe</p>
+                    </div>
                 </div>
-            </div>
+                <span *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="text-danger">
+                    <span *ngIf="email?.errors?.['required']">Email is required.</span>
+                    <span *ngIf="email?.errors?.['pattern']">Please enter a valid email address, like user&#64;example.com</span>
+                  </span>
+                </form>
         </div>
     </div>
 </div>

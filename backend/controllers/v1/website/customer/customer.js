@@ -38,18 +38,18 @@ const modelObj = {
 
     const user = await CustomerRepository.create(userData);
 
-    let data = {
-      userName: `${user.firstName} ${user.lastName}`,
-      email: user.email,
-      OTP: user.resetPin,
-      subject: `VERIFY EMAIL FOR PEACOCK`,
-      verifyLink: `${process.env.verifyLink}/api/v1/website/customer/verifyEmail/${user.id}`,
-      companyLogo:
-        "https://peacock-collective.web.app/assets/images/gold-logo.png",
-      template: "verifyEmail.html",
-      url: `${process.env.REQ_URL}#/change-pwd?sub=${user.id}&pin=${user.resetPin}&role=${user.role}`,
-    };
-    mail.sendForgetMail(req, data);
+    // let data = {
+    //   userName: `${user.firstName} ${user.lastName}`,
+    //   email: user.email,
+    //   OTP: user.resetPin,
+    //   subject: `VERIFY EMAIL FOR PEACOCK`,
+    //   verifyLink: `${process.env.verifyLink}/api/v1/website/customer/verifyEmail/${user.id}`,
+    //   companyLogo:
+    //     "https://peacock-collective.web.app/assets/images/gold-logo.png",
+    //   template: "verifyEmail.html",
+    //   url: `${process.env.REQ_URL}#/change-pwd?sub=${user.id}&pin=${user.resetPin}&role=${user.role}`,
+    // };
+    // mail.sendForgetMail(req, data);
 
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
@@ -161,7 +161,6 @@ const modelObj = {
       throw new ApiError(error, resCode.HTTP_BAD_REQUEST);
     }
     if (user.resetPin === req.body.resetPin) {
-      console.log("hit the setPassword", user.resetPin);
       user.password = await bcrypt.hash(
         req.body.password,
         bcrypt.genSaltSync(8)
@@ -181,7 +180,6 @@ const modelObj = {
 
   updatePassword: asyncHandler(async (req, res) => {
     let user = await CustomerRepository.findByPk(req.user.id); // here user should be find by id using req.user
-    console.log("your got the user", user);
     if (!user) {
       let errors = MESSAGES.apiErrorStrings.OTP_EXPIRED;
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
@@ -195,8 +193,6 @@ const modelObj = {
           let errors = MESSAGES.apiErrorStrings.USER_BLOCKED;
           throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
         }
-
-        console.log("your password match", isMatch);
 
         user.password = await bcrypt.hash(
           req.body.newPassword,
@@ -275,7 +271,6 @@ const modelObj = {
       where: { email: req.body.email.toLowerCase() },
     });
 
-    console.log("got the user", existingUser);
     if (!existingUser) {
       let errors = MESSAGES.apiErrorStrings.USER_DOES_NOT_EXIST;
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
@@ -283,7 +278,6 @@ const modelObj = {
       //  existingUser.resetPin = Math.floor(Math.random() * 899999 + 100000);
       existingUser.resetPin = Math.floor(Math.random() * 9000) + 1000;
       existingUser.save();
-      console.log("got the user existingUser", existingUser);
       let data = {
         userName: `${existingUser.firstName} ${existingUser.lastName}`,
         email: existingUser.email,

@@ -128,6 +128,8 @@ export class CartComponent implements OnInit {
       };
     });
     if (isPlatformBrowser(this._platformId)) {
+      console.log("this._platformId",this._platformId);
+      
       sessionStorage.setItem('products', JSON.stringify(checkoutProduts));
       this.router.navigate(['/order/checkout'], {
         queryParams: {

@@ -86,9 +86,6 @@ const modelObj = {
     } = req.query;
     let offset = (page - 1) * pageSize || 0;
     let query = {
-      where: {
-        customerId: req.user.id,
-      },
       order: [[column, direction]],
 
       include: [

@@ -330,13 +330,13 @@
       </div>
       <div *ngIf="!showAddressForm" class="row py-4 justify-content-between">
         <div class="col-8 mb-3">
-          <h2>
+          <h4>
             <i class="fa-solid fa-location-dot text-danger me-2"></i>
             <span>
               My
               {{ allAddresses.length == 1 ? "address" : "adresses" }}
             </span>
-          </h2>
+          </h4>
         </div>
         <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
           <button
@@ -358,7 +358,7 @@
                 >
                   <span
                     class="bg-danger text-white rounded-pill px-3 py-2 ms-2"
-                    >{{ add.type }}</span
+                    >{{ add.type | titlecase }}</span
                   >
                 </div>
                 <div
@@ -400,7 +400,7 @@
                   <span
                     [class.text-light]="add.isDefault"
                     [class.text-dark]="!add.isDefault"
-                    >Set Default</span
+                    >Set default</span
                   >
                 </button>
               </div>
