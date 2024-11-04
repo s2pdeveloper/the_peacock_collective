@@ -9,7 +9,7 @@
     <div class="col-11">
       <h1 class="p-4 regular-weight">Checkout</h1>
     </div>
-    <div class="col-11">
+    <div class="col-11 py-3">
       <div class="row">
         <div class="col-12 col-md-12 col-lg-8">
           <div [ngClass]="collapsed ? 'info-collapsed' : 'info'" class="row px-3 address-info">
@@ -82,7 +82,7 @@
                       <app-strive (stripeEvent)="stripePay($event)"></app-strive>
                   </div>
                     <button *ngIf="payment != 'card'" class="btn btn-dark py-3 mt-3" (click)="createOrder()">
-                      Place Order
+                      Place order
                     </button>
                   </div>
                 </div>
@@ -169,7 +169,7 @@
                 </div>
               </div> -->
             </div>
-            <div class="row p-4 background-primary">
+            <!-- <div class="row p-4 background-primary">
               <div class="col-2">
                 <i class="fa-solid fa-tag"></i>
               </div>
@@ -179,7 +179,7 @@
               <div class="col-3 d-flex justify-content-end">
                 <p class="regular-weight pointer">Add</p>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
