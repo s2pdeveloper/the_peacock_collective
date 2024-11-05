@@ -424,7 +424,7 @@
     class="cart-body m-0 bg-white p-3 d-flex flex-column justify-content-between"
   >
     <div class="product-part">
-      <ng-container *ngIf="!cartData.length; else elseBlock">
+      <ng-container *ngIf="!cartData?.length; else elseBlock">
         <div class="w-100 d-flex align-items-center">
           <img
             class="img-fluid"
