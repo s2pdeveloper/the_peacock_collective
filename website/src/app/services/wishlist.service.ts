@@ -22,9 +22,9 @@ export class WishlistService {
       .put(this.BASE_URL + '/' + id, payload)
       .pipe(map((res: any) => res));
   }
-  delete(id: any) {
+  delete(data: any) {
     return this.http
-      .delete(this.BASE_URL + '/' + id)
+      .put(this.BASE_URL , data)
       .pipe(map((res: any) => res));
   }
   getById(id: any) {

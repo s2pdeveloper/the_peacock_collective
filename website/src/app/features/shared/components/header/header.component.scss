@@ -255,7 +255,13 @@ li {
 .cart-body {
   height: 90vh;
 }
-
+.update-btn{
+  width: 50%;
+  padding: 0.25rem;
+  border: 0;
+  background-color: #000;
+  color: #fff;
+}
 // TOPBAR
 #topbar {
   background: transparent;

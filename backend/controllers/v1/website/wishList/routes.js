@@ -42,8 +42,8 @@ app.post(
 //   controller.getById
 // );
 
-app.delete(
-  "/:id",
+app.put(
+  "/",
   // authHandler.authenticateJWT(),
   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
   // validate("checkParamId"),

@@ -12,10 +12,10 @@ import { WishlistService } from 'src/app/services/wishlist.service';
 })
 export class WishlistComponent {
   wishlist: any[] = [];
-  user:any;
+  user: any;
   constructor(
     private wishlistService: WishlistService,
-    private cartService : CartService,
+    private cartService: CartService,
     private storageService: StorageService,
     private toasterService: ToastrService,
     private router: Router
@@ -39,42 +39,40 @@ export class WishlistComponent {
   navigateTo(path: any) {
     this.router.navigate([path]);
   }
-  navigateToProdDetails(id:number) {
-    let path = `/product/product-details/${id}`
+  navigateToProdDetails(id: number) {
+    let path = `/product/product-details/${id}`;
     this.router.navigate([path]);
   }
-  createCart(id:number) {
+  createCart(id: number) {
     try {
       if (!this.user) {
         this.toasterService.warning('Please login to add cart');
         return;
       }
-      console.log("added to cart");
+      console.log('added to cart');
       let payload = {
         qty: 1,
-        variantId:id,
+        variantId: id,
         customerId: this.user.id,
       };
-      this.cartService.create(payload).subscribe(x => {
+      this.cartService.create(payload).subscribe((x) => {
         this.toasterService.success('Product added to cart!!');
-      })
+      });
     } catch (error) {
-      console.log("error", error);
-
+      console.log('error', error);
     }
   }
-  deleteList(id:number){
+  deleteList(id: number) {
     try {
-      if (!this.user) {
-        this.toasterService.warning('Please login to add cart');
-        return;
+      let payload = {
+        variantId : id
       }
-      this.wishlistService.delete(id).subscribe(success =>{
+      this.wishlistService.delete(payload).subscribe((success) => {
         this.getAllWishlist();
         this.toasterService.success('Product removed from wishlist!!');
-      })
+      });
     } catch (error) {
-      console.log("error", error);
+      console.log('error', error);
     }
   }
 }

@@ -24,9 +24,11 @@ export class ProductDetailsComponent implements OnInit {
   tabActive: String = '';
   products: any = null;
   isLoginDone: boolean = false;
+  isFav: boolean = false;
   attrArr: any[] = [];
   currentVariant = null;
   variants: any[] = [];
+  wishlist: any[] = [];
   user: any;
   bannerImg: any;
   event: any;
@@ -71,7 +73,7 @@ export class ProductDetailsComponent implements OnInit {
         this.variants = this.products.productWithVariants;
         this.currentVariant = this.products.productWithVariants[0];
         console.log(this.currentVariant);
-
+        this.getAllWishlist();
         this.attrArr = [];
         this.bannerImg = this.currentVariant.variantImages[0]?.image;
         for (const item of this.currentVariant.variantWithAttrVariantMap) {
@@ -109,6 +111,19 @@ export class ProductDetailsComponent implements OnInit {
       }
     });
   }
+  getAllWishlist() {
+    this.wishlistService.getAll().subscribe({
+      next: (success) => {
+        this.wishlist = success.result.rows;
+        this.isFav = this.wishlist.some(
+          (x: any) => x.variantId == this.currentVariant?.id
+        );
+      },
+      error: (err) => {
+        console.log('err', err);
+      },
+    });
+  }
   handleVariant(data: any) {
     this.currentVariant = data;
     this.attrArr = [];
@@ -122,6 +137,7 @@ export class ProductDetailsComponent implements OnInit {
         selectedValue: item.value ? item.value : null,
       });
     }
+    this.getAllWishlist();
   }
   handleImg(img: string) {
     this.bannerImg = img;
@@ -220,6 +236,9 @@ export class ProductDetailsComponent implements OnInit {
     }
   }
   addToWishlist() {
+    console.log('clicked');
+
+    // this.toggleFav = !this.toggleFav
     if (!this.user) {
       this.toasterService.warning('Please login to add product to wishlist');
       return;
@@ -230,6 +249,8 @@ export class ProductDetailsComponent implements OnInit {
     };
     this.wishlistService.create(payload).subscribe({
       next: (success) => {
+        console.log('success', success);
+
         this.toasterService.success('Product added to wishlist!!');
       },
       error: (err) => {
@@ -243,5 +264,18 @@ export class ProductDetailsComponent implements OnInit {
 
   incrementQty(): void {
     this.qty = this.qty + 1;
+  }
+  removeWishlist(id: Number) {
+    try {
+      let payload = {
+        variantId : this.currentVariant.id
+      }
+      this.wishlistService.delete(payload).subscribe((success) => {
+        this.getAllWishlist();
+        this.toasterService.success('Product removed from wishlist!!');
+      });
+    } catch (error) {
+      console.log('error', error);
+    }
   }
 }

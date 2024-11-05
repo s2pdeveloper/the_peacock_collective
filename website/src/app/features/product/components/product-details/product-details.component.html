@@ -83,7 +83,9 @@
               </p>
               <div class="row">
                 <div class="col-12 d-flex justify-content-center">
-                  <p class="badge text-bg-warning text-center p-2">In stock : {{currentVariant?.qty}} </p>
+                  <p class="badge text-bg-warning text-center p-2">
+                    In stock : {{ currentVariant?.qty }}
+                  </p>
                 </div>
               </div>
 
@@ -152,11 +154,25 @@
                     [(ngModel)]="qty"
                   /> -->
                   <div class="input-group justify-content-center my-2">
-                    <button class="input-group-text px-2" (click)="decrementQty()" >-</button>
-                    <input type="number" min="1"
-                    [(ngModel)]="qty" 
-                    readonly class="w-50 border-0 text-center p-1">
-                    <button class="input-group-text px-2" (click)="incrementQty()">+</button>
+                    <button
+                      class="input-group-text px-2"
+                      (click)="decrementQty()"
+                    >
+                      -
+                    </button>
+                    <input
+                      type="number"
+                      min="1"
+                      [(ngModel)]="qty"
+                      readonly
+                      class="w-50 border-0 text-center p-1"
+                    />
+                    <button
+                      class="input-group-text px-2"
+                      (click)="incrementQty()"
+                    >
+                      +
+                    </button>
                   </div>
                 </div>
                 <div class="col-12 col-lg-3 m-2">
@@ -179,12 +195,22 @@
                     Now
                   </button>
                 </div>
-                <div
-                  class="col-lg-2 m-2 p-3 background-primary pointer d-flex justify-content-center align-items-center"
-                  (click)="addToWishlist()"
-                >
-                  <i class="fa-regular fa-heart"></i>
-                </div>
+                <ng-container *ngIf="isFav">
+                  <div
+                    class="col-lg-2 m-2 p-3 background-primary pointer d-flex justify-content-center align-items-center"
+                    (click)="removeWishlist(currentVariant?.id)"
+                  >
+                    <i class="fa-solid text-danger fa-heart"></i>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="!isFav">
+                  <div
+                    class="col-lg-2 m-2 p-3 background-primary pointer d-flex justify-content-center align-items-center"
+                    (click)="addToWishlist()"
+                  >
+                    <i class="fa-regular fa-heart"></i>
+                  </div>
+                </ng-container>
                 <!-- <div
                   class="col-lg-2 p-3 m-2 background-primary d-flex justify-content-center align-items-center"
                 >

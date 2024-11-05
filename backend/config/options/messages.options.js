@@ -94,6 +94,8 @@ const MESSAGES = {
     Payment: (data) => `${data} Verify successfully`,
     Payment_Fail: (data) => `${data} Verify Fail`,
     Active_Plan: (data) => `${data} Currently Active`,
+    ADDED_VARIANT : (data) => `${data} added to the wishlist`,
+    REMOVE_VARIANT : (data) => `${data} remove from the wishlist`,
   },
   pushNotification: {
     REGISTER_TITLE: (name) =>

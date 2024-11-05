@@ -49,7 +49,7 @@ export class ContactComponent {
       this.customerService
         .enquiryEmail(this.messageForm.value)
         .subscribe((success) => {
-          this.toasterService.success('Sent Successfully!!');
+          this.toasterService.success('Message sent successfully!!');
           this.messageForm.reset();
         });
     } catch (error) {

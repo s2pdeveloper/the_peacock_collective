@@ -142,7 +142,8 @@ const modelObj = {
   delete: asyncHandler(async (req, res) => {
     let query = {
       where: {
-        id: req.params.id,
+        customerId: req.user.id,
+        variantId : req.body.variantId
       },
     };
     let deleted = await wishlistRepository.delete(query);

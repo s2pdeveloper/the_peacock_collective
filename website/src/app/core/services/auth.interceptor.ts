@@ -49,7 +49,7 @@ export class AuthInterceptor implements HttpInterceptor {
         if (errorResponse instanceof HttpErrorResponse) {
           if (errorResponse.status == 401) {
             this.router.navigate(['/auth/login']);
-            this.toast.error('Please login first..');
+            this.toast.error('Please login');
           } else {
             if (errorResponse.error) {
               this.toast.error(errorResponse.error.error);

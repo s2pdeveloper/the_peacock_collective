@@ -24,8 +24,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   showEye: boolean = true;
   collapsed: boolean = false;
   user: any;
-  collapsedAddress: boolean = true;
-  collapsedPayment: boolean = true;
   collapsedDetails: boolean = true;
   selectedAddressId: number = null;
   allAddresses: any[] = [];
@@ -229,15 +227,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           }
         }
       });
-    }
-  }
-  continue() {
-    if (this.selectedAddressId == null && this.selectedAddressId == undefined) {
-      this.toasterService.error('Please select atleast 1 address');
-      return;
-    } else {
-      this.collapsedPayment = !this.collapsedPayment;
-      this.collapsed = !this.collapsed;
     }
   }
   getAllCartData() {

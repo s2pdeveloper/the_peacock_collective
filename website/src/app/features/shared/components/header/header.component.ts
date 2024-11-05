@@ -62,7 +62,7 @@ export class HeaderComponent {
   get totalItemPrice() {
     let totalPriceArray = this.cartData.reduce(
       (acc, currValue) =>
-        acc + currValue.cartWithVariants.price * currValue.qty,
+        acc + currValue?.cartWithVariants?.price * currValue?.qty,
       0
     );
     // return totalPriceArray.reduce(
@@ -70,6 +70,13 @@ export class HeaderComponent {
     //   0
     // );
     return totalPriceArray;
+  }
+  get totalCartCount() {
+    let cartCnt = this.cartData.reduce(
+      (acc, currValue) => acc + currValue?.qty,
+      0
+    );
+    return cartCnt;
   }
   ngOnInit(): void {
     this.commonService.getLoginStatus().subscribe((success) => {
@@ -82,23 +89,8 @@ export class HeaderComponent {
         this.getAllCartData();
       }
     }
-
-    // this.commonService.addToCart(1);
-    // if (isPlatformBrowser(this._platformId)) {
-    //   window.addEventListener('wheel', (event) => {
-    //     this.scrollValue = Math.sign(event.deltaY);
-    //   });
-    // }
+    this.cartData = JSON.parse(sessionStorage.getItem('products'));
   }
-  // @HostListener('window:scroll', [])
-  // onWindowScroll() {
-  //   const scrollPositionValue =
-  //     window.pageYOffset ||
-  //     document.documentElement.scrollTop ||
-  //     document.body.scrollTop ||
-  //     0;
-  //   this.scrollPosition = scrollPositionValue;
-  // }
   navigateTo(path: any) {
     this.isVisible = false;
     if (path == '/order/my-orders' || path == '/order/wishlist') {
@@ -204,7 +196,12 @@ export class HeaderComponent {
   }
   getAllCartData() {
     this.cartService.getAll().subscribe((success) => {
-      this.cartData = success.result.rows;
+      if (isPlatformBrowser(this._platformId)) {
+        sessionStorage.setItem(
+          'products',
+          JSON.stringify(success?.result?.rows)
+        );
+      }
       let count = success.result.rows.reduce((acc, curr) => acc + curr.qty, 0);
       this.commonService.resetCart();
       this.commonService.addToCart(count);

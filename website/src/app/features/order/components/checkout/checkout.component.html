@@ -12,7 +12,7 @@
     <div class="col-11 py-3">
       <div class="row">
         <div class="col-12 col-md-12 col-lg-8">
-          <div [ngClass]="collapsed ? 'info-collapsed' : 'info'" class="row px-3 address-info">
+          <!-- <div [ngClass]="collapsed ? 'info-collapsed' : 'info'" class="row px-3 address-info">
             <div class="col-12 border">
               <div class="p-4 border-bottom">
                 <p class="fw-bold">Step 1: Addresses</p>
@@ -88,7 +88,83 @@
                 </div>
               </div>
             </div>
+          </div> -->
+          <div class="row px-3 address-info">
+            <div class="col-12 border">
+              <div class="accordion" id="accordionExample">
+                <div class="accordion-item border-0">
+                  <h2 class="accordion-header border-bottom" id="headingOne">
+                    <button class="accordion-button p-4 bg-transparent  rounded-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <p class="fw-bold">Step 1: Addresses</p>
+                    </button>
+                  </h2>
+                  <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body p-3">
+                      <div class="row justify-content-around">
+                        <div *ngFor="let add of allAddresses; let i = index"
+                          class="col-10 col-md-4 col-lg-5 card position-relative p-4">
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="d-flex mb-3 align-items-center">
+                                <p>{{ add?.name }}</p>
+                                <span class="bg-light small-text text-muted p-1 ms-2">{{ add.type }}</span>
+                              </div>
+                              <p class="mb-3">
+                                {{ add?.location }}
+                              </p>
+                              <p>{{ add?.phone }}</p>
+                            </div>
+                            <div class="badge pointer">
+                              <span><input type="radio" [(ngModel)]="this.selectedAddressId" name="address"
+                                  [value]="add.id" /></span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item border-0">
+                  <h2 class="accordion-header border-bottom border-top" id="headingTwo">
+                    <button class="accordion-button p-4 bg-transparent  rounded-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                      <p class="fw-bold">Step 2: Payment</p>
+                  </button>
+                  </h2>
+                  <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="accordion-body p-3">
+                      <div class="row align-items-center px-4 py-3">
+                        <div class="col-1">
+                          <input type="radio" value="cod" [(ngModel)]="payment" name="payment" id="cod" />
+                        </div>
+                        <div class="col-11">
+                          <label for="cod">COD</label>
+                        </div>
+                      </div>
+                      <div class="row align-items-center px-4 py-3">
+                        <div class="col-1">
+                          <input type="radio" value="card"  [(ngModel)]="payment" name="payment" id="card" />
+                        </div>
+                        <div class="col-11">
+                          <label for="card">CARD</label>
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="col-12">
+                          <div class="card-container" *ngIf="payment == 'card'">
+                            <app-strive (stripeEvent)="stripePay($event)"></app-strive>
+                        </div>
+                          <button *ngIf="payment != 'card'" class="btn btn-dark py-3 mt-3" (click)="createOrder()">
+                            Place order
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+          
         </div>
         <div class="col-12 col-md-12 col-lg-4">
           <div class="card rounded-0">
