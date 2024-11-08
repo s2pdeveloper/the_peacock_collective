@@ -60,24 +60,34 @@ export class HeaderComponent {
   }
 
   get totalItemPrice() {
-    let totalPriceArray = this.cartData.reduce(
-      (acc, currValue) =>
-        acc + currValue?.cartWithVariants?.price * currValue?.qty,
-      0
-    );
+    if (this.cartData.length) {
+      let totalPriceArray = this.cartData.reduce(
+        (acc, currValue) =>
+          acc + currValue?.cartWithVariants?.price * currValue?.qty,
+        0
+      );
+      return totalPriceArray;
+    } else {
+      return;
+    }
+
     // return totalPriceArray.reduce(
     //   (acc, currValue) => acc + currValue.totalPrice,
     //   0
     // );
-    return totalPriceArray;
   }
   get totalCartCount() {
-    let cartCnt = this.cartData.reduce(
-      (acc, currValue) => acc + currValue?.qty,
-      0
-    );
-    return cartCnt;
+    if (this.cartData && this.cartData?.length > 0) {
+      let cartCnt = this.cartData.reduce(
+        (acc, currValue) => acc + currValue?.qty,
+        0
+      );
+      return cartCnt;
+    } else {
+      return;
+    }
   }
+
   ngOnInit(): void {
     this.commonService.getLoginStatus().subscribe((success) => {
       this.customer = success;
@@ -89,7 +99,7 @@ export class HeaderComponent {
         this.getAllCartData();
       }
     }
-    this.cartData = JSON.parse(sessionStorage.getItem('products'));
+    this.cartData = JSON.parse(sessionStorage.getItem('products')) ?? [];
   }
   navigateTo(path: any) {
     this.isVisible = false;

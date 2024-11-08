@@ -71,6 +71,7 @@ export class ProductInfoFormComponent {
     name: new FormControl(null, [Validators.required]),
     categoryId: new FormControl(null, [Validators.required]),
     description: new FormControl(null),
+    keywords: new FormControl(null),
     hsn: new FormControl(null, [Validators.required]),
     gst: new FormControl(null),
     inStock: new FormControl(false),

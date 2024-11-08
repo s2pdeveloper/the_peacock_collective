@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT('long'),
       allowNull: true,
     },
+    keywords: {
+      type: DataTypes.TEXT('long'),
+      allowNull: true,
+    },
     hsn: {
       type: DataTypes.STRING,
       allowNull: true,

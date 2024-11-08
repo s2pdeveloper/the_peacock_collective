@@ -73,13 +73,14 @@ const modelObj = {
       direction = "DESC",
       search = req.query.name,
     } = req.query;
-    console.log("search", search);
+    console.log("search===================", search);
     let offset = (page - 1) * pageSize || 0;
     const query = {
       where: {
         ...(search && {
           [Op.or]: {
             name: { [Op.like]: `%${search}%` },
+            keywords : { [Op.like]: `%${search}%` },
             // description: { [Op.like]: `%${search}%` },
             // description: { [Op.iLike]: `%${search}%` },
           },
