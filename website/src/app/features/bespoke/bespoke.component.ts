@@ -3,8 +3,13 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import Stepper from 'bs-stepper';
-import { SpinnerService, StorageService, ToastService } from 'src/app/core/services';
+import {
+  SpinnerService,
+  StorageService,
+  ToastService,
+} from 'src/app/core/services';
 import { BespokeService } from 'src/app/services/bespoke';
+import { Country, State, City } from 'country-state-city';
 
 @Component({
   selector: 'app-bespoke',
@@ -13,6 +18,7 @@ import { BespokeService } from 'src/app/services/bespoke';
 })
 export class BespokeComponent {
   @ViewChild('attachments') attachment: any;
+  countries = Country.getAllCountries();
   storage = inject(StorageService);
   fileName: any = '';
   url: any = null;
@@ -32,6 +38,11 @@ export class BespokeComponent {
       value: 'No, Not sure yet',
     },
   ];
+  selectedState: any;
+  selectedCity: any;
+  states: any[] = [];
+  cities: any[] = [];
+  selectedCountryCode: string;
 
   constructor(
     private domSanitizer: DomSanitizer,
@@ -45,8 +56,16 @@ export class BespokeComponent {
     name: new FormControl('', Validators.required),
     city: new FormControl('', Validators.required),
     country: new FormControl('', Validators.required),
-    mobile: new FormControl(null, Validators.required),
-    email: new FormControl('', Validators.required),
+    state: new FormControl('', Validators.required),
+    mobile: new FormControl(null, [
+      Validators.required,
+      Validators.maxLength(10),
+      Validators.minLength(10),
+    ]),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}'),
+    ]),
     fromDate: new FormControl('', Validators.required),
     toDate: new FormControl('', Validators.required),
     eventOutfit: new FormControl('', Validators.required),
@@ -58,7 +77,7 @@ export class BespokeComponent {
       let token = this.storage.get('jSessionId') ?? '';
       if (token) {
         if (this.bespokeForm.invalid) {
-          this.toastService.error('Please fill required fields');
+          this.toastService.error('Please fill corrected data.');
         }
       }
       this.spinner.show();
@@ -71,19 +90,23 @@ export class BespokeComponent {
           formData.append(key, this.bespokeForm.value[key]);
         }
       }
+      if (!this.files.length) {
+        return this.toastService.success('Please add files.')
+      }
       if (this.files.length) {
         for (const item of this.files) {
           formData.append('image', item.file);
         }
       }
-      this.bespokeService.create(formData).subscribe((success) => {
-        this.spinner.hide();
-        console.log('success', success);
-        this.toastService.success(success?.result?.message);
-      },
-      (error) =>{
-        this.spinner.hide();
-      }
+      this.bespokeService.create(formData).subscribe(
+        (success) => {
+          this.spinner.hide();
+          console.log('success', success);
+          this.toastService.success(success?.result?.message);
+        },
+        (error) => {
+          this.spinner.hide();
+        }
       );
       this.reset();
     } catch (error) {
@@ -143,8 +166,8 @@ export class BespokeComponent {
       }
     }
   }
-  next(count: any) {
-    let options = {
+  next(count: number) {
+    const stepperOptions = {
       linear: true,
       animation: true,
       selectors: {
@@ -153,9 +176,32 @@ export class BespokeComponent {
         stepper: '.bs-stepper',
       },
     };
-    let step: any = new Stepper(document.querySelector('.bs-stepper'), options);
-    step.to(count);
+  
+    const stepper = new Stepper(
+      document.querySelector('.bs-stepper'),
+      stepperOptions
+    );
+  
+    const validateRequiredFields = (fields: string[]): boolean =>
+      fields.every((field) => this.bespokeForm.get(field)?.valid);
+  
+    const displayError = () => this.toastService.error('All fields are required.');
+  
+    if (count === 2) {
+      const requiredFields = ['name', 'mobile', 'email', 'country', 'state', 'city'];
+      if (!validateRequiredFields(requiredFields)) {
+        return displayError();
+      }
+    } else if (count === 3) {
+      const requiredFields = ['fromDate', 'toDate', 'eventOutfit', 'category', 'jewelryOption'];
+      if (!validateRequiredFields(requiredFields)) {
+        return displayError();
+      }
+    }
+  
+    stepper.to(count);
   }
+  
   previous(count: any) {
     let options = {
       linear: true,
@@ -168,5 +214,33 @@ export class BespokeComponent {
     };
     let step: any = new Stepper(document.querySelector('.bs-stepper'), options);
     step.to(count);
+  }
+  get email() {
+    return this.bespokeForm.get('email');
+  }
+
+  onCountryChange(value: any) {
+    this.selectedState = '';
+    this.selectedCity = '';
+    this.cities = [];
+    this.bespokeForm.controls['state'].setValue('');
+    this.bespokeForm.controls['city'].setValue('');
+    this.selectedCountryCode = value?.isoCode;
+    this.bespokeForm.controls['country'].setValue(value?.name);
+    this.states = State?.getStatesOfCountry(value?.isoCode);
+  }
+
+  onStateChange(value: any) {
+    this.selectedState = value?.name;
+    this.cities = [];
+    this.bespokeForm.controls['state'].setValue(value?.name);
+    this.cities = City?.getCitiesOfState(
+      this.selectedCountryCode,
+      value?.isoCode
+    );
+  }
+  onCityChange(value: any) {
+    this.selectedCity = value?.name;
+    this.bespokeForm.controls['city'].setValue(value?.name);
   }
 }

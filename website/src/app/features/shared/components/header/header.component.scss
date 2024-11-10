@@ -423,7 +423,19 @@ i {
 .dropdown-toggle::after{
   display: none !important;
 }
+/* Set the height of the scrollbar and remove background */
+.swiper-scrollbar {
+  height: 4px; /* Adjust height as needed */
+  background: transparent; /* Remove the default background */
+  bottom: 0; /* Position at the bottom */
+}
 
+/* Style the draggable scrollbar handle */
+.swiper-scrollbar-drag {
+  background-color: #007bff; /* Customize color of the scrollbar handle */
+  border-radius: 2px; /* Round the corners */
+  height: 100%; /* Make sure it takes full height */
+}
 @media (max-width: 992px) {
   .header-web {
     display: none;

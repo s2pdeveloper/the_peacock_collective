@@ -40,6 +40,14 @@ export class HeaderComponent {
   isSearchOpen: boolean = false;
   isVisible: boolean = false;
   activeTagTitle: string = '';
+  swiperConfig = {
+    slidesPerView: 4,
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+      type: 'bullets', // or 'progressbar' for a different style
+    },
+  };
   constructor(
     @Inject(PLATFORM_ID) private _platformId: Object,
     private router: Router,

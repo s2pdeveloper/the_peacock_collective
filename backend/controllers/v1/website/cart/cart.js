@@ -165,7 +165,7 @@ const modelObj = {
         })
       );
     } else {
-      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Cart");
+      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Item");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
   }),

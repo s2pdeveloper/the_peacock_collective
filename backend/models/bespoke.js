@@ -22,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      state: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       mobile: {
         type: DataTypes.INTEGER,
         allowNull: false,

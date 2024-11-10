@@ -249,7 +249,7 @@ const modelObj = {
     for await (const item of req.body.products) {
       let variant = await variantRepository.findByPk(item.variantId);
       if (variant.qty < item.qty) {
-        let errors = `Quantity of ${variant.sku} you selected in not available`;
+        let errors = `Quantity of ${variant.sku} you selected is not available`;
         throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
       }
     }

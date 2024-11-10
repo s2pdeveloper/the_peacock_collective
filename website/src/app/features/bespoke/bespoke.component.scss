@@ -55,6 +55,9 @@
   border-right: 0;
   outline: none;
 }
+.custom-dropdown {
+  padding-right: 30px; /* Add padding to avoid overlap with arrow */
+}
 .btn-dark,
 .btn-light {
   width: 100% !important;
@@ -69,4 +72,20 @@
 }
 input:focus{
   box-shadow: none;
+}
+
+.dropdown-container {
+  position: relative;  /* Position the container */
+}
+
+.custom-dropdown {
+  padding-right: 30px; /* Add padding to avoid overlap with arrow */
+}
+
+.dropdown-arrow {
+  position: absolute; /* Position it absolutely */
+  top: 50%;          /* Center vertically */
+  right: 50px;      /* Adjust this value for spacing */
+  transform: translateY(-50%); /* Vertically center the image */
+  pointer-events: none; /* Prevent interference with clicks */
 }
