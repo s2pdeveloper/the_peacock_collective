@@ -166,40 +166,59 @@ export class BespokeComponent {
       }
     }
   }
-  next(count: number) {
-    const stepperOptions = {
-      linear: true,
-      animation: true,
-      selectors: {
-        steps: '.step',
-        trigger: '.step-trigger',
-        stepper: '.bs-stepper',
-      },
-    };
-  
-    const stepper = new Stepper(
-      document.querySelector('.bs-stepper'),
-      stepperOptions
-    );
-  
-    const validateRequiredFields = (fields: string[]): boolean =>
-      fields.every((field) => this.bespokeForm.get(field)?.valid);
-  
-    const displayError = () => this.toastService.error('All fields are required.');
-  
-    if (count === 2) {
+  next(count: any) {
+    if (count === 2 ) {
       const requiredFields = ['name', 'mobile', 'email', 'country', 'state', 'city'];
-      if (!validateRequiredFields(requiredFields)) {
-        return displayError();
+      const allFieldsValid = requiredFields.every(
+        (field) => this.bespokeForm.get(field)?.valid
+      );
+      if (!allFieldsValid) {
+        return this.toastService.error('All fields are required.');
       }
-    } else if (count === 3) {
-      const requiredFields = ['fromDate', 'toDate', 'eventOutfit', 'category', 'jewelryOption'];
-      if (!validateRequiredFields(requiredFields)) {
-        return displayError();
+      else {
+  
+        let options = {
+          linear: true,
+          animation: true,
+          selectors: {
+            steps: '.step',
+            trigger: '.step-trigger',
+            stepper: '.bs-stepper',
+          },
+        };
+        let step: any = new Stepper(
+          document.querySelector('.bs-stepper'),
+          options
+        );
+        step.to(count);
       }
     }
+    if (count === 3 ) {
+      const requiredFields = ['fromDate', 'toDate', 'eventOutfit', 'category', 'jewelryOption'];
+      const allFieldsValid = requiredFields.every(
+        (field) => this.bespokeForm.get(field)?.valid
+      );
+      if (!allFieldsValid) {
+        return this.toastService.error('All fields are required.');
+      }
+      else {
   
-    stepper.to(count);
+        let options = {
+          linear: true,
+          animation: true,
+          selectors: {
+            steps: '.step',
+            trigger: '.step-trigger',
+            stepper: '.bs-stepper',
+          },
+        };
+        let step: any = new Stepper(
+          document.querySelector('.bs-stepper'),
+          options
+        );
+        step.to(count);
+      }
+    }
   }
   
   previous(count: any) {
