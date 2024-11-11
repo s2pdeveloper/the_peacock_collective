@@ -3,7 +3,6 @@
   margin: 0;
 }
 .packbag-page {
-  padding: 100px 40px;
   position: relative !important;
   .pack-img {
     width: 100%;
@@ -55,7 +54,6 @@
 }
 @media (max-width: 767px) {
   .packbag-page {
-    padding: 100px 15px;
     .pack-img{
       &:hover{
         background-size: cover;
