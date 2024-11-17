@@ -580,10 +580,10 @@
         class="option-item border-bottom d-flex justify-content-between py-3"
         (click)="handleDataRemove()"
       >
-        <div class="d-flex align-items-center w-25">
-          <i class="fa-solid fa-chevron-left"></i>
-        </div>
-        <p class="w-75 text-uppercase fw-bold">{{ category?.title }}</p>
+      <p class="w-75 text-uppercase fw-bold">{{ category?.title }}</p>
+      <div class="d-flex align-items-center justify-content-end w-25">
+        <i class="fa-solid fa-chevron-left"></i>
+      </div>
       </div>
       <div
         *ngFor="
@@ -611,7 +611,7 @@
       <div class="dropdownItem p-3">
         <swiper-container slides-per-view="1">
           <swiper-slide
-            class="px-2 w-100"
+            class="px-2 w-100 d-flex align-items-center flex-column"
             (click)="
               navigateToProdDetails(p?.id);
               handleDataRemove();
@@ -621,7 +621,7 @@
               let p of commonService.allData.products
                 | tagProduct : activeTagId : activeCategoryId
             "
-            ><img class="prod-img w-100" [src]="p?.bannerImage" />
+            ><img class="mob-prod-img" [src]="p?.bannerImage" />
             <div class="text-box p-3">
               <p class="prod-name">{{ p?.name }}</p>
             </div>

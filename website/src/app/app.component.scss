@@ -13,3 +13,10 @@
     transition: all 0.5s;
   }
 }
+input:-webkit-autofill {
+  background-color: transparent !important;
+  box-shadow: 0 0 0px 1000px white inset !important; /* Matches the input's background */
+  -webkit-background-clip: text;
+  color: inherit !important;
+}
+

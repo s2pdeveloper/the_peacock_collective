@@ -21,7 +21,10 @@ export class RegisterComponent implements AfterContentInit {
     socialTitle: new FormControl(null),
     firstName: new FormControl(null),
     lastName: new FormControl(null),
-    email: new FormControl(null),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}'),
+    ]),
     phone: new FormControl(null, [
       Validators.maxLength(10),
       Validators.minLength(10),
@@ -29,7 +32,9 @@ export class RegisterComponent implements AfterContentInit {
     password: new FormControl(null),
     DOB: new FormControl(null),
   });
-
+  get email() {
+    return this.registerForm.get('email');
+  }
   constructor(
     private router: Router,
     private customerService: CustomerService,

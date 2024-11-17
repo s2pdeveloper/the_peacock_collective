@@ -18,6 +18,23 @@
                   placeholder="Email"
                 />
               </div>
+              <div class="col-12">
+                <span
+                  *ngIf="
+                    email?.invalid &&
+                    (email?.dirty || email?.touched)
+                  "
+                  class="text-danger"
+                >
+                  <span *ngIf="email?.errors?.['required']"
+                    >Email is required.</span
+                  >
+                  <span *ngIf="email?.errors?.['pattern']"
+                    >Please enter a valid email address, like
+                    user&#64;example.com</span
+                  >
+                </span>
+              </div>
               <div class="col-12 password-input">
                 <input
                   [type]="showEye ? 'password' : 'text'"
@@ -338,7 +355,7 @@
             </span>
           </h4>
         </div>
-        <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
+        <div class="col-4 col-sm-4 col-md-3 col-lg-2 mb-3">
           <button
             (click)="showAddressForm = !showAddressForm"
             class="btn px-3 btn-dark"

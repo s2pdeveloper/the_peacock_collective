@@ -1,7 +1,7 @@
 <div class="search-dropdown" [ngClass]="{'open':shown}">
   <div *ngIf="!shown" class="w-100 d-flex align-items-center" (click)="show()"><span>Search</span></div>
   <div *ngIf="shown" class="search-dropdown__dropdown">
-    <input class="search-dropdown__dropdown__search" type="text" placeholder="Search for a product..."
+    <input class="search-dropdown__dropdown__search" type="text" placeholder="Search"
       (keyup)="search($event)" #input [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}" />
     <div class="search-dropdown__dropdown__scroller" *ngIf="items.length">
       <div class="search-dropdown__dropdown__item" *ngFor="let item of items" (click)="select(item)">

@@ -54,10 +54,15 @@ export class LoginComponent implements OnInit {
     isDefault: new FormControl(false),
   });
   loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required]),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}'),
+    ]),
     password: new FormControl('', [Validators.required]),
   });
-
+  get email() {
+    return this.loginForm.get('email');
+  }
   ngOnInit(): void {
     this.getAddresses();
   }

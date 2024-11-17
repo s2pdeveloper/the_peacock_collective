@@ -384,9 +384,9 @@ i {
 }
 
 .search-drop {
-  width: 85%;
+  width: 93%;
   position: absolute;
-  top: 25%;
+  top: 20%;
 }
 
 .search-collab{
@@ -493,6 +493,11 @@ i {
   .cart-modal,
   .cart-close {
     width: 100%;
+  }
+  .mob-prod-img{
+    width: 290px;
+    height: 350px;
+    object-fit: contain;
   }
 }
 

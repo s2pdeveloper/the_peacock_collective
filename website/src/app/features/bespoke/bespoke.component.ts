@@ -43,14 +43,17 @@ export class BespokeComponent {
   states: any[] = [];
   cities: any[] = [];
   selectedCountryCode: string;
-
+  today: string;
   constructor(
     private domSanitizer: DomSanitizer,
     private toastService: ToastService,
     private bespokeService: BespokeService,
     private spinner: SpinnerService,
     private router: Router
-  ) {}
+  ) {
+    const currentDate = new Date();
+    this.today = currentDate.toISOString().split('T')[0];
+  }
 
   bespokeForm = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -72,6 +75,7 @@ export class BespokeComponent {
     category: new FormControl('bridal'),
     jewelryOption: new FormControl(this.jewelryOption[0].label),
   });
+  
   submit() {
     try {
       let token = this.storage.get('jSessionId') ?? '';
@@ -91,7 +95,7 @@ export class BespokeComponent {
         }
       }
       if (!this.files.length) {
-        return this.toastService.success('Please add files.')
+        return this.toastService.success('Please add files.');
       }
       if (this.files.length) {
         for (const item of this.files) {
@@ -101,22 +105,41 @@ export class BespokeComponent {
       this.bespokeService.create(formData).subscribe(
         (success) => {
           this.spinner.hide();
-          console.log('success', success);
-          this.toastService.success(success?.result?.message);
+          this.reset()
+          this.previous(1)
+          this.toastService.success(
+            'Thank you for reaching out! Our team will respond shortly.'
+          );
         },
         (error) => {
           this.spinner.hide();
         }
       );
-      this.reset();
+      // this.spinner.hide();
+      // this.reset();
+
     } catch (error) {
       this.spinner.hide();
     }
   }
   reset() {
-    this.bespokeForm.reset();
-    this.files = [];
+    this.bespokeForm.reset({
+      name: '',
+      city: '',
+      country: '',
+      state: '',
+      mobile: null,
+      email: '',
+      fromDate: '',
+      toDate: '',
+      eventOutfit: '',
+      category: 'bridal', // Default value
+      jewelryOption: this.jewelryOption[0].label, // Default value
+    });
+    this.previous(1);
+    // this.files = [];
   }
+  
   navigateTo(path: any) {
     this.router.navigate([path]);
   }
@@ -142,9 +165,9 @@ export class BespokeComponent {
   fileChosen(event: any) {
     // this.files=[]
     if (event.target.files.length) {
-      if (event.target.files[0].size > 2000000) {
+      if (event.target.files[0].size > 5500000) {
         this.toastService.warning(
-          'Unable to upload file of size more than 1MB'
+          'Unable to upload file of size more than 5MB'
         );
         return;
       }
@@ -167,16 +190,21 @@ export class BespokeComponent {
     }
   }
   next(count: any) {
-    if (count === 2 ) {
-      const requiredFields = ['name', 'mobile', 'email', 'country', 'state', 'city'];
+    if (count === 2) {
+      const requiredFields = [
+        'name',
+        'mobile',
+        'email',
+        'country',
+        'state',
+        'city',
+      ];
       const allFieldsValid = requiredFields.every(
         (field) => this.bespokeForm.get(field)?.valid
       );
       if (!allFieldsValid) {
         return this.toastService.error('All fields are required.');
-      }
-      else {
-  
+      } else {
         let options = {
           linear: true,
           animation: true,
@@ -193,16 +221,20 @@ export class BespokeComponent {
         step.to(count);
       }
     }
-    if (count === 3 ) {
-      const requiredFields = ['fromDate', 'toDate', 'eventOutfit', 'category', 'jewelryOption'];
+    if (count === 3) {
+      const requiredFields = [
+        'fromDate',
+        'toDate',
+        'eventOutfit',
+        'category',
+        'jewelryOption',
+      ];
       const allFieldsValid = requiredFields.every(
         (field) => this.bespokeForm.get(field)?.valid
       );
       if (!allFieldsValid) {
         return this.toastService.error('All fields are required.');
-      }
-      else {
-  
+      } else {
         let options = {
           linear: true,
           animation: true,
@@ -220,7 +252,7 @@ export class BespokeComponent {
       }
     }
   }
-  
+
   previous(count: any) {
     let options = {
       linear: true,

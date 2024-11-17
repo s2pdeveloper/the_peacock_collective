@@ -89,3 +89,6 @@ input:focus{
   transform: translateY(-50%); /* Vertically center the image */
   pointer-events: none; /* Prevent interference with clicks */
 }
+::ng-deep .ng-option:hover {
+  background-color: #796853d0; /* Change to your desired background color */
+}

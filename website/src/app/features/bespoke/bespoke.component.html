@@ -340,9 +340,8 @@
                                   <input
                                     formControlName="mobile"
                                     placeholder="Phone"
-                                    maxlength="10"
-                                    minlength="10"
-                                    type="text"
+                                    max="9999999999" oninput="this.value = this.value.slice(0, 10)"
+                                    type="number"
                                     class="form-control"
                                   />
                                 </div>
@@ -582,6 +581,7 @@
                                   <input
                                     formControlName="fromDate"
                                     type="date"
+                                    [min]="today"
                                     class="form-control"
                                   />
                                 </div>
@@ -595,6 +595,7 @@
                                   <input
                                     formControlName="toDate"
                                     type="date"
+                                    [min]="today"
                                     class="form-control"
                                   />
                                 </div>
