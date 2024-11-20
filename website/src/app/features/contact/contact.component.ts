@@ -42,7 +42,7 @@ export class ContactComponent {
   }
   submit() {
     if (this.messageForm.invalid) {
-      this.toasterService.error('please fill required fields!!');
+      this.toasterService.error('Please enter required detials');
       return;
     }
     try {
