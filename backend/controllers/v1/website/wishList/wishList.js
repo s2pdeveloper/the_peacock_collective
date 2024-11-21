@@ -31,6 +31,7 @@ const modelObj = {
     let checkExisting = await wishlistRepository.findOneByCondition({
       where: {
         variantId: req.body.variantId,
+        customerId: req.user.id
       },
     });
 

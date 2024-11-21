@@ -250,7 +250,7 @@ export class ProductDetailsComponent implements OnInit {
     this.wishlistService.create(payload).subscribe({
       next: (success) => {
         console.log('success', success);
-
+        this.isFav = true;
         this.toasterService.success('Product added to wishlist!!');
       },
       error: (err) => {
@@ -271,6 +271,7 @@ export class ProductDetailsComponent implements OnInit {
         variantId : this.currentVariant.id
       }
       this.wishlistService.delete(payload).subscribe((success) => {
+        this.isFav = false;
         this.getAllWishlist();
         this.toasterService.success('Product removed from wishlist!!');
       });
