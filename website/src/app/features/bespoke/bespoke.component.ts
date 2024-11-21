@@ -61,9 +61,7 @@ export class BespokeComponent {
     country: new FormControl('', Validators.required),
     state: new FormControl('', Validators.required),
     mobile: new FormControl(null, [
-      Validators.required,
-      Validators.maxLength(10),
-      Validators.minLength(10),
+      Validators.pattern(/^([+]\d{2}[ ])?\d{10}$/)
     ]),
     email: new FormControl('', [
       Validators.required,
@@ -268,6 +266,9 @@ export class BespokeComponent {
   }
   get email() {
     return this.bespokeForm.get('email');
+  }
+  get mobile() {
+    return this.bespokeForm.get('mobile');
   }
 
   onCountryChange(value: any) {

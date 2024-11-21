@@ -149,7 +149,7 @@
                 class="row justify-content-between justify-content-sm-start justify-content-md-start justify-content-lg-around"
               >
                 <div class="col-2 d-flex align-items-center my-1">
-                  <label for="inputPassword6" class="col-form-label"
+                  <label for="inputPassword7" class="col-form-label"
                     >Type
                   </label>
                   <span class="text-danger">*</span>
@@ -200,7 +200,7 @@
                 class="row justify-content-between justify-content-sm-start justify-content-md-start justify-content-lg-around"
               >
                 <div class="col-2 d-flex align-items-center my-1">
-                  <label for="inputPassword6" class="col-form-label"
+                  <label for="inputPassword8" class="col-form-label"
                     >Address
                   </label>
                   <span class="text-danger">*</span>
@@ -219,7 +219,7 @@
                 class="row justify-content-between justify-content-sm-start justify-content-md-start justify-content-lg-around"
               >
                 <div class="col-2 d-flex align-items-center my-1">
-                  <label for="inputPassword6" class="col-form-label"
+                  <label for="inputPassword9" class="col-form-label"
                     >Country</label
                   >
                   <span class="text-danger">*</span>
@@ -232,6 +232,7 @@
                   bindValue="name"
                   [clearable]="false" 
                   (change)="onCountryChange($event)"
+                  formControlName="country"
                 >
                 </ng-select>
                 <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
@@ -248,7 +249,7 @@
                 class="row justify-content-between justify-content-sm-start justify-content-md-start justify-content-lg-around"
               >
                 <div class="col-2 d-flex align-items-center my-1">
-                  <label for="inputPassword6" class="col-form-label"
+                  <label for="inputPassword10" class="col-form-label"
                     >State
                   </label>
                   <span class="text-danger">*</span>
@@ -258,10 +259,10 @@
                   class="form-control background-primary custom-dropdown"
                   [items]="states"
                   bindLabel="name"
+                  bindValue="name"
+                  [clearable]="false" 
                   [(ngModel)]="selectedState"
                   [ngModelOptions]="{standalone: true}"
-                  [clearable]="false" 
-                  bindValue="name"
                   (change)="onStateChange($event)"
                 >
                 </ng-select>
@@ -274,7 +275,7 @@
                 class="row justify-content-between justify-content-sm-start justify-content-md-start justify-content-lg-around"
               >
                 <div class="col-2 d-flex align-items-center my-1">
-                  <label for="inputPassword6" class="col-form-label"
+                  <label for="inputPassword11" class="col-form-label"
                     >City
                   </label>
                   <span class="text-danger">*</span>
@@ -300,7 +301,7 @@
                 class="row justify-content-between justify-content-sm-start justify-content-md-start justify-content-lg-around"
               >
                 <div class="col-2 d-flex align-items-center my-1">
-                  <label for="inputPassword6" class="col-form-label"
+                  <label for="inputPassword12" class="col-form-label"
                     >Pin code
                   </label>
                   <span class="text-danger">*</span>

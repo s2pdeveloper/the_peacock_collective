@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
   selectedCountryCode: string;
   selectedState: any;
   selectedCity: any;
+  selectedCountry: any;
   states: any[] = [];
   cities: any[] = [];
   showEye: boolean = true;
@@ -153,6 +154,17 @@ export class LoginComponent implements OnInit {
     this.addressId = data.id;
     this.showAddressForm = !this.showAddressForm;
     this.addressForm.patchValue(data);
+    this.selectedState = data?.state;
+    this.selectedCity = data?.city;
+     this.selectedCountryCode = this.countries.find(
+      (x: any) => x.name == data.country
+    )?.isoCode 
+    this.states = State?.getStatesOfCountry(this.selectedCountryCode);
+    let stateisoCode = this.states.find((x: any) => x.name == data.state);
+    this.cities = City?.getCitiesOfState(
+      this.selectedCountryCode,
+      stateisoCode?.isoCode
+    );
   }
   update() {
     if (this.user) {
@@ -177,7 +189,7 @@ export class LoginComponent implements OnInit {
       });
     }
   }
-  onCountryChange(value: any) {
+  onCountryChange(value: any) { 
     this.selectedState = '';
     this.selectedCity = '';
     this.cities = [];
@@ -191,6 +203,7 @@ export class LoginComponent implements OnInit {
   onStateChange(value: any) {
     this.selectedState = value?.name;
     this.cities = [];
+    this.selectedCity = '';
     this.addressForm.controls['state'].setValue(value?.name);
     this.cities = City?.getCitiesOfState(
       this.selectedCountryCode,
