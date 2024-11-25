@@ -107,7 +107,6 @@ export class HeaderComponent {
         this.getAllCartData();
       }
     }
-    this.cartData = JSON.parse(sessionStorage.getItem('products')) ?? [];
   }
   navigateTo(path: any) {
     this.isVisible = false;
@@ -190,13 +189,14 @@ export class HeaderComponent {
   }
 
   showCart() {
-    let user = null;
+    // let user = null;
     if (isPlatformBrowser(this._platformId)) {
-      user = localStorage.getItem('Customer') ? true : false;
+      this.user = this.storageService.get('Customer');
     }
-    if (user) {
+    if (this.user) {
       this.isCartOpen = !this.isCartOpen;
-      this.getAllCartData();
+      // this.getAllCartData();
+      this.cartData = JSON.parse(sessionStorage.getItem('products')) ?? [];
     } else {
       this.toast.warning('Please login to view your cart');
     }
@@ -204,8 +204,18 @@ export class HeaderComponent {
   deleteVariant(id) {
     this.cartService.delete(id).subscribe({
       next: (success) => {
-        this.toasterService.success(success?.result?.message);
         this.getAllCartData();
+        this.toasterService.success(success?.result?.message);
+        // let removedEle = this.cartData.findIndex((c: any) => c.id == id);
+        // this.cartData = this.cartData.splice(removedEle, 0);
+        // if (isPlatformBrowser(this._platformId)) {
+        //   sessionStorage.setItem(
+        //     'products',
+        //     JSON.stringify(success?.result?.rows)
+        //   );
+        // }
+        // this.cartData = JSON.parse(sessionStorage.getItem('products')) ?? [];
+
       },
       error: (err) => {
         console.log('err', err);

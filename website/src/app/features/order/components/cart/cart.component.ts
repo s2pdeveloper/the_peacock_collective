@@ -12,13 +12,13 @@ import { CommonService } from 'src/app/services/common.service';
   styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
-  @Inject(PLATFORM_ID) private _platformId: Object
   qty: number = 1;
   user: any = null;
   originalCart = [];
   carts = [];
   showUpdate: boolean = false;
   constructor(
+    @Inject(PLATFORM_ID) private _platformId: Object,
     private router: Router,
     public commonService: CommonService,
     private cartService: CartService,
@@ -128,8 +128,6 @@ export class CartComponent implements OnInit {
       };
     });
     if (isPlatformBrowser(this._platformId)) {
-      console.log("this._platformId",this._platformId);
-      
       sessionStorage.setItem('products', JSON.stringify(checkoutProduts));
       this.router.navigate(['/order/checkout'], {
         queryParams: {

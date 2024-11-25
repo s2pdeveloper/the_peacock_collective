@@ -72,7 +72,7 @@ export class ProductDetailsComponent implements OnInit {
         );
         this.variants = this.products.productWithVariants;
         this.currentVariant = this.products.productWithVariants[0];
-        console.log(this.currentVariant);
+        // console.log(this.currentVariant);
         this.getAllWishlist();
         this.attrArr = [];
         this.bannerImg = this.currentVariant.variantImages[0]?.image;
@@ -236,8 +236,6 @@ export class ProductDetailsComponent implements OnInit {
     }
   }
   addToWishlist() {
-    console.log('clicked');
-
     // this.toggleFav = !this.toggleFav
     if (!this.user) {
       this.toasterService.warning('Please login to add product to wishlist');

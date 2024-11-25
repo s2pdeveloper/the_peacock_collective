@@ -340,7 +340,8 @@
                                   <input
                                     formControlName="mobile"
                                     placeholder="Phone"
-                                    type="tel"
+                                    oninput="this.value = this.value.splice(0,10)"
+                                    type="number"
                                     class="form-control"
                                   />
                                 </div>
