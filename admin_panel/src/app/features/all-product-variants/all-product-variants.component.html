@@ -44,8 +44,8 @@
               <th scope="col">Sr. No.</th>
               <!-- <th scope="col" class="text-start">Attribute</th> -->
               <th scope="col" class="text-start">SKU</th>
-              <th scope="col" class="text-end">QTY</th>
-              <th scope="col">Add QTY</th>
+              <!-- <th scope="col" class="text-end">QTY</th> -->
+              <th scope="col">Stock</th>
               <th scope="col">Price</th>
               <th scope="col" class="mx-auto text-center">Action</th>
             </tr>
@@ -64,14 +64,14 @@
                 </p>
               </td> -->
               <td scope="row" class="text-start">{{ c?.sku }}</td>
-              <td scope="row" class="text-end">{{ c?.qty }}</td>
+              <!-- <td scope="row" class="text-end">{{ c?.qty }}</td> -->
 
               <td scope="row">
                 <div class="d-flex justify-content-center align-items-center">
                   <button
-                    [disabled]="c.addQty <= 0"
+                    [disabled]="c.qty <= 0"
                     class="btn btn-sm btn-outline-none py-0 border-0"
-                    (click)="c.addQty = c.addQty - 1; c.edit = true"
+                    (click)="c.qty = c.qty - 1; c.edit = true"
                   >
                     <i
                       class="fa-solid fs-3 fa-minus-square text-primary fa-5x mx-0"
@@ -81,13 +81,14 @@
                   <input
                     class="form-control w-25"
                     type="number"
-                    [(ngModel)]="c.addQty"
+                    [(ngModel)]="c.qty"
                     [ngModelOptions]="{ standalone: true }"
                     (change)="c.edit = true"
+                    readonly
                   />
                   <button
                     class="btn btn-sm btn-outline-none py-0 border-0"
-                    (click)="c.addQty = c.addQty + 1; c.edit = true"
+                    (click)="c.qty = c.qty + 1; c.edit = true"
                   >
                     <i
                       class="fa-solid fs-3 fa-plus-square text-primary fa-5x mx-0"

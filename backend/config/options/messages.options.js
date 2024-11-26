@@ -33,7 +33,7 @@ const MESSAGES = {
   },
   apiErrorStrings: {
     INVALID_REQUEST: "Invalid request",
-    SERVER_ERROR: "Oops! something went wrong. Contact to server admin",
+    SERVER_ERROR: "Oops! something went wrong.",
     EXAM_START: (dateTime) =>
       `Your exam will start at ${dateTime}. Please wait`,
     MOBILE_NUMBER_ALREADY_IN_USE:

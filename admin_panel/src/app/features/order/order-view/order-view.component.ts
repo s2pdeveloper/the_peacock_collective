@@ -1,3 +1,4 @@
+import { CurrencyPipe } from "@angular/common";
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -15,6 +16,7 @@ enum OrderStatus {
   selector: "app-order-view",
   templateUrl: "./order-view.component.html",
   styleUrls: ["./order-view.component.scss"],
+  providers: [CurrencyPipe]
 })
 export class OrderViewComponent {
   OrderStatus = OrderStatus;
@@ -26,7 +28,8 @@ export class OrderViewComponent {
     private activated: ActivatedRoute,
     private orderService: OrderService,
     private spinner: SpinnerService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private currencyPipe: CurrencyPipe
   ) {}
   orderForm = new FormGroup({
     total: new FormControl(null),
@@ -39,6 +42,12 @@ export class OrderViewComponent {
       this.id = Number(params?.id);
     });
     this.getData();
+    this.orderForm.get('total')?.valueChanges.subscribe((value) => {
+      if (value !== null) {
+        const formattedValue = this.currencyPipe.transform(value, 'CAD', 'symbol', '1.2-2');
+        this.orderForm.get('total')?.setValue(formattedValue, { emitEvent: false }); // Prevent infinite loop
+      }
+    });
   }
   navigateTo(path) {
     this.router.navigate([path]);
@@ -77,16 +86,16 @@ export class OrderViewComponent {
         this.getData();
       });
   }
-  totalChange() {
-    let total: any = this.subtotal;
-    if (this.orderForm.value.discount) {
-      total =
-        this.subtotal - (this.orderForm.value.discount / 100) * this.subtotal ??
-        this.subtotal;
-    }
-    if (this.orderForm.value.shippingFee) {
-      total += this.orderForm.value.shippingFee;
-    }
-    this.orderForm.controls["total"].setValue(total.toFixed(2));
-  }
+  // totalChange() {
+  //   let total: any = this.subtotal;
+  //   if (this.orderForm.value.discount) {
+  //     total =
+  //       this.subtotal - (this.orderForm.value.discount / 100) * this.subtotal ??
+  //       this.subtotal;
+  //   }
+  //   if (this.orderForm.value.shippingFee) {
+  //     total += this.orderForm.value.shippingFee;
+  //   }
+  //   this.orderForm.controls["total"].setValue(total);
+  // }
 }

@@ -65,6 +65,10 @@ export class ProductInfoFormComponent {
       message: "Status is Required",
       key: "status",
     },
+    {
+      message: "Please select atleast one tag",
+      key: "tagId",
+    },
   ];
   productForm = new FormGroup({
     id: new FormControl(null),
@@ -231,6 +235,8 @@ export class ProductInfoFormComponent {
     } else {
       this.form.tagId.setValue(null)
     }
+    console.log("this.form.tagId",this.form.tagId.value);
+    
   }
   fileChosen(event: any, key) {
     if (event.target.files.length) {

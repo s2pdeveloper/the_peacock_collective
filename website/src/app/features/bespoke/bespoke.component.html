@@ -608,7 +608,7 @@
                                   <input
                                     formControlName="toDate"
                                     type="date"
-                                    [min]="today"
+                                    [min]="bespokeForm.get('fromDate')?.value"
                                     class="form-control"
                                   />
                                 </div>

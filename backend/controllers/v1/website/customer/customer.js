@@ -298,7 +298,7 @@ const modelObj = {
   }),
   enquiryEmail: asyncHandler(async (req, res) => {
     if (!req.body.email) {
-      const errors = MESSAGES.apiErrorStrings.INVALID_REQUEST;
+      const errors = MESSAGES.apiErrorStrings.SERVER_ERROR;
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
     console.log("req.body", req.body);
@@ -312,10 +312,11 @@ const modelObj = {
         "https://peacock-collective.web.app/assets/images/gold-logo.png",
       template: "enquiryEmail.html",
     };
-    console.log("data", data);
+    console.log("data", req.user);
     let emailPayload = {
       email: req.body?.email,
       message: req.body?.enquiryMsg,
+      customerId : req.body?.customerId
     };
     QueryMailsRepository.create(emailPayload);
     mail.sendForgetMail(req, data);

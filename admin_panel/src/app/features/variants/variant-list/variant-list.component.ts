@@ -19,24 +19,22 @@ export class VariantListComponent {
     private activated: ActivatedRoute,
     private spinner: SpinnerService,
     private toastService: ToastService
-  ) { }
+  ) {}
   page: number = 1;
   pageSize: number = 25;
   collection: number = 0;
   @Input() variantList: any = [];
+  @Input() productId: number;
   @Output() customEvent = new EventEmitter<any>();
   selectedRow;
   ngOnInit(): void {
-    this.attributeList = this.variantList.map(
-      (x) => x
-    );
-    console.log('this.attributeList', this.attributeList);
-
+    this.attributeList = this.variantList.map((x) => x);
+    console.log("this.attributeList", this.attributeList);
   }
   navigateTo(page, id) {
     if (id) {
       this.router.navigate([page], {
-        queryParams: { id: id },
+        queryParams: { id: id, productId: this.productId },
       });
     } else {
       this.router.navigate([page]);

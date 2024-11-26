@@ -85,7 +85,7 @@ input:focus{
 .dropdown-arrow {
   position: absolute; /* Position it absolutely */
   top: 50%;          /* Center vertically */
-  right: 50px;      /* Adjust this value for spacing */
+  right: 10px;     /* Adjust this value for spacing */
   transform: translateY(-50%); /* Vertically center the image */
   pointer-events: none; /* Prevent interference with clicks */
 }

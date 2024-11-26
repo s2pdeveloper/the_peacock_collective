@@ -17,6 +17,7 @@ export class VariantImagesComponent {
   variantId: any;
   options = [];
   imageArr = [];
+  productId:number
   constructor(
     private router: Router,
     private activated: ActivatedRoute,
@@ -42,6 +43,7 @@ export class VariantImagesComponent {
       if (params.id) {
         this.getByProductId(params.id);
         this.variantId = params.id;
+        this.productId = params.productId
         this.f["variantId"].setValue(params.id);
       }
     });
@@ -139,7 +141,9 @@ export class VariantImagesComponent {
     }
   }
   navigateTo() {
-    this.router.navigate(["default/product/product-list"]);
+    this.router.navigate(["default/variant/variant-form"], {
+      queryParams: { id: this.productId},
+    });
   }
   reset() {
     this.imageForm.reset();

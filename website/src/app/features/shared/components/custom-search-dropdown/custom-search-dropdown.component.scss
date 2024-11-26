@@ -5,6 +5,10 @@ $offset: 1px;
   font-size: 0.875rem;
   display: flex;
   justify-content: space-between;
+  position: absolute;
+  width: 92%;
+  max-height: 270px;
+
   $self: &;
   #{$self}__btn {
     position: absolute;
@@ -70,6 +74,8 @@ $offset: 1px;
     }
   }
   &.open {
+    top: 7px;
+    transform: translateY(7px);
     #{$self}__btn {
       &:before {
         border-top: 0px;

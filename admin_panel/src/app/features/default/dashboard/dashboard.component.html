@@ -30,7 +30,7 @@
           <div class="col-auto">
             Sales
             <span class="badge px-2 text-bg-success">
-             {{ dashboardStats?.todayOrderValue || 0 | currency : 'INR'}}
+             {{ dashboardStats?.todayOrderValue || 0 | currency : 'CAD'}}
             </span>
           </div>
           <div class="col-auto p-0">
@@ -331,7 +331,7 @@
               <h6 class="mb-2 f-w-400 text-muted">Yearly Income</h6>
               <h4 class="mb-3">
                 <span class="badge text-bg-info">
-                  {{ dashboardStats?.yearlyOrderValue || 0 | currency : 'INR' }}
+                  {{ dashboardStats?.yearlyOrderValue || 0 | currency : 'CAD' }}
                 </span>
               </h4>
             </div>

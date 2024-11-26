@@ -141,7 +141,19 @@ export class BespokeComponent {
   navigateTo(path: any) {
     this.router.navigate([path]);
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.bespokeForm.get('fromDate')?.valueChanges.subscribe((fromDate) => {
+      const toDateControl = this.bespokeForm.get('toDate');
+      if (fromDate) {
+        // Set minimum value for toDate
+        toDateControl?.setValidators([
+          Validators.required,
+          this.minDateValidator(new Date(fromDate)),
+        ]);
+        toDateControl?.updateValueAndValidity();
+      }
+    });
+  }
 
   onCategoryChange(ev: any) {
     if (ev.target.value == 'other') {
@@ -294,5 +306,13 @@ export class BespokeComponent {
   onCityChange(value: any) {
     this.selectedCity = value?.name;
     this.bespokeForm.controls['city'].setValue(value?.name);
+  }
+  minDateValidator(minDate: Date) {
+    return (control: FormControl) => {
+      const selectedDate = new Date(control.value);
+      return selectedDate >= minDate
+        ? null
+        : { minDate: { valid: false, requiredMinDate: minDate } };
+    };
   }
 }
