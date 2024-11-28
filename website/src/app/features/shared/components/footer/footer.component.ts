@@ -45,7 +45,7 @@ export class FooterComponent {
       this.customerService
         .enquiryEmail(this.messageForm.value)
         .subscribe((success) => {
-          this.toasterService.success('Sent Successfully!!');
+          this.toasterService.success("You're in! Stay tuned for newsletters");
           this.messageForm.reset();
         });
     } catch (error) {

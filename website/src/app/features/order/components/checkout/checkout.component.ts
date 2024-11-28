@@ -96,6 +96,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
   }
   createOrder() {
+    if (!this.selectedAddressId) {
+      this.toasterService.error('Please select atleast 1 address.');
+      return;
+    }
     let amount = this.product.reduce(
       (acc, currValue) => acc + currValue.price,
       0
