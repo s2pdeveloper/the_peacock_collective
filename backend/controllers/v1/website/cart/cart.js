@@ -28,7 +28,8 @@ const modelObj = {
       },
     });
     if (checkExisting) {
-      (checkExisting.qty += req.body?.qty), await checkExisting.save();
+      (checkExisting.qty += req.body?.qty);
+       await checkExisting.save();
     } else {
       await CartRepository.create(req.body);
     }

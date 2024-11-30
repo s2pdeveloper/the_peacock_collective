@@ -11,7 +11,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomerService } from 'src/app/services/customer.service';
 import { AddressService } from 'src/app/services/address.service';
 import { throttleTime } from 'rxjs';
-
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
@@ -29,6 +28,7 @@ export class ProductDetailsComponent implements OnInit {
   currentVariant = null;
   variants: any[] = [];
   wishlist: any[] = [];
+  carts: any[] = [];
   user: any;
   bannerImg: any;
   event: any;
@@ -75,6 +75,7 @@ export class ProductDetailsComponent implements OnInit {
         // console.log(this.currentVariant);
         if (this.user) {
           this.getAllWishlist();
+          this.getAllCart();
         }
         this.attrArr = [];
         this.bannerImg = this.currentVariant.variantImages[0]?.image;
@@ -87,29 +88,6 @@ export class ProductDetailsComponent implements OnInit {
             selectedValue: item.value ? item.value : null,
           });
         }
-        // for (const [i, item] of this.products.productWithVariants.entries()) {
-        //   for (const varMap of item.variantWithAttrVariantMap) {
-        //     let index = this.attrArr.findIndex(
-        //       (x) => x.name == varMap.AttrVariantMapWithAttributes.name
-        //     );
-        //     if (index == -1) {
-        //       this.attrArr.push({
-        //         name: varMap.AttrVariantMapWithAttributes.name,
-        //         type: varMap.AttrVariantMapWithAttributes.type,
-        //         value: [varMap.value],
-        //         selectedValue: i == 0 ? varMap.value : null,
-        //       });
-        //     } else {
-        //       this.attrArr[index].value.push(varMap.value);
-        //       this.attrArr[index].value = [
-        //         ...new Set(this.attrArr[index].value),
-        //       ];
-        //     }
-        //   }
-        // }
-        // this.currentVariant = this.products.productWithVariants.filter(
-        //   (x) => x.id === this.currentVariant.id
-        // )[0];
       }
     });
   }
@@ -146,30 +124,37 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   createCart() {
-    if (this.qty > this.currentVariant.qty) {
-      this.qty = this.currentVariant.qty;
+    if (this.carts.length) {
+      let selectedVar = this.carts.find(
+        (cart: any) => cart?.variantId == this.currentVariant.id
+      );
+      console.log('selectedVar', selectedVar);
+      if (selectedVar?.qty >= this.currentVariant.qty) {
+        this.toasterService.error(
+          'You selected product is already with max quantity in cart.'
+        );
+        return;
+      }
     }
     let payload = {
       qty: this.qty,
       variantId: this.currentVariant.id,
       customerId: this.user.id,
     };
-    this.cartService
-      .create(payload)
-      .pipe(throttleTime(1000))
-      .subscribe((success) => {
-        if (success) {
-          this.cartService.getAll().subscribe((success) => {
-            let count = success.result.rows.reduce(
-              (acc, curr) => acc + curr.qty,
-              0
-            );
-            this.commonService.resetCart();
-            this.commonService.addToCart(count);
-          });
-        }
-        this.toasterService.success('Product added to cart!!');
-      });
+    this.cartService.create(payload).subscribe((success) => {
+      if (success) {
+        this.cartService.getAll().subscribe((success) => {
+          let count = success.result.rows.reduce(
+            (acc, curr) => acc + curr.qty,
+            0
+          );
+          this.commonService.resetCart();
+          this.commonService.addToCart(count);
+          this.getAllCart();
+        });
+      }
+      this.toasterService.success('Product added to cart!!');
+    });
   }
 
   validateCart(login, event) {
@@ -268,8 +253,8 @@ export class ProductDetailsComponent implements OnInit {
   removeWishlist(id: Number) {
     try {
       let payload = {
-        variantId : this.currentVariant.id
-      }
+        variantId: this.currentVariant.id,
+      };
       this.wishlistService.delete(payload).subscribe((success) => {
         this.isFav = false;
         this.getAllWishlist();
@@ -278,5 +263,16 @@ export class ProductDetailsComponent implements OnInit {
     } catch (error) {
       console.log('error', error);
     }
+  }
+  getAllCart() {
+    this.cartService.getAll().subscribe({
+      next: (success) => {
+        this.carts = JSON.parse(JSON.stringify(success.result.rows));
+        console.log('success', success.result.rows);
+      },
+      error: (err) => {
+        console.log('err', err);
+      },
+    });
   }
 }
