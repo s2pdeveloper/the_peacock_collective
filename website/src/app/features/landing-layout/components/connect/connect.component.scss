@@ -52,15 +52,22 @@
   .input-wrapper {
     padding: 0 2rem;
     input {
-      font-size: 18px;
+      font-size: 14px;
     }
   }
 }
 @media (max-width: 575px) {
   .input-wrapper {
+    input{
+      min-height: 50px;
+      font-size: 12px;
+    }
     .subs-box {
-      width: 35%;
+      width: 30%;
       padding: 0 1rem;
+      p{
+        font-size: 12px;
+      }
     }
   }
 }
