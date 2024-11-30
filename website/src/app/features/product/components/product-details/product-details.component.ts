@@ -128,7 +128,6 @@ export class ProductDetailsComponent implements OnInit {
       let selectedVar = this.carts.find(
         (cart: any) => cart?.variantId == this.currentVariant.id
       );
-      console.log('selectedVar', selectedVar);
       if (selectedVar?.qty >= this.currentVariant.qty) {
         this.toasterService.error(
           'You selected product is already with max quantity in cart.'

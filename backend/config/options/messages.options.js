@@ -83,7 +83,7 @@ const MESSAGES = {
       `${data} status has been changed to ${status} successfully`,
     DELETED: (data) => `${data} has been deleted successfully`,
     DATA_ALREADY_EXISTS: (data) => `${data} already exists`,
-    DATA_NOT_EXISTS: (data) => `${data} does not exists`,
+    DATA_NOT_EXISTS: (data) => `${data} does not exist`,
     COURSES: (data) => `Courses are ${data}`,
     STATES: (data) => `States are ${data}`,
     IMAGES: (data) => `Images are ${data}`,
