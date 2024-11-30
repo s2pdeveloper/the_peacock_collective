@@ -22,13 +22,13 @@
           </div>
         </div>
         <div
-          class="col-6 col-md-6 col-lg-3 d-flex flex-column align-items-center"
+          class="col-6 col-md-6 col-lg-3 d-flex flex-column align-items-center box-3"
         >
           <!-- Peacock info -->
           <div class="d-flex flex-column">
-            <p class="mb-2 p-0 cursor">
+            <!-- <p class="mb-2 p-0 cursor">
               <span>Customer Reviews</span>
-            </p>
+            </p> -->
             <p class="mb-2 p-0 cursor">
               <span (click)="navigateTo('/info/terms-condition')"
                 >Terms & Conditions</span
@@ -47,7 +47,7 @@
           </div>
         </div>
         <div
-          class="col-6 col-md-6 col-lg-3 box-3"
+          class="col-6 col-md-6 col-lg-2 box-3"
         >
           <!-- Peacock info -->
           <div class="d-flex flex-column">
@@ -65,18 +65,19 @@
             </p>
           </div>
         </div>
-        <div class="col-12 col-md-4 col-lg-3 box-4">
+        <div class="col-12 col-md-4 col-lg-4 box-4">
           <p class="follow-text">Join our newsletter</p>
-        <form [formGroup]="messageForm">
+        <form [formGroup]="messageForm" autocomplete="off">
           <div class="input-wrapper">
             <input
               type="email"
               placeholder="Your email address"
               formControlName="email"
+              autocomplete="off"
             />
           
             <i
-              class="fa-solid cursor fa-arrow-right p-3"
+              class="fa-solid cursor fa-arrow-right px-3 py-2"
               (click)="submit()"
             ></i>
           </div>

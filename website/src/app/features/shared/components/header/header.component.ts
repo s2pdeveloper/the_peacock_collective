@@ -9,6 +9,7 @@ import { PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
+import { GeneralConfirmationModalComponent } from '../../modals/general-confirmation-modal/general-confirmation-modal';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -48,6 +49,7 @@ export class HeaderComponent {
       type: 'bullets', // or 'progressbar' for a different style
     },
   };
+  private modalService = inject(NgbModal);
   constructor(
     @Inject(PLATFORM_ID) private _platformId: Object,
     private router: Router,
@@ -62,9 +64,23 @@ export class HeaderComponent {
       this.commonService.setLogin();
     }
   }
-  private modalService = inject(NgbModal);
   openSearch(content: any) {
     this.modalService.open(content, { size: 'xl', centered: true });
+  }
+  open() {
+    const modalRef = this.modalService.open(GeneralConfirmationModalComponent, {
+      centered: true,
+    });
+    modalRef.componentInstance.info.info =
+      'Are you sure you want to log out? You will need to sign in again to access your account.';
+      modalRef.closed.subscribe((res: any) => {
+        if (res == 'Yes') {
+          console.log("Yessssss");
+          this.logout('/auth/login')
+        } else if (res == "No") {
+          console.log("Nooooooo");
+        }
+      })
   }
 
   get totalItemPrice() {
@@ -215,7 +231,6 @@ export class HeaderComponent {
         //   );
         // }
         // this.cartData = JSON.parse(sessionStorage.getItem('products')) ?? [];
-
       },
       error: (err) => {
         console.log('err', err);

@@ -4,19 +4,5 @@
 .outlet{
   min-height: 50vh;
 }
-.nav-top {
-  position: absolute;
-  width: 100%;
-  top: 0;
-  &:hover{
-    background: teal;
-    transition: all 0.5s;
-  }
-}
-input:-webkit-autofill {
-  background-color: transparent !important;
-  box-shadow: 0 0 0px 1000px white inset !important; /* Matches the input's background */
-  -webkit-background-clip: text;
-  color: inherit !important;
-}
+
 

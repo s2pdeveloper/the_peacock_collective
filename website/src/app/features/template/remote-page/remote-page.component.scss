@@ -61,16 +61,24 @@
   flex-direction: column;
   align-items: center;
 }
-
+.desc-container{
+  padding: 0 3rem;
+}
 @media (max-width: 575px) {
   .prod-cart {
     .prod-img {
-      min-height: 45vh;
-      max-height: 45vh;
+      min-height: 200px;
+      max-height: 200px;
       object-fit: contain;
-      height: 230px;
-      width: 140px !important;
+      height: 200px;
+      width: 150px !important;
       cursor: pointer;
+    }
+    .prod-name{
+      font-size: 12px
+    }
+    .desc-container{
+      padding: 0 1rem;
     }
   }
 

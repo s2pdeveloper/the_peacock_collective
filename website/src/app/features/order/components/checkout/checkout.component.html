@@ -94,20 +94,37 @@
               <div class="accordion" id="accordionExample">
                 <div class="accordion-item border-0">
                   <h2 class="accordion-header border-bottom" id="headingOne">
-                    <button class="accordion-button p-4 bg-transparent  rounded-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        <p class="fw-bold">Step 1: Addresses</p>
+                    <button
+                      class="accordion-button p-4 bg-transparent rounded-0"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseOne"
+                      aria-expanded="true"
+                      aria-controls="collapseOne"
+                    >
+                      <p class="fw-bold">Step 1: Addresses</p>
                     </button>
                   </h2>
-                  <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                  <div
+                    id="collapseOne"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="headingOne"
+                    data-bs-parent="#accordionExample"
+                  >
                     <div class="accordion-body p-3">
                       <div class="row justify-content-around">
-                        <div *ngFor="let add of allAddresses; let i = index"
-                          class="col-10 col-md-4 col-lg-5 card position-relative p-4">
+                        <div
+                          *ngFor="let add of allAddresses; let i = index"
+                          class="col-10 col-md-4 col-lg-5 card position-relative p-4"
+                        >
                           <div class="row">
                             <div class="col-12">
                               <div class="d-flex mb-3 align-items-center">
                                 <p>{{ add?.name }}</p>
-                                <span class="bg-light small-text text-muted p-1 ms-2">{{ add.type }}</span>
+                                <span
+                                  class="bg-light small-text text-muted p-1 ms-2"
+                                  >{{ add.type }}</span
+                                >
                               </div>
                               <p class="mb-3">
                                 {{ add?.location }}
@@ -115,8 +132,13 @@
                               <p>{{ add?.phone }}</p>
                             </div>
                             <div class="badge pointer">
-                              <span><input type="radio" [(ngModel)]="this.selectedAddressId" name="address"
-                                  [value]="add.id" /></span>
+                              <span
+                                ><input
+                                  type="radio"
+                                  [(ngModel)]="this.selectedAddressId"
+                                  name="address"
+                                  [value]="add.id"
+                              /></span>
                             </div>
                           </div>
                         </div>
@@ -125,16 +147,37 @@
                   </div>
                 </div>
                 <div class="accordion-item border-0">
-                  <h2 class="accordion-header border-bottom border-top" id="headingTwo">
-                    <button class="accordion-button p-4 bg-transparent  rounded-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                  <h2
+                    class="accordion-header border-bottom border-top"
+                    id="headingTwo"
+                  >
+                    <button
+                      class="accordion-button p-4 bg-transparent rounded-0"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseTwo"
+                      aria-expanded="true"
+                      aria-controls="collapseTwo"
+                    >
                       <p class="fw-bold">Step 2: Payment</p>
-                  </button>
+                    </button>
                   </h2>
-                  <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                  <div
+                    id="collapseTwo"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="headingTwo"
+                    data-bs-parent="#accordionExample"
+                  >
                     <div class="accordion-body p-3">
                       <div class="row align-items-center px-4 py-3">
                         <div class="col-1">
-                          <input type="radio" value="cod" [(ngModel)]="payment" name="payment" id="cod" />
+                          <input
+                            type="radio"
+                            value="cod"
+                            [(ngModel)]="payment"
+                            name="payment"
+                            id="cod"
+                          />
                         </div>
                         <div class="col-11">
                           <label for="cod">COD</label>
@@ -142,7 +185,13 @@
                       </div>
                       <div class="row align-items-center px-4 py-3">
                         <div class="col-1">
-                          <input type="radio" value="card"  [(ngModel)]="payment" name="payment" id="card" />
+                          <input
+                            type="radio"
+                            value="card"
+                            [(ngModel)]="payment"
+                            name="payment"
+                            id="card"
+                          />
                         </div>
                         <div class="col-11">
                           <label for="card">CARD</label>
@@ -151,9 +200,15 @@
                       <div class="row justify-content-center">
                         <div class="col-12">
                           <div class="card-container" *ngIf="payment == 'card'">
-                            <app-strive (stripeEvent)="stripePay($event)"></app-strive>
-                        </div>
-                          <button *ngIf="payment != 'card'" class="btn btn-dark py-3 mt-3" (click)="createOrder()">
+                            <app-strive
+                              (stripeEvent)="stripePay($event)"
+                            ></app-strive>
+                          </div>
+                          <button
+                            *ngIf="payment != 'card'"
+                            class="btn btn-dark py-3 mt-3"
+                            (click)="createOrder()"
+                          >
                             Place order
                           </button>
                         </div>
@@ -164,7 +219,6 @@
               </div>
             </div>
           </div>
-          
         </div>
         <div class="col-12 col-md-12 col-lg-4">
           <div class="card rounded-0">
@@ -179,40 +233,78 @@
                 <div class="col-4 d-flex justify-content-end">
                   <h5 class="small-text">
                     Show details
-                    <i class="fa-solid fa-chevron-down ms-1 pointer" (click)="collapsedDetails = !collapsedDetails"></i>
+                    <i
+                      class="fa-solid fa-chevron-down ms-1 pointer"
+                      (click)="collapsedDetails = !collapsedDetails"
+                    ></i>
                   </h5>
                 </div>
               </div>
               <div *ngIf="!collapsedDetails">
-                <div *ngFor="let d of product" class="row justify-content-between">
-                  <div class="col-3 p-3 pb-0">
-                    <img (click)="navigateToProdDetails(d?.product?.id)" class="img-fluid"
-                      [src]="d?.variant?.variantImages[0].image" alt="" />
+                <div
+                  *ngFor="let d of product"
+                  class="row justify-content-between product-container"
+                >
+                  <div class="col-3 p-3">
+                    <img
+                      (click)="navigateToProdDetails(d?.product?.id)"
+                      class="img-fluid"
+                      [src]="d?.variant?.variantImages[0].image"
+                      alt=""
+                    />
                   </div>
-                  <div class="col-9">
+                  <div class="col-9 d-flex flex-column justify-content-center">
                     <p class="regular-font">
-                      <span class="pointer" (click)="navigateToProdDetails(d?.product?.id)">{{
-                        d?.variant?.sku }}</span>
+                      <span
+                        class="pointer"
+                        (click)="navigateToProdDetails(d?.product?.id)"
+                        >{{ d?.variant?.sku }}</span
+                      >
                     </p>
-                    <p class="text-color-secondary small-text attr" *ngFor="
-                        let attr of d?.variant
-                          ?.variantWithAttrVariantMap
-                      ">
+                    <p
+                      class="text-color-secondary small-text attr"
+                      *ngFor="let attr of d?.variant?.variantWithAttrVariantMap"
+                    >
                       {{ attr.AttrVariantMapWithAttributes.name }} :
-                      <ng-container *ngIf="attr?.AttrVariantMapWithAttributes?.type == 'color'"> <i class="fa-solid fa-square" [ngStyle]="{'background-color':attr?.value}" ></i></ng-container>
-                      <ng-container *ngIf="attr?.AttrVariantMapWithAttributes?.type != 'color'"> {{ attr?.value }}</ng-container>
+                      <ng-container
+                        *ngIf="
+                          attr?.AttrVariantMapWithAttributes?.type == 'color'
+                        "
+                      >
+                        <i
+                          class="fa-solid fa-square"
+                          [ngStyle]="{ 'background-color': attr?.value }"
+                        ></i
+                      ></ng-container>
+                      <ng-container
+                        *ngIf="
+                          attr?.AttrVariantMapWithAttributes?.type != 'color'
+                        "
+                      >
+                        {{ attr?.value }}</ng-container
+                      >
                     </p>
-                  </div>
-                  <div class="col-12 d-flex justify-content-end">
-                    <p class="small-text">
-                      x{{ d?.qty}} {{ d?.variant.price | currency : 'CAD' }}
+                    <p class="small-text fw-bold">
+                      {{ d?.variant.price | currency : "CAD" }}
                     </p>
-                  </div>
-                  <div class="col-12 d-flex justify-content-end">
-                    <span class="small-text pointer" (click)="navigateTo('/order/cart')">
+                    <p class="small-text"><span class="fw-bold">Quantity:</span>{{ d?.qty }}</p>
+                    <span
+                      class="small-text pointer"
+                      (click)="navigateTo('/order/cart')"
+                    >
                       <i class="fa-solid fa-pencil me-2"></i>Edit
                     </span>
                   </div>
+                  <!-- <div class="col-12 d-flex justify-content-end">
+                    <p class="small-text">
+                      {{ d?.qty}} {{ d?.variant.price | currency : 'CAD' }}
+                    </p>
+                  </div>
+                 <div class="col-12 d-flex justify-content-end">
+                    <span class="small-text pointer" (click)="navigateTo('/order/cart')">
+                      <i class="fa-solid fa-pencil me-2"></i>Edit
+                    </span>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -220,7 +312,7 @@
               <div class="row justify-content-between">
                 <div class="col-4 regular-font">Subtotal</div>
                 <div class="col-4 d-flex justify-content-end regular-font">
-                  {{ totalItemPrice | currency : 'CAD' }}
+                  {{ totalItemPrice | currency : "CAD" }}
                 </div>
               </div>
             </div>
@@ -231,7 +323,7 @@
                 </div>
                 <div class="col-4 d-flex justify-content-end">
                   <h5 class="regular-weight">
-                    {{ totalItemPrice | currency : 'CAD' }}
+                    {{ totalItemPrice | currency : "CAD" }}
                   </h5>
                 </div>
               </div>

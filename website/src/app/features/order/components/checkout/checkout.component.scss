@@ -87,7 +87,7 @@ input:focus{
   box-shadow: none;
 }
 .small-text{
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   font-weight: 400;
 }
 .badge{
@@ -99,9 +99,11 @@ input:focus{
   padding: 0.5rem;
   width: 10%;
 }
-.card{
-  // margin: 1rem;
-    // width: 45%;
+.product-container {
+  background: rgb(249, 249, 250);
+  box-shadow: rgba(153, 153, 153, 0.25) 2px 2px 6px;
+  border-radius: 12px;
+  margin-bottom: 36px;
 }
 .fa-square{
   width: 20px;

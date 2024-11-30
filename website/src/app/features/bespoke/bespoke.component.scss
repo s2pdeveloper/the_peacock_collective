@@ -89,6 +89,14 @@ input:focus{
   transform: translateY(-50%); /* Vertically center the image */
   pointer-events: none; /* Prevent interference with clicks */
 }
+.field-padding{
+  padding: 16px 24px;
+}
 ::ng-deep .ng-option:hover {
   background-color: #796853d0; /* Change to your desired background color */
+}
+@media (max-width: 768px) {
+  .field-padding{
+    padding: 16px 0 0 0;
+  }
 }

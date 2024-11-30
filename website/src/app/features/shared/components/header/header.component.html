@@ -62,7 +62,7 @@
                     <button
                       class="p-3"
                       ngbDropdownItem
-                      (click)="logout('/auth/login')"
+                      (click)="open()"
                     >
                       LOG OUT
                     </button>
@@ -561,15 +561,15 @@
 
 <!-- Mobile Toggle Menu -->
 <div [ngClass]="isCatOpen ? 'modal-open cart-modal' : 'modal-open cart-close'">
-  <div class="offcanvas-header m-0 px-4 py-3 border-bottom">
-    <h6 class="fw-bold">THE PEACOCK COLLECTIVE</h6>
-    <button
-      type="button"
-      class="btn text-dark"
-      (click)="handleDataRemove(); isMenuOpen = !isMenuOpen"
-    >
-      <i class="text-dark fa-solid fa-xmark"></i>
-    </button>
+  <div class="offcanvas-header justify-content-center m-0 px-5 py-4 border-bottom">
+    <img
+    (click)="handleDataRemove(); isMenuOpen = !isMenuOpen"
+    class="img-fluid "
+    src="../../../../../assets/images/companyName.png"
+    alt="logo"
+  />
+
+    <!-- <h6 class="fw-bold" >THE PEACOCK COLLECTIVE</h6> -->
   </div>
 
   <div
@@ -595,10 +595,11 @@
           navigateToDynamic(item); handleDataRemove(); isMenuOpen = !isMenuOpen
         "
       >
+      <div class="w-25"></div>
         <span
           [class.textDanger]="item?.name == 'Sale'"
           [class.active-category]="activeCategoryId == item.id"
-          class="drop-items pointer"
+          class="drop-items pointer w-50 text-center"
           >{{ item?.name }}</span
         >
         <!-- <p class="w-75 text-uppercase" (click)="isMenuOpen = !isMenuOpen; handleDataRemove()">
@@ -608,7 +609,7 @@
           <i class="fa-solid fa-chevron-right"></i>
         </div>
       </div>
-      <div class="dropdownItem p-3">
+      <div class="dropdownItem py-3">
         <swiper-container slides-per-view="1">
           <swiper-slide
             class="px-2 w-100 d-flex align-items-center flex-column"

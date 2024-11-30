@@ -79,6 +79,18 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+input:-webkit-autofill {
+  background-color: transparent !important;
+  box-shadow: 0 0 0px 1000px transparent inset !important;
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  color: inherit !important; 
+}
+input:-webkit-autofill {
+  background-color: #fff !important;
+  color: #000 !important;
+  font-size: inherit;
+  border: inherit;
+}
 .ng-select-sm {
   font-size: 0.8rem !important;
   min-width: 8rem;

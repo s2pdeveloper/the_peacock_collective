@@ -1,0 +1,37 @@
+<div class="generalmodalHeader">
+  <p>Confirmation</p>
+  <button
+    (click)="hide()"
+    type="button"
+    class="close button-style purple-button"
+    data-dismiss="modal"
+    aria-label="Close"
+  >
+  <i class="fa-solid fa-xmark"></i>
+  </button>
+</div>
+
+<div class="generalmodalBody">
+  <div class="warningIcon">
+    <i class="fa-solid fa-triangle-exclamation"></i>
+  </div>
+  <p>{{info?.info}}</p>
+</div>
+
+<div class="generalmodalFooter">
+  <button
+    type="button"
+    class="d-flex align-items-center button-style purple-button me-2"
+    (click)="yes()"
+  >
+    <i class="fa-solid fa-check me-2"></i>Yes
+  </button>
+  <button
+    type="button"
+    class="d-flex align-items-center button-style red-button"
+    (click)="no()"
+    data-dismiss="modal"
+  >
+    <i class="fa-solid fa-xmark me-2"></i>No
+  </button>
+</div>
