@@ -200,81 +200,81 @@ export class BespokeComponent {
     }
   }
   next(count: any) {
-    // if (count === 2) {
-    //   const requiredFields = [
-    //     'name',
-    //     'mobile',
-    //     'email',
-    //     'country',
-    //     'state',
-    //     'city',
-    //   ];
-    //   const allFieldsValid = requiredFields.every(
-    //     (field) => this.bespokeForm.get(field)?.valid
-    //   );
-    //   if (!allFieldsValid) {
-    //     return this.toastService.error('All fields are required.');
-    //   } else {
-    //     let options = {
-    //       linear: true,
-    //       animation: true,
-    //       selectors: {
-    //         steps: '.step',
-    //         trigger: '.step-trigger',
-    //         stepper: '.bs-stepper',
-    //       },
-    //     };
-    //     let step: any = new Stepper(
-    //       document.querySelector('.bs-stepper'),
-    //       options
-    //     );
-    //     step.to(count);
-    //   }
-    // }
-    // if (count === 3) {
-    //   const requiredFields = [
-    //     'fromDate',
-    //     'toDate',
-    //     'eventOutfit',
-    //     'category',
-    //     'jewelryOption',
-    //   ];
-    //   const allFieldsValid = requiredFields.every(
-    //     (field) => this.bespokeForm.get(field)?.valid
-    //   );
-    //   if (!allFieldsValid) {
-    //     return this.toastService.error('All fields are required.');
-    //   } else {
-    //     let options = {
-    //       linear: true,
-    //       animation: true,
-    //       selectors: {
-    //         steps: '.step',
-    //         trigger: '.step-trigger',
-    //         stepper: '.bs-stepper',
-    //       },
-    //     };
-    //     let step: any = new Stepper(
-    //       document.querySelector('.bs-stepper'),
-    //       options
-    //     );
-    //     step.to(count);
-    //   }
-    // }
-    let options = {
-      linear: true,
-      animation: true,
-      selectors: {
-        steps: '.step',
-        trigger: '.step-trigger',
-        stepper: '.bs-stepper',
-      },
-    };
-    let step: any = new Stepper(
-      document.querySelector('.bs-stepper'),
-      options
-    );
-    step.to(count);
+    if (count === 2) {
+      const requiredFields = [
+        'name',
+        'mobile',
+        'email',
+        'country',
+        'state',
+        'city',
+      ];
+      const allFieldsValid = requiredFields.every(
+        (field) => this.bespokeForm.get(field)?.valid
+      );
+      if (!allFieldsValid) {
+        return this.toastService.error('All fields are required.');
+      } else {
+        let options = {
+          linear: true,
+          animation: true,
+          selectors: {
+            steps: '.step',
+            trigger: '.step-trigger',
+            stepper: '.bs-stepper',
+          },
+        };
+        let step: any = new Stepper(
+          document.querySelector('.bs-stepper'),
+          options
+        );
+        step.to(count);
+      }
+    }
+    if (count === 3) {
+      const requiredFields = [
+        'fromDate',
+        'toDate',
+        'eventOutfit',
+        'category',
+        'jewelryOption',
+      ];
+      const allFieldsValid = requiredFields.every(
+        (field) => this.bespokeForm.get(field)?.valid
+      );
+      if (!allFieldsValid) {
+        return this.toastService.error('All fields are required.');
+      } else {
+        let options = {
+          linear: true,
+          animation: true,
+          selectors: {
+            steps: '.step',
+            trigger: '.step-trigger',
+            stepper: '.bs-stepper',
+          },
+        };
+        let step: any = new Stepper(
+          document.querySelector('.bs-stepper'),
+          options
+        );
+        step.to(count);
+      }
+    }
+    // let options = {
+    //   linear: true,
+    //   animation: true,
+    //   selectors: {
+    //     steps: '.step',
+    //     trigger: '.step-trigger',
+    //     stepper: '.bs-stepper',
+    //   },
+    // };
+    // let step: any = new Stepper(
+    //   document.querySelector('.bs-stepper'),
+    //   options
+    // );
+    // step.to(count);
   }
 
   previous(count: any) {
@@ -328,5 +328,9 @@ export class BespokeComponent {
         ? null
         : { minDate: { valid: false, requiredMinDate: minDate } };
     };
+  }
+  allowNumbersOnly(event: any): void {
+    const input = event.target;
+    input.value = input.value.replace(/[^0-9]/g, '');
   }
 }

@@ -339,12 +339,14 @@
                                 </div>
                                 <div class="col-12 col-lg-10">
                                   <input
-                                    formControlName="mobile"
-                                    placeholder="Phone"
-                                    oninput="this.value = this.value.splice(0,10)"
-                                    type="number"
-                                    class="form-control"
-                                  />
+                                  formControlName="mobile"
+                                  placeholder="Phone"
+                                  type="text"
+                                  maxlength="10"
+                                  pattern="\d*"
+                                  class="form-control"
+                                  (input)="allowNumbersOnly($event)"
+                                />
                                 </div>
                                 <div class="col-12">
                                   <span

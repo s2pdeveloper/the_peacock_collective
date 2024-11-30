@@ -1,14 +1,17 @@
 import { isPlatformBrowser } from '@angular/common';
 import {
   Component,
+  inject,
   Inject,
   OnDestroy,
   OnInit,
   PLATFORM_ID,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { SpinnerService, StorageService } from 'src/app/core/services';
+import { NewAddressModalComponent } from 'src/app/features/shared/modals/new-address-modal/new-address-modal.component';
 import { AddressService } from 'src/app/services/address.service';
 import { CartService } from 'src/app/services/cart.service';
 import { CommonService } from 'src/app/services/common.service';
@@ -20,6 +23,7 @@ import { PaymentService } from 'src/app/services/payment.service';
   styleUrls: ['./checkout.component.scss'],
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
+  private modalService = inject(NgbModal);
   payment: any;
   showEye: boolean = true;
   collapsed: boolean = false;
@@ -31,7 +35,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   // cartData: any[] = [];
   shippingFee = 0;
   discount = 0;
-
 
   type: string = null;
   constructor(
@@ -52,8 +55,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   navigateTo(path: any) {
     this.router.navigate([path]);
   }
-  navigateToProdDetails(id:any) {
-    let path = `/product/product-details/${id}`
+  navigateToProdDetails(id: any) {
+    let path = `/product/product-details/${id}`;
     this.router.navigate([path]);
   }
   ngOnInit(): void {
@@ -108,7 +111,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       products: this.product,
       addressId: this.selectedAddressId,
       type: this.type,
-      amount: (amount + this.shippingFee) - this.discount,
+      amount: amount + this.shippingFee - this.discount,
       shippingFee: this.shippingFee,
       discount: this.discount,
     };
@@ -129,8 +132,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     const description = (product: any) => {
       let str = '';
       for (const item of product) {
-        str = (str ? str + ',' : '') + `${item.variant.sku} (QTY: ${item.qty},Price : ₹ ${item.variant.price} / unit)`;
-
+        str =
+          (str ? str + ',' : '') +
+          `${item.variant.sku} (QTY: ${item.qty},Price : ₹ ${item.variant.price} / unit)`;
       }
       return str;
     };
@@ -161,7 +165,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.spinnerService.show();
         let orderPayload = {
           ...payload,
-          amount: (amount + this.shippingFee) - this.discount,
+          amount: amount + this.shippingFee - this.discount,
           transId: success?.result?.data?.id,
           shippingFee: this.shippingFee,
           discount: this.discount,
@@ -236,6 +240,18 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   getAllCartData() {
     this.cartService.getAll().subscribe((success) => {
       this.product = success.result.rows;
+    });
+  }
+  openAddModal() {
+    const modalRef = this.modalService.open(NewAddressModalComponent, {
+      centered: true,
+    });
+    modalRef.componentInstance.user = this.user;
+    modalRef.closed.subscribe((res: any) => {
+      console.log('res', res);
+      if (res) {
+        this.getAddresses()
+      }
     });
   }
 }

@@ -75,13 +75,13 @@ export class HeaderComponent {
       'Are you sure you want to log out? You will need to sign in again to access your account.';
       modalRef.closed.subscribe((res: any) => {
         if (res == 'Yes') {
-          console.log("Yessssss");
           this.logout('/auth/login')
         } else if (res == "No") {
-          console.log("Nooooooo");
+          console.log("No");
         }
       })
   }
+
 
   get totalItemPrice() {
     if (this.cartData.length) {
