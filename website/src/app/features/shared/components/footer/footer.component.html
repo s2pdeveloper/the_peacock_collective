@@ -1,12 +1,11 @@
-<div class="container-fluid py-3 footer">
+<div class="container-fluid py-4 footer">
   <div class="row justify-content-center">
     <div class="col-11">
       <div class="row justify-content-between">
-        <div
-          class="col-6 col-md-6 col-lg-3"
-        >
+        <div class="col-12">
           <h3 class="mb-2 head-color">The Peacock Collective</h3>
-          <!-- Peacock info -->
+        </div>
+        <div class="col-6 col-md-6 col-lg-3">
           <div class="d-flex flex-column mb-2">
             <p class="mb-1 p-0 cursor">
               <a [href]="'mailto:' + data.email" target="_blank">{{
@@ -22,7 +21,7 @@
           </div>
         </div>
         <div
-          class="col-6 col-md-6 col-lg-3 d-flex flex-column align-items-center box-3"
+          class="col-6 col-md-6 col-lg-3 d-flex flex-column align-items-center"
         >
           <!-- Peacock info -->
           <div class="d-flex flex-column">
@@ -46,9 +45,7 @@
             </p>
           </div>
         </div>
-        <div
-          class="col-6 col-md-6 col-lg-2 box-3"
-        >
+        <div class="col-6 col-md-6 col-lg-2 box-3">
           <!-- Peacock info -->
           <div class="d-flex flex-column">
             <p class="mb-2 p-0 cursor">
@@ -67,26 +64,33 @@
         </div>
         <div class="col-12 col-md-4 col-lg-4 box-4">
           <p class="follow-text">Join our newsletter</p>
-        <form [formGroup]="messageForm" autocomplete="off">
-          <div class="input-wrapper">
-            <input
-              type="email"
-              placeholder="Your email address"
-              formControlName="email"
-              autocomplete="off"
-            />
-          
-            <i
-              class="fa-solid cursor fa-arrow-right px-3 py-2"
-              (click)="submit()"
-            ></i>
-          </div>
-          <span *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="text-danger">
-            <span *ngIf="email?.errors?.['required']">Email is required.</span>
-            <span *ngIf="email?.errors?.['pattern']">Please enter a valid email address, like user&#64;example.com</span>
-          </span>
-        </form>
-          
+          <form [formGroup]="messageForm" autocomplete="off">
+            <div class="input-wrapper">
+              <input
+                type="email"
+                placeholder="Your email address"
+                formControlName="email"
+                autocomplete="off"
+              />
+
+              <i
+                class="fa-solid cursor fa-arrow-right px-3 py-2"
+                (click)="submit()"
+              ></i>
+            </div>
+            <span
+              *ngIf="email?.invalid && (email?.dirty || email?.touched)"
+              class="text-danger"
+            >
+              <span *ngIf="email?.errors?.['required']"
+                >Email is required.</span
+              >
+              <span *ngIf="email?.errors?.['pattern']"
+                >Please enter a valid email address, like
+                user&#64;example.com</span
+              >
+            </span>
+          </form>
         </div>
         <div class="col-12 py-3">
           <p class="copyright">&copy; 2024 peacock collective</p>

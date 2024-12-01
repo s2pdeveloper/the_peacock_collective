@@ -1,4 +1,10 @@
-import { Component, Inject, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Inject,
+  inject,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { StorageService, ToastService } from 'src/app/core/services';
@@ -10,6 +16,9 @@ import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { GeneralConfirmationModalComponent } from '../../modals/general-confirmation-modal/general-confirmation-modal';
+import Swiper from 'swiper';
+import { Navigation } from 'swiper/modules';
+Swiper.use([Navigation]);
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -41,14 +50,6 @@ export class HeaderComponent {
   isSearchOpen: boolean = false;
   isVisible: boolean = false;
   activeTagTitle: string = '';
-  swiperConfig = {
-    slidesPerView: 4,
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true,
-      type: 'bullets', // or 'progressbar' for a different style
-    },
-  };
   private modalService = inject(NgbModal);
   constructor(
     @Inject(PLATFORM_ID) private _platformId: Object,
@@ -73,13 +74,13 @@ export class HeaderComponent {
     });
     modalRef.componentInstance.info.info =
       'Are you sure you want to log out? You will need to sign in again to access your account.';
-      modalRef.closed.subscribe((res: any) => {
-        if (res == 'Yes') {
-          this.logout('/auth/login')
-        } else if (res == "No") {
-          console.log("No");
-        }
-      })
+    modalRef.closed.subscribe((res: any) => {
+      if (res == 'Yes') {
+        this.logout('/auth/login');
+      } else if (res == 'No') {
+        console.log('No');
+      }
+    });
   }
 
 

@@ -1,13 +1,13 @@
 <div class="container-fluid collection" id="newArrivals">
-  <div class="row" *ngFor="let item of selectedCategories">
-    <div class="col-12 py-4 d-flex justify-content-center">
+  <div class="row py-4" *ngFor="let item of selectedCategories">
+    <div class="col-12 d-flex justify-content-center">
       <p class="section-heading">{{ item?.name }}</p>
     </div>
     <div class="col-12 product large-list pb-4">
       <div class="row product-row">
         <div class="col-12 product-column">
           <div class="card border-0">
-            <swiper-container class="img-box" slides-per-view="5">
+            <swiper-container class="img-box" slides-per-view="5" [navigation]="true">
               <ng-container
                 *ngFor="
                   let p of commonService.allData.products
@@ -40,7 +40,7 @@
       <div class="row product-row">
         <div class="col-12 product-column">
           <div class="card border-0">
-            <swiper-container class="img-box" slides-per-view="2">
+            <swiper-container class="img-box" slides-per-view="2" [navigation]="true">
               <ng-container
                 *ngFor="
                   let p of commonService.allData.products
@@ -72,7 +72,7 @@
       <div class="row product-row">
         <div class="col-12 product-column">
           <div class="card border-0">
-            <swiper-container class="img-box" slides-per-view="2">
+            <swiper-container class="img-box" slides-per-view="2" [navigation]="true">
               <ng-container
                 *ngFor="
                   let p of commonService.allData.products

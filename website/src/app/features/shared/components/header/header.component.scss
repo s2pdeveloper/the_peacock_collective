@@ -528,3 +528,26 @@ i {
     }
   }
 }
+
+/* Style the navigation buttons */
+swiper-container::part(button-prev),
+swiper-container::part(button-next) {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  scale: 0.75;
+  padding: 0.5rem;
+  top: 45%;
+  transform: translateY(-45%);
+}
+swiper-container::part(button-next) {
+  right: var(--swiper-navigation-sides-offset, -5px);
+}
+swiper-container::part(button-prev) {
+  left: var(--swiper-navigation-sides-offset, -5px);
+}

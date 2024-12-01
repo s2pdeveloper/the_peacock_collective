@@ -9,46 +9,20 @@ import {
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/services/common.service';
 import Swiper from 'swiper';
-import { register } from 'swiper/element/bundle';
-register();
+import { Navigation } from 'swiper/modules';
+Swiper.use([Navigation]);
 @Component({
   selector: 'app-new-arrivals',
   templateUrl: './new-arrivals.component.html',
   styleUrls: ['./new-arrivals.component.scss'],
 })
-export class NewArrivalsComponent implements OnInit, AfterViewInit {
-  constructor(
-    private router: Router,
-    public commonService: CommonService,
-    @Inject(PLATFORM_ID) private _platformId: Object
-  ) {}
+export class NewArrivalsComponent implements OnInit {
   selectedCategories: any[] = [];
-  swiper;
-
+  constructor(private router: Router, public commonService: CommonService) {}
   ngOnInit(): void {
     this.selectedCategories = this.commonService?.allData?.categories.filter(
       (cat) => cat.isShowHome === true
     );
-  }
-  ngAfterViewInit(): void {
-    if (isPlatformBrowser(this._platformId)) {
-      this.swiper = new Swiper('.sample-slider', {
-        loop: true, //loop
-        autoplay: {
-          //autoplay
-          delay: 2000,
-        },
-        pagination: {
-          //pagination(dots)
-          el: '.swiper-pagination',
-        },
-        navigation: {
-          //navigation(arrows)
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
-      });
-    }
   }
 
   showNavigationIndicators = false;
