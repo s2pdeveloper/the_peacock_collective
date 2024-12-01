@@ -528,6 +528,10 @@ i {
     }
   }
 }
+.dropdownItem{
+  cursor: pointer;
+}
+
 
 /* Style the navigation buttons */
 swiper-container::part(button-prev),
@@ -544,10 +548,13 @@ swiper-container::part(button-next) {
   padding: 0.5rem;
   top: 45%;
   transform: translateY(-45%);
+  cursor: pointer;
 }
 swiper-container::part(button-next) {
   right: var(--swiper-navigation-sides-offset, -5px);
+  cursor: pointer;
 }
 swiper-container::part(button-prev) {
+  cursor: pointer;
   left: var(--swiper-navigation-sides-offset, -5px);
 }
