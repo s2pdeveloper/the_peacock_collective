@@ -113,46 +113,46 @@
                   >
                     <div class="accordion-body p-3">
                       <div class="row justify-content-around">
-                        <ng-container
-                          *ngIf="allAddresses.length; else noAddress"
+                        <div
+                          *ngFor="let add of allAddresses; let i = index"
+                          class="col-10 col-md-4 col-lg-5 card position-relative p-4"
                         >
-                          <div
-                            *ngFor="let add of allAddresses; let i = index"
-                            class="col-10 col-md-4 col-lg-5 card position-relative p-4"
-                          >
-                            <div class="row">
-                              <div class="col-12">
-                                <div class="d-flex mb-3 align-items-center">
-                                  <p>{{ add?.name }}</p>
-                                  <span
-                                    class="bg-light small-text text-muted p-1 ms-2"
-                                    >{{ add.type }}</span
-                                  >
-                                </div>
-                                <p class="mb-3">
-                                  {{ add?.location }}
-                                </p>
-                                <p>{{ add?.phone }}</p>
-                              </div>
-                              <div class="badge pointer">
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="d-flex mb-3 align-items-center">
+                                <p>{{ add?.name }}</p>
                                 <span
-                                  ><input
-                                    type="radio"
-                                    [(ngModel)]="this.selectedAddressId"
-                                    name="address"
-                                    [value]="add.id"
-                                /></span>
+                                  class="bg-light small-text text-muted p-1 ms-2"
+                                  >{{ add.type }}</span
+                                >
                               </div>
+                              <p class="mb-3">
+                                {{ add?.location }}
+                              </p>
+                              <p>{{ add?.phone }}</p>
+                            </div>
+                            <div class="badge pointer">
+                              <span
+                                ><input
+                                  type="radio"
+                                  [(ngModel)]="this.selectedAddressId"
+                                  name="address"
+                                  [value]="add.id"
+                              /></span>
                             </div>
                           </div>
-                        </ng-container>
-                        <ng-template #noAddress>
-                          <div class="col-6 col-md-4 col-lg-4">
-                            <button class="btn px-3 btn-dark" (click)="openAddModal()">
-                              <i class="fa-solid fa-plus me-2"></i>Add address
-                            </button>
-                          </div>
-                        </ng-template>
+                        </div>
+                       
+                      </div>
+                      <div class="row justify-content-around mt-3">
+                        <div class="col-6 col-md-4 col-lg-4">
+                          <button
+                            class="btn px-3 btn-dark"
+                            (click)="openAddModal()"
+                          >
+                            <i class="fa-solid fa-plus me-2"></i>Add address
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>

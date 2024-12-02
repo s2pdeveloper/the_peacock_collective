@@ -15,7 +15,7 @@ export class CartComponent implements OnInit {
   qty: number = 1;
   user: any = null;
   originalCart = [];
-  carts = [];
+  carts:any[] = [];
   showUpdate: boolean = false;
   constructor(
     @Inject(PLATFORM_ID) private _platformId: Object,
@@ -35,7 +35,10 @@ export class CartComponent implements OnInit {
     this.router.navigate([path]);
   }
   ngOnInit(): void {
-    this.getAllCart();
+    // this.originalCart = JSON.parse(sessionStorage.getItem('products'));
+    this.carts = JSON.parse(sessionStorage.getItem('products'));
+    // console.log("this.carts",this.carts);
+    
   }
   deleteVariant(id) {
     console.log("id222222",id);
@@ -43,7 +46,7 @@ export class CartComponent implements OnInit {
       next: (success) => {
         console.log('success', success);
         this.toasterService.success(success?.result?.message);
-        this.getAllCart()
+        // this.getAllCart()
       },
       error: (err) => {
         console.log('err', err);
@@ -100,47 +103,65 @@ export class CartComponent implements OnInit {
     }
     return qtyExceed;
   }
-  getAllCart() {
-    this.cartService.getAll().subscribe({
-      next: (success) => {
-        this.originalCart = JSON.parse(JSON.stringify(success.result.rows));
-        this.carts = JSON.parse(JSON.stringify(success.result.rows));
-      },
-      error: (err) => {
-        console.log('err', err);
-      },
-    });
-  }
+  // getAllCart() {
+  //   this.cartService.getAll().subscribe({
+  //     next: (success) => {
+  //       this.originalCart = JSON.parse(JSON.stringify(success.result.rows));
+  //       this.carts = JSON.parse(JSON.stringify(success.result.rows));
+  //     },
+  //     error: (err) => {
+  //       console.log('err', err);
+  //     },
+  //   });
+  // }
   get totalItemPrice() {
-    let totalPriceArray = this.carts.reduce(
-      (acc, currValue) =>
-        acc + currValue.cartWithVariants.price * currValue.qty,
-      0
-    );
-    return totalPriceArray;
+    if (this.carts.length) {
+      let totalPriceArray = this.carts.reduce(
+        (acc, currValue) =>
+          acc + currValue.cartWithVariants.price * currValue.qty,
+        0
+      );
+      return totalPriceArray;
+    }
   }
   checkout() {
-    let checkoutProduts = this.carts.map((x) => {
-      return {
-        price: x.cartWithVariants.price * x.qty,
-        qty: x.qty,
-        variantId: x.variantId,
-      };
-    });
-    if (isPlatformBrowser(this._platformId)) {
-      sessionStorage.setItem('products', JSON.stringify(checkoutProduts));
+    // let checkoutProduts = this.carts.map((x) => {
+    //   return {
+    //     price: x.cartWithVariants.price * x.qty,
+    //     qty: x.qty,
+    //     variantId: x.variantId,
+    //   };
+    // });
+    // if (isPlatformBrowser(this._platformId)) {
+    //   sessionStorage.setItem('products', JSON.stringify(checkoutProduts));
       this.router.navigate(['/order/checkout'], {
         queryParams: {
           type: 'CART',
         },
       });
-    }
+    // }
   }
   decrementQty(p: any): void {
     p.qty = Math.max(1, p.qty - 1);
+    let products = JSON.parse(sessionStorage.getItem('products'));
+    let index = products.findIndex((x: any) => x.id == p.id);
+    if (index !== -1) {
+      products[index].qty = p.qty;
+    } else {
+      console.error('Product not found in the session storage');
+    }
+    sessionStorage.setItem('products', JSON.stringify(products));
   }
 
   incrementQty(p: any): void {
     p.qty = p.qty + 1;
+    let products = JSON.parse(sessionStorage.getItem('products'));
+    let index = products.findIndex((x: any) => x.id === p.id);
+    if (index !== -1) {
+      products[index].qty = p.qty;
+    } else {
+      console.error('Product not found in the session storage');
+    }
+    sessionStorage.setItem('products', JSON.stringify(products));
   }
 }

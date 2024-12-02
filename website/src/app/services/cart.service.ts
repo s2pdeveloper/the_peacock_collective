@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../core/services';
-import { map } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
   readonly BASE_URL = 'cart';
+  cartItems = new BehaviorSubject<any>([]);
+  cartItems$ = this.cartItems.asObservable();
 
-  constructor(private http: ApiService) { }
+  constructor(private http: ApiService) {}
 
   getAll() {
-    return this.http
-      .get(this.BASE_URL)
-      .pipe(map((res: any) => res));
+    return this.http.get(this.BASE_URL).pipe(map((res: any) => res));
   }
   create(payload: any) {
     return this.http.post(this.BASE_URL, payload).pipe(map((res: any) => res));

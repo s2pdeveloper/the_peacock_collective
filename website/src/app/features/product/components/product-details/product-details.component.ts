@@ -42,7 +42,6 @@ export class ProductDetailsComponent implements OnInit {
     private storageService: StorageService,
     private toasterService: ToastrService,
     private wishlistService: WishlistService,
-    private addressService: AddressService,
     @Inject(PLATFORM_ID) private _platformId: Object
   ) {
     this.user = this.storageService.get('Customer');
@@ -124,13 +123,16 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   createCart() {
+    console.log('this.currentVariant.id', this.currentVariant.id);
+    console.log('this.carts', this.carts);
+
     if (this.carts.length) {
       let selectedVar = this.carts.find(
         (cart: any) => cart?.variantId == this.currentVariant.id
       );
       if (selectedVar?.qty >= this.currentVariant.qty) {
         this.toasterService.error(
-          'You selected product is already with max quantity in cart.'
+          'Your selected product is already with max quantity in cart.'
         );
         return;
       }
@@ -143,13 +145,20 @@ export class ProductDetailsComponent implements OnInit {
     this.cartService.create(payload).subscribe((success) => {
       if (success) {
         this.cartService.getAll().subscribe((success) => {
+          this.cartService.cartItems.next([]);
+          this.cartService.cartItems.next([...success.result.rows]);
+          sessionStorage.setItem(
+            'products',
+            JSON.stringify(success.result.rows)
+          );
+          this.carts = success?.result?.rows;
           let count = success.result.rows.reduce(
             (acc, curr) => acc + curr.qty,
             0
           );
+          // this.getAllCart();
           this.commonService.resetCart();
           this.commonService.addToCart(count);
-          this.getAllCart();
         });
       }
       this.toasterService.success('Product added to cart!!');
@@ -266,7 +275,9 @@ export class ProductDetailsComponent implements OnInit {
   getAllCart() {
     this.cartService.getAll().subscribe({
       next: (success) => {
-        this.carts = JSON.parse(JSON.stringify(success.result.rows));
+        this.cartService.cartItems.next([]);
+        this.cartService.cartItems.next([...success.result.rows]);
+        this.carts = this.cartService.cartItems.getValue();
         console.log('success', success.result.rows);
       },
       error: (err) => {

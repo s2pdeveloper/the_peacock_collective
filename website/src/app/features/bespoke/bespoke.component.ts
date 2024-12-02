@@ -82,7 +82,6 @@ export class BespokeComponent {
           this.toastService.error('Please fill corrected data.');
         }
       }
-      this.spinner.show();
       let formData: FormData = new FormData();
       if (this.isOther) {
         this.bespokeForm.controls['category'].setValue(this.otherCategory);
@@ -93,13 +92,14 @@ export class BespokeComponent {
         }
       }
       if (!this.files.length) {
-        return this.toastService.success('Please add files.');
+        return this.toastService.error('Please add files.');
       }
       if (this.files.length) {
         for (const item of this.files) {
           formData.append('image', item.file);
         }
       }
+      this.spinner.show();
       this.bespokeService.create(formData).subscribe(
         (success) => {
           this.spinner.hide();

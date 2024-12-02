@@ -20,22 +20,61 @@ const {
 
 const modelObj = {
   create: asyncHandler(async (req, res) => {
-    console.log('cartbody',req.body);
+    console.log("req.body",req.body);
     
+    let result;
+    let id;
     const checkExisting = await CartRepository.findOneByCondition({
       where: {
         variantId: req.body.variantId,
       },
     });
     if (checkExisting) {
-      (checkExisting.qty += req.body?.qty);
-       await checkExisting.save();
+      id = checkExisting.id
+      checkExisting.qty += req.body?.qty;
+      await checkExisting.save();
     } else {
-      await CartRepository.create(req.body);
+     let res = await CartRepository.create(req.body);
+     id = res.id
     }
+    let query = {
+      where: {
+        id: id,
+      },
+      include: [
+        {
+          model: Variant,
+          as: "cartWithVariants",
+          attributes: ["price", "qty", "sku"],
+          include: [
+            {
+              model: AttrVariantMap,
+              as: "variantWithAttrVariantMap",
+              include: {
+                model: Attribute,
+                as: "AttrVariantMapWithAttributes",
+                // attributes: ["name", "hsn"],
+              },
+            },
+            {
+              model: Product,
+              as: "variantWithProduct",
+              attributes: ["name", "hsn", "id"],
+            },
+            {
+              model: Images,
+              as: "variantImages",
+            },
+          ],
+        },
+      ],
+    };
+    result = await CartRepository.findOneByCondition(query);
+
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
         message: MESSAGES.apiSuccessStrings.ADDED("Cart"),
+        data: result,
       })
     );
   }),
@@ -57,7 +96,7 @@ const modelObj = {
         {
           model: Variant,
           as: "cartWithVariants",
-          attributes: ["price", "qty","sku"],
+          attributes: ["price", "qty", "sku"],
           include: [
             {
               model: AttrVariantMap,
@@ -190,8 +229,7 @@ const modelObj = {
           }
         );
       });
-      Promise.all(promissArr).then((values) => {
-      });
+      Promise.all(promissArr).then((values) => {});
     }
 
     return res.json(
@@ -200,7 +238,6 @@ const modelObj = {
       })
     );
   }),
-
 };
 
 module.exports = modelObj;

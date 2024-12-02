@@ -22,7 +22,7 @@ import { PaymentService } from 'src/app/services/payment.service';
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss'],
 })
-export class CheckoutComponent implements OnInit, OnDestroy {
+export class CheckoutComponent implements OnInit {
   private modalService = inject(NgbModal);
   payment: any;
   showEye: boolean = true;
@@ -212,17 +212,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     //   0
     // );
     return totalPriceArray;
-  }
-  ngOnDestroy(): void {
-    if (isPlatformBrowser(this._platformId)) {
-      try {
-        if (sessionStorage.getItem('products')) {
-          sessionStorage.removeItem('products');
-        }
-      } catch (error) {
-        console.log('error', error);
-      }
-    }
   }
   getAddresses() {
     if (this.user) {

@@ -1,10 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  Inject,
-  inject,
-  ViewChild,
-} from '@angular/core';
+import { Component, Inject, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { StorageService, ToastService } from 'src/app/core/services';
@@ -12,7 +6,7 @@ import { TagCategoryPipe } from 'src/app/pipes/tag-category.pipe';
 import { CartService } from 'src/app/services/cart.service';
 import { CommonService } from 'src/app/services/common.service';
 import { PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { GeneralConfirmationModalComponent } from '../../modals/general-confirmation-modal/general-confirmation-modal';
@@ -82,7 +76,6 @@ export class HeaderComponent {
       }
     });
   }
-
 
   get totalItemPrice() {
     if (this.cartData.length) {
@@ -189,31 +182,29 @@ export class HeaderComponent {
     this.category.categories = [];
   }
   checkout() {
-    let checkoutProduts = this.cartData.map((x) => {
-      return {
-        qty: x.qty,
-        variantId: x.variantId,
-      };
-    });
-    if (isPlatformBrowser(this._platformId)) {
-      sessionStorage.setItem('products', JSON.stringify(checkoutProduts));
+    // let checkoutProduts = this.cartData.map((x) => {
+    //   return {
+    //     qty: x.qty,
+    //     variantId: x.variantId,
+    //   };
+    // });
+    // if (isPlatformBrowser(this._platformId)) {
+      // sessionStorage.setItem('products', JSON.stringify(checkoutProduts));
       this.router.navigate(['/order/checkout'], {
         queryParams: {
           type: 'CART',
         },
       });
-    }
+    // }
   }
 
   showCart() {
-    // let user = null;
     if (isPlatformBrowser(this._platformId)) {
       this.user = this.storageService.get('Customer');
     }
     if (this.user) {
       this.isCartOpen = !this.isCartOpen;
-      // this.getAllCartData();
-      this.cartData = JSON.parse(sessionStorage.getItem('products')) ?? [];
+      this.getAllCartData();
     } else {
       this.toast.warning('Please login to view your cart');
     }
@@ -223,15 +214,6 @@ export class HeaderComponent {
       next: (success) => {
         this.getAllCartData();
         this.toasterService.success(success?.result?.message);
-        // let removedEle = this.cartData.findIndex((c: any) => c.id == id);
-        // this.cartData = this.cartData.splice(removedEle, 0);
-        // if (isPlatformBrowser(this._platformId)) {
-        //   sessionStorage.setItem(
-        //     'products',
-        //     JSON.stringify(success?.result?.rows)
-        //   );
-        // }
-        // this.cartData = JSON.parse(sessionStorage.getItem('products')) ?? [];
       },
       error: (err) => {
         console.log('err', err);
@@ -240,6 +222,9 @@ export class HeaderComponent {
   }
   getAllCartData() {
     this.cartService.getAll().subscribe((success) => {
+      this.cartService.cartItems.next([]);
+      this.cartService.cartItems.next([...success.result.rows]);
+      this.cartData = this.cartService.cartItems.getValue();
       if (isPlatformBrowser(this._platformId)) {
         sessionStorage.setItem(
           'products',
@@ -298,9 +283,25 @@ export class HeaderComponent {
 
   decrementQty(p: any): void {
     p.qty = Math.max(1, p.qty - 1);
+    let products = JSON.parse(sessionStorage.getItem('products'));
+    let index = products.findIndex((x: any) => x.id == p.id);
+    if (index !== -1) {
+      products[index].qty = p.qty;
+    } else {
+      console.error('Product not found in the session storage');
+    }
+    sessionStorage.setItem('products', JSON.stringify(products));
   }
 
   incrementQty(p: any): void {
     p.qty = p.qty + 1;
+    let products = JSON.parse(sessionStorage.getItem('products'));
+    let index = products.findIndex((x: any) => x.id === p.id);
+    if (index !== -1) {
+      products[index].qty = p.qty;
+    } else {
+      console.error('Product not found in the session storage');
+    }
+    sessionStorage.setItem('products', JSON.stringify(products));
   }
 }
