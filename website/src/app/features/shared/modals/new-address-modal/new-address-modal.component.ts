@@ -108,4 +108,8 @@ export class NewAddressModalComponent {
     this.selectedCity = value?.name;
     this.form.controls['city'].setValue(value?.name);
   }
+  allowNumbersOnly(event: any): void {
+    const input = event.target;
+    input.value = input.value.replace(/[^0-9]/g, '');
+  }
 }

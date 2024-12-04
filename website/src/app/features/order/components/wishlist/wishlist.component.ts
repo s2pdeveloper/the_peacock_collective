@@ -24,7 +24,9 @@ export class WishlistComponent {
   }
 
   ngOnInit(): void {
-    this.getAllWishlist();
+    if (this.user) {
+      this.getAllWishlist();
+    }
   }
   getAllWishlist() {
     this.wishlistService.getAll().subscribe({

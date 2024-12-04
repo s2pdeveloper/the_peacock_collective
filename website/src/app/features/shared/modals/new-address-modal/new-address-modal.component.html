@@ -1,214 +1,212 @@
 <div class="container-fluid p-2">
-    <div class="row justify-content-center">
-        <div class="col-12 mb-2 ">
-          <h4 class="text-center py-2 border-bottom border-dark bg-dark text-light">Add Delivery Address</h4>
+  <div class="row justify-content-center">
+    <div class="col-12 mb-2">
+      <h4 class="text-center py-2 border-bottom border-dark bg-dark text-light">
+        Add Delivery Address
+      </h4>
+    </div>
+    <form [formGroup]="form" class="pb-3">
+      <div class="row my-3">
+        <div class="col-12">
+          <div
+            class="row justify-content-between justify-content-sm-start justify-content-md-start justify-content-lg-around"
+          >
+            <div class="col-3 d-flex align-items-center my-1">
+              <label class="col-form-label">Name </label>
+              <span class="text-danger">*</span>
+            </div>
+            <div class="col-9 d-flex my-1">
+              <input
+                type="text"
+                class="form-control background-primary"
+                formControlName="name"
+              />
+            </div>
+          </div>
         </div>
-        <form [formGroup]="form" class="pb-3">
-          <div class="row my-3">
-            <div class="col-12">
-              <div
-                class="row justify-content-between justify-content-sm-start justify-content-md-start justify-content-lg-around"
-              >
-                <div class="col-3 d-flex align-items-center my-1">
-                  <label class="col-form-label">Name </label>
-                  <span class="text-danger">*</span>
-                </div>
-                <div class="col-9 d-flex my-1">
-                  <input
-                    type="text"
-                    class="form-control background-primary"
-                    formControlName="name"
-                  />
-                </div>
-              </div>
+        <div class="col-12 d-flex flex-column justify-content-center">
+          <div
+            class="row justify-content-between justify-content-sm-start justify-content-md-start justify-content-lg-around"
+          >
+            <div class="col-3 d-flex align-items-center my-1">
+              <label class="col-form-label">Type </label>
+              <span class="text-danger">*</span>
             </div>
-            <div
-              class="col-12 d-flex flex-column justify-content-center"
-            >
-              <div
-                class="row justify-content-between justify-content-sm-start justify-content-md-start justify-content-lg-around"
-              >
-                <div class="col-3 d-flex align-items-center my-1">
-                  <label class="col-form-label">Type </label>
-                  <span class="text-danger">*</span>
-                </div>
-                <div class="col-9 d-flex my-1">
-                  <div class="d-flex px-2 align-items-center">
-                    <input
-                      class="form-check-input me-2 background-primary"
-                      type="radio"
-                      name="type"
-                      id="typeHome"
-                      value="home"
-                      formControlName="type"
-                    />
-                    <label class="form-check-label" for="typeHome">Home</label>
-                  </div>
-                  <div class="d-flex px-2 align-items-center">
-                    <input
-                      class="form-check-input me-2 background-primary"
-                      type="radio"
-                      name="type"
-                      id="typeWork"
-                      value="work"
-                      formControlName="type"
-                    />
-                    <label class="form-check-label" for="typeWork">Work</label>
-                  </div>
-                  <div class="d-flex px-2 align-items-center">
-                    <input
-                      class="form-check-input me-2 background-primary"
-                      type="radio"
-                      name="type"
-                      id="typeOther"
-                      value="others"
-                      formControlName="type"
-                    />
-                    <label class="form-check-label" for="typeOther">Other</label>
-                  </div>
-                </div>
+            <div class="col-9 d-flex my-1">
+              <div class="d-flex px-2 align-items-center">
+                <input
+                  class="form-check-input me-2 background-primary"
+                  type="radio"
+                  name="type"
+                  id="typeHome"
+                  value="home"
+                  formControlName="type"
+                />
+                <label class="form-check-label" for="typeHome">Home</label>
+              </div>
+              <div class="d-flex px-2 align-items-center">
+                <input
+                  class="form-check-input me-2 background-primary"
+                  type="radio"
+                  name="type"
+                  id="typeWork"
+                  value="work"
+                  formControlName="type"
+                />
+                <label class="form-check-label" for="typeWork">Work</label>
+              </div>
+              <div class="d-flex px-2 align-items-center">
+                <input
+                  class="form-check-input me-2 background-primary"
+                  type="radio"
+                  name="type"
+                  id="typeOther"
+                  value="others"
+                  formControlName="type"
+                />
+                <label class="form-check-label" for="typeOther">Other</label>
               </div>
             </div>
           </div>
-          <div class="row my-3">
-            <div class="col-12">
-              <div
-                class="row justify-content-between justify-content-sm-start justify-content-md-start justify-content-lg-around"
-              >
-                <div class="col-3 d-flex align-items-center my-1">
-                  <label class="col-form-label">Address </label>
-                  <span class="text-danger">*</span>
-                </div>
-                <div class="col-9 d-flex my-1">
-                  <textarea
-                    formControlName="location"
-                    class="form-control background-primary"
-                    cols="10"
-                  ></textarea>
-                </div>
-              </div>
-            </div>
-            <div class="col-12">
-              <div
-                class="row justify-content-between justify-content-sm-start justify-content-md-start justify-content-lg-around"
-              >
-                <div class="col-3 d-flex align-items-center my-1">
-                  <label class="col-form-label">Country</label>
-                  <span class="text-danger">*</span>
-                </div>
-                <div class="col-9 my-1 dropdown-container">
-                  <ng-select
-                    class="form-control background-primary custom-dropdown"
-                    [items]="countries"
-                    bindLabel="name"
-                    bindValue="name"
-                    [clearable]="false"
-                    (change)="onCountryChange($event)"
-                    formControlName="country"
-                  >
-                  </ng-select>
-                  <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div
-              class="col-12 d-flex flex-column justify-content-center my-3"
-            >
-              <div
-                class="row justify-content-between justify-content-sm-start justify-content-md-start justify-content-lg-around"
-              >
-                <div class="col-3 d-flex align-items-center my-1">
-                  <label class="col-form-label">State </label>
-                  <span class="text-danger">*</span>
-                </div>
-                <div class="col-9 my-1 dropdown-container">
-                  <ng-select
-                    class="form-control background-primary custom-dropdown"
-                    [items]="states"
-                    bindLabel="name"
-                    bindValue="name"
-                    [clearable]="false"
-                    [(ngModel)]="selectedState"
-                    [ngModelOptions]="{ standalone: true }"
-                    (change)="onStateChange($event)"
-                  >
-                  </ng-select>
-                  <i
-                    *ngIf="states.length"
-                    class="fa-solid fa-chevron-down dropdown-arrow"
-                  ></i>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 my-3">
-              <div
-                class="row justify-content-between justify-content-sm-start justify-content-md-start justify-content-lg-around"
-              >
-                <div class="col-3 d-flex align-items-center my-1">
-                  <label class="col-form-label">City </label>
-                  <span class="text-danger">*</span>
-                </div>
-                <div class="col-9 my-1 dropdown-container">
-                  <ng-select
-                    class="form-control background-primary custom-dropdown"
-                    [items]="cities"
-                    bindLabel="name"
-                    [(ngModel)]="selectedCity"
-                    [ngModelOptions]="{ standalone: true }"
-                    [clearable]="false"
-                    bindValue="name"
-                    (change)="onCityChange($event)"
-                  >
-                  </ng-select>
-                  <i
-                    *ngIf="cities.length"
-                    class="fa-solid fa-chevron-down dropdown-arrow"
-                  ></i>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 my-3">
-              <div
-                class="row justify-content-between justify-content-sm-start justify-content-md-start justify-content-lg-around"
-              >
-                <div class="col-3 d-flex align-items-center my-1">
-                  <label class="col-form-label">Pin code </label>
-                  <span class="text-danger">*</span>
-                </div>
-                <div class="col-9 my-1">
-                  <input
-                    type="text"
-                    maxlength="6"
-                    class="form-control background-primary"
-                    formControlName="pinCode"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-      
-          <div class="row my-4 justify-content-center">
-            <div class="col-3 col-md-2 col-lg-2 me-2">
-              <button
-                class="btn bg-dark p-2 w-100 text-light rounded-0"
-                (click)="submit()"
-              >
-                Save
-              </button>
-            </div>
-            <div class="col-3 col-md-2 col-lg-2">
-              <button
-                class="btn bg-dark p-2 w-100 text-light rounded-0"
-                (click)="hide()"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </form>
+        </div>
       </div>
+      <div class="row my-3">
+        <div class="col-12">
+          <div
+            class="row justify-content-between justify-content-sm-start justify-content-md-start justify-content-lg-around"
+          >
+            <div class="col-3 d-flex align-items-center my-1">
+              <label class="col-form-label">Address </label>
+              <span class="text-danger">*</span>
+            </div>
+            <div class="col-9 d-flex my-1">
+              <textarea
+                formControlName="location"
+                class="form-control background-primary"
+                cols="10"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div
+            class="row justify-content-between justify-content-sm-start justify-content-md-start justify-content-lg-around"
+          >
+            <div class="col-3 d-flex align-items-center my-1">
+              <label class="col-form-label">Country</label>
+              <span class="text-danger">*</span>
+            </div>
+            <div class="col-9 my-1 dropdown-container">
+              <ng-select
+                class="form-control background-primary custom-dropdown"
+                [items]="countries"
+                bindLabel="name"
+                bindValue="name"
+                [clearable]="false"
+                (change)="onCountryChange($event)"
+                formControlName="country"
+              >
+              </ng-select>
+              <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 d-flex flex-column justify-content-center my-3">
+          <div
+            class="row justify-content-between justify-content-sm-start justify-content-md-start justify-content-lg-around"
+          >
+            <div class="col-3 d-flex align-items-center my-1">
+              <label class="col-form-label">State </label>
+              <span class="text-danger">*</span>
+            </div>
+            <div class="col-9 my-1 dropdown-container">
+              <ng-select
+                class="form-control background-primary custom-dropdown"
+                [items]="states"
+                bindLabel="name"
+                bindValue="name"
+                [clearable]="false"
+                [(ngModel)]="selectedState"
+                [ngModelOptions]="{ standalone: true }"
+                (change)="onStateChange($event)"
+              >
+              </ng-select>
+              <i
+                *ngIf="states.length"
+                class="fa-solid fa-chevron-down dropdown-arrow"
+              ></i>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 my-3">
+          <div
+            class="row justify-content-between justify-content-sm-start justify-content-md-start justify-content-lg-around"
+          >
+            <div class="col-3 d-flex align-items-center my-1">
+              <label class="col-form-label">City </label>
+              <span class="text-danger">*</span>
+            </div>
+            <div class="col-9 my-1 dropdown-container">
+              <ng-select
+                class="form-control background-primary custom-dropdown"
+                [items]="cities"
+                bindLabel="name"
+                [(ngModel)]="selectedCity"
+                [ngModelOptions]="{ standalone: true }"
+                [clearable]="false"
+                bindValue="name"
+                (change)="onCityChange($event)"
+              >
+              </ng-select>
+              <i
+                *ngIf="cities.length"
+                class="fa-solid fa-chevron-down dropdown-arrow"
+              ></i>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 my-3">
+          <div
+            class="row justify-content-between justify-content-sm-start justify-content-md-start justify-content-lg-around"
+          >
+            <div class="col-3 d-flex align-items-center my-1">
+              <label class="col-form-label">Pin code </label>
+              <span class="text-danger">*</span>
+            </div>
+            <div class="col-9 my-1">
+              <input
+                formControlName="pinCode"
+                type="text"
+                maxlength="6"
+                pattern="\d*"
+                class="form-control background-primary"
+                (input)="allowNumbersOnly($event)"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-4 justify-content-center">
+        <div class="col-3 col-md-2 col-lg-2 me-2">
+          <button
+            class="btn bg-dark p-2 w-100 text-light rounded-0"
+            (click)="submit()"
+          >
+            Save
+          </button>
+        </div>
+        <div class="col-3 col-md-2 col-lg-2">
+          <button
+            class="btn bg-dark p-2 w-100 text-light rounded-0"
+            (click)="hide()"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
-
-

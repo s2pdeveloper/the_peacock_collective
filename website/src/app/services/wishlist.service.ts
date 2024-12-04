@@ -3,12 +3,12 @@ import { ApiService } from '../core/services';
 import { map } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WishlistService {
   readonly BASE_URL = 'wishlist';
 
-  constructor(private http: ApiService) { }
+  constructor(private http: ApiService) {}
 
   getAll() {
     return this.http.get(this.BASE_URL);
@@ -23,9 +23,7 @@ export class WishlistService {
       .pipe(map((res: any) => res));
   }
   delete(data: any) {
-    return this.http
-      .put(this.BASE_URL , data)
-      .pipe(map((res: any) => res));
+    return this.http.put(this.BASE_URL, data).pipe(map((res: any) => res));
   }
   getById(id: any) {
     return this.http.get(this.BASE_URL + '/' + id).pipe(map((res: any) => res));

@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 import { ToastService } from '../services/toast.service';
 import { environment } from 'src/environments/environment';
 import { PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   currentRoute: any;
@@ -27,12 +27,9 @@ export class AuthInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     let user = null;
-    // const user = this.storageService.get('userData');
     if (isPlatformBrowser(this._platformId)) {
       user = JSON.parse(localStorage.getItem('Customer'));
     }
-    const excludePath = [];
-
     request = request.clone({
       url: environment.apiEndpoint + request.url,
       ...(user &&
@@ -55,7 +52,6 @@ export class AuthInterceptor implements HttpInterceptor {
               this.toast.error(errorResponse.error.error);
             }
           }
-          
         }
         return throwError(() => errorResponse.error);
       })
