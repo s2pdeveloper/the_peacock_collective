@@ -34,9 +34,9 @@ sudo certbot --nginx -d peacock.s2pedutech.com
 
 node dist/website/server/main.js
 
-<!-- Pending Bugs -->
-1) Delete Variant from cart --OK
-2) Checkout Details --OK
-3) Payment UI --OK
-4) Decrease quantity after order the product --OK
-5) Remove Image from Tag & Category (Admin Panel) --OK
+<!-- Modifications -->
+1) Template -> Category : no need of remote-page make category page remote-page itself
+2) Distribute Topbar and Header
+3) 
+4) 
+5) 

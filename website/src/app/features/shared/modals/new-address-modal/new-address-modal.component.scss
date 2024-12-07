@@ -1,10 +1,10 @@
 .dropdown-container {
-    position: relative;  /* Position the container */
-  }
+  position: relative;
+}
 .dropdown-arrow {
-    position: absolute; /* Position it absolutely */
-    top: 50%;          /* Center vertically */
-    right: 10px;
-    transform: translate(-10px, -50%); /* Vertically center the image */
-    pointer-events: none; /* Prevent interference with clicks */
-  }
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translate(-10px, -50%);
+  pointer-events: none;
+}

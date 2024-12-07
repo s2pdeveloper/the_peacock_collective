@@ -62,11 +62,6 @@ const routes: Routes = [
       import('./features/order/order.module').then((m) => m.OrderModule),
   },
   {
-    path: 'brand',
-    loadChildren: () =>
-      import('./features/brand/brand.module').then((m) => m.BrandModule),
-  },
-  {
     path: 'info',
     loadChildren: () =>
       import('./features/information/information.module').then(

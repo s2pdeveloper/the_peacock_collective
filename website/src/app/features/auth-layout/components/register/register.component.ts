@@ -19,17 +19,18 @@ export class RegisterComponent implements AfterContentInit {
   showEye: boolean = true;
   registerForm = new FormGroup({
     socialTitle: new FormControl(null),
-    firstName: new FormControl(null),
-    lastName: new FormControl(null),
+    firstName: new FormControl(null , [Validators.required]),
+    lastName: new FormControl(null, [Validators.required]),
     email: new FormControl('', [
       Validators.required,
       Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}'),
     ]),
     phone: new FormControl(null, [
+      Validators.required,
       Validators.maxLength(10),
       Validators.minLength(10),
     ]),
-    password: new FormControl(null),
+    password: new FormControl(null, [Validators.required]),
     DOB: new FormControl(null),
   });
   get email() {
@@ -39,10 +40,9 @@ export class RegisterComponent implements AfterContentInit {
     private router: Router,
     private customerService: CustomerService,
     private toasterService: ToastrService,
-    private storageService: StorageService,
-    // private cd: ChangeDetectorRef
-  ) {
-  }
+    private storageService: StorageService
+  ) // private cd: ChangeDetectorRef
+  {}
   ngAfterContentInit(): void {
     // this.cd.markForCheck()
   }
@@ -51,15 +51,15 @@ export class RegisterComponent implements AfterContentInit {
     this.router.navigate([path]);
   }
   submit() {
-    if (this.registerForm.value) {
+    if (this.registerForm.valid) {
       let formData: any = this.registerForm.value;
       this.customerService.register(formData).subscribe((success: any) => {
         this.toasterService.success(success?.result?.message);
-        
+
         this.router.navigate(['/auth/login']);
       });
     } else {
-      this.toasterService.error('Please fill required fields!!')
+      this.toasterService.error('Please fill required fields!!');
     }
   }
 }

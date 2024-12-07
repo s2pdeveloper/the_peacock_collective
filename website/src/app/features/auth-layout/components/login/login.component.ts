@@ -73,13 +73,13 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
-    if (this.loginForm.value) {
+    if (this.loginForm.valid) {
       this.customerService.login(this.loginForm.value).subscribe(
         (success: any) => {
           if (success) {
             this.user = success.result;
             this.storageService.set('Customer', success.result);
-            this.toasterService.success('Successfully logged in!!!');
+            this.toasterService.success('Signed in successfully');
             this.getAddresses();
             this.navigateTo('/');
             this.cartService.getAll().subscribe((success) => {
