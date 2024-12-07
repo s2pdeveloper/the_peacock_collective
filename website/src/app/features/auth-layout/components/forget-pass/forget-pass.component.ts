@@ -22,13 +22,21 @@ export class ForgetPassComponent {
     this.router.navigate([path]);
   }
   submit() {
-    let formData = this.forgetPassForm.value;
-    console.log('formData', formData);
-    this.customerService
-      .forgetPass(this.forgetPassForm.value)
-      .subscribe((success) => {
-        console.log('success', success);
-        this.toastService.success(success?.result?.message)
-      });
+    if (this.forgetPassForm.invalid) {
+      this.toastService.error('Please fill required fields!!');
+      return;
+    }
+    try {
+      let formData = this.forgetPassForm.value;
+      console.log('formData', formData);
+      this.customerService
+        .forgetPass(this.forgetPassForm.value)
+        .subscribe((success) => {
+          console.log('success', success);
+          this.toastService.success(success?.result?.message)
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

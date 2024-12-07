@@ -17,23 +17,23 @@
                   autocomplete="off"
                   placeholder="Email"
                 />
-              </div>
-              <div class="col-12">
-                <span
-                  *ngIf="
-                    email?.invalid &&
-                    (email?.dirty || email?.touched)
-                  "
-                  class="text-danger"
-                >
-                  <span *ngIf="email?.errors?.['required']"
-                    >Email is required.</span
+                <div>
+                  <span
+                    *ngIf="
+                      email?.invalid &&
+                      (email?.dirty || email?.touched)
+                    "
+                    class="text-danger"
                   >
-                  <span *ngIf="email?.errors?.['pattern']"
-                    >Please enter a valid email address, like
-                    user&#64;example.com</span
-                  >
-                </span>
+                    <span *ngIf="email?.errors?.['required']"
+                      >Email is required.</span
+                    >
+                    <span *ngIf="email?.errors?.['pattern']"
+                      >Please enter a valid email address, like
+                      user&#64;example.com</span
+                    >
+                  </span>
+                </div>
               </div>
               <div class="col-12 password-input">
                 <input

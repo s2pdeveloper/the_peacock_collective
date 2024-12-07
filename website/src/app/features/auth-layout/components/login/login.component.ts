@@ -96,7 +96,7 @@ export class LoginComponent implements OnInit {
         (error) => {}
       );
     } else {
-      this.toasterService.error('Something went wrong!!');
+      this.toasterService.error('All fields are required');
     }
   }
 
