@@ -118,3 +118,8 @@ input:-webkit-autofill {
   padding: 0 0.75rem;
   cursor: text;
 }
+button:disabled,
+button[disabled] {
+  cursor: not-allowed;
+  pointer-events: none;
+}

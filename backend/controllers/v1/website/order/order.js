@@ -111,7 +111,7 @@ const modelObj = {
         {
           model: OrderVariantMap,
           as: "orderWithOrderVariantMap",
-          attributes: ["variantId", "qty", "price"],
+          attributes: ["variantId", "qty", "price","orderId"],
           include: [
             {
               model: Variant,
@@ -120,6 +120,7 @@ const modelObj = {
                 {
                   model: AttrVariantMap,
                   as: "variantWithAttrVariantMap",
+                  attribute:["value"],
                   include: {
                     model: Attribute,
                     as: "AttrVariantMapWithAttributes",
@@ -137,8 +138,13 @@ const modelObj = {
                 },
               ],
             },
+            {
+              model:Order,
+              as:"orderVariantMapWithOrder",
+              attributes:["orderNumber","status"]
+            }
           ],
-        },
+        }
       ],
 
       offset: +offset,

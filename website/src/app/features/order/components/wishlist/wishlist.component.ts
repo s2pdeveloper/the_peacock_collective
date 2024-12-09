@@ -13,6 +13,7 @@ import { WishlistService } from 'src/app/services/wishlist.service';
 export class WishlistComponent {
   wishlist: any[] = [];
   user: any;
+  isLoading : boolean = false;
   constructor(
     private wishlistService: WishlistService,
     private cartService: CartService,
@@ -69,7 +70,9 @@ export class WishlistComponent {
       let payload = {
         variantId : id
       }
+      this.isLoading = true;
       this.wishlistService.delete(payload).subscribe((success) => {
+        this.isLoading = false;
         this.getAllWishlist();
         this.toasterService.success('Product removed from wishlist!!');
       });

@@ -20,13 +20,15 @@ const {
 
 const modelObj = {
   create: asyncHandler(async (req, res) => {
-    console.log("req.body",req.body);
+    // console.log("req.body",req.body);
+    // console.log("req.user",req.user);
     
     let result;
     let id;
     const checkExisting = await CartRepository.findOneByCondition({
       where: {
         variantId: req.body.variantId,
+        customerId : req.user.id
       },
     });
     if (checkExisting) {
