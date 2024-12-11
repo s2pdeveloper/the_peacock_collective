@@ -13,31 +13,31 @@
           </div>
           <div *ngIf="wishlist.length" class="col-12 p-3 border-bottom">
             <div class="row">
-              <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex py-3 flex-wrap bg-white rounded-4" *ngFor="let p of wishlist">
-                <div class="d-flex flex-column align-items-center w-100">
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex flex-wrap " *ngFor="let p of wishlist">
+                <div class="d-flex flex-column align-items-center py-3 w-100 m-2 bg-white rounded-4">
                   <img height="250" class="mb-3" [src]="p?.variantWithWishList?.variantImages[0]?.image" (click)="
                       navigateToProdDetails(
                         p?.variantWithWishList?.variantWithProduct?.id
                       )
                     " alt="" />
-                    <div class="row w-100 py-2 border-top">
-                      <div class="col-9 p-0">
-                          <p class="mb-0 text-size-s">
-                            {{ p?.variantWithWishList?.sku }}
-                          </p>
-                          <p class="mb-0 text-danger text-size-s">
-                            {{ p?.variantWithWishList?.price | currency : 'CAD' }}
-                          </p>
-                      </div>
-                      <div class="col-3 p-0">
-                        <button class="btn btn-dark mb-2 p-2" (click)="createCart(p)">
-                          <i class="fa-solid fa-plus"></i>
-                        </button>
-                        <button class="btn btn-dark p-2" (click)="deleteList(p.variantId)" [disabled]="isLoading" >
-                          <i class="fa-solid fa-trash"></i>
-                        </button>
-                      </div>
+                  <div class="row w-100 p-2 border-top">
+                    <div class="col-9 p-0">
+                      <p class="mb-0 text-size-s">
+                        {{ p?.variantWithWishList?.sku }}
+                      </p>
+                      <p class="mb-0 text-danger text-size-s">
+                        {{ p?.variantWithWishList?.price | currency : 'CAD' }}
+                      </p>
                     </div>
+                    <div class="col-3 p-0">
+                      <button class="btn btn-dark mb-2 p-2" (click)="createCart(p)">
+                        <i class="fa-solid fa-plus"></i>
+                      </button>
+                      <button class="btn btn-dark p-2" (click)="deleteList(p.variantId)" [disabled]="isLoading">
+                        <i class="fa-solid fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
