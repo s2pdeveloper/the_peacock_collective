@@ -69,7 +69,7 @@ const modelObj = {
       include: {
         model: Variant,
         as: "variantWithWishList",
-        attributes: ["price","sku"],
+        attributes: ["price","sku","qty"],
         include: [
           {
             model: Product,
@@ -109,36 +109,37 @@ const modelObj = {
   //     .json(generateResponse(resCode.HTTP_OK, existing));
   // }),
 
-  //   update: asyncHandler(async (req, res) => {
-  //     let itemDetails = await Model.findOne({
-  //       where: {
-  //         id: req.params.id,
-  //       },
-  //     });
-  //     // console.log("itemDetails============", itemDetails);
-  //     if (!itemDetails) {
-  //       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Categories");
-  //       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
-  //     } else {
-  //       if (req.file) {
-  //         if (itemDetails.image) {
-  //           await cloudinary.deleteFile(itemDetails.image);
-  //         }
-  //         console.log("req.file.path", req.file);
-  //         req.body.image = await cloudinary.uploadFromBuffer(req.file.buffer);
-  //       }
+    // update: asyncHandler(async (req, res) => {
+    //   let itemDetails = await Model.findOne({
+    //     where: {
+    //       id: req.params.id,
+    //       customerId: req.user.id
+    //     },
+    //   });
+    //   // console.log("itemDetails============", itemDetails);
+    //   if (!itemDetails) {
+    //     let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Item");
+    //     throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
+    //   } else {
+    //     // if (req.file) {
+    //     //   if (itemDetails.image) {
+    //     //     await cloudinary.deleteFile(itemDetails.image);
+    //     //   }
+    //     //   console.log("req.file.path", req.file);
+    //     //   req.body.image = await cloudinary.uploadFromBuffer(req.file.buffer);
+    //     // }
 
-  //       itemDetails = await generateCreateData(itemDetails, req.body);
+    //     itemDetails = await generateCreateData(itemDetails, req.body);
 
-  //       await itemDetails.save();
+    //     await itemDetails.save();
 
-  //       return res.json(
-  //         generateResponse(resCode.HTTP_OK, {
-  //           message: MESSAGES.apiSuccessStrings.UPDATE("Categories"),
-  //         })
-  //       );
-  //     }
-  //   }),
+    //     return res.json(
+    //       generateResponse(resCode.HTTP_OK, {
+    //         message: MESSAGES.apiSuccessStrings.UPDATE("Product"),
+    //       })
+    //     );
+    //   }
+    // }),
 
   delete: asyncHandler(async (req, res) => {
     let query = {
@@ -149,7 +150,7 @@ const modelObj = {
     };
     let deleted = await wishlistRepository.delete(query);
     if (deleted == 0) {
-      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("WishList");
+      let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Item");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
     return res.json(

@@ -37,12 +37,12 @@ app.post(
   controller.updateAll
 );
 
-// app.put(
-//   "/:id",
-//   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
-//   // validate("updateCustomer"),
-//   controller.update
-// );
+app.put(
+  "/:id",
+  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  // validate("updateCustomer"),
+  controller.update
+);
 
 
 module.exports = app;

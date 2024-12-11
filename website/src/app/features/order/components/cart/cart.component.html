@@ -16,7 +16,7 @@
             <div class="col-12 col-lg-7">
               <div
                 class="row product-container"
-                *ngFor="let p of carts; let i = index"
+                *ngFor="let p of sessionCart; let i = index"
               >
                 <div class="col-11 d-flex align-items-center">
                   <img
@@ -36,6 +36,7 @@
                       <button
                         class="input-group-text px-3"
                         (click)="decrementQty(p)"
+                        [disabled]="isLoading"
                       >
                         -
                       </button>
@@ -51,6 +52,7 @@
                       <button
                         class="input-group-text px-3"
                         (click)="incrementQty(p)"
+                        [disabled]="isLoading"
                       >
                         +
                       </button>
@@ -125,11 +127,11 @@
           </div>
 
           <div class="row py-4">
-            <div class="col-3 mb-3" *ngIf="showUpdate">
+            <!-- <div class="col-3 mb-3" *ngIf="showUpdate">
               <button class="btn btn-dark" (click)="updateAllCart()">
                 Update
               </button>
-            </div>
+            </div> -->
             <div class="col-12 col-lg-8 d-flex justify-content-center">
               <div class="w-50 ">
                 <button class="btn btn-dark" (click)="navigateTo('/home')">
@@ -144,10 +146,10 @@
             <div class="p-3">
               <div class="row mb-3">
                 <div class="col-6 regular-text">
-                  Total {{ carts?.length < 1 ? "item" : "items" }}
+                  Total {{ sessionCart?.length < 1 ? "item" : "items" }}
                 </div>
                 <div class="col-6 d-flex justify-content-end regular-weight">
-                  {{ carts?.length }}
+                  {{ sessionCart?.length }}
                 </div>
               </div>
               <div class="row">

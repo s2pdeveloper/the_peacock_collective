@@ -180,11 +180,14 @@ const modelObj = {
         id: req.params.id,
       },
     };
-    let cart = await CartRepository.update(req.body, query);
-    if (cart[0] == 0) {
+    let cart = CartRepository.findByPk(req.params.id);
+    console.log("cart",cart);
+    
+    if (!cart) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Cart");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     } else {
+       await CartRepository.update(req.body, query);
       return res.json(
         generateResponse(resCode.HTTP_OK, {
           message: MESSAGES.apiSuccessStrings.UPDATE("Cart"),

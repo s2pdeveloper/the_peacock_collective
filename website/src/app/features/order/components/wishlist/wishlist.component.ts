@@ -12,6 +12,7 @@ import { WishlistService } from 'src/app/services/wishlist.service';
 })
 export class WishlistComponent {
   wishlist: any[] = [];
+  carts: any[] = [];
   user: any;
   isLoading : boolean = false;
   constructor(
@@ -46,20 +47,37 @@ export class WishlistComponent {
     let path = `/product/product-details/${id}`;
     this.router.navigate([path]);
   }
-  createCart(id: number) {
+  createCart(p: any) {
+    console.log("p",p);
+    
     try {
       if (!this.user) {
         this.toasterService.warning('Please login to add cart');
         return;
       }
-      console.log('added to cart');
       let payload = {
         qty: 1,
-        variantId: id,
+        variantId: p.variantId,
         customerId: this.user.id,
       };
-      this.cartService.create(payload).subscribe((x) => {
-        this.toasterService.success('Product added to cart!!');
+      this.cartService.getAll().subscribe((success) => {
+        this.carts = success?.result?.rows;
+        if (this.carts.length) {
+          let selectedVar = this.carts.find(
+            (cart: any) => cart?.variantId == p.variantId
+          );
+          console.log("selectedVar",selectedVar);
+          
+          if (selectedVar?.qty >= selectedVar.cartWithVariants.qty) {
+            this.toasterService.error(
+              'Your selected product is already with max quantity in cart.'
+            );
+            return;
+          }
+        }
+        this.cartService.create(payload).subscribe((x) => {
+          this.toasterService.success('Product added to cart!!');
+        });
       });
     } catch (error) {
       console.log('error', error);

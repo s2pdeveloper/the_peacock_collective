@@ -3,6 +3,7 @@
 @import "./themes/custom";
 @import "ngx-toastr/toastr";
 @import "~bs-stepper/dist/css/bs-stepper.min.css";
+@import "~@ng-select/ng-select/themes/default.theme.css";
 @font-face {
   font-family: "Buffalo";
   src: url("assets/font/Buffalo/Buffalo.otf") format("opentype"),
@@ -122,4 +123,24 @@ button:disabled,
 button[disabled] {
   cursor: not-allowed;
   pointer-events: none;
+}
+
+.ng-select .ng-select-container {
+  border: 0 !important;
+  background-color: transparent;
+}
+.ng-select .ng-select-container:hover {
+  box-shadow: none !important;
+}
+.ng-dropdown-panel {
+  padding: 0 !important;
+}
+.ng-dropdown-panel.ng-select-bottom {
+  border-top: 0 !important;
+}
+.ng-select.ng-select-focused:not(.ng-select-opened)>.ng-select-container {
+  box-shadow: none !important;
+}
+.ng-select.ng-select-opened>.ng-select-container {
+  background: transparent;
 }
