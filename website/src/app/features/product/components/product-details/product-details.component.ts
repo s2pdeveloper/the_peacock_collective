@@ -123,9 +123,6 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   createCart() {
-    console.log('this.currentVariant.id', this.currentVariant.id);
-    console.log('this.carts', this.carts);
-
     if (this.carts.length) {
       let selectedVar = this.carts.find(
         (cart: any) => cart?.variantId == this.currentVariant.id
@@ -208,9 +205,10 @@ export class ProductDetailsComponent implements OnInit {
       price: this.qty * this.currentVariant.price,
       qty: this.qty,
       variantId: this.currentVariant.id,
+      cartWithVariants: this.currentVariant
     };
     if (isPlatformBrowser(this._platformId)) {
-      sessionStorage.setItem('products', JSON.stringify([payload]));
+      sessionStorage.setItem('buyProducts', JSON.stringify([payload]));
       this.router.navigate(['/order/checkout'], {
         queryParams: {
           type: 'BUY',

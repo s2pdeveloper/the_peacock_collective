@@ -53,7 +53,7 @@ export class CheckoutComponent implements OnInit {
     this.user = this.storageService.get('Customer');
   }
   navigateTo(path: any) {
-    this.router.navigate([path]);
+    this.router.navigate([path], { queryParams: { type: this.type } });
   }
   navigateToProdDetails(id: any) {
     let path = `/product/product-details/${id}`;

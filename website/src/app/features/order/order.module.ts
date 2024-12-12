@@ -10,6 +10,7 @@ import { MyOrderComponent } from './components/my-order/my-order.component';
 import { WishlistComponent } from './components/wishlist/wishlist.component';
 import { StriveComponent } from './components/strive/strive.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 const routes: Routes = [
   { path: 'cart', component: CartComponent },
@@ -19,6 +20,6 @@ const routes: Routes = [
 ];
 @NgModule({
   declarations: [OrderComponent, CartComponent, CheckoutComponent,MyOrderComponent,WishlistComponent,StriveComponent],
-  imports: [CommonModule,FormsModule,ReactiveFormsModule,NgxSpinnerModule, RouterModule.forChild(routes)],
+  imports: [CommonModule,FormsModule,ReactiveFormsModule,NgxSpinnerModule,NgbTooltipModule, RouterModule.forChild(routes)],
 })
 export class OrderModule {}

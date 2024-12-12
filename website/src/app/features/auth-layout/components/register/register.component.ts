@@ -19,7 +19,7 @@ export class RegisterComponent implements AfterContentInit {
   showEye: boolean = true;
   registerForm = new FormGroup({
     socialTitle: new FormControl(null),
-    firstName: new FormControl(null , [Validators.required]),
+    firstName: new FormControl(null, [Validators.required]),
     lastName: new FormControl(null, [Validators.required]),
     email: new FormControl('', [
       Validators.required,
@@ -42,7 +42,7 @@ export class RegisterComponent implements AfterContentInit {
     private toasterService: ToastrService,
     private storageService: StorageService
   ) // private cd: ChangeDetectorRef
-  {}
+  { }
   ngAfterContentInit(): void {
     // this.cd.markForCheck()
   }
@@ -51,15 +51,16 @@ export class RegisterComponent implements AfterContentInit {
     this.router.navigate([path]);
   }
   submit() {
-    if (this.registerForm.valid) {
+    if (this.registerForm.invalid) {
+      this.toasterService.error('Please fill required fields!!');
+      return;
+    } else {
       let formData: any = this.registerForm.value;
       this.customerService.register(formData).subscribe((success: any) => {
         this.toasterService.success(success?.result?.message);
-
         this.router.navigate(['/auth/login']);
       });
-    } else {
-      this.toasterService.error('Please fill required fields!!');
+
     }
   }
 }

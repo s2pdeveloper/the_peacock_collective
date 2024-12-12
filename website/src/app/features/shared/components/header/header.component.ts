@@ -284,54 +284,73 @@ export class HeaderComponent {
   }
 
   decrementQty(p: any): void {
-    p.qty = Math.max(1, p.qty - 1);
-    let data = {
-      customerId: this.user.id,
-      id: p.id,
-      qty: p.qty
-    }
-    this.spinnerService.show()
-    let products = JSON.parse(sessionStorage.getItem('products'));
-    let index = products.findIndex((x: any) => x.id == p.id);
-    if (index !== -1) {
-      products[index].qty = p.qty;
-      this.isLoading = true
-      this.cartService.update(p.id, data).subscribe((success: any) => {
-        this.isLoading = false;
+    if (p.qty != 1) {
+      p.qty = Math.max(1, p.qty - 1);
+      let data = {
+        customerId: this.user.id,
+        id: p.id,
+        qty: p.qty
+      }
+      this.spinnerService.show()
+      let products: any[] = JSON.parse(sessionStorage.getItem('products'));
+      let index = products.findIndex((x: any) => x.id == p.id);
+
+      if (index !== -1) {
+        products[index].qty = p.qty;
+        this.isLoading = true;
+        this.cartService.update(p.id, data).subscribe((success: any) => {
+          this.isLoading = false;
+          this.spinnerService.hide()
+          this.toasterService.success(success?.result?.message)
+        })
+      } else {
         this.spinnerService.hide()
-        this.toasterService.success(success?.result?.message)
-      })
-    } else {
-      this.spinnerService.hide()
-      console.error('Product not found in the session storage');
+        console.error('Product not found in the session storage');
+      }
+      sessionStorage.setItem('products', JSON.stringify(products));
+      this.commonService.addToCart();
     }
-    sessionStorage.setItem('products', JSON.stringify(products));
-    this.commonService.addToCart();
   }
 
   incrementQty(p: any): void {
-    p.qty = p.qty + 1;
-    let data = {
-      customerId: this.user.id,
-      id: p.id,
-      qty: p.qty
-    }
-    this.spinnerService.show()
-    let products = JSON.parse(sessionStorage.getItem('products'));
-    let index = products.findIndex((x: any) => x.id === p.id);
-    if (index !== -1) {
-      products[index].qty = p.qty;
-      this.isLoading = true
-      this.cartService.update(p.id, data).subscribe((success: any) => {
-        this.isLoading = false;
+    this.cartService.getAll().subscribe((success) => {
+      let carts = success?.result?.rows;
+      if (carts.length) {
+        let selectedVar = carts.find(
+          (cart: any) => cart?.variantId == p.variantId
+        );
+        if (selectedVar?.qty >= selectedVar.cartWithVariants.qty) {
+          this.toasterService.error(
+            'Your selected product is already with max quantity in cart.'
+          );
+          return;
+        }
+      }
+      p.qty = p.qty + 1;
+      let data = {
+        customerId: this.user.id,
+        id: p.id,
+        qty: p.qty
+      }
+      this.spinnerService.show()
+      let products = JSON.parse(sessionStorage.getItem('products'));
+      let index = products.findIndex((x: any) => x.id === p.id);
+
+      if (index !== -1) {
+        products[index].qty = p.qty;
+        this.isLoading = true
+        this.cartService.update(p.id, data).subscribe((success: any) => {
+          this.isLoading = false;
+          this.spinnerService.hide()
+          this.toasterService.success(success?.result?.message)
+        })
+      } else {
         this.spinnerService.hide()
-        this.toasterService.success(success?.result?.message)
-      })
-    } else {
-      this.spinnerService.hide()
-      console.error('Product not found in the session storage');
-    }
-    sessionStorage.setItem('products', JSON.stringify(products));
-    this.commonService.addToCart();
+        console.error('Product not found in the session storage');
+      }
+      sessionStorage.setItem('products', JSON.stringify(products));
+      this.commonService.addToCart();
+    });
+
   }
 }
