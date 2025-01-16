@@ -34,17 +34,17 @@ const modelObj = {
     //   },
     // });
 
-    let query={
-      where: {
-        sku: req.body.sku,
-      },
-    }
+    // let query={
+    //   where: {
+    //     sku: req.body.sku,
+    //   },
+    // }
 
-    let checkExisting=await variantRespository.findOneByCondition(query);
-    if (checkExisting) {
-      let message = MESSAGES.apiErrorStrings.Data_EXISTS("Variant");
-      throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
-    }
+    // let checkExisting=await variantRespository.findOneByCondition(query);
+    // if (checkExisting) {
+    //   let message = MESSAGES.apiErrorStrings.Data_EXISTS("Variant");
+    //   throw new ApiError(message, resCode.HTTP_BAD_REQUEST);
+    // }
 
     // let createObj = await generateCreateData(new Model(), req.body);
     // let variant = await createObj.save();

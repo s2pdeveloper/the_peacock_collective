@@ -144,3 +144,7 @@ button[disabled] {
 .ng-select.ng-select-opened>.ng-select-container {
   background: transparent;
 }
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
+  background-color: #796853d0;
+  color: #FFF;
+}

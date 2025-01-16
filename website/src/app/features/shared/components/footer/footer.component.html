@@ -13,7 +13,10 @@
               }}</a>
             </p>
             <p class="mb-1 p-0 cursor">
-              <a href="" target="_blank"> Instagram </a>
+                  <a
+                  [href]="'https://' + data?.instaLink"
+                  target="_blank"
+                  >Instagram</a>
             </p>
             <p class="cursor" (click)="navigateTo('about-us')">
               <span> About Us</span>
@@ -57,12 +60,12 @@
             <p class="mb-2 p-0 cursor">
               <span (click)="navigateTo('/bespoke')"> Bespoke - By, You</span>
             </p>
-            <p class="mb-2 p-0 cursor">
+            <!-- <p class="mb-2 p-0 cursor">
               <span>Stay in Touch</span>
-            </p>
+            </p> -->
           </div>
         </div>
-        <div class="col-12 col-md-4 col-lg-4 box-4">
+        <!-- <div class="col-12 col-md-4 col-lg-4 box-4">
           <p class="follow-text">Join our newsletter</p>
           <form [formGroup]="messageForm" autocomplete="off">
             <div class="input-wrapper">
@@ -91,7 +94,7 @@
               >
             </span>
           </form>
-        </div>
+        </div> -->
         <div class="col-12 py-3">
           <p class="copyright">&copy; 2024 peacock collective</p>
         </div>

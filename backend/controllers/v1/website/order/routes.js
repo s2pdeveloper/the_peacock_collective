@@ -58,13 +58,13 @@ app.post(
 //   // validate("checkParamId"),
 //   controller.getProductAttribute
 // );
-// app.get(
-//   "/:id",
-//   // authHandler.authenticateJWT(),
-//   // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
-//   // validate("checkParamId"),
-//   controller.getById
-// );
+app.get(
+  "/:id",
+  // authHandler.authenticateJWT(),
+  // rolePermit(roles.usersRoles.SUPER_ADMIN, roles.usersRoles.SHOP_KEEPER),
+  // validate("checkParamId"),
+  controller.getById
+);
 
 // app.delete(
 //   "/:id",

@@ -34,11 +34,26 @@
 .background-primary {
   background-color: #f8f8f8;
 }
+.badge {
+  font-size: 15px;
+  font-style: italic;
+}
 .btn-dark,
 .btn-light {
   width: 100% !important;
   padding: 0.5rem !important;
-  border-radius: 0 !important;
+  border-radius: 2rem;
+  font-size: .75rem;
+}
+.mid-text{
+  font-size: .85rem;
+}
+.dark-btn {
+  width: 100% !important;
+  padding: 0.5rem !important;
+  border-radius: 2rem;
+  border:1px solid #212529;
+  font-size: .75rem;
 }
 input {
   background-color: #e3e3e3;
@@ -156,7 +171,6 @@ input {
       }
     }
   }
-
 }
 select {
   background-color: transparent;
@@ -189,4 +203,29 @@ img {
 .rest-img {
   aspect-ratio: 1/1;
   object-fit: contain;
+}
+/* Style the navigation buttons */
+swiper-container::part(button-prev),
+swiper-container::part(button-next) {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  scale: 0.75;
+  padding: 0.5rem;
+  top: 60%;
+  transform: translateY(-60%);
+  cursor: pointer;
+}
+swiper-container::part(button-next) {
+  right: var(--swiper-navigation-sides-offset, -5px);
+  cursor: pointer;
+}
+swiper-container::part(button-prev) {
+  cursor: pointer;
+  left: var(--swiper-navigation-sides-offset, -5px);
 }

@@ -29,6 +29,10 @@ export class CommonService {
     this.currentCartCount += quantity;
     this.cartCnt.next(this.currentCartCount);
   }
+  removeToCart(quantity: number = 1) {
+    this.currentCartCount -= quantity;
+    this.cartCnt.next(this.currentCartCount);
+  }
 
   resetCart() {
     this.currentCartCount = 0;

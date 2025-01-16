@@ -9,8 +9,8 @@ import { OrderService } from 'src/app/services/order.service';
 })
 export class MyOrderComponent implements OnInit {
   orders = [];
-  orderVariants = [];
-  
+  // orderVariants = [];
+
   constructor(private orderService: OrderService, private router: Router) {}
 
   ngOnInit(): void {
@@ -20,25 +20,31 @@ export class MyOrderComponent implements OnInit {
     this.orderService.getAll({}).subscribe({
       next: (success) => {
         this.orders = success.result;
-        let variants = this.orders.map(x => x.orderWithOrderVariantMap);
-        for (const items of variants) {
-          for (const item of items) {
-            this.orderVariants.push(item);
-          }
-        }
-        console.log('this.orderVariants',this.orderVariants);
-        
+        console.log('orders', this.orders);
+
+        // let variants = this.orders.map((x) => x.orderWithOrderVariantMap);
+        // for (const items of variants) {
+        //   for (const item of items) {
+        //     this.orderVariants.push(item);
+        //   }
+        // }
+        // console.log('this.orderVariants', this.orderVariants);
       },
       error: (err) => {
         console.log('err', err);
       },
     });
   }
-  navigateTo(path: any) {
-    this.router.navigate([path]);
+  navigateTo(path: any, id?: number) {
+    if (id) {
+      let p = `${path + id}`
+      this.router.navigate([p]);
+    }else {
+      this.router.navigate([path]);
+    }
   }
-  navigateToProdDetails(id:number) {
-    let path = `/product/product-details/${id}`
+  navigateToProdDetails(id: number) {
+    let path = `/product/product-details/${id}`;
     this.router.navigate([path]);
   }
 }

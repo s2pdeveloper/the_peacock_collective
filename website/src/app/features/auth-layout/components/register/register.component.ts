@@ -25,11 +25,7 @@ export class RegisterComponent implements AfterContentInit {
       Validators.required,
       Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}'),
     ]),
-    phone: new FormControl(null, [
-      Validators.required,
-      Validators.maxLength(10),
-      Validators.minLength(10),
-    ]),
+    phone: new FormControl(null, [Validators.required]),
     password: new FormControl(null, [Validators.required]),
     DOB: new FormControl(null),
   });
@@ -40,9 +36,8 @@ export class RegisterComponent implements AfterContentInit {
     private router: Router,
     private customerService: CustomerService,
     private toasterService: ToastrService,
-    private storageService: StorageService
-  ) // private cd: ChangeDetectorRef
-  { }
+    private storageService: StorageService // private cd: ChangeDetectorRef
+  ) {}
   ngAfterContentInit(): void {
     // this.cd.markForCheck()
   }
@@ -60,7 +55,6 @@ export class RegisterComponent implements AfterContentInit {
         this.toasterService.success(success?.result?.message);
         this.router.navigate(['/auth/login']);
       });
-
     }
   }
 }

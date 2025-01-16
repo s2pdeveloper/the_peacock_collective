@@ -9,6 +9,7 @@ const OrderVariantMap = require("../../../../models").OrderVariantMap;
 const Attribute = require("../../../../models").Attribute;
 const Product = require("../../../../models").Product;
 const Images = require("../../../../models").Images;
+const Address = require("../../../../models").Address;
 const {
   OPTIONS,
   generateResponse,
@@ -144,6 +145,10 @@ const modelObj = {
               attributes:["orderNumber","status"]
             }
           ],
+        },
+        {
+          model : Address,
+          as : "address",
         }
       ],
 
@@ -158,11 +163,58 @@ const modelObj = {
   }),
 
   getById: asyncHandler(async (req, res) => {
-    let existing = await Model.findOne({
+    console.log("req",req.params.id);
+    
+    let query = {
       where: {
-        id: req.params.id,
+        customerId: req.user.id,
+        id:req.params.id
       },
-    });
+      include: [
+        {
+          model: OrderVariantMap,
+          as: "orderWithOrderVariantMap",
+          attributes: ["variantId", "qty", "price","orderId"],
+          include: [
+            {
+              model: Variant,
+              as: "orderVariantMapWithVariant",
+              include: [
+                {
+                  model: AttrVariantMap,
+                  as: "variantWithAttrVariantMap",
+                  attribute:["value"],
+                  include: {
+                    model: Attribute,
+                    as: "AttrVariantMapWithAttributes",
+                    // attributes: ["name", "hsn"],
+                  },
+                },
+                {
+                  model: Product,
+                  as: "variantWithProduct",
+                  attributes: ["name", "hsn", "id"],
+                },
+                {
+                  model: Images,
+                  as: "variantImages",
+                },
+              ],
+            },
+            {
+              model:Order,
+              as:"orderVariantMapWithOrder",
+              attributes:["orderNumber","status"]
+            }
+          ],
+        },
+        {
+          model : Address,
+          as : "address",
+        }
+      ],
+    };
+    let existing = await Model.findOne(query);
     if (!existing) {
       let errors = MESSAGES.apiSuccessStrings.DATA_NOT_EXISTS("Order");
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);

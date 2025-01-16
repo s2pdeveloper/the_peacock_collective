@@ -302,14 +302,13 @@
               >
                 <div class="col-2 d-flex align-items-center my-1">
                   <label for="inputPassword12" class="col-form-label"
-                    >Pin code
+                    >Pin code / zip code
                   </label>
                   <span class="text-danger">*</span>
                 </div>
                 <div class="col-9 my-1">
                   <input
-                    type="text"
-                    maxlength="6"
+                    [type]="selectedCountry == 'India'  ? 'number' : 'text'"
                     class="form-control background-primary"
                     formControlName="pinCode"
                   />

@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       description: {
          type: DataTypes.TEXT('long'),
-        allowNull: false,
+        allowNull: true,
       },
       price: {
         type: DataTypes.FLOAT,

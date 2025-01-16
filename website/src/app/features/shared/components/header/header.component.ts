@@ -1,7 +1,11 @@
 import { Component, Inject, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SpinnerService, StorageService, ToastService } from 'src/app/core/services';
+import {
+  SpinnerService,
+  StorageService,
+  ToastService,
+} from 'src/app/core/services';
 import { TagCategoryPipe } from 'src/app/pipes/tag-category.pipe';
 import { CartService } from 'src/app/services/cart.service';
 import { CommonService } from 'src/app/services/common.service';
@@ -12,6 +16,8 @@ import { Observable } from 'rxjs';
 import { GeneralConfirmationModalComponent } from '../../modals/general-confirmation-modal/general-confirmation-modal';
 import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CustomerService } from 'src/app/services/customer.service';
 Swiper.use([Navigation]);
 @Component({
   selector: 'app-header',
@@ -46,6 +52,9 @@ export class HeaderComponent {
   activeTagTitle: string = '';
   isLoading: boolean = false;
   private modalService = inject(NgbModal);
+  isLoginDone: boolean = false;
+  showEye: boolean = true;
+
   constructor(
     @Inject(PLATFORM_ID) private _platformId: Object,
     private router: Router,
@@ -55,12 +64,17 @@ export class HeaderComponent {
     private cartService: CartService,
     private toast: ToastService,
     private storageService: StorageService,
-    private spinnerService : SpinnerService
+    private spinnerService: SpinnerService,
+    private customerService: CustomerService
   ) {
     if (this.storageService.get('Customer')) {
       this.commonService.setLogin();
     }
   }
+  loginForm = new FormGroup({
+    email: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required]),
+  });
   openSearch(content: any) {
     this.modalService.open(content, { size: 'xl', centered: true });
   }
@@ -113,10 +127,14 @@ export class HeaderComponent {
       this.customer = success;
     });
     this.cartCnt = this.commonService.getCntData();
+    console.log('this.cartCnt', this.commonService.getCntData());
+
     if (isPlatformBrowser(this._platformId)) {
       let user = localStorage.getItem('Customer') ? true : false;
       if (user) {
         this.getAllCartData();
+      } else {
+        this.getAllCartWithoutLogin();
       }
     }
   }
@@ -183,21 +201,26 @@ export class HeaderComponent {
     this.category.title = '';
     this.category.categories = [];
   }
-  checkout() {
-    // let checkoutProduts = this.cartData.map((x) => {
-    //   return {
-    //     qty: x.qty,
-    //     variantId: x.variantId,
-    //   };
-    // });
-    // if (isPlatformBrowser(this._platformId)) {
-    // sessionStorage.setItem('products', JSON.stringify(checkoutProduts));
-    this.router.navigate(['/order/checkout'], {
-      queryParams: {
-        type: 'CART',
-      },
-    });
-    // }
+  checkout(login) {
+    if (this.user) {
+      // let checkoutProduts = this.cartData.map((x) => {
+      //   return {
+      //     qty: x.qty,
+      //     variantId: x.variantId,
+      //   };
+      // });
+      // if (isPlatformBrowser(this._platformId)) {
+      // sessionStorage.setItem('products', JSON.stringify(checkoutProduts));
+      this.router.navigate(['/order/checkout'], {
+        queryParams: {
+          type: 'CART',
+        },
+      });
+      // }
+    } else {
+      this.openLogin(login);
+    }
+    this.isCartOpen = !this.isCartOpen;
   }
 
   showCart() {
@@ -208,19 +231,38 @@ export class HeaderComponent {
       this.isCartOpen = !this.isCartOpen;
       this.getAllCartData();
     } else {
-      this.toast.warning('Please login to view your cart');
+      this.isCartOpen = !this.isCartOpen;
+      // this.toast.warning('Please login to view your cart');
+      this.getAllCartWithoutLogin();
     }
   }
   deleteVariant(id) {
-    this.cartService.delete(id).subscribe({
-      next: (success) => {
-        this.getAllCartData();
-        this.toasterService.success(success?.result?.message);
-      },
-      error: (err) => {
-        console.log('err', err);
-      },
-    });
+    if (this.user) {
+      this.cartService.delete(id).subscribe({
+        next: (success) => {
+          this.getAllCartData();
+          this.toasterService.success(success?.result?.message);
+        },
+        error: (err) => {
+          console.log('err', err);
+        },
+      });
+    } else {
+      let products = this.storageService.get('noLoginCartProducts') ?? [];
+      if (products.length) {
+        let index = products.findIndex((x: any) => x.id == id);
+        this.commonService.removeToCart(products[index].qty);
+        if (index !== -1) {
+          products.splice(index, 1);
+        }
+        console.log('products', products);
+        this.toasterService.success(
+          'Product from cart has been deleted successfully.'
+        );
+        this.storageService.set('noLoginCartProducts', products);
+      }
+      this.getAllCartWithoutLogin();
+    }
   }
   getAllCartData() {
     this.cartService.getAll().subscribe((success) => {
@@ -228,10 +270,35 @@ export class HeaderComponent {
       this.cartService.cartItems.next([...success.result.rows]);
       this.cartData = this.cartService.cartItems.getValue();
       if (isPlatformBrowser(this._platformId)) {
-        sessionStorage.setItem(
-          'products',
-          JSON.stringify(success?.result?.rows)
+        let loginCartProducts: any[] = JSON.parse(
+          sessionStorage.getItem('products')
         );
+        let noLoginCartProducts = this.storageService.get(
+          'noLoginCartProducts'
+        );
+        console.log('loginCartProducts', loginCartProducts);
+        console.log('noLoginCartProducts', noLoginCartProducts);
+        let user: any = this.storageService.get('Customer');
+        console.log('this.user', user);
+
+        if (noLoginCartProducts) {
+          // let updatedProducts = noLoginCartProducts.map((product) => {
+          //   return {
+          //     ...product,
+          //     customerId: user?.id,
+          //   };
+          // });
+          // console.log('updatedProducts', updatedProducts);
+          // let finalProducts = [...updatedProducts, ...loginCartProducts];
+          // console.log('finalProducts', finalProducts);
+          // sessionStorage.setItem('products', JSON.stringify(finalProducts));
+          // this.storageService.set('noLoginCartProducts', []);
+        } else {
+          sessionStorage.setItem(
+            'products',
+            JSON.stringify(success?.result?.rows)
+          );
+        }
       }
       let count = success.result.rows.reduce((acc, curr) => acc + curr.qty, 0);
       this.commonService.resetCart();
@@ -285,38 +352,92 @@ export class HeaderComponent {
 
   decrementQty(p: any): void {
     if (p.qty != 1) {
-      p.qty = Math.max(1, p.qty - 1);
-      let data = {
-        customerId: this.user.id,
-        id: p.id,
-        qty: p.qty
-      }
-      this.spinnerService.show()
-      let products: any[] = JSON.parse(sessionStorage.getItem('products'));
-      let index = products.findIndex((x: any) => x.id == p.id);
+      if (this.user) {
+        p.qty = Math.max(1, p.qty - 1);
+        let data = {
+          customerId: this.user.id,
+          id: p.id,
+          qty: p.qty,
+        };
+        this.spinnerService.show();
+        let products: any[] = JSON.parse(sessionStorage.getItem('products'));
+        let index = products.findIndex((x: any) => x.id == p.id);
+        console.log('products[index]', products[index]);
 
-      if (index !== -1) {
-        products[index].qty = p.qty;
-        this.isLoading = true;
-        this.cartService.update(p.id, data).subscribe((success: any) => {
-          this.isLoading = false;
-          this.spinnerService.hide()
-          this.toasterService.success(success?.result?.message)
-        })
+        if (index !== -1) {
+          products[index].qty = p.qty;
+          this.isLoading = true;
+          this.cartService.update(p.id, data).subscribe((success: any) => {
+            this.isLoading = false;
+            this.spinnerService.hide();
+            this.toasterService.success(success?.result?.message);
+          });
+        } else {
+          this.spinnerService.hide();
+          console.error('Product not found in the session storage');
+        }
+        sessionStorage.setItem('products', JSON.stringify(products));
+        this.commonService.removeToCart();
       } else {
-        this.spinnerService.hide()
-        console.error('Product not found in the session storage');
+        p.qty = Math.max(1, p.qty - 1);
+        let products = this.storageService.get('noLoginCartProducts') ?? [];
+        if (products.length) {
+          let index = products.findIndex((x: any) => x.id == p.id);
+          console.log('products[index]', products[index]);
+          if (index !== -1) {
+            products[index].qty = p.qty;
+          }
+          this.storageService.set('noLoginCartProducts', products);
+          this.commonService.removeToCart();
+        }
       }
-      sessionStorage.setItem('products', JSON.stringify(products));
-      this.commonService.addToCart();
     }
   }
 
   incrementQty(p: any): void {
-    this.cartService.getAll().subscribe((success) => {
-      let carts = success?.result?.rows;
-      if (carts.length) {
-        let selectedVar = carts.find(
+    if (this.user) {
+      this.cartService.getAll().subscribe((success) => {
+        let carts = success?.result?.rows;
+        if (carts.length) {
+          let selectedVar = carts.find(
+            (cart: any) => cart?.variantId == p.variantId
+          );
+          if (selectedVar?.qty >= selectedVar.cartWithVariants.qty) {
+            this.toasterService.error(
+              'Your selected product is already with max quantity in cart.'
+            );
+            return;
+          }
+        }
+        p.qty = p.qty + 1;
+        let data = {
+          customerId: this.user.id,
+          id: p.id,
+          qty: p.qty,
+        };
+        this.spinnerService.show();
+        let products = JSON.parse(sessionStorage.getItem('products'));
+        let index = products.findIndex((x: any) => x.id === p.id);
+
+        if (index !== -1) {
+          products[index].qty = p.qty;
+          this.isLoading = true;
+          this.cartService.update(p.id, data).subscribe((success: any) => {
+            this.isLoading = false;
+            this.spinnerService.hide();
+            this.toasterService.success(success?.result?.message);
+          });
+        } else {
+          this.spinnerService.hide();
+          console.error('Product not found in the session storage');
+        }
+        sessionStorage.setItem('products', JSON.stringify(products));
+        this.commonService.addToCart();
+      });
+    } else {
+      let products = this.storageService.get('noLoginCartProducts') ?? [];
+      if (products.length) {
+        let selectedVar = products.find(
           (cart: any) => cart?.variantId == p.variantId
         );
         if (selectedVar?.qty >= selectedVar.cartWithVariants.qty) {
@@ -325,32 +446,45 @@ export class HeaderComponent {
           );
           return;
         }
+        let index = products.findIndex((x: any) => x.id == p.id);
+        if (index !== -1) {
+          products[index].qty = p.qty + 1;
+        }
       }
       p.qty = p.qty + 1;
-      let data = {
-        customerId: this.user.id,
-        id: p.id,
-        qty: p.qty
-      }
-      this.spinnerService.show()
-      let products = JSON.parse(sessionStorage.getItem('products'));
-      let index = products.findIndex((x: any) => x.id === p.id);
-
-      if (index !== -1) {
-        products[index].qty = p.qty;
-        this.isLoading = true
-        this.cartService.update(p.id, data).subscribe((success: any) => {
-          this.isLoading = false;
-          this.spinnerService.hide()
-          this.toasterService.success(success?.result?.message)
-        })
-      } else {
-        this.spinnerService.hide()
-        console.error('Product not found in the session storage');
-      }
-      sessionStorage.setItem('products', JSON.stringify(products));
+      this.storageService.set('noLoginCartProducts', products);
       this.commonService.addToCart();
-    });
-
+    }
+  }
+  getAllCartWithoutLogin() {
+    let products = [];
+    if (isPlatformBrowser(this._platformId)) {
+      products = this.storageService.get('noLoginCartProducts') ?? [];
+    }
+    this.cartService.cartItems.next([]);
+    this.cartService.cartItems.next([...products]);
+    this.cartData = this.cartService.cartItems.getValue();
+    let count = products.reduce((acc, curr) => acc + curr.qty, 0);
+    this.commonService.resetCart();
+    this.commonService.addToCart(count);
+  }
+  openLogin(content: any) {
+    this.modalService.open(content, { centered: true });
+  }
+  loginSubmit() {
+    if (this.loginForm.value) {
+      this.customerService.login(this.loginForm.value).subscribe(
+        (success: any) => {
+          this.user = success.result;
+          this.storageService.set('Customer', success.result);
+          this.toasterService.success('Successfully logged in!!!');
+          this.isLoginDone = true;
+          this.modalService.dismissAll();
+        },
+        (error) => {}
+      );
+    } else {
+      this.toasterService.error('Something went wrong!!');
+    }
   }
 }

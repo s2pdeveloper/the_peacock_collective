@@ -24,7 +24,7 @@ import { PaymentService } from 'src/app/services/payment.service';
 })
 export class CheckoutComponent implements OnInit {
   private modalService = inject(NgbModal);
-  payment: any;
+  payment: string = 'card';
   showEye: boolean = true;
   collapsed: boolean = false;
   user: any;
@@ -67,9 +67,15 @@ export class CheckoutComponent implements OnInit {
     });
 
     if (isPlatformBrowser(this._platformId)) {
-      this.product = sessionStorage.getItem('products')
-        ? JSON.parse(sessionStorage.getItem('products'))
-        : [];
+      if (this.type == 'CART') {
+        this.product = sessionStorage.getItem('products')
+          ? JSON.parse(sessionStorage.getItem('products'))
+          : [];
+      } else {
+        this.product = sessionStorage.getItem('buyProducts')
+          ? JSON.parse(sessionStorage.getItem('buyProducts'))
+          : [];
+      }
     }
 
     this.getAddresses();
@@ -239,7 +245,7 @@ export class CheckoutComponent implements OnInit {
     modalRef.closed.subscribe((res: any) => {
       console.log('res', res);
       if (res) {
-        this.getAddresses()
+        this.getAddresses();
       }
     });
   }

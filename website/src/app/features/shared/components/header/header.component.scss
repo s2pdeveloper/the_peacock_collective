@@ -558,3 +558,34 @@ swiper-container::part(button-prev) {
   cursor: pointer;
   left: var(--swiper-navigation-sides-offset, -5px);
 }
+.password-input {
+  display: flex;
+  input {
+    border-top-left-radius: 0.375rem;
+    border-bottom-left-radius: 0.375rem;
+    width: 90%;
+  }
+  .icon-box {
+    width: 10%;
+    background-color: #f8f8f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top-right-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+  }
+}
+.input-div {
+  //   width: 20%;
+  input {
+    background-color: transparent;
+  }
+  input:focus {
+    box-shadow: none;
+    outline: none;
+    border: 0;
+  }
+}
+.background-primary {
+  background-color: #f8f8f8;
+}

@@ -60,9 +60,7 @@ export class BespokeComponent {
     city: new FormControl('', Validators.required),
     country: new FormControl('', Validators.required),
     state: new FormControl('', Validators.required),
-    mobile: new FormControl(null, [
-      Validators.pattern(/^([+]\d{2}[ ])?\d{10}$/)
-    ]),
+    mobile: new FormControl(null, [Validators.required]),
     email: new FormControl('', [
       Validators.required,
       Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}'),
@@ -73,7 +71,7 @@ export class BespokeComponent {
     category: new FormControl('bridal'),
     jewelryOption: new FormControl(this.jewelryOption[0].label),
   });
-  
+
   submit() {
     try {
       let token = this.storage.get('jSessionId') ?? '';
@@ -104,8 +102,8 @@ export class BespokeComponent {
       this.bespokeService.create(formData).subscribe(
         (success) => {
           this.spinner.hide();
-          this.reset()
-          this.previous(1)
+          this.reset();
+          this.previous(1);
           this.toastService.success(
             'Thank you for reaching out! Our team will respond shortly.'
           );
@@ -116,7 +114,6 @@ export class BespokeComponent {
       );
       // this.spinner.hide();
       // this.reset();
-
     } catch (error) {
       this.spinner.hide();
     }
@@ -138,7 +135,7 @@ export class BespokeComponent {
     this.previous(1);
     // this.files = [];
   }
-  
+
   navigateTo(path: any) {
     this.router.navigate([path]);
   }

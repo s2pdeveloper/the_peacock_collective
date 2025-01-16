@@ -31,7 +31,7 @@ export class FooterComponent {
     fbLink: '',
     twitterLink: '',
     googleLink: '',
-    instaLink: '',
+    instaLink: 'www.instagram.com/peacockcollectiveofficial?igsh=MWgzdTlmOWszamppMQ==',
     ytLink: '',
     pinterestLink: '',
     vimeoLink: '',
