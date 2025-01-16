@@ -49,17 +49,21 @@
               <div class="prod-info">
                 <p>{{ order?.orderVariantMapWithVariant?.sku }}</p>
                 <p>
-                  {{ order?.orderVariantMapWithVariant?.price | currency : "CAD"  }}
+                  {{
+                    order?.orderVariantMapWithVariant?.price | currency : "CAD"
+                  }}
                   x {{ order?.qty }}
                 </p>
               </div>
             </div>
             <div
               class="col-4 text-center my-auto d-flex justify-content-center align-items-center flex-column"
-              *ngIf="
-                order?.orderVariantMapWithVariant?.variantWithAttrVariantMap
-              "
             >
+              <ng-container
+                *ngIf="
+                  order?.orderVariantMapWithVariant?.variantWithAttrVariantMap
+                "
+              >
               <p>Product properties:</p>
               <ng-container
                 *ngFor="
@@ -89,9 +93,13 @@
                 <!-- <p></p>
               <p>{{prop?.AttrVariantMapWithAttributes?.name}} : {{prop?.value}}</p> -->
               </ng-container>
+              </ng-container>
             </div>
             <div class="col-3 text-center my-auto">
-              {{ order?.orderVariantMapWithVariant?.price * order?.qty | currency : "CAD" }}
+              {{
+                order?.orderVariantMapWithVariant?.price * order?.qty
+                  | currency : "CAD"
+              }}
             </div>
           </div>
         </div>
