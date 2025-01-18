@@ -8,6 +8,8 @@ import { CartService } from 'src/app/services/cart.service';
 import { CommonService } from 'src/app/services/common.service';
 import { CustomerService } from 'src/app/services/customer.service';
 import { Country, State, City } from 'country-state-city';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { GeneralConfirmationModalComponent } from 'src/app/features/shared/modals/general-confirmation-modal/general-confirmation-modal';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -469,6 +471,7 @@ export class LoginComponent implements OnInit {
   allAddresses: any[] = [];
   user: any;
   addressId: Number;
+  private modalService = inject(NgbModal);
 
   constructor(
     private router: Router,
@@ -544,7 +547,7 @@ export class LoginComponent implements OnInit {
   getAddresses() {
     if (this.user) {
       this.addressService.getAll().subscribe((success: any) => {
-        this.allAddresses = success.result.rows;
+        this.allAddresses = success?.result?.rows;
       });
     }
   }
@@ -552,7 +555,7 @@ export class LoginComponent implements OnInit {
     this.user = this.storageService.remove('Customer');
     this.commonService.setLogout();
     this.commonService.resetCart();
-    this.storageService.remove('noLoginCartProducts')
+    this.storageService.remove('noLoginCartProducts');
   }
   createAddress() {
     if (this.user) {
@@ -598,9 +601,9 @@ export class LoginComponent implements OnInit {
     this.addressForm.patchValue(data);
     this.selectedState = data?.state;
     this.selectedCity = data?.city;
-     this.selectedCountryCode = this.countries.find(
+    this.selectedCountryCode = this.countries.find(
       (x: any) => x.name == data.country
-    )?.isoCode 
+    )?.isoCode;
     this.states = State?.getStatesOfCountry(this.selectedCountryCode);
     let stateisoCode = this.states.find((x: any) => x.name == data.state);
     this.cities = City?.getCitiesOfState(
@@ -631,9 +634,9 @@ export class LoginComponent implements OnInit {
       });
     }
   }
-  onCountryChange(value: any) { 
-    console.log("selectedCountry",value);
-    this.selectedCountry = value?.name
+  onCountryChange(value: any) {
+    console.log('selectedCountry', value);
+    this.selectedCountry = value?.name;
     this.selectedState = '';
     this.selectedCity = '';
     this.cities = [];
@@ -657,5 +660,27 @@ export class LoginComponent implements OnInit {
   onCityChange(value: any) {
     this.selectedCity = value?.name;
     this.addressForm.controls['city'].setValue(value?.name);
+  }
+  open() {
+    const modalRef = this.modalService.open(GeneralConfirmationModalComponent, {
+      centered: true,
+    });
+    modalRef.componentInstance.info.info =
+      'Are you sure you want to log out? You will need to sign in again to access your account.';
+    modalRef.closed.subscribe((res: any) => {
+      if (res == 'Yes') {
+        this.logout();
+      } else if (res == 'No') {
+        console.log('No');
+      }
+    });
+  }
+  cancel() {
+    this.showAddressForm = !this.showAddressForm;
+    this.addressForm.reset();
+    this.cities = [];
+    this.states = []
+    this.selectedCity = '';
+    this.selectedState = '';
   }
 }

@@ -39,7 +39,7 @@ const MESSAGES = {
     MOBILE_NUMBER_ALREADY_IN_USE:
       "The Mobile number is already in use. Please try again using a different Mobile number",
     USER_EXISTS: (data) => `User already exists with this same ${data}`,
-    Data_EXISTS: (data) => `${data} is already exists.`,
+    Data_EXISTS: (data) => `${data} already exists.`,
     ALREADY_APPLIED: "You have already applied for this job!",
     ALREADY_ATTEMPT: "You have already attempt for this exam!",
     USER_DOES_NOT_EXIST: "The user does not exist!",

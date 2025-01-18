@@ -171,6 +171,8 @@ export class ProductInfoFormComponent {
           };
         });
       formData.append("attributeArr", JSON.stringify(attr));
+    }else{
+      formData.append("attributeArr", JSON.stringify([]));
     }
 
     if (this.productForm.value.id) {
@@ -191,6 +193,8 @@ export class ProductInfoFormComponent {
   }
 
   update(id, formData) {
+    console.log("formData",formData);
+    
     this.spinner.show();
     this.productService.update(id, formData).subscribe((success: any) => {
       this.spinner.hide();

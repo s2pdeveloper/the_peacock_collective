@@ -104,130 +104,6 @@
         <div class="col-12 d-flex justify-content-center align-items-center">
           <form [formGroup]="bespokeForm" class="w-100">
             <div class="row justify-content-between">
-              <!-- <div class="col-12 mt-3 px-4">
-                <p class="header-text">
-                  We’d love to hear about your event and your ideas -
-                </p>
-              </div>
-              <div class="col-12 col-md-12 col-lg-6 mb-2 px-4 pt-2">
-                <label class="form-label mb-2"
-                  >What outfit category are you looking for?
-                </label>
-                <select
-                  formControlName="category"
-                  class="form-control"
-                  (change)="onCategoryChange($event)"
-                >
-                  <option value="bridal">Bridal</option>
-                  <option value="bridalParty">
-                    Bridal Party (order of >3)
-                  </option>
-                  <option value="ofTheBride">Mother/Sister of the Bride</option>
-                  <option value="familyEventAttire">Family event attire</option>
-                  <option value="nonBridal">Non-Bridal</option>
-                  <option value="weddingGuest">Wedding Guest</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-              <div
-                *ngIf="isOther"
-                class="col-12 col-md-12 col-lg-6 mb-2 px-4 pt-2"
-              >
-                <label class="form-label mb-2">Other </label>
-                <input
-                  [(ngModel)]="otherCategory"
-                  [ngModelOptions]="{ standalone: true }"
-                  placeholder="Other"
-                  type="text"
-                  class="form-control"
-                />
-              </div>
-              <div class="col-12 mt-3 px-4">
-                <p class="header-text">Event Timeline</p>
-              </div>
-              <div
-                class="col-12 col-md-12 col-lg-6 d-flex align-items-center px-4 pt-2 pb-3 mb-4"
-              >
-                <label class="form-label flex-nowrap me-3">From Date</label>
-                <input
-                  formControlName="fromDate"
-                  type="date"
-                  class="form-control"
-                />
-              </div>
-              <div
-                class="col-12 col-md-12 col-lg-6 d-flex align-items-center px-4 pt-2 pb-3 mb-4"
-              >
-                <label class="form-label d-flex flex-nowrap me-3"
-                  >To Date</label
-                >
-                <input
-                  formControlName="toDate"
-                  type="date"
-                  class="form-control"
-                />
-              </div>
-              <div class="col-12 mt-3 px-4">
-                <p class="header-text">
-                  What outfit are you envisioning for your event(s)?
-                </p>
-              </div>
-              <div
-                class="col-12 col-md-12 col-lg-6 d-flex align-items-center px-4 py-2 mb-4"
-              >
-                <input
-                  formControlName="eventOutfit"
-                  type="text"
-                  class="form-control"
-                />
-              </div>
-              <div class="col-12 mt-3 px-4">
-                <p class="header-text">
-                  Are you also looking to explore jewelry options?
-                </p>
-              </div>
-              <div
-                class="col-12 col-md-12 col-lg-6 d-flex align-items-center px-4 py-2 mb-4"
-              >
-                <select formControlName="jewelryOption" class="form-control">
-                  <option *ngFor="let opt of jewelryOption" [value]="opt.value">
-                    {{ opt.label }}
-                  </option>
-                </select>
-              </div>
-              <div class="col-12 mt-3 px-4">
-                <p class="header-text">Can you share some images with us?</p>
-              </div>
-              <div
-                class="col-12 col-md-12 col-lg-6 d-flex flex-column justify-content-center px-4 py-2 mb-4"
-              >
-                <input
-                  placeholder="image"
-                  type="file"
-                  class="form-control"
-                  [multiple]="true"
-                  accept=".png,.jpeg,.jpg,.pdf,.svg,.gif"
-                  (change)="fileChosen($event)"
-                />
-              </div>
-              <div class="col-12">
-                <div class="row mt-3" *ngIf="files.length">
-                  <div
-                    class="col-6 col-sm-4 col-md-4 col-lg-3 ps-0 mb-3 image-col"
-                    *ngFor="let file of files"
-                  >
-                    <img
-                      height="300"
-                      class="w-100 new-img p-2"
-                      [src]="file.url"
-                      alt="image"
-                    />
-                    <div class="delete-badge" (click)="imageDelete()">
-                      <i class="fa-solid fa-xmark"></i>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
               <div id="stepper1" class="bs-stepper linear">
                 <div class="bs-stepper-header" role="tablist">
                   <div class="step active" data-target="#test-l-1">
@@ -311,7 +187,7 @@
                               class="col-12 col-md-12 col-lg-6 d-flex align-items-center field-padding"
                             >
                               <div class="row w-100">
-                                <div class="col-12 col-lg-2">
+                                <div class="col-12 col-lg-2 d-flex align-items-center">
                                   <label class="form-label d-flex"
                                     >Name
                                     <span class="text-danger">*</span></label
@@ -331,7 +207,7 @@
                               class="col-12 col-md-12 col-lg-6 d-flex align-items-center field-padding"
                             >
                               <div class="row w-100">
-                                <div class="col-12 col-lg-2">
+                                <div class="col-12 col-lg-2 d-flex align-items-center">
                                   <label class="form-label d-flex"
                                     >Phone
                                     <span class="text-danger">*</span></label
@@ -366,7 +242,7 @@
                               <div class="row w-100">
                                 <div class="col-12 d-flex">
                                   <div class="row w-100">
-                                    <div class="col-12 col-lg-2">
+                                    <div class="col-12 col-lg-2 d-flex align-items-center">
                                       <label class="form-label d-flex me-3"
                                         >Email
                                         <span class="text-danger"
@@ -408,7 +284,7 @@
                               class="col-12 col-md-12 col-lg-6 d-flex align-items-center field-padding"
                             >
                               <div class="row w-100">
-                                <div class="col-12 col-lg-2">
+                                <div class="col-12 col-lg-2 d-flex align-items-center">
                                   <label
                                     for="inputPassword6"
                                     class="form-label d-flex me-3"
@@ -438,7 +314,7 @@
                               class="col-12 col-md-12 col-lg-6 d-flex align-items-center field-padding"
                             >
                               <div class="row w-100">
-                                <div class="col-12 col-lg-2">
+                                <div class="col-12 col-lg-2 d-flex align-items-center">
                                   <label
                                     for="inputPassword6"
                                     class="form-label d-flex me-3"
@@ -470,7 +346,7 @@
                               class="col-12 col-md-12 col-lg-6 d-flex align-items-center field-padding"
                             >
                               <div class="row w-100">
-                                <div class="col-12 col-lg-2">
+                                <div class="col-12 col-lg-2 d-flex align-items-center">
                                   <label
                                     for="inputPassword6"
                                     class="form-label d-flex me-3"

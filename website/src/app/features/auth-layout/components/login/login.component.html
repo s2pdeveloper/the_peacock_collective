@@ -92,7 +92,7 @@
           <h4 class="py-3">You are already logged in</h4>
         </div>
         <div class="col-2 d-block d-sm-block d-md-none d-lg-none">
-          <button (click)="logout()" class="btn btn-dark">
+          <button (click)="open()" class="btn btn-dark">
             <i class="fa-solid fa-arrow-right-from-bracket"></i>
           </button>
         </div>
@@ -106,7 +106,7 @@
             Address
           </button> -->
           <button
-            (click)="logout()"
+            (click)="open()"
             class="btn btn-dark d-none d-sm-none d-md-block d-lg-block"
           >
             Log out <i class="fa-solid fa-arrow-right-from-bracket ms-2"></i>
@@ -337,7 +337,7 @@
             <div class="col-3 col-md-2 col-lg-2">
               <button
                 class="btn bg-dark p-2 w-100 text-light rounded-0"
-                (click)="showAddressForm = !showAddressForm"
+                (click)="cancel()"
               >
                 Cancel
               </button>
