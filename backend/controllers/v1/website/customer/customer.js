@@ -38,19 +38,6 @@ const modelObj = {
 
     const user = await CustomerRepository.create(userData);
 
-    // let data = {
-    //   userName: `${user.firstName} ${user.lastName}`,
-    //   email: user.email,
-    //   OTP: user.resetPin,
-    //   subject: `VERIFY EMAIL FOR PEACOCK`,
-    //   verifyLink: `${process.env.verifyLink}/api/v1/website/customer/verifyEmail/${user.id}`,
-    //   companyLogo:
-    //     "https://peacock-collective.web.app/assets/images/gold-logo.png",
-    //   template: "verifyEmail.html",
-    //   url: `${process.env.REQ_URL}#/change-pwd?sub=${user.id}&pin=${user.resetPin}&role=${user.role}`,
-    // };
-    // mail.sendForgetMail(req, data);
-
     return res.status(resCode.HTTP_OK).json(
       generateResponse(resCode.HTTP_OK, {
         message: MESSAGES.apiSuccessStrings.ADDED("User"),
@@ -288,12 +275,21 @@ const modelObj = {
         template: "resetPassword.html",
         url: `${process.env.REQ_URL}auth/change-pass?sub=${existingUser.id}&pin=${existingUser.resetPin}`,
       };
-      mail.sendForgetMail(req, data);
-      return res.status(resCode.HTTP_OK).json(
-        generateResponse(resCode.HTTP_OK, {
-          message: MESSAGES.apiSuccessStrings.EMAIL_FORGOT,
-        })
-      );
+      try {
+        mail.sendForgetMail(req, data);
+        return res.status(resCode.HTTP_OK).json(
+          generateResponse(resCode.HTTP_OK, {
+            message: MESSAGES.apiSuccessStrings.EMAIL_FORGOT,
+          })
+        );
+      } catch (error) {
+        console.error("Error sending email:", error);
+        return res.status(resCode.HTTP_INTERNAL_SERVER_ERROR).json(
+          generateResponse(resCode.HTTP_INTERNAL_SERVER_ERROR, {
+            message: "Failed to send email",
+          })
+        );
+      }
     }
   }),
   enquiryEmail: asyncHandler(async (req, res) => {
@@ -302,29 +298,35 @@ const modelObj = {
       throw new ApiError(errors, resCode.HTTP_BAD_REQUEST);
     }
     console.log("req.body", req.body);
-
-    let data = {
-      enquiryEmail: req.body?.email,
-      enquiryMsg: req.body?.enquiryMsg,
-      email: `${process.env.EMAIL_SEND_ID}`,
-      subject: `Enquiry mail from ${req.body.email}`,
-      companyLogo:
-        "https://peacock-collective.web.app/assets/images/gold-logo.png",
-      template: "enquiryEmail.html",
-    };
-    console.log("data", req.user);
-    let emailPayload = {
+    let payload = {
       email: req.body?.email,
       message: req.body?.enquiryMsg,
-      customerId : req.body?.customerId
+      customerId: req.body?.customerId,
     };
-    QueryMailsRepository.create(emailPayload);
-    mail.sendForgetMail(req, data);
-    return res.status(resCode.HTTP_OK).json(
-      generateResponse(resCode.HTTP_OK, {
-        message: MESSAGES.apiSuccessStrings.SEND("Email"),
-      })
-    );
+    QueryMailsRepository.create(payload);
+    // mail.sendForgetMail(req, data);
+    const mailOptions = {
+      from: `${process.env.EMAIL_SEND_ID}`,
+      to: req.body?.email,
+      subject: `Enquiry mail from ${req.body.email}`,
+      text: req.body?.enquiryMsg,
+    };
+
+    try {
+      await mail.triggerMailOutlook(mailOptions);
+      return res.status(resCode.HTTP_OK).json(
+        generateResponse(resCode.HTTP_OK, {
+          message: MESSAGES.apiSuccessStrings.SEND("Email"),
+        })
+      );
+    } catch (error) {
+      console.error("Error sending email:", error);
+      return res.status(resCode.HTTP_INTERNAL_SERVER_ERROR).json(
+        generateResponse(resCode.HTTP_INTERNAL_SERVER_ERROR, {
+          message: "Failed to send email",
+        })
+      );
+    }
   }),
 
   verifyEmail: asyncHandler(async (req, res, next) => {

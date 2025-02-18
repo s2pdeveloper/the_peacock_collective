@@ -27,7 +27,7 @@
       <div class="row row-cols row-cols-lg-5 row-cols-md-2 justify-content-center p-2">
         <div
           class="col prod-cart bg-light border m-2 p-2"
-          *ngFor="let p of products"
+          *ngFor="let p of products; trackBy: trackByFunc"
           (click)="navigateToProdDetails(p?.id)"
         >
           <img class="prod-img w-100" [src]="p?.bannerImage" />

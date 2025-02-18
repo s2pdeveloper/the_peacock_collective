@@ -1,8 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { CommonModule, LocationStrategy } from "@angular/common";
-import { ActivatedRoute, Router, RouterModule } from "@angular/router";
+import { RouterModule } from "@angular/router";
 import { QRCodeModule } from "angularx-qrcode";
-import { environment } from "src/environments/environment";
 @Component({
   selector: "app-label-qr",
   standalone: true,
@@ -13,7 +12,6 @@ import { environment } from "src/environments/environment";
 export default class LabelQRComponent implements OnInit {
   qrList: any = [];
   constructor(private location: LocationStrategy) {}
-  websiteUrl: string = environment.websiteUrl;
   ngOnInit() {
     let state: any = this.location.getState();
 

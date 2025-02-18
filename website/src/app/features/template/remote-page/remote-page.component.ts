@@ -27,11 +27,14 @@ export class RemotePageComponent implements OnInit {
       );
     });
   }
-  navigateTo(path: any, id: any) {
+  navigateTo(path: string, id: number) {
     this.router.navigate([path], { queryParams: { id: id } });
   }
   navigateToProdDetails(id: number) {
     let path = `/product/product-details/${id}`;
     this.router.navigate([path]);
+  }
+  trackByFunc(index: number, products: any): number {
+    return products.id;
   }
 }

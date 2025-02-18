@@ -2,7 +2,6 @@ import { CommonModule, LocationStrategy } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router, RouterModule } from "@angular/router";
 import { QRCodeModule } from "angularx-qrcode";
-import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-QRSheet",
@@ -14,7 +13,7 @@ import { environment } from "src/environments/environment";
 export default class QRSheetComponent implements OnInit {
   qrList: any = [];
   constructor(private location: LocationStrategy) {}
-  websiteUrl: string = environment.websiteUrl;
+  websiteUrl: string = '';
   ngOnInit() {
     let state: any = this.location.getState();
     for (const ele of state.products) {
