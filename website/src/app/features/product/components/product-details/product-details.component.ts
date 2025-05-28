@@ -10,6 +10,7 @@ import { WishlistService } from 'src/app/services/wishlist.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomerService } from 'src/app/services/customer.service';
 import { Navigation } from 'swiper/modules';
+import { NgxImgZoomService } from 'ngx-img-zoom';
 import Swiper from 'swiper';
 Swiper.use([Navigation]);
 @Component({
@@ -33,6 +34,9 @@ export class ProductDetailsComponent implements OnInit {
   bannerImg: any;
   event: any;
   isLoading: boolean = false;
+  myThumbnail = 'https://wittlock.github.io/ngx-image-zoom/assets/thumb.jpg';
+  myFullresImage =
+    'https://wittlock.github.io/ngx-image-zoom/assets/fullres.jpg';
 
   constructor(
     private router: Router,
@@ -42,9 +46,17 @@ export class ProductDetailsComponent implements OnInit {
     private storageService: StorageService,
     private toasterService: ToastrService,
     private wishlistService: WishlistService,
+    private ngxImgZoom: NgxImgZoomService,
     @Inject(PLATFORM_ID) private _platformId: Object
   ) {
     this.user = this.storageService.get('Customer');
+    this.ngxImgZoom.setZoomBreakPoints([
+      { w: 100, h: 100 },
+      { w: 150, h: 150 },
+      { w: 200, h: 200 },
+      { w: 250, h: 250 },
+      { w: 300, h: 300 },
+    ]);
   }
   setTabActive(key: any) {
     this.tabActive = key;
@@ -323,11 +335,9 @@ export class ProductDetailsComponent implements OnInit {
         (prod: any) => prod.variantId === this.currentVariant.id
       );
     }
-    console.log("products[index]",products[index]);
-    
-    let finalQty = products[index]
-      ? products[index]?.qty + this.qty
-      : this.qty;
+    console.log('products[index]', products[index]);
+
+    let finalQty = products[index] ? products[index]?.qty + this.qty : this.qty;
     console.log('finalQty', finalQty);
 
     console.log('variant qty', this.currentVariant?.qty);
@@ -337,15 +347,15 @@ export class ProductDetailsComponent implements OnInit {
       );
       return;
     }
-    console.log("index",index);
-    
+    console.log('index', index);
+
     if (index || index === 0) {
       products[index].qty += this.qty;
     } else {
       products.push(payload);
     }
-    console.log("products",products);
-    
+    console.log('products', products);
+
     let count = products.reduce((acc, curr) => acc + curr.qty, 0);
 
     this.commonService.resetCart();

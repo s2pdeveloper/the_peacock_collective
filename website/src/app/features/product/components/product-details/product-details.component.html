@@ -28,11 +28,36 @@
         <div class="col-12 col-md-6 col-lg-5">
           <div class="row">
             <div class="col-12">
-              <img
+              <ngx-image-zoom
+                [thumbImage]="myThumbnail"
+                [fullImage]="myFullresImage"
+                [magnification]="1"
+                [enableScrollZoom]="true"
+                [enableLens]="true"
+                [lensWidth]="200"
+                [lensHeight]="200"
+              ></ngx-image-zoom>
+            </div>
+            <div class="col-12">
+              <!-- <img
                 class="img-fluid banner-img pointer"
                 [src]="bannerImg"
                 alt="product-image"
-              />
+              /> -->
+              <ngx-img-zoom
+                [zoomImageSrc]="bannerImg"
+                [previewImageSrc]="bannerImg"
+                [enableZoom]="true"
+              ></ngx-img-zoom>
+              <!-- <ngx-image-zoom
+                [thumbImage]="bannerImg"
+                [fullImage]="bannerImg"
+                [magnification]="1"
+                [enableScrollZoom]="true"
+                [enableLens]="true"
+                [lensWidth]="200"
+                [lensHeight]="200"
+              ></ngx-image-zoom> -->
             </div>
             <div class="col-12 border my-2">
               <swiper-container
@@ -87,7 +112,9 @@
                     [class.img-border]="currentVariant?.sku == item?.sku"
                     (click)="handleVariant(item)"
                   >
-                    <p class="px-3 py-2 text-center pointer mid-text">{{ item?.sku }}</p>
+                    <p class="px-3 py-2 text-center pointer mid-text">
+                      {{ item?.sku }}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -314,4 +341,3 @@
     </div> -->
   </div>
 </div>
-

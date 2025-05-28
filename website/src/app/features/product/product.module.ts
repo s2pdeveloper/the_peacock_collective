@@ -9,6 +9,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductCompareComponent } from './components/product-compare/product-compare.component';
 import { register } from 'swiper/element/bundle';
+import { NgxImgZoomModule, NgxImgZoomService } from 'ngx-img-zoom';
 register();
 const routes: Routes = [
   {
@@ -27,7 +28,16 @@ const routes: Routes = [
     ProductDetailsComponent,
     ProductCompareComponent,
   ],
-  imports: [CommonModule,ReactiveFormsModule,NgxSliderModule,FormsModule, RouterModule.forChild(routes)],
-  schemas:[CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NgxSliderModule,
+    FormsModule,
+    RouterModule.forChild(routes),
+  ],
+    providers: [
+    NgxImgZoomService // ✅ This is the missing line
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ProductModule {}
