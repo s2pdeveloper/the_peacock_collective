@@ -39,11 +39,28 @@
               ></ngx-image-zoom>
             </div>
             <div class="col-12">
-              <img
+              <div
+                class="image-container"
+                (mousemove)="onMouseMove($event)"
+                (mouseleave)="onMouseLeave()"
+              >
+                <img #imageRef [src]="bannerImg" class="product-image" />
+
+                <div
+                  class="zoom-view"
+                  *ngIf="showZoom"
+                  [ngStyle]="zoomStyle"
+                ></div>
+              </div>
+
+              <!-- OG RUNNING -->
+              <!-- <img
                 class="img-fluid banner-img pointer"
                 [src]="bannerImg"
                 alt="product-image"
-              />
+              /> -->
+
+
               <!-- <ngx-img-zoom
                 [zoomImageSrc]="bannerImg"
                 [previewImageSrc]="bannerImg"

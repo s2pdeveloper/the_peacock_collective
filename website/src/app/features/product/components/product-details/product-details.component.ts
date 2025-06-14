@@ -1,5 +1,13 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, Inject, OnInit, PLATFORM_ID, inject } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Inject,
+  OnInit,
+  PLATFORM_ID,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -37,6 +45,9 @@ export class ProductDetailsComponent implements OnInit {
   myThumbnail = 'https://wittlock.github.io/ngx-image-zoom/assets/thumb.jpg';
   myFullresImage =
     'https://wittlock.github.io/ngx-image-zoom/assets/fullres.jpg';
+  showZoom = false;
+  zoomStyle = {};
+  @ViewChild('imageRef') imageRef!: ElementRef;
 
   constructor(
     private router: Router,
@@ -363,5 +374,27 @@ export class ProductDetailsComponent implements OnInit {
     this.storageService.set('noLoginCartProducts', products);
     this.toasterService.success('Product added to cart!!');
     this.qty = 1;
+  }
+
+  onMouseMove(event: MouseEvent): void {
+    const imageEl = this.imageRef.nativeElement;
+    const rect = imageEl.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    const zoomX = (x / rect.width) * 120;
+    const zoomY = (y / rect.height) * 120;
+
+    this.showZoom = true;
+
+    this.zoomStyle = {
+      top: `${y - 100}px`,
+      left: `${x - 100}px`,
+      backgroundImage: `url(${this.bannerImg})`,
+      backgroundPosition: `${zoomX}% ${zoomY}%`,
+    };
+  }
+  onMouseLeave(): void {
+    this.showZoom = false;
   }
 }
